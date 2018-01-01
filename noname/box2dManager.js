@@ -148,6 +148,10 @@ var Box2dManager = function(_fps, _canvas, _camera) {
 
     self.update = function() {
         self.world.Step(1/self.fps, 8, 3);
+        self.world.ClearForces();
+    };
+
+    self.draw = function() {
         if (self.debugDraw) {
             self.context.save();
             // camera rotation
@@ -161,11 +165,14 @@ var Box2dManager = function(_fps, _canvas, _camera) {
             self.world.DrawDebugData();
             self.context.restore();
         }
-        self.world.ClearForces();
     };
 
     self.toRadians = function (_degrees) {
         return _degrees * 0.0174532925199432957;
+    };
+
+    self.clear = function () {
+        self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     };
 
 };

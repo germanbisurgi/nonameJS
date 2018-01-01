@@ -73,7 +73,9 @@ var Game = function (_config) {
                     return _entity.state === self.state.current.name;
                 })
                 self.render.clear();
+                self.box2d.clear();
                 self.render.draw(renderEntities);
+                self.box2d.draw();
             }
 
         });
