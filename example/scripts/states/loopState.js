@@ -102,8 +102,6 @@ loopState.update = function () {
         var r2 = navigator.getGamepads()[0].buttons[7].pressed;
         var select = navigator.getGamepads()[0].buttons[8].pressed;
         var start = navigator.getGamepads()[0].buttons[9].pressed;
-        var ha = Math.floor(navigator.getGamepads()[0].axes[0]);
-        var va =  Math.floor(navigator.getGamepads()[0].axes[1]);
         var up = Math.floor(navigator.getGamepads()[0].axes[1]) === -1;
         var right =  Math.floor(navigator.getGamepads()[0].axes[0]) === 1;
         var down =  Math.floor(navigator.getGamepads()[0].axes[1]) === 1;
@@ -204,10 +202,10 @@ loopState.update = function () {
     if (this.inputs.pressing(['i'])) {
         this.camera.rotate(speed);
     }
-    if (this.inputs.pressing(['n'])) {
+    if (this.inputs.pressing(['n']) || l1) {
         this.camera.setZoom(0.2);
     }
-    if (this.inputs.pressing(['m'])) {
+    if (this.inputs.pressing(['m']) || r1) {
         this.camera.setZoom(-0.2);
     }
 

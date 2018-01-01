@@ -39,6 +39,9 @@ var CameraComponent = function (_x, _y, _width, _height) {
     }
     this.setZoom = function (_zoom) {
         this.zoom += this.clock.toPPS(_zoom);
+        if (this.zoom < 0) {
+            this.zoom = 0;
+        }
     }
     this.setLerp = function (_lerp) {
         this.lerp = _lerp;
