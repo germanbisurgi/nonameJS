@@ -13,6 +13,7 @@ var State = function (_name) {
         self.clock = _game.clock;
         self.entities = _game.entities;
         self.render = _game.render;
+        self.camera = _game.render.camera;
         self.box2d = _game.box2d;
         self.initialized = true;
     }

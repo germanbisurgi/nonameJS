@@ -14,5 +14,6 @@ var noname = {
     matrixComponent: MatrixComponent,
     imageComponent: ImageComponent,
     spriteComponent: SpriteComponent,
-    tileSpriteComponent: TileSpriteComponent
+    tileSpriteComponent: TileSpriteComponent,
+    cameraComponent: CameraComponent
 };

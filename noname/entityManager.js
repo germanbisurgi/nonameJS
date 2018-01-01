@@ -37,6 +37,12 @@ var EntityManager = function (_game) {
         return entity;
     };
 
+    self.addCamera = function(_x, _y, _width, _height) {
+        var entity = self.create();
+        entity.addComponent(new noname.cameraComponent(_x, _y, _width, _height));
+        return entity;
+    };
+
     self.list = function() {
         return self.pool;
     };

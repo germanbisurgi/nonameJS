@@ -74,7 +74,6 @@ loopState.create = function () {
     this.polyFixture4 = this.box2d.addRectangle(this.polyBody, 1, 1, -25, -25);
     this.polyBody.m_angularVelocity = 1;
 
-
 };
 
 var pausedCanFire = true;
@@ -212,6 +211,6 @@ loopState.update = function () {
         this.render.setZoom(-0.2);
     }
 
-    this.render.follow(this.player.x, this.player.y, this.player.width, this.player.height);
+    this.camera.follow(this.player.x, this.player.y, this.player.width, this.player.height);
 
 };
