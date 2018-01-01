@@ -11,17 +11,19 @@ var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
-var Box2dManager = function(_fps, _canvas) {
+var Box2dManager = function(_fps, _canvas, _camera) {
     "use strict";
     var self = this;
     self.scale = 30;
     self.fps = _fps;
     self.world = new b2World(new b2Vec2(0, 50), true);
     self.debugDraw = null;
+    self.context = null;
 
     if (_canvas) {
         self.debugDraw = new b2DebugDraw();
-        self.debugDraw.SetSprite(_canvas.getContext("2d"));
+        self.context = _canvas.getContext("2d")
+        self.debugDraw.SetSprite(self.context);
         self.debugDraw.SetDrawScale(self.scale);
         self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit || b2DebugDraw.e_jointBit);
         self.world.SetDebugDraw(self.debugDraw);
@@ -147,9 +149,23 @@ var Box2dManager = function(_fps, _canvas) {
     self.update = function() {
         self.world.Step(1/self.fps, 8, 3);
         if (self.debugDraw) {
+            self.context.save();
+            // camera rotation
+            self.context.translate((_camera.width * _camera.anchorX), (_camera.height * _camera.anchorY));
+            self.context.rotate(self.toRadians(-_camera.angle));
+            self.context.translate(-(_camera.width * _camera.anchorX), -(_camera.height * _camera.anchorY));
+            // camera position
+            self.context.translate(-_camera.x, -_camera.y);
+            // camera zoom.
+            self.context.scale(_camera.zoom, _camera.zoom);
             self.world.DrawDebugData();
+            self.context.restore();
         }
         self.world.ClearForces();
+    };
+
+    self.toRadians = function (_degrees) {
+        return _degrees * 0.0174532925199432957;
     };
 
 };

@@ -187,28 +187,28 @@ loopState.update = function () {
     }
 
     if (this.inputs.pressing(['u'])) {
-        this.render.move(0, -speed)
+        this.camera.move(0, -speed)
     }
     if (this.inputs.pressing(['k'])) {
-        this.render.move(speed, 0)
+        this.camera.move(speed, 0)
     }
     if (this.inputs.pressing(['j'])) {
-        this.render.move(0, speed)
+        this.camera.move(0, speed)
     }
     if (this.inputs.pressing(['h'])) {
-        this.render.move(-speed, 0)
+        this.camera.move(-speed, 0)
     }
     if (this.inputs.pressing(['z'])) {
-        this.render.rotate(-speed);
+        this.camera.rotate(-speed);
     }
     if (this.inputs.pressing(['i'])) {
-        this.render.rotate(speed);
+        this.camera.rotate(speed);
     }
     if (this.inputs.pressing(['n'])) {
-        this.render.setZoom(0.2);
+        this.camera.setZoom(0.2);
     }
     if (this.inputs.pressing(['m'])) {
-        this.render.setZoom(-0.2);
+        this.camera.setZoom(-0.2);
     }
 
     this.camera.follow(this.player.x, this.player.y, this.player.width, this.player.height);

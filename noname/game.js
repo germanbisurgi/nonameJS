@@ -36,7 +36,7 @@ var Game = function (_config) {
         self.clock = new noname.clockManager();
         self.entities = new noname.entityManager(self);
         self.render = new noname.renderManager(_config.canvas, self.entities.addCamera(0, 0, _config.canvas.width, _config.canvas.height));
-        self.box2d = new noname.box2dManager(_config.fps, _config.box2dCanvas);
+        self.box2d = new noname.box2dManager(_config.fps, _config.box2dCanvas, self.render.camera);
 
         self.loop.start(function() {
 
