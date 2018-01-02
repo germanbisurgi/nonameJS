@@ -21,7 +21,6 @@ var myState = new noname.state('myState');
 myState.preload = function () {
     // this code will allow you can put load your assets (images, audio, ecc)
     this.assets.queueImage('stone', 'assets/path/stone.png');
-
 };
 
 myState.loading = function () {
