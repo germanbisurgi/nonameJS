@@ -5,19 +5,41 @@ nonameJS want to be a 2d game engine based on web technologies.
 
 ## Make a new Game
 
-To make a new functional game you need at least:
+To make a nonameJS game you need at least two things:
 
-* one state:
-* one html5 canvas element to render the state.
+1) an HTML element to contain the game canvas.
 
+```html
+<div class="screen"></div>
+```
+
+2) A game state: an object that allow the developer to split the logic of a game and manage assets loading.
 
 The game class takes a configuration array as parameter. If a necessary
 configuration property is not given the game will not start and the console will
 warn you.
 
-```html
-<div class="screen"></div>
+```javascript
+var loopState = new noname.state('loopState');
+
+loopState.preload = function () {
+    // queue assets loading code
+};
+
+loopState.loading = function () {
+	// on loading assets logic
+};
+
+loopState.create = function () {
+	// game objects creation code
+}
+
+loopState.update = function () {
+	// game logic code
+};
 ```
+
+
 
 ```javascript
 var game = new noname.game({
