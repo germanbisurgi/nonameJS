@@ -20,22 +20,27 @@ var myState = new noname.state('myState');
 
 myState.preload = function () {
     // this code will allow you can put load your assets (images, audio, ecc)
+    this.assets.queueImage('stone', 'assets/path/stone.png');
+
 };
 
 myState.loading = function () {
     // this code will be running while the game is loading assets
+    console.log(this.assets.progress)
 };
 
 myState.create = function () {
-    // this code allows you to create your game objects
+    // this code allows you to create your entities (game objects)
+    this.myEntitty = this.entities.addImage('stone', 0, 0, 0, 0);
 }
 
 myState.update = function () {
     // this code will execute the logic behin your game
+    this.myEntitty.move(50, 0);
 };
 ```
 
-The game class takes a configuration array as parameter. If a necessary
+The game class takes a configuration array as parameter. If a required
 configuration property is not given the game will not start and the console will
 warn you.
 
