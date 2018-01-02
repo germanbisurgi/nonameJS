@@ -16,7 +16,7 @@ configuration property is not given the game will not start and the console will
 warn you.
 
 ```html
-<canvas class="game-canvas"></canvas>
+<div class="screen"></div>
 ```
 
 ```javascript
