@@ -42,7 +42,7 @@ var game = new noname.game({
     <tbody>
         <tr>
             <td>screen</td>
-            <td>it an HTML container that will hold the game canvas</td>
+            <td>An HTML container that will hold the game canvas</td>
             <td> - </td>
             <td> yes </td>
             <td> document.querySelector('.screen')</td>
