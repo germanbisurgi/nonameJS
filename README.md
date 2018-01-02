@@ -42,10 +42,17 @@ var game = new noname.game({
     <tbody>
         <tr>
             <td>screen</td>
-            <td>An HTML container that will hold the game canvas</td>
+            <td>An HTML element that will hold the game canvas</td>
             <td> - </td>
             <td> yes </td>
             <td> document.querySelector('.screen')</td>
+        </tr>
+        <tr>
+            <td>states</td>
+            <td>An array of states objects</td>
+            <td>its required andwill be always an Array</td>
+            <td> yes</td>
+            <td> [mapState, loopState]</td>
         </tr>
         <tr>
             <td>fps</td>
@@ -60,13 +67,6 @@ var game = new noname.game({
             <td> 60 or equal to FPS</td>
             <td> no</td>
             <td> 30 </td>
-        </tr>
-        <tr>
-            <td>states</td>
-            <td>An array of states objects</td>
-            <td>its required andwill be always an Array</td>
-            <td> yes</td>
-            <td> [mapState, loopState]</td>
         </tr>
         <tr>
             <td>initialState</td>
