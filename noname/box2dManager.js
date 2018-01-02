@@ -29,55 +29,55 @@ var Box2dManager = function(_fps, _canvas, _camera) {
         self.world.SetDebugDraw(self.debugDraw);
     }
 
-    self.addCircle = function (pBody, pRadius, pOffsetX, pOffsetY) {
-        var fixtureDef = self.circle(pRadius);
-        fixtureDef.shape.m_p = {x: pOffsetX / self.scale || 0, y: pOffsetY / self.scale || 0};
-        var fixture = pBody.CreateFixture(fixtureDef);
+    self.addCircle = function (_body, _radius, _offsetX, _offsetY) {
+        var fixtureDef = self.circle(_radius);
+        fixtureDef.shape.m_p = {x: _offsetX / self.scale || 0, y: _offsetY / self.scale || 0};
+        var fixture = _body.CreateFixture(fixtureDef);
         return fixture;
     };
 
-    self.addRectangle = function (pBody, pWidth, pHeight, pOffsetX, pOffsetY) {
-        var fixtureDef = self.rectangle(pWidth, pHeight);
+    self.addRectangle = function (_body, _width, _height, _offsetX, _offsetY) {
+        var fixtureDef = self.rectangle(_width, _height);
         fixtureDef.shape.m_vertices.forEach(function (vert) {
-            vert.x +=  pOffsetX / self.scale || 0;
-            vert.y +=  pOffsetY / self.scale || 0;
+            vert.x +=  _offsetX / self.scale || 0;
+            vert.y +=  _offsetY / self.scale || 0;
         });
-        fixtureDef.shape.m_centroid.x +=  pOffsetX / self.scale || 0;
-        fixtureDef.shape.m_centroid.y +=  pOffsetY / self.scale || 0;
-        var fixture = pBody.CreateFixture(fixtureDef);
+        fixtureDef.shape.m_centroid.x +=  _offsetX / self.scale || 0;
+        fixtureDef.shape.m_centroid.y +=  _offsetY / self.scale || 0;
+        var fixture = _body.CreateFixture(fixtureDef);
         return fixture;
     };
 
-    self.addPolygon = function (pBody, pPoints) {
-        var fixtureDef = self.polygon(pPoints);
-        var fixture = pBody.CreateFixture(fixtureDef);
+    self.addPolygon = function (_body, _points) {
+        var fixtureDef = self.polygon(_points);
+        var fixture = _body.CreateFixture(fixtureDef);
         return fixture;
     };
 
-    self.addEdge = function (pX1, pY1, pX2, pY2, pType) {
-        var body = self.addBody(pX1, pY1, pType);
-        var fixture = self.edge(0, 0, pX2 - pX1, pY2 - pY1);
+    self.addEdge = function (_x1, _y1, _x2, _y2, _type) {
+        var body = self.addBody(_x1, _y1, _type);
+        var fixture = self.edge(0, 0, _x2 - _x1, _y2 - _y1);
         body.CreateFixture(fixture);
         return body;
     };
 
-    self.followBody = function (pEntity, pBody) {
-        pEntity.x = pBody.GetPosition().x * 30 - pEntity.width / 2;
-        pEntity.y = pBody.GetPosition().y * 30 - pEntity.height / 2;
-        pEntity.angle = pBody.GetAngle() * 57.295779513082320876;
+    self.followBody = function (_entity, _body) {
+        _entity.x = _body.GetPosition().x * 30 - _entity.width / 2;
+        _entity.y = _body.GetPosition().y * 30 - _entity.height / 2;
+        _entity.angle = _body.GetAngle() * 57.295779513082320876;
     };
 
-    self.followFixture = function (pEntity, pFixture) {
-        var body = pFixture.GetBody();
-        pEntity.x = (pFixture.GetAABB().GetCenter().x * 30 - pEntity.width  / 2);
-        pEntity.y = (pFixture.GetAABB().GetCenter().y * 30 - pEntity.height / 2);
-        pEntity.angle = body.GetAngle() * 57.295779513082320876;
+    self.followFixture = function (_entity, _fixture) {
+        var body = _fixture.GetBody();
+        _entity.x = (_fixture.GetAABB().GetCenter().x * 30 - _entity.width  / 2);
+        _entity.y = (_fixture.GetAABB().GetCenter().y * 30 - _entity.height / 2);
+        _entity.angle = body.GetAngle() * 57.295779513082320876;
     };
 
-    self.addBody = function(pX, pY, pType) {
+    self.addBody = function(_x, _y, _type) {
         var bodyDef = new b2BodyDef();
-        bodyDef.position.x      = pX / self.scale;
-        bodyDef.position.y      = pY / self.scale;
+        bodyDef.position.x      = _x / self.scale;
+        bodyDef.position.y      = _y / self.scale;
         bodyDef.active          = true;
         bodyDef.allowSleep      = true;
         bodyDef.angle           = 0;
@@ -89,9 +89,9 @@ var Box2dManager = function(_fps, _canvas, _camera) {
         bodyDef.linearDamping   = 0;
         bodyDef.linearVelocity  = {'x': 0, 'y': 0};
         bodyDef.userData        = '';
-        if (pType === 'static')    {bodyDef.type = b2Body.b2_staticBody;}
-        if (pType === 'dynamic')   {bodyDef.type = b2Body.b2_dynamicBody;}
-        if (pType === 'kinematic') {bodyDef.type = b2Body.b2_kinematicBody;}
+        if (_type === 'static')    {bodyDef.type = b2Body.b2_staticBody;}
+        if (_type === 'dynamic')   {bodyDef.type = b2Body.b2_dynamicBody;}
+        if (_type === 'kinematic') {bodyDef.type = b2Body.b2_kinematicBody;}
         var body = self.world.CreateBody(bodyDef);
         return body;
     };
@@ -105,38 +105,38 @@ var Box2dManager = function(_fps, _canvas, _camera) {
         return fixDef;
     };
 
-    self.circle = function(pRadius) {
+    self.circle = function(_radius) {
         var fixDef = self.getFixtureDef();
-        fixDef.shape = new b2CircleShape(pRadius / self.scale);
+        fixDef.shape = new b2CircleShape(_radius / self.scale);
         return fixDef;
     };
 
-    self.rectangle = function(pWidth, pHeight) {
+    self.rectangle = function(_width, _height) {
         var fixDef = self.getFixtureDef();
         fixDef.shape = new b2PolygonShape();
-        fixDef.shape.SetAsBox(pWidth * 0.5 / self.scale, pHeight * 0.5 / self.scale);
+        fixDef.shape.SetAsBox(_width * 0.5 / self.scale, _height * 0.5 / self.scale);
         return fixDef;
     };
 
-    self.polygon = function(pPoints) {
+    self.polygon = function(_points) {
         var fixDef = self.getFixtureDef();
         fixDef.shape = new b2PolygonShape();
-        pPoints.forEach(function (point) {
-            point.x /= self.scale;
-            point.y /= self.scale;
+        _points.forEach(function (_point) {
+            _point.x /= self.scale;
+            _point.y /= self.scale;
         });
-        fixDef.shape.SetAsArray(pPoints, pPoints.length);
+        fixDef.shape.SetAsArray(_points, _points.length);
         return fixDef;
     };
 
-    self.edge = function(pX1, pY1, pX2, pY2) {
+    self.edge = function(_x1, _y1, _x2, _y2) {
         var fixDef = self.getFixtureDef();
         fixDef.shape = new b2PolygonShape();
-        pX1 /= self.scale;
-        pY1 /= self.scale;
-        pX2 /= self.scale;
-        pY2 /= self.scale;
-        fixDef.shape.SetAsEdge({x: pX1, y: pY1}, {x: pX2, y: pY2});
+        _x1 /= self.scale;
+        _y1 /= self.scale;
+        _x2 /= self.scale;
+        _y2 /= self.scale;
+        fixDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
         return fixDef;
     };
 
