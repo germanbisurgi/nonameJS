@@ -95,7 +95,7 @@ var game = new noname.game({
         <tr>
             <td>initialState</td>
             <td>a string that specify the name of the state that will be loaded first</td>
-            <td>The first state object in the states array</td>
+            <td>The first state object in the states array. If there is no state with this name it will use the default state</td>
             <td> no</td>
             <td> 'myState'</td>
         </tr>

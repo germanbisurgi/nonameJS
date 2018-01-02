@@ -1,16 +1,16 @@
-var loopState = new noname.state('loopState');
+var myState = new noname.state('myState');
 var speed = 150;
 
-loopState.preload = function () {
+myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('disc', 'example/assets/images/disc.png');
     this.assets.queueImage('player2', 'example/assets/images/player2.png');
     this.assets.queueImage('map', 'example/assets/images/map.png');
 };
 
-loopState.loading = function () {};
+myState.loading = function () {};
 
-loopState.create = function () {
+myState.create = function () {
 
     this.entities.addImage('map', -2720*1.5, -2048*1.5, 2720*3, 2048*3);
 
@@ -64,7 +64,7 @@ loopState.create = function () {
 
 var pausedCanFire = true;
 
-loopState.update = function () {
+myState.update = function () {
 
     this.box2d.followFixture(this.disc1, this.circleFixture1);
     this.box2d.followFixture(this.disc2, this.circleFixture2);

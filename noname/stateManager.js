@@ -8,7 +8,7 @@ var StateManager = function (_config) {
         _config.states.forEach(function (_state) {
             self.add(_state);
         });
-        if (typeof _config.initialState !== 'undefined') {
+        if (typeof _config.initialState !== 'undefined' && self.get(_config.initialState)) {
             self.switch(_config.initialState);
         } else {
             self.switch(self.pool[0].name);
@@ -25,6 +25,16 @@ var StateManager = function (_config) {
                 self.current = _state;
             }
         });
+    };
+
+    self.get = function(_name) {
+        var output = false;
+        self.pool.forEach(function (_state) {
+            if (_state.name === _name) {
+                output = _state;
+            }
+        });
+        return output;
     };
 
     self.init();
