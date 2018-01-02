@@ -1,9 +1,26 @@
-var RenderManager = function (_canvas, _camera) {
+var RenderManager = function (_config, _camera) {
     'use strict';
     var self = this;
-    self.canvas = _canvas;
-    self.context = self.canvas.getContext("2d");
+    self.canvas = null;
+    self.context = null;
     self.camera = _camera;
+    self.screen = _config.screen;
+
+    self.init = function () {
+        self.canvas = document.createElement('canvas');
+        self.canvas.setAttribute('style', 'position: absolute;');
+        self.context = self.canvas.getContext("2d");
+        self.screen.appendChild(self.canvas);
+    }
+
+    self.init();
+
+    self.resize = function () {
+        self.canvas.width = _config.screen.clientWidth
+        self.canvas.height = _config.screen.clientHeight;
+        self.camera.width = self.canvas.width;
+        self.camera.height = self.canvas.height;
+    };
 
     self.clear = function () {
         self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);

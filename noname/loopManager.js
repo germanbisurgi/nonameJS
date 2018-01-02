@@ -1,4 +1,4 @@
-var LoopManager = function (_fps) {
+var LoopManager = function (_config) {
     'use strict';
     var self = this;
     self.fps = null;
@@ -7,7 +7,7 @@ var LoopManager = function (_fps) {
     self.frames = 0;
 
     self.init = function () {
-        self.fps = _fps || 60;
+        self.fps = _config.fps || 60;
         window.requestAnimFrame = (function(){
           return  window.requestAnimationFrame       ||
                   window.webkitRequestAnimationFrame ||

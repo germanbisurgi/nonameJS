@@ -9,11 +9,6 @@ var Game = function (_config) {
             return;
         }
 
-        if (typeof _config.canvas === 'undefined' || !_config.canvas instanceof HTMLElement) {
-            console.warn('No canvas element was given in the game config');
-            return;
-        }
-
         if (typeof _config.fps !== 'undefined' && !_config.fps > 0) {
             console.warn('fps must be greater than 0');
             return;
@@ -29,14 +24,14 @@ var Game = function (_config) {
             return;
         }
 
-        self.loop = new noname.loopManager(_config.fps);
-        self.state = new noname.stateManager(_config.states, _config.initialState);
+        self.loop = new noname.loopManager(_config);
+        self.state = new noname.stateManager(_config);
         self.assets = new noname.assetManager();
         self.inputs = new noname.inputManager();
         self.clock = new noname.clockManager();
         self.entities = new noname.entityManager(self);
-        self.render = new noname.renderManager(_config.canvas, self.entities.addCamera(0, 0, _config.canvas.width, _config.canvas.height));
-        self.box2d = new noname.box2dManager(_config.fps, _config.box2dCanvas, self.render.camera);
+        self.render = new noname.renderManager(_config, self.entities.addCamera(0, 0, 0, 0));
+        self.box2d = new noname.box2dManager(_config, self.render.camera);
 
         self.loop.start(function() {
 
@@ -72,6 +67,8 @@ var Game = function (_config) {
                 var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
                     return _entity.state === self.state.current.name;
                 })
+                self.render.resize();
+                self.box2d.resize();
                 self.render.clear();
                 self.box2d.clear();
                 self.render.draw(renderEntities);

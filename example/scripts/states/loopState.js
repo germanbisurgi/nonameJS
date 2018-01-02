@@ -1,16 +1,21 @@
 var loopState = new noname.state('loopState');
 var speed = 150;
+
 loopState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('disc', 'example/assets/images/disc.png');
     this.assets.queueImage('player2', 'example/assets/images/player2.png');
+    this.assets.queueImage('map', 'example/assets/images/map.png');
 };
 
 loopState.loading = function () {};
 
 loopState.create = function () {
 
+    this.entities.addImage('map', -2720*1.5, -2048*1.5, 2720*3, 2048*3);
 
+    var player = new Player();
+    this.player = player.create(this.entities);
 
     this.disc1 = this.entities.addImage('disc', 50, 50, 50, 50);
     this.disc2 = this.entities.addImage('disc', 50, 50, 50, 50);
@@ -20,25 +25,6 @@ loopState.create = function () {
     this.rectStone2 = this.entities.addImage('stone', 50, 50, 50, 50);
     this.rectStone3 = this.entities.addImage('stone', 50, 50, 50, 50);
     this.rectStone4 = this.entities.addImage('stone', 50, 50, 50, 50);
-
-    this.player = this.entities.addSprite('player2', 125, 50, 50, 50, 32, 32);
-    this.player.addAnimation('walkUp',        [36, 37, 38, 37] );
-    this.player.addAnimation('walkRight',     [24, 25, 26, 25] );
-    this.player.addAnimation('walkDown',      [ 0,  1,  2,  1] );
-    this.player.addAnimation('walkLeft',      [12, 13, 14, 13] );
-    this.player.addAnimation('walkUpRight',   [39, 40, 41, 40] );
-    this.player.addAnimation('walkUpLeft',    [15, 16, 17, 16] );
-    this.player.addAnimation('walkDownRight', [27, 28, 29, 28] );
-    this.player.addAnimation('walkDownLeft',  [ 3,  4,  5,  4] );
-    this.player.addAnimation('idleUp',        [37] );
-    this.player.addAnimation('idleRight',     [25] );
-    this.player.addAnimation('idleDown',      [ 1] );
-    this.player.addAnimation('idleLeft',      [13] );
-    this.player.addAnimation('idleUpRight',   [40] );
-    this.player.addAnimation('idleUpLeft',    [16] );
-    this.player.addAnimation('idleDownRight', [28] );
-    this.player.addAnimation('idleDownLeft',  [ 4] );
-    this.player.play('idleDown');
 
     this.edge1 = this.box2d.addEdge(-100, 0, 190, 191, 'static');
     this.edge2 = this.box2d.addEdge(190, 190, 400, 0, 'static');

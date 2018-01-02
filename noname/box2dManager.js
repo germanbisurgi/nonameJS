@@ -11,23 +11,35 @@ var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
-var Box2dManager = function(_fps, _canvas, _camera) {
+var Box2dManager = function(_config, _camera) {
     "use strict";
     var self = this;
     self.scale = 30;
-    self.fps = _fps;
+    self.fps = _config.fps;
     self.world = new b2World(new b2Vec2(0, 50), true);
     self.debugDraw = null;
+    self.canvas = null;
     self.context = null;
+    self.screen = _config.screen;
 
-    if (_canvas) {
+    self.init = function () {
+        self.canvas = document.createElement('canvas');
+        self.canvas.setAttribute('style', 'position: absolute; opacity: 0.6;');
+        self.context = self.canvas.getContext("2d");
+        self.screen.appendChild(self.canvas);
         self.debugDraw = new b2DebugDraw();
-        self.context = _canvas.getContext("2d")
         self.debugDraw.SetSprite(self.context);
         self.debugDraw.SetDrawScale(self.scale);
         self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit || b2DebugDraw.e_jointBit);
         self.world.SetDebugDraw(self.debugDraw);
     }
+
+    self.init();
+
+    self.resize = function () {
+        self.canvas.width = _config.screen.clientWidth
+        self.canvas.height = _config.screen.clientHeight;
+    };
 
     self.addCircle = function (_body, _radius, _offsetX, _offsetY) {
         var fixtureDef = self.circle(_radius);

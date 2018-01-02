@@ -1,8 +1,7 @@
 var game = new noname.game({
+    screen: document.querySelector('.screen'),
     fps: 30,
-    dps: 30, // must be a factor of 60 :)
-    canvas: document.querySelector('.game-canvas'),
-    box2dCanvas: document.querySelector('.box2d-canvas'),
+    dps: 30, // will be never greate than fps
     states: [mapState, loopState],
     initialState: 'loopState'
 });

@@ -21,7 +21,5 @@ var Player = function () {
         player.play('idleDown');
         return player;
     }
-
-    self.update = function () {}
-
+    self.update = function (_inputs) {}
 }

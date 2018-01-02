@@ -1,12 +1,5 @@
-.game-canvas {
-    position: absolute;
-    border: 1px solid red;
-    z-index: 1;
-}
-
-.box2d-canvas {
-    border: 1px solid orange;
-    opacity: 0.5;
-    position: absolute;
-    z-index: 2;
+.screen {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
 }
