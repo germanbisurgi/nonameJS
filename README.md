@@ -23,15 +23,15 @@ myState.preload = function () {
 };
 
 myState.loading = function () {
-	// on loading assets logic
+    // on loading assets logic
 };
 
 myState.create = function () {
-	// game objects creation code
+    // game objects creation code
 }
 
 myState.update = function () {
-	// game logic code
+    // game logic code
 };
 ```
 
