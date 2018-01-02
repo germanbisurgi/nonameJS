@@ -15,39 +15,37 @@ To make a nonameJS game you need at least two things:
 
 2) A game state: an object that allow the developer to split the logic of a game and manage assets loading.
 
-The game class takes a configuration array as parameter. If a necessary
-configuration property is not given the game will not start and the console will
-warn you.
-
 ```javascript
-var loopState = new noname.state('loopState');
+var myState = new noname.state('myState');
 
-loopState.preload = function () {
+myState.preload = function () {
     // queue assets loading code
 };
 
-loopState.loading = function () {
+myState.loading = function () {
 	// on loading assets logic
 };
 
-loopState.create = function () {
+myState.create = function () {
 	// game objects creation code
 }
 
-loopState.update = function () {
+myState.update = function () {
 	// game logic code
 };
 ```
 
-
+The game class takes a configuration array as parameter. If a necessary
+configuration property is not given the game will not start and the console will
+warn you.
 
 ```javascript
 var game = new noname.game({
     screen: document.querySelector('.screen'),
     fps: 30,
     dps: 30,
-    states: [mapState, loopState],
-    initialState: 'loopState'
+    states: [mapState, myState],
+    initialState: 'myState'
 });
 ```
 
@@ -74,7 +72,7 @@ var game = new noname.game({
             <td>An array of states objects</td>
             <td>its required andwill be always an Array</td>
             <td> yes</td>
-            <td> [mapState, loopState]</td>
+            <td> [mapState, myState]</td>
         </tr>
         <tr>
             <td>fps</td>
@@ -95,7 +93,7 @@ var game = new noname.game({
             <td>a string that specify the name of the state that will be loaded first</td>
             <td>The first state object in the states array</td>
             <td> no</td>
-            <td> 'loopState'</td>
+            <td> 'myState'</td>
         </tr>
     </tbody>
 </table>
