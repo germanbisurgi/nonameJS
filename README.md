@@ -116,7 +116,7 @@ This manager allows you to add and switch your states.
 This manager give you handy inputs abstractions like keyboard keys, touch, mouse, etc.
 
 ### clock
-This manager makes ease to manage time in your game. like how fast things happen, when an event will be trigger, slow motion, etc.
+This manager makes ease to manage clocks and time in your game. like how fast things happen, when an event will be trigger, slow motion, etc. All the entities are sync to the game master clock but you can create extra clock to create more time based complexity.
 
 ### entities
 This manager manage all your entities (game objects). It´s most important job is to add and remove entities from your states, but it´s have a bunch of helper methods that make ease to create pre-composed entities like sprites, images, tile sprites, etc.
