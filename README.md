@@ -107,7 +107,7 @@ var game = new noname.game({
 nonameJS give to you a bunch of tools or "Managers" that allow you to create and manage what, when, and how things happen in your game. You can access this managers from every state you create. The following are raw explanations of the nonameJS managers. A most detailed documentations will come soon
 
 ### loop
-This manager is the heart of your game. Like its name says, it´s a loop where your code goes in. It will execute as often as you configure it int the fps setting. He´s job is to repeat your states objects logic code several times per second.
+This manager is the heart of your game. Like its name says, it´s a loop where your code goes in. It will execute as often as you configure it int the fps setting. He´s job is to repeat your states objects logic code several times per second You really don´t need this manager. Instead use the time manager for timing bussiness.
 
 ### state
 This manager allows you to add and switch your states.
