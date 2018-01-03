@@ -22,7 +22,7 @@ myState.preload = function () {
 };
 
 myState.loading = function () {
-    console.log('loading', this.assets.progress());
+    console.log('loading', this.assets.progress(), this.assets.lastLoaded);
     this.render.context.fillText(this.assets.progress(), 15, 15);
 };
 
