@@ -22,11 +22,16 @@ myState.preload = function () {
 };
 
 myState.loading = function () {
-    console.log('loading', this.assets.progress(), this.assets.lastLoaded);
-    this.render.context.fillText(this.assets.progress(), 15, 15);
+    var loading = document.querySelector('.loading');
+    loading.innerText = 'complete';
+    if (!this.assets.loadComplete()) {
+        loading.innerText = 'loading: ' + this.assets.progress();
+    }
 };
 
 myState.create = function () {
+    var loading = document.querySelector('.loading');
+    loading.innerText = 'load complete';
 
     this.entities.addImage('map', -2720*1.5, -2048*1.5, 2720*3, 2048*3);
 
