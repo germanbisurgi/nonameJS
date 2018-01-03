@@ -42,8 +42,6 @@ var StateManager = function (_config) {
         }
     };
 
-    self.init();
-
     /**
     * Adds a new State into the StateManager.
     *
@@ -84,5 +82,7 @@ var StateManager = function (_config) {
         });
         return output;
     };
+
+    self.init();
 
 };
