@@ -71,7 +71,8 @@ myState.create = function () {
 
 
     this.shipBody = this.box2d.addBody(0, 0, 'dynamic');
-    this.shipFixture = this.box2d.addCircle(this.shipBody, 50, 0, 0);
+    this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, 0, 13);
+    this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 0, -30);
     this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
 
 
@@ -82,7 +83,7 @@ var pausedCanFire = true;
 
 myState.update = function () {
 
-    this.box2d.followFixture(this.shipImage, this.shipFixture);
+    this.box2d.followBody(this.shipImage, this.shipBody);
 
     this.box2d.followFixture(this.disc1, this.circleFixture1);
     this.box2d.followFixture(this.disc2, this.circleFixture2);
