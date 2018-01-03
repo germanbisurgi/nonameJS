@@ -2,9 +2,9 @@
 
 nonameJS want to be a 2d game engine based on web technologies.
 
-[demo](https://germanbisurgi.github.io/nonameJS)
+[demo](http://germanbisurgi.github.io/nonameJS)
 
-[apidocs](https://germanbisurgi.github.io/nonameJS/apidocs)
+[apidocs](http://germanbisurgi.github.io/nonameJS/apidocs)
 
 
 

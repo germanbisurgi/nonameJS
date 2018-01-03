@@ -56,7 +56,7 @@ var Game = function (_config) {
 
             if (self.state.current.created) {
                 self.clock.update(self.loop.delta);
-                if (true) { // PERFORMANCE
+                if (true) { // TOTO physics condition
                     self.box2d.update();
                 }
                 self.state.current.update();
@@ -68,11 +68,13 @@ var Game = function (_config) {
                     return _entity.state === self.state.current.name;
                 })
                 self.render.resize();
-                self.box2d.resize();
                 self.render.clear();
-                self.box2d.clear();
                 self.render.draw(renderEntities);
+                self.box2d.resize();
+                self.box2d.clear();
                 self.box2d.draw();
+
+
             }
 
         });

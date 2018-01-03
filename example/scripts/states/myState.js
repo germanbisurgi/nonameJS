@@ -23,7 +23,7 @@ myState.preload = function () {
 
 myState.loading = function () {
     var loading = document.querySelector('.loading');
-    loading.innerText = 'complete';
+    loading.innerText = 'loading: complete';
     if (!this.assets.loadComplete()) {
         loading.innerText = 'loading: ' + this.assets.progress();
     }

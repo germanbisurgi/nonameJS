@@ -22,6 +22,4 @@ var ClockManager = function () {
         self.pool.push(clock);
         return clock;
     };
-
-
 };
