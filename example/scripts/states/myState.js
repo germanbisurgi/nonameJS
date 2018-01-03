@@ -5,20 +5,8 @@ myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('disc', 'example/assets/images/disc.png');
     this.assets.queueImage('player2', 'example/assets/images/player2.png');
-    this.assets.queueImage('map', 'example/assets/images/map.png');
+    this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
 
-    this.assets.queueImage('grass', 'example/assets/images/grass.jpg');
-    this.assets.queueImage('landscape1', 'example/assets/images/landscape1.png');
-    this.assets.queueImage('landscape2', 'example/assets/images/landscape2.png');
-    this.assets.queueImage('landscape3', 'example/assets/images/landscape3.png');
-    this.assets.queueImage('landscape4', 'example/assets/images/landscape4.png');
-    this.assets.queueImage('landscape5', 'example/assets/images/landscape5.png');
-    this.assets.queueImage('landscape6', 'example/assets/images/landscape6.png');
-    this.assets.queueImage('mine', 'example/assets/images/mine.png');
-    this.assets.queueImage('rocket', 'example/assets/images/rocket.png');
-    this.assets.queueImage('snow', 'example/assets/images/snow.png');
-    this.assets.queueImage('player', 'example/assets/images/player.png', 32, 32);
-    this.assets.queueImage('tanks', 'example/assets/images/tanks.png', 32, 32);
 };
 
 myState.loading = function () {
@@ -33,7 +21,7 @@ myState.create = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'load complete';
 
-    this.entities.addImage('map', -2720*1.5, -2048*1.5, 2720*3, 2048*3);
+
 
     var player = new Player();
     this.player = player.create(this.entities);
@@ -81,11 +69,20 @@ myState.create = function () {
     this.polyFixture4 = this.box2d.addRectangle(this.polyBody, 1, 1, -25, -25);
     this.polyBody.m_angularVelocity = 1;
 
+
+    this.shipBody = this.box2d.addBody(0, 0, 'dynamic');
+    this.shipFixture = this.box2d.addCircle(this.shipBody, 50, 0, 0);
+    this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
+
+
 };
+
 
 var pausedCanFire = true;
 
 myState.update = function () {
+
+    this.box2d.followFixture(this.shipImage, this.shipFixture);
 
     this.box2d.followFixture(this.disc1, this.circleFixture1);
     this.box2d.followFixture(this.disc2, this.circleFixture2);
