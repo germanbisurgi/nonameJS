@@ -7,7 +7,7 @@ myState.preload = function () {
     this.assets.queueImage('player2', 'example/assets/images/player2.png');
     this.assets.queueImage('map', 'example/assets/images/map.png');
 
-    this.assets.queueImage('grass', 'example/assets/images/grass.jpg');
+    /*this.assets.queueImage('grass', 'example/assets/images/grass.jpg');
     this.assets.queueImage('landscape1', 'example/assets/images/landscape1.png');
     this.assets.queueImage('landscape2', 'example/assets/images/landscape2.png');
     this.assets.queueImage('landscape3', 'example/assets/images/landscape3.png');
@@ -18,12 +18,12 @@ myState.preload = function () {
     this.assets.queueImage('rocket', 'example/assets/images/rocket.png');
     this.assets.queueImage('snow', 'example/assets/images/snow.png');
     this.assets.queueImage('player', 'example/assets/images/player.png', 32, 32);
-    this.assets.queueImage('tanks', 'example/assets/images/tanks.png', 32, 32);
+    this.assets.queueImage('tanks', 'example/assets/images/tanks.png', 32, 32);*/
 };
 
 myState.loading = function () {
-    console.log('loading', this.assets.progress(), this.assets.lastLoaded);
-    this.render.context.fillText(this.assets.progress(), 15, 15);
+    /*console.log('loading', this.assets.progress(), this.assets.lastLoaded);
+    this.render.context.fillText(this.assets.progress(), 15, 15);*/
 };
 
 myState.create = function () {
