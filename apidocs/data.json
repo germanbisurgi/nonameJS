@@ -1,0 +1,311 @@
+{
+    "project": {},
+    "files": {
+        "noname\\events.js": {
+            "name": "noname\\events.js",
+            "modules": {},
+            "classes": {
+                "Events": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "noname\\stateManager.js": {
+            "name": "noname\\stateManager.js",
+            "modules": {},
+            "classes": {
+                "StateManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Events": {
+            "name": "Events",
+            "shortname": "Events",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\events.js",
+            "line": 1,
+            "description": "Used to create custom events and attach to them one or more listeners that\ncan be triggered once or multiple times.",
+            "is_constructor": 1
+        },
+        "StateManager": {
+            "name": "StateManager",
+            "shortname": "StateManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\stateManager.js",
+            "line": 1,
+            "description": "This manager allows you to add and switch your states. Thingslike to change from\ngame state to main menu state or map A to map B are the dayly bread of this manager."
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "noname\\events.js",
+            "line": 11,
+            "description": "All the created events",
+            "itemtype": "property",
+            "name": "pool",
+            "type": "{Events Array}",
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 19,
+            "description": "All the emitted events the will be triggered in the next update call",
+            "itemtype": "property",
+            "name": "emitted",
+            "type": "{Emitted events Array}",
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 27,
+            "description": "Returns the event if exists.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Event"
+            },
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 44,
+            "description": "Returns the listeners of an event.",
+            "itemtype": "method",
+            "name": "getListeners",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "",
+                    "type": "Event"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Listeners array"
+            },
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 55,
+            "description": "Returns the listener of an event if it have it.",
+            "itemtype": "method",
+            "name": "getListener",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "",
+                    "type": "Event"
+                },
+                {
+                    "name": "Listener",
+                    "description": "(the function that will be called)",
+                    "type": "Listener"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Listeners"
+            },
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 73,
+            "description": "Creates an event and adds to it an event listener.\nIf the event already exists, it just adds the listener to the event.",
+            "itemtype": "method",
+            "name": "on",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "name",
+                    "type": "String"
+                },
+                {
+                    "name": "Listener",
+                    "description": "(the function that will be called)",
+                    "type": "Function"
+                },
+                {
+                    "name": "Priority.",
+                    "description": "The smaller the higher the priority.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 101,
+            "description": "The same as \"on\" but the listener will be executed only once.",
+            "itemtype": "method",
+            "name": "once",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "name",
+                    "type": "String"
+                },
+                {
+                    "name": "Listener",
+                    "description": "(the function that will be called)",
+                    "type": "Function"
+                },
+                {
+                    "name": "Priority.",
+                    "description": "The smaller the higher the priority.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 113,
+            "description": "Removes a listener of an event. If the event have no more listeners\nthe event will be removed to.",
+            "itemtype": "method",
+            "name": "off",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "name",
+                    "type": "String"
+                },
+                {
+                    "name": "Listener",
+                    "description": "(the function that will be called)",
+                    "type": "Function"
+                }
+            ],
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 140,
+            "description": "Adds the event to the emitted events pool. The listeners of this events\nwill be emitted when the \"update\" method will be called in order of priority.",
+            "itemtype": "method",
+            "name": "emit",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "name",
+                    "type": "String"
+                }
+            ],
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 154,
+            "description": "Removes all events in the pool.",
+            "itemtype": "method",
+            "name": "clear",
+            "class": "Events"
+        },
+        {
+            "file": "noname\\events.js",
+            "line": 163,
+            "description": "Call all the listeners functions of the emitted events order by priority.\nand removes the listeners that have trigger only once.",
+            "itemtype": "method",
+            "name": "update",
+            "class": "Events"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 11,
+            "description": "The current state (active).",
+            "itemtype": "property",
+            "name": "current",
+            "type": "{Object} A state object.",
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 19,
+            "description": "All the states of the game.",
+            "itemtype": "property",
+            "name": "pool",
+            "type": "{Array} Array of state objects.",
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 27,
+            "description": "Add all the states given in the setting object and.\nif specified in the setting will set the initial state otherwise the first\nelement in the array will be used as initial state.",
+            "itemtype": "method",
+            "name": "init",
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 47,
+            "description": "Adds a new State into the StateManager.",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "state object.",
+                    "type": "Object"
+                }
+            ],
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 57,
+            "description": "Set the given state as current (active) state.",
+            "itemtype": "method",
+            "name": "switch",
+            "params": [
+                {
+                    "name": "state",
+                    "description": "name you want to switch to.",
+                    "type": "String"
+                }
+            ],
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 71,
+            "description": "Get a state by name.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "state",
+                    "description": "name you want to retrieve.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns a state otherwise returns false.",
+                "type": "Object"
+            },
+            "class": "StateManager"
+        }
+    ],
+    "warnings": []
+}

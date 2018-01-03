@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Events</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Events.html">Events</a></li>
+                                <li><a href="../classes/StateManager.html">StateManager</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Events Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/noname_events.js.html#l1"><code>noname\events.js:1</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>Used to create custom events and attach to them one or more listeners that
+can be triggered once or multiple times.</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+<div id="method_Events" class="method item">
+    <h3 class="name"><code>Events</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l1"><code>noname\events.js:1</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+
+
+
+</div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_clear">clear</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_emit">emit</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_get">get</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getListener">getListener</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getListeners">getListeners</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_off">off</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_on">on</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_once">once</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_update">update</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_emitted">emitted</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pool">pool</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_clear" class="method item">
+    <h3 class="name"><code>clear</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l154"><code>noname\events.js:154</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Removes all events in the pool.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_emit" class="method item">
+    <h3 class="name"><code>emit</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l140"><code>noname\events.js:140</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Adds the event to the emitted events pool. The listeners of this events
+will be emitted when the &quot;update&quot; method will be called in order of priority.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_get" class="method item">
+    <h3 class="name"><code>get</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>eventName</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Event</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l27"><code>noname\events.js:27</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns the event if exists.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">eventName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Event</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getListener" class="method item">
+    <h3 class="name"><code>getListener</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+                <li class="arg">
+                        <code>Listener</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Listeners</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l55"><code>noname\events.js:55</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns the listener of an event if it have it.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">Event</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Listener</code>
+                        <span class="type">Listener</span>
+
+
+                    <div class="param-description">
+                        <p>(the function that will be called)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Listeners</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getListeners" class="method item">
+    <h3 class="name"><code>getListeners</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Listeners array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l44"><code>noname\events.js:44</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns the listeners of an event.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">Event</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Listeners array</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_off" class="method item">
+    <h3 class="name"><code>off</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+                <li class="arg">
+                        <code>Listener</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l113"><code>noname\events.js:113</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Removes a listener of an event. If the event have no more listeners
+the event will be removed to.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Listener</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>(the function that will be called)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_on" class="method item">
+    <h3 class="name"><code>on</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+                <li class="arg">
+                        <code>Listener</code>
+                </li>
+                <li class="arg">
+                        <code>Priority.</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l73"><code>noname\events.js:73</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Creates an event and adds to it an event listener.
+If the event already exists, it just adds the listener to the event.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Listener</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>(the function that will be called)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Priority.</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>The smaller the higher the priority.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_once" class="method item">
+    <h3 class="name"><code>once</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>Event</code>
+                </li>
+                <li class="arg">
+                        <code>Listener</code>
+                </li>
+                <li class="arg">
+                        <code>Priority.</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l101"><code>noname\events.js:101</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>The same as &quot;on&quot; but the listener will be executed only once.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">Event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Listener</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>(the function that will be called)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">Priority.</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>The smaller the higher the priority.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_update" class="method item">
+    <h3 class="name"><code>update</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l163"><code>noname\events.js:163</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call all the listeners functions of the emitted events order by priority.
+and removes the listeners that have trigger only once.</p>
+
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_emitted" class="property item">
+    <h3 class="name"><code>emitted</code></h3>
+    <span class="type">Emitted events Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l19"><code>noname\events.js:19</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>All the emitted events the will be triggered in the next update call</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_pool" class="property item">
+    <h3 class="name"><code>pool</code></h3>
+    <span class="type">Events Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_events.js.html#l11"><code>noname\events.js:11</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>All the created events</p>
+
+    </div>
+
+
+
+</div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
