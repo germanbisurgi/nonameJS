@@ -124,23 +124,30 @@ myState.update = function () {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
-    this.inputs.fingers.one(function (finger1) {
-        console.log('one');
-    });
 
-    this.inputs.fingers.two(function (finger1, finger2) {
-        console.log('two');
-    });
 
 
 };
 
 myState.afterRender = function () {
+
+    myState.fingerCount = 0;
+
+    this.inputs.fingers.one(function (finger1) {
+        console.log('one');
+        myState.fingerCount = 1;
+    });
+
+    this.inputs.fingers.two(function (finger1, finger2) {
+        console.log('two');
+        myState.fingerCount = 1;
+    });
+
     for(var i = 0; i < this.inputs.fingers.touches.length; i++) {
         var touch = this.inputs.fingers.touches[i];
         this.render.context.beginPath();
         this.render.context.fillStyle = "white";
-        this.render.context.fillText("touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
+        this.render.context.fillText("finger count : "+myState.fingerCount+" touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
         this.render.context.beginPath();
         this.render.context.strokeStyle = "cyan";
         this.render.context.lineWidth = "6";
