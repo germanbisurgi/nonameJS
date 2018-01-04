@@ -7,7 +7,7 @@ var CameraComponent = function (_x, _y, _width, _height) {
     this.anchorY = 0.5;
     this.angle = 0;
     this.zoom = 1.0;
-    this.lerp = 0.3;
+    this.lerp = 1;
 
     this.move = function (_x, _y) {
         this.x += this.clock.toPPS(_x);

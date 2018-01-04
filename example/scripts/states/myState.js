@@ -43,13 +43,12 @@ myState.create = function () {
     this.polyFixture4 = this.box2d.addRectangle(this.polyBody, 1, 1, -25, -25);
     this.polyBody.m_angularVelocity = 1;
 
-
     this.shipBody = this.box2d.addBody(0, 0, 'dynamic');
     this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, 0, 13);
     this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 0, -30);
     this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
     this.shipBody.SetAngularDamping(5);
-    this.shipBody.SetLinearDamping(1);
+    this.shipBody.SetLinearDamping(0.5);
 
     this.lastCameraTransform = this.camera.getTransform();
     this.currentCameraTransform = null;
@@ -85,6 +84,12 @@ myState.update = function () {
     if (this.inputs.pressing(['arrowDown'])) {
         this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
     }
+    if (this.inputs.pressing(['arrowUp'])) {
+        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['spacebar'])) {
+        this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
+    }
 
     // ship image follows ship body
     this.box2d.followBody(this.shipImage, this.shipBody);
@@ -94,8 +99,6 @@ myState.update = function () {
 
     // space follows ship image
     this.space.follow(this.shipImage);
-
-    console.log(this.shipBody.GetLinearVelocity().x);
 
     // scroll background in relativeto the camera and body velocity
     this.currentCameraTransform = this.camera.getTransform();
