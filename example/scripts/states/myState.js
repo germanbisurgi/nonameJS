@@ -10,6 +10,8 @@ console.log = function(value)
     window.$log = value;
 };
 
+console.log('banana')
+
 myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
