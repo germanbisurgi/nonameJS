@@ -43,7 +43,7 @@ myState.create = function () {
     this.polyFixture4 = this.box2d.addRectangle(this.polyBody, 1, 1, -25, -25);
     this.polyBody.m_angularVelocity = 1;
 
-    this.shipBody = this.box2d.addBody(0, 0, 'dynamic');
+    this.shipBody = this.box2d.addBody(5, -50, 'dynamic');
     this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, 0, 13);
     this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 0, -30);
     this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
@@ -89,6 +89,17 @@ myState.update = function () {
     }
     if (this.inputs.pressing(['spacebar'])) {
         this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
+    }
+
+    // shot
+    if (this.inputs.pressing(['s'])) {
+        this.bulletBody = this.box2d.addBody(
+            (this.shipBody.GetPosition().x * 30),
+            (this.shipBody.GetPosition().y * 30),
+            'dynamic'
+        );
+        this.bulletFixture = this.box2d.addCircle(this.bulletBody, 5, 0, 0);
+        this.bulletBody.ApplyImpulse({'x': cos * 1, 'y': sin * 1}, this.bulletBody.GetWorldCenter());
     }
 
     // ship image follows ship body
