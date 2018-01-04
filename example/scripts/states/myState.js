@@ -7,7 +7,6 @@ myState.preload = function () {
     this.assets.queueImage('space', 'example/assets/images/space.jpg');
     this.assets.queueImage('arrow', 'example/assets/images/arrow.png');
     this.assets.queueImage('mine', 'example/assets/images/mine.png');
-    this.assets.queueImage('ring', 'example/assets/images/ring.png');
 };
 
 myState.loading = function () {
@@ -38,11 +37,6 @@ myState.create = function () {
 
     // compass
     this.compassImage = this.entities.addImage('arrow', 50, -100, 100, 100);
-
-    // controller
-    this.outerRing = this.entities.addTileSprite('ring', 0, 0, 80, 80);
-    this.innerRing = this.entities.addTileSprite('ring', 0, 0, 40, 40);
-
 
     // variables
     this.lastCameraTransform = this.camera.getTransform();
@@ -129,6 +123,14 @@ myState.update = function () {
     if (this.inputs.keyboard.pressing(['f'])) {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
+
+    this.inputs.fingers.one(function (finger1) {
+        console.log('one');
+    });
+
+    this.inputs.fingers.two(function (finger1, finger2) {
+        console.log('two');
+    });
 
 
 };

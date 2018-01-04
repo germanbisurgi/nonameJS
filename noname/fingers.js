@@ -16,4 +16,19 @@ var Fingers = function(_game) {
         self.touches = event.touches;
     }, false );
 
+    self.one = function (_function) {
+        if (self.touches.length === 1) {
+            _function(self.touches[0]);
+        }
+    }
+
+    self.two = function (_function) {
+        if (self.touches.length === 2) {
+            _function(
+                self.touches[0],
+                self.touches[1],
+            );
+        }
+    }
+
 };
