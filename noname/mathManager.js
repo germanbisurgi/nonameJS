@@ -26,12 +26,22 @@ var MathManager = function () {
         return ((n >= min) && (n <= max));
     };
 
-    self.toRadians = function(x) {
-        return x * 0.0174532925199432957;
+    self.toRadians = function(_value) {
+        return _value * 0.0174532925199432957;
     };
 
-    self.toDegrees = function(x) {
-        return x * 57.295779513082320876;
+    self.toDegrees = function(_value) {
+        return _value * 57.295779513082320876;
     };
+
+    self.distance = function (_x1, _y1, _x2, _y2) {
+        var a = _x1 - _x2
+        var b = _y1 - _y2
+        return Math.sqrt(a * a + b * b);
+    }
+
+    self.angleToPointer = function (_x1, _y1, _x2, _y2) {
+        return Math.atan2(_y1 - _y2, _x1 - _x2);
+    }
 
 };

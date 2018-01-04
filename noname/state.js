@@ -9,6 +9,7 @@ var State = function (_name) {
     self.initialize = function (_game) {
         self.loop = _game.loop;
         self.assets = _game.assets;
+        self.math = _game.math;
         self.inputs = _game.inputs;
         self.clock = _game.clock;
         self.entities = _game.entities;

@@ -2,6 +2,7 @@ var noname = {
     stateManager: StateManager,
     assetManager: AssetManager,
     loopManager: LoopManager,
+    mathManager:MathManager,
     inputManager: InputManager,
     clockManager: ClockManager,
     entityManager: EntityManager,

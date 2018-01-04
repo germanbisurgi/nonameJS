@@ -5,6 +5,8 @@ myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
     this.assets.queueImage('space', 'example/assets/images/space.jpg');
+    this.assets.queueImage('arrow', 'example/assets/images/arrow.png');
+    this.assets.queueImage('mine', 'example/assets/images/mine.png');
 };
 
 myState.loading = function () {
@@ -19,37 +21,24 @@ myState.create = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'load complete';
 
-    this.space = this.entities.addTileSprite('space',0,0,1024*2,1024*2);
+    //space
+    this.space = this.entities.addTileSprite('space', 0,0 , 1024 * 2, 1024 * 2);
 
-    this.edge1 = this.box2d.addEdge(-100, 0, 190, 191, 'static');
-    this.edge2 = this.box2d.addEdge(190, 190, 400, 0, 'static');
+    //mine
+    this.mine = this.entities.addTileSprite('mine', 150, 50, 20, 20);
 
-    this.polyBody = this.box2d.addBody(200, 100, 'kinematic');
-    this.polyFixture1 = this.box2d.addPolygon(this.polyBody, [
-        {x:   0, y:  0},
-        {x:  50, y:  0},
-        {x: 100, y: 25},
-        {x:  50, y: 50},
-        {x:   0, y: 50}
-    ]);
-    this.polyFixture2 = this.box2d.addPolygon(this.polyBody, [
-        {x:    0, y:   0},
-        {x:  -50, y:   0},
-        {x: -100, y: -25},
-        {x:  -50, y: -50},
-        {x:    0, y: -50}
-    ]);
-    this.polyFixture3 = this.box2d.addRectangle(this.polyBody, 1, 1, 25, 25);
-    this.polyFixture4 = this.box2d.addRectangle(this.polyBody, 1, 1, -25, -25);
-    this.polyBody.m_angularVelocity = 1;
-
+    // ship
     this.shipBody = this.box2d.addBody(5, -50, 'dynamic');
-    this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, 0, 13);
-    this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 0, -30);
-    this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
+    this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, -13, 0);
+    this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 30, 0);
+    this.shipImage = this.entities.addImage('falcon', 0, 0, 130, 100);
     this.shipBody.SetAngularDamping(5);
     this.shipBody.SetLinearDamping(0.5);
 
+    // compass
+    this.compassImage = this.entities.addImage('arrow', 50, -100, 100, 100);
+
+    // variables
     this.lastCameraTransform = this.camera.getTransform();
     this.currentCameraTransform = null;
 
@@ -68,39 +57,6 @@ myState.update = function () {
         this.camera.setZoom(-0.4);
     }
 
-    // move ship
-    if (this.inputs.pressing(['arrowRight'])) {
-        this.shipBody.ApplyTorque(500);
-    }
-    if (this.inputs.pressing(['arrowLeft'])) {
-        this.shipBody.ApplyTorque(-500);
-    }
-    var currentAngle = this.shipBody.GetAngle() - 90 * 0.0174532925199432957;
-    var cos = Math.cos(currentAngle);
-    var sin = Math.sin(currentAngle);
-    if (this.inputs.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.pressing(['arrowDown'])) {
-        this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.pressing(['spacebar'])) {
-        this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
-    }
-
-    // shot
-    if (this.inputs.pressing(['s'])) {
-        this.bulletBody = this.box2d.addBody(
-            (this.shipBody.GetPosition().x * 30),
-            (this.shipBody.GetPosition().y * 30),
-            'dynamic'
-        );
-        this.bulletFixture = this.box2d.addCircle(this.bulletBody, 5, 0, 0);
-        this.bulletBody.ApplyImpulse({'x': cos * 1, 'y': sin * 1}, this.bulletBody.GetWorldCenter());
-    }
 
     // ship image follows ship body
     this.box2d.followBody(this.shipImage, this.shipBody);
@@ -124,5 +80,52 @@ myState.update = function () {
         this.space.scroll('up', this.shipBody.GetLinearVelocity().y);
     }
     this.lastCameraTransform = this.currentCameraTransform;
+
+    // compass
+    this.compassImage.setPosition(this.camera.x / this.camera.zoom, this.camera.y / this.camera.zoom);
+    var compassAngle = this.math.angleToPointer(
+        (this.shipImage.y + this.shipImage.height / 2) - (this.mine.y + this.mine.height / 2),
+        (this.shipImage.x + this.shipImage.width / 2) - (this.mine.x + this.mine.width / 2)
+    );
+    this.compassImage.setAngle(this.math.toDegrees(compassAngle))
+
+    // move ship
+    if (this.inputs.pressing(['arrowRight'])) {
+        this.shipBody.ApplyTorque(500);
+    }
+    if (this.inputs.pressing(['arrowLeft'])) {
+        this.shipBody.ApplyTorque(-500);
+    }
+
+    var currentAngle = this.shipBody.GetAngle();
+    var cos = Math.cos(currentAngle);
+    var sin = Math.sin(currentAngle);
+
+    if (this.inputs.pressing(['arrowUp'])) {
+        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['arrowDown'])) {
+        this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['arrowUp'])) {
+        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['spacebar'])) {
+        this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['f'])) {
+        this.shipBody.SetAngle(compassAngle);
+    }
+
+    // shot
+    if (this.inputs.pressing(['s'])) {
+        this.bulletBody = this.box2d.addBody(
+            (this.shipBody.GetPosition().x * 30),
+            (this.shipBody.GetPosition().y * 30),
+            'dynamic'
+        );
+        this.bulletFixture = this.box2d.addCircle(this.bulletBody, 5, 0, 0);
+        this.bulletBody.ApplyImpulse({'x': cos * 1, 'y': sin * 1}, this.bulletBody.GetWorldCenter());
+    }
 
 };

@@ -26,6 +26,7 @@ var Game = function (_config) {
 
         self.loop = new noname.loopManager(_config);
         self.state = new noname.stateManager(_config);
+        self.math = new noname.mathManager();
         self.assets = new noname.assetManager();
         self.inputs = new noname.inputManager();
         self.clock = new noname.clockManager();
