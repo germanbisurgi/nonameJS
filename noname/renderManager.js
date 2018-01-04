@@ -13,8 +13,6 @@ var RenderManager = function (_game) {
         self.screen.appendChild(self.canvas);
     }
 
-    self.init();
-
     self.resize = function () {
         self.canvas.width = _game.settings.screen.clientWidth
         self.canvas.height = _game.settings.screen.clientHeight;
@@ -78,5 +76,7 @@ var RenderManager = function (_game) {
     self.toRadians = function (_degrees) {
         return _degrees * 0.0174532925199432957;
     };
+
+    self.init();
 
 };

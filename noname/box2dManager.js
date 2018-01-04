@@ -24,7 +24,7 @@ var Box2dManager = function(_game) {
 
     self.init = function () {
         self.canvas = document.createElement('canvas');
-        self.canvas.setAttribute('style', 'position: absolute; opacity: 0.6;');
+        self.canvas.setAttribute('style', 'position: absolute; opacity: 0.6; pointer-events: none;');
         self.context = self.canvas.getContext("2d");
         self.screen.appendChild(self.canvas);
         self.debugDraw = new b2DebugDraw();

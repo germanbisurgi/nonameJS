@@ -44,8 +44,8 @@ myState.update = function () {
 };
 ```
 
-The game class takes a configuration array as parameter. If a required
-configuration property is not given the game will not start and the console will
+The game class takes a settings array as parameter. If a required
+setting property is not given the game will not start and the console will
 warn you.
 
 ```javascript

@@ -5,9 +5,38 @@ var InputManager = function(_game) {
 
     self.touches = [];
 
-    /*canvas.addEventListener( 'touchstart', onTouchStart, false );
-	canvas.addEventListener( 'touchmove', onTouchMove, false );
-	canvas.addEventListener( 'touchend', onTouchEnd, false );*/
+    console.log(_game.render.canvas)
+
+    _game.render.canvas.addEventListener('touchstart', function (event) {
+        console.log('touchstart');
+        self.touches = event.touches;
+    }, false );
+
+	_game.render.canvas.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+        self.touches = event.touches;
+        console.log('touchmove');
+    }, false );
+
+	_game.render.canvas.addEventListener('touchend', function (event) {
+        self.touches = event.touches;
+        console.log('touchend');
+    }, false );
+
+    self.drawTouches = function () {
+        for(var i=0; i<self.touches.length; i++) {
+			var touch = self.touches[i];
+			_game.render.context.beginPath();
+			_game.render.context.fillStyle = "white";
+			_game.render.context.fillText("touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
+			_game.render.context.beginPath();
+			_game.render.context.strokeStyle = "cyan";
+			_game.render.context.lineWidth = "6";
+			_game.render.context.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true);
+			_game.render.context.stroke();
+		}
+
+    }
 
     self.keyboard = {
         enter: false,

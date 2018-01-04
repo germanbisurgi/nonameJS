@@ -29,11 +29,11 @@ var Game = function (_settings) {
         self.state = new noname.stateManager(self);
         self.math = new noname.mathManager();
         self.assets = new noname.assetManager();
-        self.inputs = new noname.inputManager(self);
         self.clock = new noname.clockManager();
         self.entities = new noname.entityManager(self);
         self.render = new noname.renderManager(self);
         self.box2d = new noname.box2dManager(self);
+        self.inputs = new noname.inputManager(self);
 
         self.loop.start(function() {
 
@@ -75,8 +75,7 @@ var Game = function (_settings) {
                 self.box2d.resize();
                 self.box2d.clear();
                 self.box2d.draw();
-
-
+                self.inputs.drawTouches();
             }
 
         });
