@@ -140,7 +140,7 @@ myState.afterRender = function () {
 
     this.inputs.fingers.two(function (finger1, finger2) {
         console.log('two');
-        myState.fingerCount = 1;
+        myState.fingerCount = 2;
     });
 
     for(var i = 0; i < this.inputs.fingers.touches.length; i++) {
