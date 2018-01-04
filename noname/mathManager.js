@@ -44,4 +44,13 @@ var MathManager = function () {
         return self.toDegrees(Math.atan2(_y1 - _y2, _x1 - _x2));
     }
 
+    self.normalize = function (_angle) {
+        _angle =  _angle % 360;
+        _angle = (_angle + 360) % 360;
+        if (_angle > 180) {
+            _angle -= 360;
+        }
+        return _angle;
+    };
+
 };

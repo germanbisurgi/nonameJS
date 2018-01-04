@@ -49,6 +49,10 @@ var pausedCanFire = true;
 
 myState.update = function () {
 
+    var currentAngle = this.shipBody.GetAngle();
+    var cos = Math.cos(currentAngle);
+    var sin = Math.sin(currentAngle);
+
     // camera zoom
     if (this.inputs.pressing(['n'])) {
         this.camera.setZoom(0.4);
@@ -116,7 +120,8 @@ myState.update = function () {
         this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.pressing(['f'])) {
-        this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
+        console.log(this.math.normalize(this.math.toDegrees(this.shipBody.GetAngle())));
+        //this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
     // shot
