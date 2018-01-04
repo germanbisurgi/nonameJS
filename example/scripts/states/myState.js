@@ -120,8 +120,7 @@ myState.update = function () {
         this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.pressing(['f'])) {
-        console.log(this.math.normalize(this.math.toDegrees(this.shipBody.GetAngle())));
-        //this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
+        this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
     // shot

@@ -4,7 +4,7 @@
 *
 * @class StateManager
 */
-var StateManager = function (_config) {
+var StateManager = function (_game) {
     'use strict';
     var self = this;
 
@@ -32,11 +32,11 @@ var StateManager = function (_config) {
     * @method init
     */
     self.init = function () {
-        _config.states.forEach(function (_state) {
+        _game.settings.states.forEach(function (_state) {
             self.add(_state);
         });
-        if (typeof _config.initialState !== 'undefined' && self.get(_config.initialState)) {
-            self.switch(_config.initialState);
+        if (typeof _game.settings.initialState !== 'undefined' && self.get(_game.settings.initialState)) {
+            self.switch(_game.settings.initialState);
         } else {
             self.switch(self.pool[0].name);
         }

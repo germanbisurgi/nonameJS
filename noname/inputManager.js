@@ -1,7 +1,13 @@
-var InputManager = function() {
+var InputManager = function(_game) {
 
     "use strict";
     var self = this;
+
+    self.touches = [];
+
+    /*canvas.addEventListener( 'touchstart', onTouchStart, false );
+	canvas.addEventListener( 'touchmove', onTouchMove, false );
+	canvas.addEventListener( 'touchend', onTouchEnd, false );*/
 
     self.keyboard = {
         enter: false,

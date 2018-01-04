@@ -11,16 +11,16 @@ var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
-var Box2dManager = function(_config, _camera) {
+var Box2dManager = function(_game) {
     "use strict";
     var self = this;
     self.scale = 30;
-    self.fps = _config.fps;
+    self.fps = _game.settings.fps;
     self.world = new b2World(new b2Vec2(0, 0), true);
     self.debugDraw = null;
     self.canvas = null;
     self.context = null;
-    self.screen = _config.screen;
+    self.screen = _game.settings.screen;
 
     self.init = function () {
         self.canvas = document.createElement('canvas');
@@ -37,8 +37,8 @@ var Box2dManager = function(_config, _camera) {
     self.init();
 
     self.resize = function () {
-        self.canvas.width = _config.screen.clientWidth
-        self.canvas.height = _config.screen.clientHeight;
+        self.canvas.width = _game.settings.screen.clientWidth
+        self.canvas.height = _game.settings.screen.clientHeight;
     };
 
     self.addCircle = function (_body, _radius, _offsetX, _offsetY) {
@@ -167,13 +167,13 @@ var Box2dManager = function(_config, _camera) {
         if (self.debugDraw) {
             self.context.save();
             // camera rotation
-            self.context.translate((_camera.width * _camera.anchorX), (_camera.height * _camera.anchorY));
-            self.context.rotate(self.toRadians(-_camera.angle));
-            self.context.translate(-(_camera.width * _camera.anchorX), -(_camera.height * _camera.anchorY));
+            self.context.translate((_game.render.camera.width * _game.render.camera.anchorX), (_game.render.camera.height * _game.render.camera.anchorY));
+            self.context.rotate(self.toRadians(-_game.render.camera.angle));
+            self.context.translate(-(_game.render.camera.width * _game.render.camera.anchorX), -(_game.render.camera.height * _game.render.camera.anchorY));
             // camera position
-            self.context.translate(-_camera.x, -_camera.y);
+            self.context.translate(-_game.render.camera.x, -_game.render.camera.y);
             // camera zoom.
-            self.context.scale(_camera.zoom, _camera.zoom);
+            self.context.scale(_game.render.camera.zoom, _game.render.camera.zoom);
             self.world.DrawDebugData();
             self.context.restore();
         }

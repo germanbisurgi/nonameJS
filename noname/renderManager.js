@@ -1,10 +1,10 @@
-var RenderManager = function (_config, _camera) {
+var RenderManager = function (_game) {
     'use strict';
     var self = this;
     self.canvas = null;
     self.context = null;
-    self.camera = _camera;
-    self.screen = _config.screen;
+    self.camera = _game.entities.addCamera(0, 0, 0, 0);
+    self.screen = _game.settings.screen;
 
     self.init = function () {
         self.canvas = document.createElement('canvas');
@@ -16,8 +16,8 @@ var RenderManager = function (_config, _camera) {
     self.init();
 
     self.resize = function () {
-        self.canvas.width = _config.screen.clientWidth
-        self.canvas.height = _config.screen.clientHeight;
+        self.canvas.width = _game.settings.screen.clientWidth
+        self.canvas.height = _game.settings.screen.clientHeight;
         self.camera.width = self.canvas.width;
         self.camera.height = self.canvas.height;
     };

@@ -1,38 +1,39 @@
-var Game = function (_config) {
+var Game = function (_settings) {
     'use strict';
     var self = this;
+    self.settings = _settings;
 
     self.init = function () {
 
-        if (typeof _config.states === 'undefined' || _config.states.length < 1) {
+        if (typeof _settings.states === 'undefined' || _settings.states.length < 1) {
             console.warn('No states available');
             return;
         }
 
-        if (typeof _config.fps !== 'undefined' && !_config.fps > 0) {
+        if (typeof _settings.fps !== 'undefined' && !_settings.fps > 0) {
             console.warn('fps must be greater than 0');
             return;
         }
 
-        if (typeof _config.dps !== 'undefined' && !_config.dps > 0) {
+        if (typeof _settings.dps !== 'undefined' && !_settings.dps > 0) {
             console.warn('draw ratio must be greater than 0');
             return;
         }
 
-        if (_config.dps > _config.fps) {
+        if (_settings.dps > _settings.fps) {
             console.warn('dps must be lower or equal to fps');
             return;
         }
 
-        self.loop = new noname.loopManager(_config);
-        self.state = new noname.stateManager(_config);
+        self.loop = new noname.loopManager(self);
+        self.state = new noname.stateManager(self);
         self.math = new noname.mathManager();
         self.assets = new noname.assetManager();
-        self.inputs = new noname.inputManager();
+        self.inputs = new noname.inputManager(self);
         self.clock = new noname.clockManager();
         self.entities = new noname.entityManager(self);
-        self.render = new noname.renderManager(_config, self.entities.addCamera(0, 0, 0, 0));
-        self.box2d = new noname.box2dManager(_config, self.render.camera);
+        self.render = new noname.renderManager(self);
+        self.box2d = new noname.box2dManager(self);
 
         self.loop.start(function() {
 
@@ -63,7 +64,7 @@ var Game = function (_config) {
                 self.state.current.update();
             }
 
-            if (self.loop.frames % Math.floor(_config.fps / _config.dps) === 0) {
+            if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
                 // TODO performance
                 var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
                     return _entity.state === self.state.current.name;
