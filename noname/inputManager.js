@@ -5,10 +5,8 @@ var InputManager = function(_game) {
 
     self.touches = [];
 
-    console.log(_game.render.canvas)
-
     _game.render.canvas.addEventListener('touchstart', function (event) {
-        console.log('touchstart');
+        console.log(event);
         self.touches = event.touches;
     }, false );
 
