@@ -27,6 +27,8 @@ var State = function (_name) {
 
     self.update = function () {}
 
+    self.afterRender = function () {}
+
 };
 
 

@@ -12,6 +12,7 @@ var noname = {
     state: State,
     entity: Entity,
     clock: Clock,
+    keyboard: Keyboard,
     matrixComponent: MatrixComponent,
     imageComponent: ImageComponent,
     spriteComponent: SpriteComponent,

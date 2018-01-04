@@ -7,6 +7,7 @@ myState.preload = function () {
     this.assets.queueImage('space', 'example/assets/images/space.jpg');
     this.assets.queueImage('arrow', 'example/assets/images/arrow.png');
     this.assets.queueImage('mine', 'example/assets/images/mine.png');
+    this.assets.queueImage('ring', 'example/assets/images/ring.png');
 };
 
 myState.loading = function () {
@@ -38,6 +39,11 @@ myState.create = function () {
     // compass
     this.compassImage = this.entities.addImage('arrow', 50, -100, 100, 100);
 
+    // controller
+    this.outerRing = this.entities.addTileSprite('ring', 0, 0, 80, 80);
+    this.innerRing = this.entities.addTileSprite('ring', 0, 0, 40, 40);
+
+
     // variables
     this.lastCameraTransform = this.camera.getTransform();
     this.currentCameraTransform = null;
@@ -49,15 +55,16 @@ var pausedCanFire = true;
 
 myState.update = function () {
 
+
     var currentAngle = this.shipBody.GetAngle();
     var cos = Math.cos(currentAngle);
     var sin = Math.sin(currentAngle);
 
     // camera zoom
-    if (this.inputs.pressing(['n'])) {
+    if (this.inputs.keyboard.pressing(['n'])) {
         this.camera.setZoom(0.4);
     }
-    if (this.inputs.pressing(['m'])) {
+    if (this.inputs.keyboard.pressing(['m'])) {
         this.camera.setZoom(-0.4);
     }
 
@@ -96,10 +103,10 @@ myState.update = function () {
     this.compassImage.setAngle(compassAngle);
 
     // move ship
-    if (this.inputs.pressing(['arrowRight'])) {
+    if (this.inputs.keyboard.pressing(['arrowRight'])) {
         this.shipBody.ApplyTorque(500);
     }
-    if (this.inputs.pressing(['arrowLeft'])) {
+    if (this.inputs.keyboard.pressing(['arrowLeft'])) {
         this.shipBody.ApplyTorque(-500);
     }
 
@@ -107,31 +114,35 @@ myState.update = function () {
     var cos = Math.cos(currentAngle);
     var sin = Math.sin(currentAngle);
 
-    if (this.inputs.pressing(['arrowUp'])) {
+    if (this.inputs.keyboard.pressing(['arrowUp'])) {
         this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
     }
-    if (this.inputs.pressing(['arrowDown'])) {
+    if (this.inputs.keyboard.pressing(['arrowDown'])) {
         this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
     }
-    if (this.inputs.pressing(['arrowUp'])) {
+    if (this.inputs.keyboard.pressing(['arrowUp'])) {
         this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
     }
-    if (this.inputs.pressing(['spacebar'])) {
+    if (this.inputs.keyboard.pressing(['spacebar'])) {
         this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
     }
-    if (this.inputs.pressing(['f'])) {
+    if (this.inputs.keyboard.pressing(['f'])) {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
-    // shot
-    if (this.inputs.pressing(['s'])) {
-        this.bulletBody = this.box2d.addBody(
-            (this.shipBody.GetPosition().x * 30),
-            (this.shipBody.GetPosition().y * 30),
-            'dynamic'
-        );
-        this.bulletFixture = this.box2d.addCircle(this.bulletBody, 5, 0, 0);
-        this.bulletBody.ApplyImpulse({'x': cos * 1, 'y': sin * 1}, this.bulletBody.GetWorldCenter());
-    }
 
 };
+
+myState.afterRender = function () {
+    /*for(var i = 0; i < this.inputs.touches.length; i++) {
+        var touch = this.inputs.touches[i];
+        this.render.context.beginPath();
+        this.render.context.fillStyle = "white";
+        this.render.context.fillText("touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
+        this.render.context.beginPath();
+        this.render.context.strokeStyle = "cyan";
+        this.render.context.lineWidth = "6";
+        this.render.context.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true);
+        this.render.context.stroke();
+    }*/
+}
