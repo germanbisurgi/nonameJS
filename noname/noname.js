@@ -13,6 +13,7 @@ var noname = {
     entity: Entity,
     clock: Clock,
     keyboard: Keyboard,
+    fingers: Fingers,
     matrixComponent: MatrixComponent,
     imageComponent: ImageComponent,
     spriteComponent: SpriteComponent,

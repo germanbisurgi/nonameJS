@@ -62,23 +62,25 @@ var Game = function (_settings) {
                     self.box2d.update();
                 }
                 self.state.current.update();
+
+                if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
+                    // TODO performance
+                    var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
+                        return _entity.state === self.state.current.name;
+                    })
+                    self.render.resize();
+                    self.render.clear();
+                    self.render.draw(renderEntities);
+
+                    self.box2d.resize();
+                    self.box2d.clear();
+                    self.box2d.draw();
+
+                    self.state.current.afterRender();
+                }
             }
 
-            if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
-                // TODO performance
-                var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
-                    return _entity.state === self.state.current.name;
-                })
-                self.render.resize();
-                self.render.clear();
-                self.render.draw(renderEntities);
 
-                self.box2d.resize();
-                self.box2d.clear();
-                self.box2d.draw();
-
-                self.state.current.afterRender();
-            }
 
         });
 

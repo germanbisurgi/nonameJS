@@ -134,8 +134,8 @@ myState.update = function () {
 };
 
 myState.afterRender = function () {
-    /*for(var i = 0; i < this.inputs.touches.length; i++) {
-        var touch = this.inputs.touches[i];
+    for(var i = 0; i < this.inputs.fingers.touches.length; i++) {
+        var touch = this.inputs.fingers.touches[i];
         this.render.context.beginPath();
         this.render.context.fillStyle = "white";
         this.render.context.fillText("touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
@@ -144,5 +144,5 @@ myState.afterRender = function () {
         this.render.context.lineWidth = "6";
         this.render.context.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true);
         this.render.context.stroke();
-    }*/
+    }
 }
