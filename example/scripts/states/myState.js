@@ -1,6 +1,15 @@
 var myState = new noname.state('myState');
 var speed = 150;
 
+
+console.oldLog = console.log;
+
+console.log = function(value)
+{
+    console.oldLog(value);
+    window.$log = value;
+};
+
 myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
@@ -184,4 +193,7 @@ myState.afterRender = function () {
         this.render.context.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true);
         this.render.context.stroke();
     }
+
+    this.render.context.fillStyle = "white";
+    this.render.context.fillText(window.$log, window.innerWidth / 2, window.innerHeight / 2 - 100);
 }
