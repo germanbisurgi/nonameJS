@@ -83,12 +83,13 @@ myState.update = function () {
 
     // compass
     this.compassImage.setPosition(this.camera.x / this.camera.zoom, this.camera.y / this.camera.zoom);
-    this.compassImage.setAngle(this.math.angleToPointer(
+    var compassAngle = this.math.angleToPointer(
         this.shipImage.x + this.shipImage.width / 2,
         this.shipImage.y + this.shipImage.height / 2,
         this.mine.x + this.mine.width / 2,
         this.mine.y + this.mine.height / 2
-    ));
+    );
+    this.compassImage.setAngle(compassAngle);
 
     // move ship
     if (this.inputs.pressing(['arrowRight'])) {
@@ -115,7 +116,7 @@ myState.update = function () {
         this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.pressing(['f'])) {
-        this.shipBody.SetAngle(compassAngle);
+        this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
     // shot
