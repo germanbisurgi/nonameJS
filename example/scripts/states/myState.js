@@ -3,10 +3,8 @@ var speed = 150;
 
 myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
-    this.assets.queueImage('disc', 'example/assets/images/disc.png');
-    this.assets.queueImage('player2', 'example/assets/images/player2.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
-
+    this.assets.queueImage('space', 'example/assets/images/space.jpg');
 };
 
 myState.loading = function () {
@@ -21,34 +19,10 @@ myState.create = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'load complete';
 
-
-
-    var player = new Player();
-    this.player = player.create(this.entities);
-
-    this.disc1 = this.entities.addImage('disc', 50, 50, 50, 50);
-    this.disc2 = this.entities.addImage('disc', 50, 50, 50, 50);
-    this.disc3 = this.entities.addImage('disc', 50, 50, 50, 50);
-    this.disc4 = this.entities.addImage('disc', 50, 50, 50, 50);
-    this.rectStone1 = this.entities.addImage('stone', 50, 50, 50, 50);
-    this.rectStone2 = this.entities.addImage('stone', 50, 50, 50, 50);
-    this.rectStone3 = this.entities.addImage('stone', 50, 50, 50, 50);
-    this.rectStone4 = this.entities.addImage('stone', 50, 50, 50, 50);
+    this.space = this.entities.addTileSprite('space',0,0,1024*2,1024*2);
 
     this.edge1 = this.box2d.addEdge(-100, 0, 190, 191, 'static');
     this.edge2 = this.box2d.addEdge(190, 190, 400, 0, 'static');
-
-    this.circleBody = this.box2d.addBody(300, 0, 'dynamic');
-    this.circleFixture1 = this.box2d.addCircle(this.circleBody, 25, -50, 0);
-    this.circleFixture2 = this.box2d.addCircle(this.circleBody, 25, 50, 0);
-    this.circleFixture3 = this.box2d.addCircle(this.circleBody, 25, 0, -50);
-    this.circleFixture4 = this.box2d.addCircle(this.circleBody, 25, 0, 50);
-
-    this.rectBody = this.box2d.addBody(60, 25, 'dynamic');
-    this.rectFixture1 = this.box2d.addRectangle(this.rectBody, 50, 50, -50, 0);
-    this.rectFixture2 = this.box2d.addRectangle(this.rectBody, 50, 50, 50, 0);
-    this.rectFixture3 = this.box2d.addRectangle(this.rectBody, 50, 50, 0, -50);
-    this.rectFixture4 = this.box2d.addRectangle(this.rectBody, 50, 50, 0, 50);
 
     this.polyBody = this.box2d.addBody(200, 100, 'kinematic');
     this.polyFixture1 = this.box2d.addPolygon(this.polyBody, [
@@ -74,7 +48,11 @@ myState.create = function () {
     this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, 0, 13);
     this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 0, -30);
     this.shipImage = this.entities.addImage('falcon', 0, 0, 100, 130);
+    this.shipBody.SetAngularDamping(5);
+    this.shipBody.SetLinearDamping(1);
 
+    this.lastCameraTransform = this.camera.getTransform();
+    this.currentCameraTransform = null;
 
 };
 
@@ -83,137 +61,54 @@ var pausedCanFire = true;
 
 myState.update = function () {
 
+    // camera zoom
+    if (this.inputs.pressing(['n'])) {
+        this.camera.setZoom(0.4);
+    }
+    if (this.inputs.pressing(['m'])) {
+        this.camera.setZoom(-0.4);
+    }
+
+    // move ship
+    if (this.inputs.pressing(['arrowRight'])) {
+        this.shipBody.ApplyTorque(500);
+    }
+    if (this.inputs.pressing(['arrowLeft'])) {
+        this.shipBody.ApplyTorque(-500);
+    }
+    var currentAngle = this.shipBody.GetAngle() - 90 * 0.0174532925199432957;
+    var cos = Math.cos(currentAngle);
+    var sin = Math.sin(currentAngle);
+    if (this.inputs.pressing(['arrowUp'])) {
+        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+    }
+    if (this.inputs.pressing(['arrowDown'])) {
+        this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
+    }
+
+    // ship image follows ship body
     this.box2d.followBody(this.shipImage, this.shipBody);
 
-    this.box2d.followFixture(this.disc1, this.circleFixture1);
-    this.box2d.followFixture(this.disc2, this.circleFixture2);
-    this.box2d.followFixture(this.disc3, this.circleFixture3);
-    this.box2d.followFixture(this.disc4, this.circleFixture4);
+    // camera follows ship image
+    this.camera.follow(this.shipImage);
 
-    this.box2d.followFixture(this.rectStone1, this.rectFixture1);
-    this.box2d.followFixture(this.rectStone2, this.rectFixture2);
-    this.box2d.followFixture(this.rectStone3, this.rectFixture3);
-    this.box2d.followFixture(this.rectStone4, this.rectFixture4);
+    // space follows ship image
+    this.space.follow(this.shipImage);
 
+    console.log(this.shipBody.GetLinearVelocity().x);
 
-    if (navigator.getGamepads()[0]) {
-        var triangle = navigator.getGamepads()[0].buttons[0].pressed;
-        var circle = navigator.getGamepads()[0].buttons[1].pressed;
-        var x = navigator.getGamepads()[0].buttons[2].pressed;
-        var square = navigator.getGamepads()[0].buttons[3].pressed;
-        var l1 = navigator.getGamepads()[0].buttons[4].pressed;
-        var r1 = navigator.getGamepads()[0].buttons[5].pressed;
-        var l2 = navigator.getGamepads()[0].buttons[6].pressed;
-        var r2 = navigator.getGamepads()[0].buttons[7].pressed;
-        var select = navigator.getGamepads()[0].buttons[8].pressed;
-        var start = navigator.getGamepads()[0].buttons[9].pressed;
-        var up = Math.floor(navigator.getGamepads()[0].axes[1]) === -1;
-        var right =  Math.floor(navigator.getGamepads()[0].axes[0]) === 1;
-        var down =  Math.floor(navigator.getGamepads()[0].axes[1]) === 1;
-        var left = Math.floor(navigator.getGamepads()[0].axes[0]) === -1;
-    }
-
-
-
-    if (this.inputs.pressing(['y']) || l2) {
-        this.player.rotate(-speed);
-
-    }
-    if (this.inputs.pressing(['x']) || r2) {
-        this.player.rotate(speed);
-    }
-    if (select) {
-        location.reload();
-    }
-
-    if (start && pausedCanFire) {
-        pausedCanFire = false;
-        this.clock.master.paused = !this.clock.master.paused;
-        setTimeout(function () {
-            pausedCanFire = true;
-        }, 200);
-    }
-
-    if (this.inputs.pressing(['arrowUp', 'arrowRight']) || up && right) {
-        this.player.move(speed, -speed);
-        this.player.play('walkUpRight', 100);
-    } else if (this.inputs.pressing(['arrowUp', 'arrowLeft']) || up && left) {
-        this.player.play('walkUpLeft', 100);
-        this.player.move(-speed, -speed);
-    } else if (this.inputs.pressing(['arrowDown', 'arrowRight']) || down && right) {
-        this.player.move(speed, speed);
-        this.player.play('walkDownRight', 100);
-    } else if (this.inputs.pressing(['arrowDown', 'arrowLeft']) || down && left) {
-        this.player.move(-speed, speed);
-        this.player.play('walkDownLeft', 100);
-    } else if (this.inputs.pressing(['arrowRight', 'arrowLeft']) || this.inputs.pressing(['arrowDown', 'arrowUp'])) {
-        // nothing
-    } else if (this.inputs.pressing(['arrowUp']) || up) {
-        this.player.move(0, -speed);
-        this.player.play('walkUp', 100);
-    } else if (this.inputs.pressing(['arrowRight']) || right) {
-        this.player.move(speed, 0);
-        this.player.play('walkRight', 100);
-    } else if (this.inputs.pressing(['arrowDown']) || down) {
-        this.player.move(0, speed);
-        this.player.play('walkDown', 100);
-    } else if (this.inputs.pressing(['arrowLeft']) || left) {
-        this.player.move(-speed, 0);
-        this.player.play('walkLeft', 100);
+    // scroll background in relativeto the camera and body velocity
+    this.currentCameraTransform = this.camera.getTransform();
+    if (this.lastCameraTransform.x >= this.currentCameraTransform.x) {
+        this.space.scroll('right', -this.shipBody.GetLinearVelocity().x);
     } else {
-        switch (this.player.lastAnimation) {
-            case 'walkUp':
-                this.player.play('idleUp', 1);
-                break;
-            case 'walkRight':
-                this.player.play('idleRight', 1);
-                break;
-            case 'walkDown':
-                this.player.play('idleDown', 1);
-                break;
-            case 'walkLeft':
-                this.player.play('idleLeft', 1);
-                break;
-            case 'walkUpRight':
-                this.player.play('idleUpRight', 1);
-                break;
-            case 'walkUpLeft':
-                this.player.play('idleUpLeft', 1);
-                break;
-            case 'walkDownRight':
-                this.player.play('idleDownRight', 1);
-                break;
-            case 'walkDownLeft':
-                this.player.play('idleDownLeft', 1);
-                break;
-        }
+        this.space.scroll('left', this.shipBody.GetLinearVelocity().x);
     }
-
-    if (this.inputs.pressing(['u'])) {
-        this.camera.move(0, -speed)
+    if (this.lastCameraTransform.y >= this.currentCameraTransform.y) {
+        this.space.scroll('down', -this.shipBody.GetLinearVelocity().y);
+    } else {
+        this.space.scroll('up', this.shipBody.GetLinearVelocity().y);
     }
-    if (this.inputs.pressing(['k'])) {
-        this.camera.move(speed, 0)
-    }
-    if (this.inputs.pressing(['j'])) {
-        this.camera.move(0, speed)
-    }
-    if (this.inputs.pressing(['h'])) {
-        this.camera.move(-speed, 0)
-    }
-    if (this.inputs.pressing(['z'])) {
-        this.camera.rotate(-speed);
-    }
-    if (this.inputs.pressing(['i'])) {
-        this.camera.rotate(speed);
-    }
-    if (this.inputs.pressing(['n']) || l1) {
-        this.camera.setZoom(0.2);
-    }
-    if (this.inputs.pressing(['m']) || r1) {
-        this.camera.setZoom(-0.2);
-    }
-
-    this.camera.follow(this.player.x, this.player.y, this.player.width, this.player.height);
+    this.lastCameraTransform = this.currentCameraTransform;
 
 };

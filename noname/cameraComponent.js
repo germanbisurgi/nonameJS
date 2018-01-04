@@ -7,7 +7,7 @@ var CameraComponent = function (_x, _y, _width, _height) {
     this.anchorY = 0.5;
     this.angle = 0;
     this.zoom = 1.0;
-    this.lerp = 1;
+    this.lerp = 0.3;
 
     this.move = function (_x, _y) {
         this.x += this.clock.toPPS(_x);
@@ -31,9 +31,29 @@ var CameraComponent = function (_x, _y, _width, _height) {
     this.setAngle = function (_degrees) {
         this.angle = _degrees;
     }
-    this.follow = function (_x, _y, _w, _h) {
-        var destinationX = this.zoom * (_x + _w  / 2) - (this.width  / 2);
-        var destinationY = this.zoom * (_y + _h / 2) - (this.height / 2);
+    this.setTransform = function (_x, _y, _width, _height, _angle) {
+        if (_x || _y) {
+            this.setPosition(_x, _y);
+        }
+        if (_width || _height) {
+            this.setSize(_width, _height);
+        }
+        if (_angle) {
+            this.setAngle(_angle);
+        }
+    }
+    this.getTransform = function () {
+        return {
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+            angle: this.angle
+        }
+    }
+    this.follow = function (_entity) {
+        var destinationX = this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2);
+        var destinationY = this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2);
         this.x += (destinationX - this.x) * this.lerp;
         this.y += (destinationY - this.y) * this.lerp;
     }
