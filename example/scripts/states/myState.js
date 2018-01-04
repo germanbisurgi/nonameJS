@@ -83,11 +83,12 @@ myState.update = function () {
 
     // compass
     this.compassImage.setPosition(this.camera.x / this.camera.zoom, this.camera.y / this.camera.zoom);
-    var compassAngle = this.math.angleToPointer(
-        (this.shipImage.y + this.shipImage.height / 2) - (this.mine.y + this.mine.height / 2),
-        (this.shipImage.x + this.shipImage.width / 2) - (this.mine.x + this.mine.width / 2)
-    );
-    this.compassImage.setAngle(this.math.toDegrees(compassAngle))
+    this.compassImage.setAngle(this.math.angleToPointer(
+        this.shipImage.x + this.shipImage.width / 2,
+        this.shipImage.y + this.shipImage.height / 2,
+        this.mine.x + this.mine.width / 2,
+        this.mine.y + this.mine.height / 2
+    ));
 
     // move ship
     if (this.inputs.pressing(['arrowRight'])) {

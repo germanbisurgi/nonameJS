@@ -41,7 +41,7 @@ var MathManager = function () {
     }
 
     self.angleToPointer = function (_x1, _y1, _x2, _y2) {
-        return Math.atan2(_y1 - _y2, _x1 - _x2);
+        return self.toDegrees(Math.atan2(_y1 - _y2, _x1 - _x2));
     }
 
 };
