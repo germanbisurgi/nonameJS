@@ -143,6 +143,45 @@ myState.afterRender = function () {
         myState.fingerCount = 2;
     });
 
+    this.inputs.fingers.three(function (finger1) {
+        console.log('three');
+        myState.fingerCount = 3;
+    });
+
+    this.inputs.fingers.four(function (finger1, finger2) {
+        console.log('four');
+        myState.fingerCount = 4;
+    });
+
+    this.inputs.fingers.five(function (finger1) {
+        console.log('five');
+        myState.fingerCount = 5;
+    });
+
+    this.inputs.fingers.six(function (finger1, finger2) {
+        console.log('six');
+        myState.fingerCount = 6
+    });
+
+    this.inputs.fingers.seven(function (finger1) {
+        console.log('seven');
+        myState.fingerCount = 7;
+    });
+
+    this.inputs.fingers.eight(function (finger1, finger2) {
+        console.log('eight');
+        myState.fingerCount = 8;
+    });
+
+    this.inputs.fingers.nine(function (finger1) {
+        console.log('nine');
+        myState.fingerCount = 9;
+    });
+
+    this.inputs.fingers.ten(function (finger1, finger2) {
+        console.log('ten');
+        myState.fingerCount = 10;
+    });
     for(var i = 0; i < this.inputs.fingers.touches.length; i++) {
         var touch = this.inputs.fingers.touches[i];
         this.render.context.beginPath();
