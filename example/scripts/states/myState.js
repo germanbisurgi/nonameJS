@@ -23,11 +23,12 @@ myState.create = function () {
 
     this.render.canvas.style.background = 'black';
 
+
     //stars
     this.stars = this.entities.addTileSprite('stars', 0,0 , 1024 * 2, 1024 * 2);
 
     //mine
-    this.mine = this.entities.addTileSprite('mine', 150, 50, 20, 20);
+    this.mine = this.entities.addImage('mine', 150, 50, 20, 20);
 
     // ship
     this.shipBody = this.box2d.addBody(5, -50, 'dynamic');
@@ -143,7 +144,6 @@ myState.update = function () {
             }
         }
     });
-
 
 };
 

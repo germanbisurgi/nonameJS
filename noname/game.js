@@ -72,9 +72,9 @@ var Game = function (_settings) {
                     self.render.clear();
                     self.render.draw(renderEntities);
 
-                    /*self.box2d.resize();
+                    self.box2d.resize();
                     self.box2d.clear();
-                    self.box2d.draw();*/
+                    self.box2d.draw();
 
                     self.state.current.afterRender();
                 }
