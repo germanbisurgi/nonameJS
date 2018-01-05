@@ -124,8 +124,8 @@ myState.update = function () {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
-    if (this.inputs.fingers.pool.length > 0 && < 2) {
-        
+    if (this.inputs.fingers.pool.length > 0 && this.inputs.fingers.pool.length < 2) {
+
     }
 
 
