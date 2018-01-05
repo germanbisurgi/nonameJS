@@ -109,16 +109,16 @@ myState.update = function () {
     var sin = Math.sin(currentAngle);
 
     if (this.inputs.keyboard.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+        this.shipBody.ApplyForce({'x': cos * 250, 'y': sin * 250}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.keyboard.pressing(['arrowDown'])) {
-        this.shipBody.ApplyForce({'x': -cos  * 500, 'y': -sin * 500}, this.shipBody.GetWorldCenter());
+        this.shipBody.ApplyForce({'x': -cos  * 250, 'y': -sin * 250}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.keyboard.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, this.shipBody.GetWorldCenter());
+        this.shipBody.ApplyForce({'x': cos * 250, 'y': sin * 250}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.keyboard.pressing(['spacebar'])) {
-        this.shipBody.ApplyImpulse({'x': cos * 50, 'y': sin * 50}, this.shipBody.GetWorldCenter());
+        this.shipBody.ApplyImpulse({'x': cos * 25, 'y': sin * 25}, this.shipBody.GetWorldCenter());
     }
     if (this.inputs.keyboard.pressing(['f'])) {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
@@ -137,7 +137,7 @@ myState.update = function () {
         } else {
             if (!rightController) {
                 rightController = _finger;
-                myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -10, 'y': sin * _finger.offsetY * -10}, myState.shipBody.GetWorldCenter());
+                myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -5, 'y': sin * _finger.offsetY * -5}, myState.shipBody.GetWorldCenter());
             }
         }
     });
