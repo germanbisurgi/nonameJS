@@ -9,8 +9,8 @@ var Fingers = function(_game) {
                 id: event.changedTouches[i].identifier,
                 startX: event.changedTouches[i].clientX,
                 startY: event.changedTouches[i].clientY,
-                moveX: null,
-                moveY: null,
+                currentX: event.changedTouches[i].clientX,
+                currentY: event.changedTouches[i].clientY,
                 offsetX: 0,
                 offsetY: 0
             })
@@ -21,8 +21,8 @@ var Fingers = function(_game) {
         event.preventDefault();
         for (var i = 0; i < event.changedTouches.length; i++) {
             var finger = self.get(event.changedTouches[i].identifier);
-            finger.moveX = event.changedTouches[i].clientX;
-            finger.moveY = event.changedTouches[i].clientY;
+            finger.currentX = event.changedTouches[i].clientX;
+            finger.currentY = event.changedTouches[i].clientY;
             finger.offsetX = event.changedTouches[i].clientX - finger.startX;
             finger.offsetY = event.changedTouches[i].clientY - finger.startY;
         }

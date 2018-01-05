@@ -156,15 +156,9 @@ myState.afterRender = function () {
         myState.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
         myState.render.context.stroke();
 
-        if (_finger.moveX && _finger.moveY) {
-            myState.render.context.beginPath();
-            myState.render.context.arc(_finger.moveX, _finger.moveY, 30, 0, Math.PI * 2, true);
-            myState.render.context.stroke();
-        } else {
-            myState.render.context.beginPath();
-            myState.render.context.arc(_finger.startX, _finger.startY, 30, 0, Math.PI * 2, true);
-            myState.render.context.stroke();
-        }
+        myState.render.context.beginPath();
+        myState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
+        myState.render.context.stroke();
 
     });
 
