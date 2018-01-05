@@ -124,10 +124,23 @@ myState.update = function () {
         this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
     }
 
-    if (this.inputs.fingers.pool.length > 0 && this.inputs.fingers.pool.length < 2) {
 
-    }
-
+    //touch controller
+    var leftController = null;
+    var rightController = null;
+    this.inputs.fingers.pool.forEach(function (_finger) {
+        if (_finger.startX <= window.innerWidth / 2 ) {
+            if (!leftController) {
+                leftController = _finger;
+                myState.shipBody.ApplyTorque(_finger.offsetX * 10);
+            }
+        } else {
+            if (!rightController) {
+                rightController = _finger;
+                myState.shipBody.ApplyForce({'x': cos * 500, 'y': sin * 500}, myState.shipBody.GetWorldCenter());
+            }
+        }
+    });
 
 
 };
@@ -135,32 +148,21 @@ myState.update = function () {
 myState.afterRender = function () {
 
     this.inputs.fingers.pool.forEach(function (_finger) {
-        var text =  "touch id: " + _finger.id;
-            text += " x: " + _finger.startX;
-            text += " y: " + _finger.startY;
-
         var halfWindow = window.innerWidth / 2;
         var strokeStyle = _finger.startX <= halfWindow ? 'cyan' : 'magenta';
-        myState.render.context.fillStyle = 'white';
         myState.render.context.strokeStyle = strokeStyle;
         myState.render.context.lineWidth = "6";
-        myState.render.context.fillText(text, _finger.startX + 30, _finger.startY - 30);
         myState.render.context.beginPath();
-        myState.render.context.arc(_finger.startX, _finger.startY, 40, 0, Math.PI * 2, true);
+        myState.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
         myState.render.context.stroke();
 
-        var text =  "touch id: " + _finger.id;
-            text += " x: " + _finger.offsetX;
-            text += " y: " + _finger.offsetY;
         if (_finger.moveX && _finger.moveY) {
-            myState.render.context.fillText(text, _finger.moveX + 30, _finger.moveY + 30);
             myState.render.context.beginPath();
-            myState.render.context.arc(_finger.moveX, _finger.moveY, 20, 0, Math.PI * 2, true);
+            myState.render.context.arc(_finger.moveX, _finger.moveY, 30, 0, Math.PI * 2, true);
             myState.render.context.stroke();
         } else {
-            myState.render.context.fillText(text, _finger.startX + 30, _finger.startY + 30);
             myState.render.context.beginPath();
-            myState.render.context.arc(_finger.startX, _finger.startY, 20, 0, Math.PI * 2, true);
+            myState.render.context.arc(_finger.startX, _finger.startY, 30, 0, Math.PI * 2, true);
             myState.render.context.stroke();
         }
 
