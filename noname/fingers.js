@@ -2,18 +2,21 @@ var Fingers = function(_game) {
     "use strict";
     var self = this;
     self.pool = [];
+    self.limit = 2;
 
     _game.render.canvas.addEventListener('touchstart', function (event) {
         for (var i = 0; i < event.changedTouches.length; i++) {
-            self.pool.push({
-                id: event.changedTouches[i].identifier,
-                startX: event.changedTouches[i].clientX,
-                startY: event.changedTouches[i].clientY,
-                currentX: event.changedTouches[i].clientX,
-                currentY: event.changedTouches[i].clientY,
-                offsetX: 0,
-                offsetY: 0
-            })
+            if (self.pool.length < self.limit) {
+                self.pool.push({
+                    id: event.changedTouches[i].identifier,
+                    startX: event.changedTouches[i].clientX,
+                    startY: event.changedTouches[i].clientY,
+                    currentX: event.changedTouches[i].clientX,
+                    currentY: event.changedTouches[i].clientY,
+                    offsetX: 0,
+                    offsetY: 0
+                });
+            }
         }
     }, false );
 
