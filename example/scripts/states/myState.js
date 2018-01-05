@@ -1,17 +1,6 @@
 var myState = new noname.state('myState');
 var speed = 150;
 
-
-console.oldLog = console.log;
-
-console.log = function(value)
-{
-    console.oldLog(value);
-    window.$log = value;
-};
-
-console.log('banana')
-
 myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
@@ -142,60 +131,33 @@ myState.update = function () {
 
 myState.afterRender = function () {
 
-    myState.fingerCount = 0;
+    this.inputs.fingers.pool.forEach(function (_finger) {
+        var text =  "touch id: " + _finger.id;
+            text += " x: " + _finger.startX;
+            text += " y: " + _finger.startY;
+        myState.render.context.fillStyle = "white";
+        myState.render.context.strokeStyle = "cyan";
+        myState.render.context.lineWidth = "6";
+        myState.render.context.fillText(text, _finger.startX + 30, _finger.startY - 30);
+        myState.render.context.beginPath();
+        myState.render.context.arc(_finger.startX, _finger.startY, 40, 0, Math.PI * 2, true);
+        myState.render.context.stroke();
 
-    this.inputs.fingers.one(function (finger1) {
-        myState.fingerCount = 1;
+        if (_finger.moveX && _finger.moveY) {
+            var text =  "touch id: " + _finger.id;
+                text += " x: " + _finger.moveX;
+                text += " y: " + _finger.moveY;
+            myState.render.context.fillText(text, _finger.moveX + 30, _finger.moveY - 30);
+            myState.render.context.beginPath();
+            myState.render.context.arc(_finger.moveX, _finger.moveY, 30, 0, Math.PI * 2, true);
+            myState.render.context.stroke();
+        } else {
+            myState.render.context.fillText(text, _finger.startX + 30, _finger.startY - 30);
+            myState.render.context.beginPath();
+            myState.render.context.arc(_finger.startX, _finger.startY, 30, 0, Math.PI * 2, true);
+            myState.render.context.stroke();
+        }
+
     });
 
-    this.inputs.fingers.two(function (finger1, finger2) {
-        myState.fingerCount = 2;
-    });
-
-    this.inputs.fingers.three(function (finger1) {
-        myState.fingerCount = 3;
-    });
-
-    this.inputs.fingers.four(function (finger1, finger2) {
-        myState.fingerCount = 4;
-    });
-
-    this.inputs.fingers.five(function (finger1) {
-        myState.fingerCount = 5;
-    });
-
-    this.inputs.fingers.six(function (finger1, finger2) {
-        myState.fingerCount = 6
-    });
-
-    this.inputs.fingers.seven(function (finger1) {
-        myState.fingerCount = 7;
-    });
-
-    this.inputs.fingers.eight(function (finger1, finger2) {
-        myState.fingerCount = 8;
-    });
-
-    this.inputs.fingers.nine(function (finger1) {
-        myState.fingerCount = 9;
-    });
-
-    this.inputs.fingers.ten(function (finger1, finger2) {
-        myState.fingerCount = 10;
-    });
-
-    for(var i = 0; i < this.inputs.fingers.touches.length; i++) {
-        var touch = this.inputs.fingers.touches[i];
-        this.render.context.beginPath();
-        this.render.context.fillStyle = "white";
-        this.render.context.fillText("finger count : "+myState.fingerCount+" touch id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30);
-        this.render.context.beginPath();
-        this.render.context.strokeStyle = "cyan";
-        this.render.context.lineWidth = "6";
-        this.render.context.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true);
-        this.render.context.stroke();
-    }
-
-    this.render.context.fillStyle = "white";
-    this.render.context.fillText(window.$log, window.innerWidth / 2, window.innerHeight / 2 - 100);
 }

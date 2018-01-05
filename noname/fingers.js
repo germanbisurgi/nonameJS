@@ -1,142 +1,51 @@
 var Fingers = function(_game) {
     "use strict";
     var self = this;
-    self.touches = [];
+    self.pool = [];
 
     _game.render.canvas.addEventListener('touchstart', function (event) {
-        self.touches = event.touches;
+        for (var i = 0; i < event.changedTouches.length; i++) {
+            self.pool.push({
+                id: event.changedTouches[i].identifier,
+                startX: event.changedTouches[i].clientX,
+                startY: event.changedTouches[i].clientY,
+                moveX: null,
+                moveY: null
+            })
+        }
     }, false );
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
         event.preventDefault();
-        self.touches = event.touches;
+        for (var i = 0; i < event.changedTouches.length; i++) {
+            var finger = self.get(event.changedTouches[i].identifier);
+            finger.moveX = event.changedTouches[i].clientX;
+            finger.moveY = event.changedTouches[i].clientY;
+        }
     }, false );
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
-        self.touches = event.touches;
+        for (var i = 0; i < event.changedTouches.length; i++) {
+            var finger = self.get(event.changedTouches[i].identifier);
+            self.remove(finger);
+        }
     }, false );
 
-    self.one = function (_function) {
-        if (self.touches.length === 1) {
-            _function(self.touches[0]);
-        }
-    }
+    self.get = function(_id) {
+        var output = false;
+        self.pool.forEach(function (_finger) {
+            if (_finger.id === _id) {
+                output = _finger;
+            }
+        });
+        return output;
+    };
 
-    self.two = function (_function) {
-        if (self.touches.length === 2) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-            );
+    self.remove = function(_item) {
+        var index = self.pool.indexOf(_item);
+        if (index > -1) {
+            self.pool.splice(index, 1);
         }
-    }
-
-    self.three = function (_function) {
-        if (self.touches.length === 3) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2]
-            );
-        }
-    }
-
-    self.four = function (_function) {
-        if (self.touches.length === 4) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3]
-            );
-        }
-    }
-
-    self.five = function (_function) {
-        if (self.touches.length === 5) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4]
-            );
-        }
-    }
-
-    self.six = function (_function) {
-        if (self.touches.length === 6) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4],
-                self.touches[5]
-            );
-        }
-    }
-
-    self.seven = function (_function) {
-        if (self.touches.length === 7) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4],
-                self.touches[5],
-                self.touches[6]
-            );
-        }
-    }
-
-    self.eight = function (_function) {
-        if (self.touches.length === 8) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4],
-                self.touches[5],
-                self.touches[6],
-                self.touches[7]
-            );
-        }
-    }
-
-    self.nine = function (_function) {
-        if (self.touches.length === 9) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4],
-                self.touches[5],
-                self.touches[6],
-                self.touches[7],
-                self.touches[8]
-            );
-        }
-    }
-
-    self.ten = function (_function) {
-        if (self.touches.length === 10) {
-            _function(
-                self.touches[0],
-                self.touches[1],
-                self.touches[2],
-                self.touches[3],
-                self.touches[4],
-                self.touches[5],
-                self.touches[6],
-                self.touches[7],
-                self.touches[8],
-                self.touches[9]
-            );
-        }
-    }
+    };
 
 };
