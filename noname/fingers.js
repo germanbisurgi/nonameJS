@@ -10,7 +10,9 @@ var Fingers = function(_game) {
                 startX: event.changedTouches[i].clientX,
                 startY: event.changedTouches[i].clientY,
                 moveX: null,
-                moveY: null
+                moveY: null,
+                offsetX: 0,
+                offsetY: 0
             })
         }
     }, false );
@@ -21,6 +23,8 @@ var Fingers = function(_game) {
             var finger = self.get(event.changedTouches[i].identifier);
             finger.moveX = event.changedTouches[i].clientX;
             finger.moveY = event.changedTouches[i].clientY;
+            finger.offsetX = event.changedTouches[i].clientX - finger.startX;
+            finger.offsetY = event.changedTouches[i].clientY - finger.startY;
         }
     }, false );
 
