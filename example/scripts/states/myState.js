@@ -4,7 +4,7 @@ var speed = 150;
 myState.preload = function () {
     this.assets.queueImage('stone', 'example/assets/images/stone.png');
     this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
-    this.assets.queueImage('space', 'example/assets/images/space.jpg');
+    this.assets.queueImage('stars', 'example/assets/images/stars.png');
     this.assets.queueImage('arrow', 'example/assets/images/arrow.png');
     this.assets.queueImage('mine', 'example/assets/images/mine.png');
 };
@@ -21,8 +21,10 @@ myState.create = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'load complete';
 
-    //space
-    this.space = this.entities.addTileSprite('space', 0,0 , 1024 * 2, 1024 * 2);
+    this.render.canvas.style.background = 'black';
+
+    //stars
+    this.stars = this.entities.addTileSprite('stars', 0,0 , 1024 * 2, 1024 * 2);
 
     //mine
     this.mine = this.entities.addTileSprite('mine', 150, 50, 20, 20);
@@ -69,20 +71,20 @@ myState.update = function () {
     // camera follows ship image
     this.camera.follow(this.shipImage);
 
-    // space follows ship image
-    this.space.follow(this.shipImage);
+    // stars follows ship image
+    this.stars.follow(this.shipImage);
 
     // scroll background in relativeto the camera and body velocity
     this.currentCameraTransform = this.camera.getTransform();
     if (this.lastCameraTransform.x >= this.currentCameraTransform.x) {
-        this.space.scroll('right', -this.shipBody.GetLinearVelocity().x);
+        this.stars.scroll('right', -this.shipBody.GetLinearVelocity().x);
     } else {
-        this.space.scroll('left', this.shipBody.GetLinearVelocity().x);
+        this.stars.scroll('left', this.shipBody.GetLinearVelocity().x);
     }
     if (this.lastCameraTransform.y >= this.currentCameraTransform.y) {
-        this.space.scroll('down', -this.shipBody.GetLinearVelocity().y);
+        this.stars.scroll('down', -this.shipBody.GetLinearVelocity().y);
     } else {
-        this.space.scroll('up', this.shipBody.GetLinearVelocity().y);
+        this.stars.scroll('up', this.shipBody.GetLinearVelocity().y);
     }
     this.lastCameraTransform = this.currentCameraTransform;
 

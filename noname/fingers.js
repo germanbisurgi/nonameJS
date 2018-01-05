@@ -2,7 +2,7 @@ var Fingers = function(_game) {
     "use strict";
     var self = this;
     self.pool = [];
-    self.limit = 2;
+    self.limit = 10;
 
     _game.render.canvas.addEventListener('touchstart', function (event) {
         for (var i = 0; i < event.changedTouches.length; i++) {
