@@ -1,14 +1,12 @@
-var ClockManager = function () {
+var ClockManager = function (_game) {
     'use strict';
     var self = this;
     self.master = null;
     self.pool = [];
 
     self.init = function () {
-        self.master = new noname.clock();
+        self.master = self.create();
     }
-
-    self.init();
 
     self.update = function (_delta) {
         self.master.update(_delta);
@@ -17,9 +15,16 @@ var ClockManager = function () {
         });
     };
 
+    self.add = function (_clock) {
+        self.pool.push(_clock);
+    };
+
     self.create = function () {
-        var clock = new noname.clock();
-        self.pool.push(clock);
+        var clock = new noname.clock(_game);
+        self.add(clock);
         return clock;
     };
+
+    self.init();
+
 };

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>StateManager</title>
+    <title>Clock</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -80,12 +80,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>StateManager Class</h1>
+<h1>Clock Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/noname_stateManager.js.html#l1"><code>noname\stateManager.js:1</code></a>
+            Defined in: <a href="../files/noname_clock.js.html#l1"><code>noname\clock.js:1</code></a>
         </div>
 
 
@@ -93,8 +93,14 @@
 
 
 <div class="box intro">
-    <p>This manager allows you to add and switch your states. To change from
-game state to main menu state or map A to map B are the daily bread of this manager.</p>
+    <p>Tracking time within a game, synchronize animations and manage time related
+events like setTimeout and setInterval.
+All clocks are updated by the clockManager who has a 'master' clock itself to
+sync created clocks. All entities are synchronizez with the master clock untill
+you change it.
+You should not directly instantiate this class because it will not added to The
+clockManager pool and therefore will not be updated. Use the add method on the
+ClockManager instead.</p>
 
 </div>
 
@@ -104,7 +110,6 @@ game state to main menu state or map A to map B are the daily bread of this mana
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
     </ul>
 
     <div>
@@ -116,38 +121,28 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_add">add</a>
+                                <a href="#method_clearEvent">clearEvent</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_get">get</a>
+                                <a href="#method_continue">continue</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_init">init</a>
+                                <a href="#method_pause">pause</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_switch">switch</a>
+                                <a href="#method_setInterval">setInterval</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_setTimeout">setTimeout</a>
 
                             </li>
                     </ul>
                 </div>
 
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                            <li class="index-item property">
-                                <a href="#property_current">current</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_pool">pool</a>
-
-                            </li>
-                    </ul>
-                </div>
 
 
         </div>
@@ -155,13 +150,13 @@ game state to main menu state or map A to map B are the daily bread of this mana
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_add" class="method item">
-    <h3 class="name"><code>add</code></h3>
+<div id="method_clearEvent" class="method item">
+    <h3 class="name"><code>clearEvent</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>state</code>
+                        <code>event</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -176,7 +171,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_stateManager.js.html#l45"><code>noname\stateManager.js:45</code></a>
+        <a href="../files/noname_clock.js.html#l108"><code>noname\clock.js:108</code></a>
         </p>
 
 
@@ -184,7 +179,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     </div>
 
     <div class="description">
-        <p>Adds a new state object to the pool.</p>
+        <p>Removes a clock event from the clock events array.</p>
 
     </div>
 
@@ -193,12 +188,12 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">state</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">event</code>
+                        <span class="type">Event</span>
 
 
                     <div class="param-description">
-                        <p>The state object you want to add to the pool.</p>
+                        <p>The event that will be removed.</p>
 
                     </div>
 
@@ -209,13 +204,81 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
 
 </div>
-<div id="method_get" class="method item">
-    <h3 class="name"><code>get</code></h3>
+<div id="method_continue" class="method item">
+    <h3 class="name"><code>continue</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_clock.js.html#l144"><code>noname\clock.js:144</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Unpauses the clock.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_pause" class="method item">
+    <h3 class="name"><code>pause</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_clock.js.html#l135"><code>noname\clock.js:135</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Pauses the clock but not the game.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_setInterval" class="method item">
+    <h3 class="name"><code>setInterval</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>stateName</code>
+                        <code>function</code>
+                </li>
+                <li class="arg">
+                        <code>milliseconds</code>
+                </li>
+                <li class="arg">
+                        <code>context</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -233,7 +296,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_stateManager.js.html#l69"><code>noname\stateManager.js:69</code></a>
+        <a href="../files/noname_clock.js.html#l68"><code>noname\clock.js:68</code></a>
         </p>
 
 
@@ -241,7 +304,8 @@ game state to main menu state or map A to map B are the daily bread of this mana
     </div>
 
     <div class="description">
-        <p>Get a state by name.</p>
+        <p>Calls a function at specified intervals (in milliseconds). It is synchronized
+whith the clock so motion will be considered in th equation.</p>
 
     </div>
 
@@ -250,12 +314,34 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">stateName</code>
-                        <span class="type">String</span>
+                        <code class="param-name">function</code>
+                        <span class="type">Function</span>
 
 
                     <div class="param-description">
-                        <p>The name of the state you want to retrieve.</p>
+                        <p>The function that will be called.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">milliseconds</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>The interval time in milliseconds.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">context</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>What will be 'this' in the function.</p>
 
                     </div>
 
@@ -268,57 +354,33 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
             <div class="returns-description">
                         <span class="type">Object</span>:
-                    <p>Returns a state otherwise returns false.</p>
+                    <p>event the event that holds the event data.</p>
 
             </div>
         </div>
 
 
 </div>
-<div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_stateManager.js.html#l27"><code>noname\stateManager.js:27</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Add all the states given in the game setting object.
-If specified in the game settings will set the initial state otherwise the first
-element in the array will be used as initial state.</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_switch" class="method item">
-    <h3 class="name"><code>switch</code></h3>
+<div id="method_setTimeout" class="method item">
+    <h3 class="name"><code>setTimeout</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>stateName</code>
+                        <code>function</code>
+                </li>
+                <li class="arg">
+                        <code>milliseconds</code>
+                </li>
+                <li class="arg">
+                        <code>context</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
 
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
 
 
 
@@ -329,7 +391,7 @@ element in the array will be used as initial state.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_stateManager.js.html#l55"><code>noname\stateManager.js:55</code></a>
+        <a href="../files/noname_clock.js.html#l82"><code>noname\clock.js:82</code></a>
         </p>
 
 
@@ -337,7 +399,8 @@ element in the array will be used as initial state.</p>
     </div>
 
     <div class="description">
-        <p>Set the given state as current (active) state.</p>
+        <p>Calls a function after a specified number of milliseconds. It is synchronized
+whith the clock so motion will be considered in th equation.</p>
 
     </div>
 
@@ -346,12 +409,34 @@ element in the array will be used as initial state.</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">stateName</code>
-                        <span class="type">String</span>
+                        <code class="param-name">function</code>
+                        <span class="type">Function</span>
 
 
                     <div class="param-description">
-                        <p>The state name you want to switch to.</p>
+                        <p>The function that will be called.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">milliseconds</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>The interval time in milliseconds.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">context</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>What will be 'this' in the function.</p>
 
                     </div>
 
@@ -359,65 +444,20 @@ element in the array will be used as initial state.</p>
             </ul>
         </div>
 
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>event the event that holds the event data.</p>
+
+            </div>
+        </div>
 
 
 </div>
             </div>
 
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-<div id="property_current" class="property item">
-    <h3 class="name"><code>current</code></h3>
-    <span class="type">Object</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_stateManager.js.html#l11"><code>noname\stateManager.js:11</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>The current state thst being played.</p>
-
-    </div>
-
-
-
-</div>
-<div id="property_pool" class="property item">
-    <h3 class="name"><code>pool</code></h3>
-    <span class="type">Array</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_stateManager.js.html#l19"><code>noname\stateManager.js:19</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>The array holding all the states of the game.</p>
-
-    </div>
-
-
-
-</div>
-            </div>
 
 
     </div>

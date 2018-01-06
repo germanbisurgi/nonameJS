@@ -45,13 +45,21 @@ myState.create = function () {
     this.lastCameraTransform = this.camera.getTransform();
     this.currentCameraTransform = null;
 
+    // setInterval
+    this.interval = this.clock.master.setInterval(function () {
+        console.log('interval')
+    }, 1000, this);
+
+    this.timeOut = this.clock.master.setTimeout(function () {
+        console.log('timeout');
+    }, 1000, this);
+
 };
 
 
 var pausedCanFire = true;
 
 myState.update = function () {
-
 
     var currentAngle = this.shipBody.GetAngle();
     var cos = Math.cos(currentAngle);

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>noname\assetManager.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/Clock.html">Clock</a></li>
+                                <li><a href="../classes/Events.html">Events</a></li>
+                                <li><a href="../classes/Fingers.html">Fingers</a></li>
+                                <li><a href="../classes/StateManager.html">StateManager</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: noname\assetManager.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* Loads and cache game assets like images and audio.
+*
+* @class AssetManager
+*/
+var AssetManager = function () {
+    &quot;use strict&quot;;
+    var self = this;
+    self.loading = false;
+    self.queue = [];
+    self.success = 0;
+    self.errors = 0;
+    self.lastLoaded = null;
+    self.pool = [];
+
+    self.reset = function () {
+        self.queue = [];
+        self.success = 0;
+        self.errors = 0;
+    };
+
+    /**
+     * Returns an array with the games assets as items.
+     *
+     * @return {array} Assets array.
+     */
+    self.list = function () {
+        return self.pool;
+    };
+
+    /**
+     * Queue an audio file to be loaded when the loadAll() method will be called.
+     *
+     * @param  {string} name The asset name (&#x27;shot&#x27;)
+     * @param  {string} path The path of the asset (asset/path/shot.wav)
+     */
+    self.queueAudio = function(_name, _path) {
+        self.queue.push({
+            type: &#x27;audio&#x27;,
+            name: _name,
+            path: _path
+        });
+    };
+
+    /**
+     * Queue an image file to be loaded when the loadAll() method will be called.
+     *
+     * @param  {string} name The asset name (&#x27;player&#x27;)
+     * @param  {string} path The path of the asset (asset/path/player.png)
+     */
+    self.queueImage = function(_name, _path) {
+        self.queue.push({
+            type: &#x27;image&#x27;,
+            name: _name,
+            path: _path,
+        });
+    };
+
+    /**
+     * Retrieves an asset from the assetManager pool.
+     *
+     * @param  {[type]} name The name of the asset to be retrieved.
+     * @return {[type]} asset A game asset like an Image or an Audio file.
+     */
+    self.get = function(_name) {
+        var output = false;
+        self.pool.forEach(function (_asset) {
+            if (_asset.name === _name) {
+                output = _asset;
+            }
+        });
+        return output;
+    };
+
+    /**
+     * Loads all queued assets and will call loadComplete right after.
+     */
+    self.loadAll = function () {
+        if (self.queue.length &gt; 0) {
+            self.loading = true;
+            self.queue.forEach(function (_asset) {
+                if (self.get(_asset.name)) {
+                    console.log(&#x27;Asset already loaded -&gt;&#x27;, asset.name);
+                    self.success++;
+                    if (self.loadComplete()) {
+                        self.loading = false;
+                        self.reset();
+                    }
+                } else {
+                    if (_asset.type === &#x27;image&#x27;) {
+                        self.loadImage(_asset);
+                    }
+                    if (_asset.type === &#x27;audio&#x27;) {
+                        self.loadAudio(_asset);
+                    }
+                }
+            });
+        }
+    };
+
+    self.loadImage = function (_asset) {
+        var img = new Image();
+        img.onload = function() {
+            self.lastLoaded = _asset.name;
+            self.success++;
+            if (self.loadComplete ()) {
+                self.loading = false;
+                self.reset();
+            }
+        };
+        img.onerror = function() {
+            self.errors++;
+            if (self.loadComplete ()) {
+                self.loading = false;
+                self.reset();
+            }
+        };
+        img.src = _asset.path;
+        img.name = _asset.name;
+        self.pool.push(img);
+    };
+
+    self.loadAudio = function (_asset) {
+        var audio = new Audio();
+        audio.oncanplaythrough = function() {
+            self.lastLoaded = _asset.name;
+            self.success++;
+            if (self.loadComplete ()) {
+                self.loading = false;
+                self.reset();
+            }
+        };
+        audio.onerror = function() {
+            self.errors++;
+            if (self.loadComplete ()) {
+                self.loading = false;
+                self.reset();
+            }
+        };
+        audio.src = _asset.path;
+        audio.name = _asset.name;
+        self.pool.push(audio);
+    };
+
+    /**
+     * Returns the loading progress in percent.
+     *
+     * @return {number} progress The loading progress in percent.
+     */
+    self.progress = function () {
+        var progress = Math.floor((self.success + self.errors) / self.queue.length * 100);
+        if (isNaN(progress)) {
+            progress = 100;
+        }
+        return progress;
+    };
+
+    /**
+     * Returns true if all assets were loaded.
+     *
+     * @return {boolean} boolean Is true if all assets were loaded.
+     */
+    self.loadComplete  = function () {
+        return self.queue.length === self.success + self.errors;
+    };
+
+};
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

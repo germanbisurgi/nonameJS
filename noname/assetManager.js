@@ -1,3 +1,8 @@
+/**
+* Loads and cache game assets like images and audio.
+*
+* @class AssetManager
+*/
 var AssetManager = function () {
     "use strict";
     var self = this;
@@ -14,10 +19,21 @@ var AssetManager = function () {
         self.errors = 0;
     };
 
+    /**
+     * Returns an array with the games assets as items.
+     *
+     * @return {array} Assets array.
+     */
     self.list = function () {
         return self.pool;
     };
 
+    /**
+     * Queue an audio file to be loaded when the loadAll() method will be called.
+     *
+     * @param  {string} name The asset name ('shot')
+     * @param  {string} path The path of the asset (asset/path/shot.wav)
+     */
     self.queueAudio = function(_name, _path) {
         self.queue.push({
             type: 'audio',
@@ -26,6 +42,12 @@ var AssetManager = function () {
         });
     };
 
+    /**
+     * Queue an image file to be loaded when the loadAll() method will be called.
+     *
+     * @param  {string} name The asset name ('player')
+     * @param  {string} path The path of the asset (asset/path/player.png)
+     */
     self.queueImage = function(_name, _path) {
         self.queue.push({
             type: 'image',
@@ -34,6 +56,12 @@ var AssetManager = function () {
         });
     };
 
+    /**
+     * Retrieves an asset from the assetManager pool.
+     *
+     * @param  {[type]} name The name of the asset to be retrieved.
+     * @return {[type]} asset A game asset like an Image or an Audio file.
+     */
     self.get = function(_name) {
         var output = false;
         self.pool.forEach(function (_asset) {
@@ -44,6 +72,9 @@ var AssetManager = function () {
         return output;
     };
 
+    /**
+     * Loads all queued assets and will call loadComplete right after.
+     */
     self.loadAll = function () {
         if (self.queue.length > 0) {
             self.loading = true;
@@ -111,6 +142,11 @@ var AssetManager = function () {
         self.pool.push(audio);
     };
 
+    /**
+     * Returns the loading progress in percent.
+     *
+     * @return {number} progress The loading progress in percent.
+     */
     self.progress = function () {
         var progress = Math.floor((self.success + self.errors) / self.queue.length * 100);
         if (isNaN(progress)) {
@@ -119,6 +155,11 @@ var AssetManager = function () {
         return progress;
     };
 
+    /**
+     * Returns true if all assets were loaded.
+     *
+     * @return {boolean} boolean Is true if all assets were loaded.
+     */
     self.loadComplete  = function () {
         return self.queue.length === self.success + self.errors;
     };

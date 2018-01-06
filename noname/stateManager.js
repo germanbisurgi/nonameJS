@@ -9,24 +9,24 @@ var StateManager = function (_game) {
     var self = this;
 
     /**
-    * The current state (active).
+    * The current state thst being played.
     *
     * @property current
-    * @type {Object} state  state object.
+    * @type {Object}
     */
     self.current = null;
 
     /**
-    * All the states of the game.
+    * The array holding all the states of the game.
     *
     * @property pool
-    * @type {Array} Array of state objects.
+    * @type {Array}
     */
     self.pool = [];
 
     /**
-    * Add all the states given in the setting object and.
-    * if specified in the setting will set the initial state otherwise the first
+    * Add all the states given in the game setting object.
+    * If specified in the game settings will set the initial state otherwise the first
     * element in the array will be used as initial state.
     *
     * @method init
@@ -43,10 +43,10 @@ var StateManager = function (_game) {
     };
 
     /**
-    * Adds a new State into the StateManager.
+    * Adds a new state object to the pool.
     *
     * @method add
-    * @param {Object} state A state object.
+    * @param {Object} state The state object you want to add to the pool.
     */
     self.add = function(_state) {
         self.pool.push(_state);

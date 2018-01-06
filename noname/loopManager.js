@@ -20,11 +20,11 @@ var LoopManager = function (_game) {
 
     self.start = function(_task) {
         var lastTime = performance.now();
-        var offset = self.fps >= 10 ? 0.5 : 0;
+        var offset = self.fps >= 10 ? 0.5 : 0; // fixes draw skips. look also clock class
         function tick(timestamp) {
             if (!self.paused) {
                 self.delta = timestamp - lastTime;
-                if (self.delta >= 1000 / (self.fps + offset)) {
+                if ((self.delta + offset) >= 1000 / self.fps) {
                     lastTime = timestamp;
                     self.frames++;
                     _task();
