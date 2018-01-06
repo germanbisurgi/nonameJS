@@ -7,12 +7,13 @@ var Fingers = function(_game) {
     _game.render.canvas.addEventListener('touchstart', function (event) {
         for (var i = 0; i < event.changedTouches.length; i++) {
             if (self.pool.length < self.limit) {
+                console.log(_game.render.screen.offsetLeft)
                 self.pool.push({
                     id: event.changedTouches[i].identifier,
-                    startX: event.changedTouches[i].clientX,
-                    startY: event.changedTouches[i].clientY,
-                    currentX: event.changedTouches[i].clientX,
-                    currentY: event.changedTouches[i].clientY,
+                    startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+                    startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+                    currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+                    currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
                     offsetX: 0,
                     offsetY: 0
                 });
@@ -24,10 +25,10 @@ var Fingers = function(_game) {
         event.preventDefault();
         for (var i = 0; i < event.changedTouches.length; i++) {
             var finger = self.get(event.changedTouches[i].identifier);
-            finger.currentX = event.changedTouches[i].clientX;
-            finger.currentY = event.changedTouches[i].clientY;
-            finger.offsetX = event.changedTouches[i].clientX - finger.startX;
-            finger.offsetY = event.changedTouches[i].clientY - finger.startY;
+            finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
+            finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
+            finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
+            finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
         }
     }, false );
 
