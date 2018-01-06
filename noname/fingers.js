@@ -1,3 +1,9 @@
+/**
+ * Track fingers touching on the game surface
+ *
+ * @param  {object} _game [description]
+ * @class Fingers
+ */
 var Fingers = function(_game) {
     "use strict";
     var self = this;

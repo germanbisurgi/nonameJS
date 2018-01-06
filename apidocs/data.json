@@ -10,6 +10,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "noname\\fingers.js": {
+            "name": "noname\\fingers.js",
+            "modules": {},
+            "classes": {
+                "Fingers": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "noname\\stateManager.js": {
             "name": "noname\\stateManager.js",
             "modules": {},
@@ -34,6 +43,25 @@
             "line": 1,
             "description": "Used to create custom events and attach to them one or more listeners that\ncan be triggered once or multiple times.",
             "is_constructor": 1
+        },
+        "Fingers": {
+            "name": "Fingers",
+            "shortname": "Fingers",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\fingers.js",
+            "line": 1,
+            "description": "Track fingers touching on the game surface",
+            "params": [
+                {
+                    "name": "_game",
+                    "description": "[description]",
+                    "type": "Object"
+                }
+            ]
         },
         "StateManager": {
             "name": "StateManager",
@@ -259,14 +287,14 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 47,
+            "line": 45,
             "description": "Adds a new State into the StateManager.",
             "itemtype": "method",
             "name": "add",
             "params": [
                 {
-                    "name": "A",
-                    "description": "state object.",
+                    "name": "state",
+                    "description": "A state object.",
                     "type": "Object"
                 }
             ],
@@ -274,14 +302,14 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 57,
+            "line": 55,
             "description": "Set the given state as current (active) state.",
             "itemtype": "method",
             "name": "switch",
             "params": [
                 {
-                    "name": "state",
-                    "description": "name you want to switch to.",
+                    "name": "stateName",
+                    "description": "The state name you want to switch to.",
                     "type": "String"
                 }
             ],
@@ -289,14 +317,14 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 71,
+            "line": 69,
             "description": "Get a state by name.",
             "itemtype": "method",
             "name": "get",
             "params": [
                 {
-                    "name": "state",
-                    "description": "name you want to retrieve.",
+                    "name": "stateName",
+                    "description": "The name of the state you want to retrieve.",
                     "type": "String"
                 }
             ],

@@ -131,3 +131,14 @@ This manager´s job is to draw everything that is visible on the canvas.
 
 ### box2d
 Is a wrapper of the Erin box2dweb library that manage the physics of your game.
+
+## TODO
+* pool class for better memory manage.
+* complete api docs.
+* collision listeners.
+* implement audio.
+* consider to make finger, keyboard, mouse and gamepad as stand alone managers
+* refactor components (the case of camera)
+* how to implement custom systems and components (settings, globals or perstate "activables").
+* clocks intervals and timeouts (intervals and timeouts * delta)
+* event manager
