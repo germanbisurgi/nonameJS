@@ -73,7 +73,7 @@
             "extension_for": [],
             "file": "noname\\stateManager.js",
             "line": 1,
-            "description": "This manager allows you to add and switch your states. Thingslike to change from\ngame state to main menu state or map A to map B are the dayly bread of this manager."
+            "description": "This manager allows you to add and switch your states. To change from\ngame state to main menu state or map A to map B are the daily bread of this manager."
         }
     },
     "elements": {},
@@ -265,7 +265,7 @@
             "description": "The current state (active).",
             "itemtype": "property",
             "name": "current",
-            "type": "{Object} A state object.",
+            "type": "{Object} state  state object.",
             "class": "StateManager"
         },
         {

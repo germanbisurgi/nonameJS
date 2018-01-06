@@ -1,6 +1,6 @@
 /**
-* This manager allows you to add and switch your states. Thingslike to change from
-* game state to main menu state or map A to map B are the dayly bread of this manager.
+* This manager allows you to add and switch your states. To change from
+* game state to main menu state or map A to map B are the daily bread of this manager.
 *
 * @class StateManager
 */
@@ -12,7 +12,7 @@ var StateManager = function (_game) {
     * The current state (active).
     *
     * @property current
-    * @type {Object} A state object.
+    * @type {Object} state  state object.
     */
     self.current = null;
 

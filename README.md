@@ -114,7 +114,7 @@ nonameJS give to you a bunch of tools or "Managers" that allow you to create and
 This manager is the heart of your game. Like its name says, it´s a loop where your code goes in. It will execute as often as you configure it int the fps setting. He´s job is to repeat your states objects logic code several times per second You really don´t need this manager. Instead use the time manager for timing bussiness.
 
 ### state
-This manager allows you to add and switch your states. Thingslike to change from game state to main menu state or map A to map B are the dayly bread of this manager.
+This manager allows you to add and switch your states. To change from game state to main menu state or map A to map B are the daily bread of this manager.
 
 ### inputs
 This manager give you handy inputs abstractions like keyboard keys, touch, mouse, etc.
@@ -136,6 +136,7 @@ Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 * complete api docs.
 * collision listeners.
 * implement audio.
+* stand alone entities.
 * consider to make finger, keyboard, mouse and gamepad as stand alone managers
 * refactor components (the case of camera)
 * how to implement custom systems and components (settings, globals or perstate "activables").
