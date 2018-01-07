@@ -123,7 +123,7 @@ myState.update = function () {
                         0
                     ));
                     myState.shipBody.SetAngle(spaceshipAngle);
-
+                    // force
                     myState.shipBody.ApplyForce(
                         {
                             'x': Math.cos(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY),
