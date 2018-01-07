@@ -107,35 +107,6 @@ myState.update = function () {
     );
     this.compassImage.setAngle(compassAngle);
 
-    // move ship
-    if (this.inputs.keyboard.pressing(['arrowRight'])) {
-        this.shipBody.ApplyTorque(500);
-    }
-    if (this.inputs.keyboard.pressing(['arrowLeft'])) {
-        this.shipBody.ApplyTorque(-500);
-    }
-
-    var currentAngle = this.shipBody.GetAngle();
-    var cos = Math.cos(currentAngle);
-    var sin = Math.sin(currentAngle);
-
-    if (this.inputs.keyboard.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 250, 'y': sin * 250}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.keyboard.pressing(['arrowDown'])) {
-        this.shipBody.ApplyForce({'x': -cos  * 250, 'y': -sin * 250}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.keyboard.pressing(['arrowUp'])) {
-        this.shipBody.ApplyForce({'x': cos * 250, 'y': sin * 250}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.keyboard.pressing(['spacebar'])) {
-        this.shipBody.ApplyImpulse({'x': cos * 25, 'y': sin * 25}, this.shipBody.GetWorldCenter());
-    }
-    if (this.inputs.keyboard.pressing(['f'])) {
-        this.shipBody.SetAngle(this.math.toRadians(compassAngle+180));
-    }
-
-
     //touch controller
     var leftController = null;
     var rightController = null;
@@ -143,17 +114,24 @@ myState.update = function () {
         if (_finger.startX <= window.innerWidth / 2 ) {
             if (!leftController) {
                 leftController = _finger;
-                //myState.shipBody.ApplyTorque(_finger.offsetX * 10);
+                if (leftController.offsetX !== 0 && leftController.offsetY !== 0) {
+                    // angle
+                    var spaceshipAngle = myState.math.toRadians(myState.math.angleToPointer(
+                        leftController.offsetX,
+                        leftController.offsetY,
+                        0,
+                        0
+                    ));
+                    myState.shipBody.SetAngle(spaceshipAngle);
 
-                var spaceshipAngle = myState.math.angleToPointer(
-                    0,
-                    0,
-                    leftController.offsetX,
-                    leftController.offsetY
-                )
-                console.log();
-                myState.shipBody.SetAngle(myState.math.toRadians(spaceshipAngle + 180));
-
+                    myState.shipBody.ApplyForce(
+                        {
+                            'x': Math.cos(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY),
+                            'y': Math.sin(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY)
+                        },
+                        myState.shipBody.GetWorldCenter()
+                    );
+                }
             }
         } else {
             if (!rightController) {
