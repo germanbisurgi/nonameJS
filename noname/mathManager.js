@@ -35,9 +35,7 @@ var MathManager = function () {
     };
 
     self.distance = function (_x1, _y1, _x2, _y2) {
-        var a = _x1 - _x2
-        var b = _y1 - _y2
-        return Math.sqrt(a * a + b * b);
+        return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
     }
 
     self.angleToPointer = function (_x1, _y1, _x2, _y2) {

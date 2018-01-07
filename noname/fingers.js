@@ -13,7 +13,6 @@ var Fingers = function(_game) {
     _game.render.canvas.addEventListener('touchstart', function (event) {
         for (var i = 0; i < event.changedTouches.length; i++) {
             if (self.pool.length < self.limit) {
-                console.log(_game.render.screen.offsetLeft)
                 self.pool.push({
                     id: event.changedTouches[i].identifier,
                     startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,

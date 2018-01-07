@@ -143,8 +143,17 @@ myState.update = function () {
         if (_finger.startX <= window.innerWidth / 2 ) {
             if (!leftController) {
                 leftController = _finger;
-                myState.shipBody.ApplyTorque(_finger.offsetX * 10);
-                console.log(myState.math.angleToPointer(leftController.offsetX, leftController.offsetY))
+                //myState.shipBody.ApplyTorque(_finger.offsetX * 10);
+
+                var spaceshipAngle = myState.math.angleToPointer(
+                    0,
+                    0,
+                    leftController.offsetX,
+                    leftController.offsetY
+                )
+                console.log();
+                myState.shipBody.SetAngle(myState.math.toRadians(spaceshipAngle + 180));
+
             }
         } else {
             if (!rightController) {
