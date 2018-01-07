@@ -30,13 +30,14 @@ myState.create = function () {
     //mine
     this.mine = this.entities.addImage('mine', 150, 50, 20, 20);
 
-    // ship
+    // spaceship
     this.shipBody = this.box2d.addBody(5, -50, 'dynamic');
     this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, -13, 0);
     this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 30, 0);
     this.shipImage = this.entities.addImage('falcon', 0, 0, 130, 100);
     this.shipBody.SetAngularDamping(5);
     this.shipBody.SetLinearDamping(0.5);
+
 
     // compass
     this.compassImage = this.entities.addImage('arrow', 50, -100, 100, 100);

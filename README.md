@@ -145,3 +145,4 @@ Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 * how to implement custom systems and components (settings, globals or perstate "activables").
 * event manager
 * time event class?
+* resize on resize event and display rotation. (landscape and potrait.)

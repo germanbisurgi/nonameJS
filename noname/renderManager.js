@@ -9,16 +9,44 @@ var RenderManager = function (_game) {
     self.init = function () {
         self.canvas = document.createElement('canvas');
         self.canvas.setAttribute('style', 'position: absolute;');
+        self.screen.setAttribute('style', 'position: absolute; left: 50%; top: 50%;');
         self.context = self.canvas.getContext("2d");
         self.screen.appendChild(self.canvas);
     }
 
     self.resize = function () {
-        self.canvas.width = _game.settings.screen.clientWidth
+        self.canvas.width = _game.settings.screen.clientWidth;
         self.canvas.height = _game.settings.screen.clientHeight;
         self.camera.width = self.canvas.width;
         self.camera.height = self.canvas.height;
     };
+
+    self.rezizeTest = function () {
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
+
+        if (newWidthToHeight > widthToHeight) {
+            // window width is too wide relative to desired game width
+            newWidth = newHeight * widthToHeight;
+            self.screen.style.height = newHeight + 'px';
+            self.screen.style.width = newWidth + 'px';
+        } else {
+            // window height is too high relative to desired game height
+            newHeight = newWidth / widthToHeight;
+            self.screen.style.width = newWidth + 'px';
+            self.screen.style.height = newHeight + 'px';
+        }
+
+        self.screen.style.marginTop = (-newHeight / 2) + 'px';
+        self.screen.style.marginLeft = (-newWidth / 2) + 'px';
+
+        self.canvas.width = newWidth;
+        self.canvas.height = newHeight;
+        self.camera.width = self.canvas.width;
+        self.camera.height = self.canvas.height;
+    }
 
     self.clear = function () {
         self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
