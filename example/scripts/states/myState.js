@@ -61,10 +61,6 @@ var pausedCanFire = true;
 
 myState.update = function () {
 
-    var currentAngle = this.shipBody.GetAngle();
-    var cos = Math.cos(currentAngle);
-    var sin = Math.sin(currentAngle);
-
     // camera zoom
     if (this.inputs.keyboard.pressing(['n'])) {
         this.camera.setZoom(0.4);
@@ -116,18 +112,19 @@ myState.update = function () {
                 leftController = _finger;
                 if (leftController.offsetX !== 0 && leftController.offsetY !== 0) {
                     // angle
-                    var spaceshipAngle = myState.math.toRadians(myState.math.angleToPointer(
+                    myState.spaceshipAngle = myState.math.toRadians(myState.math.angleToPointer(
                         leftController.offsetX,
                         leftController.offsetY,
                         0,
                         0
                     ));
-                    myState.shipBody.SetAngle(spaceshipAngle);
+                    myState.shipBody.SetAngle(myState.spaceshipAngle);
                     // force
+                    myState. controllerOffset = myState.math.distance(0,0,leftController.offsetX,leftController.offsetY);
                     myState.shipBody.ApplyForce(
                         {
-                            'x': Math.cos(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY) * 5,
-                            'y': Math.sin(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY) * 5
+                            'x': Math.cos(myState.spaceshipAngle) * myState. controllerOffset,
+                            'y': Math.sin(myState.spaceshipAngle) * myState. controllerOffset
                         },
                         myState.shipBody.GetWorldCenter()
                     );
@@ -136,7 +133,7 @@ myState.update = function () {
         } else {
             if (!rightController) {
                 rightController = _finger;
-                myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -5, 'y': sin * _finger.offsetY * -5}, myState.shipBody.GetWorldCenter());
+                //myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -5, 'y': sin * _finger.offsetY * -5}, myState.shipBody.GetWorldCenter());
             }
         }
     });
@@ -153,11 +150,18 @@ myState.afterRender = function () {
         myState.render.context.beginPath();
         myState.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
         myState.render.context.stroke();
-
         myState.render.context.beginPath();
         myState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
         myState.render.context.stroke();
-
     });
+
+    myState.render.context.fillStyle = "yellow";
+    var distanceGoal = Math.floor(myState.math.distance(
+        myState.shipImage.x + myState.shipImage.width / 2,
+        myState.shipImage.y + myState.shipImage.height / 2,
+        myState.mine.x + myState.mine.width / 2,
+        myState.mine.y + myState.mine.height / 2
+    ));
+    myState.render.context.fillText(distanceGoal, window.innerWidth / 10, window.innerHeight / 10);
 
 }
