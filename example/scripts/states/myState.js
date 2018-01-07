@@ -46,13 +46,13 @@ myState.create = function () {
     this.currentCameraTransform = null;
 
     // setInterval
-    this.interval = this.clock.master.setInterval(function () {
+    /*this.interval = this.clock.master.setInterval(function () {
         console.log('interval')
     }, 1000, this);
 
     this.timeOut = this.clock.master.setTimeout(function () {
         console.log('timeout');
-    }, 1000, this);
+    }, 1000, this);*/
 
 };
 
@@ -144,6 +144,7 @@ myState.update = function () {
             if (!leftController) {
                 leftController = _finger;
                 myState.shipBody.ApplyTorque(_finger.offsetX * 10);
+                console.log(myState.math.angleToPointer(leftController.offsetX, leftController.offsetY))
             }
         } else {
             if (!rightController) {

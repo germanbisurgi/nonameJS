@@ -143,6 +143,5 @@ Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 * consider to make finger, keyboard, mouse and gamepad as stand alone managers
 * refactor components (the case of camera)
 * how to implement custom systems and components (settings, globals or perstate "activables").
-* clocks intervals and timeouts (intervals and timeouts * delta)
 * event manager
 * time event class?
