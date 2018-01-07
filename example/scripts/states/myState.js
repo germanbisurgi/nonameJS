@@ -126,8 +126,8 @@ myState.update = function () {
                     // force
                     myState.shipBody.ApplyForce(
                         {
-                            'x': Math.cos(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY),
-                            'y': Math.sin(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY)
+                            'x': Math.cos(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY) * 5,
+                            'y': Math.sin(spaceshipAngle) * myState.math.distance(0,0,leftController.offsetX,leftController.offsetY) * 5
                         },
                         myState.shipBody.GetWorldCenter()
                     );
