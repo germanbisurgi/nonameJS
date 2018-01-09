@@ -64,18 +64,16 @@ var Game = function (_settings) {
                 self.state.current.update();
 
                 if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
-                    // TODO performance
-                    var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
-                        return _entity.state === self.state.current.name;
-                    })
+                    if (!self.entities.prepared) {
+                        self.entities.prepare();
+                    }
                     self.render.clear();
-                    self.render.draw(renderEntities);
+                    self.render.draw(self.entities.active);
 
                     if (_settings.box2dDebug) {
                         self.box2d.clear();
                         self.box2d.draw();
                     }
-
 
                     self.state.current.afterRender();
                 }
