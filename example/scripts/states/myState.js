@@ -134,7 +134,7 @@ myState.update = function () {
         } else {
             if (!rightController) {
                 rightController = _finger;
-                //myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -5, 'y': sin * _finger.offsetY * -5}, myState.shipBody.GetWorldCenter());
+                //myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -15, 'y': sin * _finger.offsetY * -15}, myState.shipBody.GetWorldCenter());
             }
         }
     });
