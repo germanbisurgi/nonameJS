@@ -3,5 +3,6 @@ var game = new noname.game({
     fps: 60,
     dps: 60,
     states: [myState],
-    initialState: 'myState'
+    initialState: 'myState',
+    box2dDebug: false
 });
