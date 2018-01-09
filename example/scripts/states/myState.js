@@ -83,14 +83,14 @@ myState.update = function () {
     // scroll background in relativeto the camera and body velocity
     this.currentCameraTransform = this.camera.getTransform();
     if (this.lastCameraTransform.x >= this.currentCameraTransform.x) {
-        this.starfield.scroll('right', -this.shipBody.GetLinearVelocity().x * 2);
+        this.starfield.scroll('right', -this.shipBody.GetLinearVelocity().x * 4);
     } else {
-        this.starfield.scroll('left', this.shipBody.GetLinearVelocity().x * 2);
+        this.starfield.scroll('left', this.shipBody.GetLinearVelocity().x * 4);
     }
     if (this.lastCameraTransform.y >= this.currentCameraTransform.y) {
-        this.starfield.scroll('down', -this.shipBody.GetLinearVelocity().y * 2);
+        this.starfield.scroll('down', -this.shipBody.GetLinearVelocity().y * 4);
     } else {
-        this.starfield.scroll('up', this.shipBody.GetLinearVelocity().y * 2);
+        this.starfield.scroll('up', this.shipBody.GetLinearVelocity().y * 4);
     }
     this.lastCameraTransform = this.currentCameraTransform;
 

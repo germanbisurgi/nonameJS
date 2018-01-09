@@ -24,6 +24,7 @@ var RenderManager = function (_game) {
         self.canvas.height = _game.settings.screen.clientHeight;
         self.camera.width = self.canvas.width;
         self.camera.height = self.canvas.height;
+        self.camera.zoomRatio = 1;
     };
 
     self.resolution = function () {
