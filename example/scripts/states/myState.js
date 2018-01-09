@@ -2,18 +2,18 @@ var myState = new noname.state('myState');
 var speed = 150;
 
 myState.preload = function () {
-    this.assets.queueImage('stone', 'example/assets/images/stone.png');
-    this.assets.queueImage('falcon', 'example/assets/images/falcon.png');
-    this.assets.queueImage('starfield', 'example/assets/images/starfield.png');
-    this.assets.queueImage('arrow', 'example/assets/images/arrow.png');
-    this.assets.queueImage('mine', 'example/assets/images/mine.png');
+    myState.assets.queueImage('stone', 'example/assets/images/stone.png');
+    myState.assets.queueImage('falcon', 'example/assets/images/falcon.png');
+    myState.assets.queueImage('starfield', 'example/assets/images/starfield.png');
+    myState.assets.queueImage('arrow', 'example/assets/images/arrow.png');
+    myState.assets.queueImage('mine', 'example/assets/images/mine.png');
 };
 
 myState.loading = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'loading: complete';
-    if (!this.assets.loadComplete()) {
-        loading.innerText = 'loading: ' + this.assets.progress();
+    if (!myState.assets.loadComplete()) {
+        loading.innerText = 'loading: ' + myState.assets.progress();
     }
 };
 
@@ -21,93 +21,90 @@ myState.create = function () {
     var loading = document.querySelector('.loading');
     loading.innerText = 'load complete';
 
-    this.render.canvas.style.background = 'black';
+    myState.render.canvas.style.background = 'black';
 
 
     //starfield
-    this.starfield = this.entities.addTileSprite('starfield', 0,0 , 1024 * 2, 1024 * 2);
+    myState.starfield = myState.entities.addTileSprite('starfield', 0,0 , 1024 * 2, 1024 * 2);
 
     //mine
-    this.mine = this.entities.addImage('mine', 150, 50, 20, 20);
+    myState.mine = myState.entities.addImage('mine', 150, 50, 20, 20);
 
     // spaceship
-    this.shipBody = this.box2d.addBody(5, -50, 'dynamic');
-    this.shipFixture1 = this.box2d.addCircle(this.shipBody, 50, -13, 0);
-    this.shipFixture2 = this.box2d.addCircle(this.shipBody, 28, 30, 0);
-    this.shipImage = this.entities.addImage('falcon', 0, 0, 130, 100);
-    this.shipBody.SetAngularDamping(5);
-    this.shipBody.SetLinearDamping(0.5);
+    myState.shipBody = myState.box2d.addBody(5, -50, 'dynamic');
+    myState.shipFixture1 = myState.box2d.addCircle(myState.shipBody, 50, -13, 0);
+    myState.shipFixture2 = myState.box2d.addCircle(myState.shipBody, 28, 30, 0);
+    myState.shipImage = myState.entities.addImage('falcon', 0, 0, 130, 100);
+    myState.shipBody.SetAngularDamping(5);
+    myState.shipBody.SetLinearDamping(0.5);
 
 
     // compass
-    this.compassImage = this.entities.addImage('arrow', 50, -100, 100, 100);
+    myState.compassImage = myState.entities.addImage('arrow', 50, -100, 100, 100);
 
     // variables
-    this.lastCameraTransform = this.camera.getTransform();
-    this.currentCameraTransform = null;
+    myState.lastCameraTransform = myState.camera.getTransform();
+    myState.currentCameraTransform = null;
 
     // setInterval
-    /*this.interval = this.clock.master.setInterval(function () {
+    /*myState.interval = myState.clock.master.setInterval(function () {
         console.log('interval')
-    }, 1000, this);
+    }, 1000, myState);
 
-    this.timeOut = this.clock.master.setTimeout(function () {
+    myState.timeOut = myState.clock.master.setTimeout(function () {
         console.log('timeout');
-    }, 1000, this);*/
+    }, 1000, myState);*/
 
 };
-
-
-var pausedCanFire = true;
 
 myState.update = function () {
 
     // camera zoom
-    if (this.inputs.keyboard.pressing(['n'])) {
-        this.camera.setZoom(0.4);
+    if (myState.inputs.keyboard.pressing(['n'])) {
+        myState.camera.setZoom(0.4);
     }
-    if (this.inputs.keyboard.pressing(['m'])) {
-        this.camera.setZoom(-0.4);
+    if (myState.inputs.keyboard.pressing(['m'])) {
+        myState.camera.setZoom(-0.4);
     }
 
 
     // ship image follows ship body
-    this.box2d.followBody(this.shipImage, this.shipBody);
+    myState.box2d.followBody(myState.shipImage, myState.shipBody);
 
     // camera follows ship image
-    this.camera.follow(this.shipImage);
+    myState.camera.follow(myState.shipImage);
 
     // starfield follows ship image
-    this.starfield.follow(this.shipImage);
+    myState.starfield.follow(myState.shipImage);
 
     // scroll background in relativeto the camera and body velocity
-    this.currentCameraTransform = this.camera.getTransform();
-    if (this.lastCameraTransform.x >= this.currentCameraTransform.x) {
-        this.starfield.scroll('right', -this.shipBody.GetLinearVelocity().x * 4);
+    myState.currentCameraTransform = myState.camera.getTransform();
+    if (myState.lastCameraTransform.x >= myState.currentCameraTransform.x) {
+        myState.starfield.scroll('right', -myState.shipBody.GetLinearVelocity().x * 4);
     } else {
-        this.starfield.scroll('left', this.shipBody.GetLinearVelocity().x * 4);
+        myState.starfield.scroll('left', myState.shipBody.GetLinearVelocity().x * 4);
     }
-    if (this.lastCameraTransform.y >= this.currentCameraTransform.y) {
-        this.starfield.scroll('down', -this.shipBody.GetLinearVelocity().y * 4);
+    if (myState.lastCameraTransform.y >= myState.currentCameraTransform.y) {
+        myState.starfield.scroll('down', -myState.shipBody.GetLinearVelocity().y * 4);
     } else {
-        this.starfield.scroll('up', this.shipBody.GetLinearVelocity().y * 4);
+        myState.starfield.scroll('up', myState.shipBody.GetLinearVelocity().y * 4);
     }
-    this.lastCameraTransform = this.currentCameraTransform;
+    myState.lastCameraTransform = myState.currentCameraTransform;
 
     // compass
-    this.compassImage.setPosition(this.camera.x / this.camera.zoom, this.camera.y / this.camera.zoom);
-    var compassAngle = this.math.angleToPointer(
-        this.shipImage.x + this.shipImage.width / 2,
-        this.shipImage.y + this.shipImage.height / 2,
-        this.mine.x + this.mine.width / 2,
-        this.mine.y + this.mine.height / 2
+    myState.compassImage.setPosition(myState.camera.x / myState.camera.zoom, myState.camera.y / myState.camera.zoom);
+    myState.compassAngle = myState.math.angleToPointer(
+        myState.shipImage.x + myState.shipImage.width / 2,
+        myState.shipImage.y + myState.shipImage.height / 2,
+        myState.mine.x + myState.mine.width / 2,
+        myState.mine.y + myState.mine.height / 2
     );
-    this.compassImage.setAngle(compassAngle);
+    myState.compassImage.setAngle(myState.compassAngle);
 
     //touch controller
     var leftController = null;
     var rightController = null;
-    this.inputs.fingers.pool.forEach(function (_finger) {
+    myState.inputs.fingers.pool.forEach(function (_finger) {
         if (_finger.startX <= window.innerWidth / 2 ) {
             if (!leftController) {
                 leftController = _finger;
@@ -143,7 +140,7 @@ myState.update = function () {
 
 myState.afterRender = function () {
 
-    this.inputs.fingers.pool.forEach(function (_finger) {
+    myState.inputs.fingers.pool.forEach(function (_finger) {
         var halfWindow = window.innerWidth / 2;
         var strokeStyle = _finger.startX <= halfWindow ? 'cyan' : 'magenta';
         myState.render.context.strokeStyle = strokeStyle;

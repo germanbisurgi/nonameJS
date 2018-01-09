@@ -3,6 +3,7 @@ var EntityManager = function (_game) {
     var self = this;
     self.game = _game;
     self.pool = [];
+    self.active = [];
 
     self.create = function() {
         var entity = new noname.entity(self.game.state.current.name, self.game.clock.master);

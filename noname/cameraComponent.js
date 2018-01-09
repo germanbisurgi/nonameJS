@@ -43,6 +43,7 @@ var CameraComponent = function (_x, _y, _width, _height) {
         }
     }
     this.getTransform = function () {
+        // this can killperformance(object creation in loop)
         return {
             x: this.x,
             y: this.y,
@@ -52,10 +53,8 @@ var CameraComponent = function (_x, _y, _width, _height) {
         }
     }
     this.follow = function (_entity) {
-        var destinationX = this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2);
-        var destinationY = this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2);
-        this.x += (destinationX - this.x) * this.lerp;
-        this.y += (destinationY - this.y) * this.lerp;
+        this.x += (this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2) - this.x) * this.lerp;
+        this.y += (this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2) - this.y) * this.lerp;
     }
     this.setZoom = function (_zoom) {
         this.zoom += this.clock.toPPS(_zoom);
