@@ -64,9 +64,11 @@ var Game = function (_settings) {
                 self.state.current.update();
 
                 if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
+
                     if (!self.entities.prepared) {
                         self.entities.prepare();
                     }
+
                     self.render.clear();
                     self.render.draw(self.entities.active);
 
@@ -78,9 +80,6 @@ var Game = function (_settings) {
                     self.state.current.afterRender();
                 }
             }
-
-
-
         });
 
     }

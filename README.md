@@ -136,13 +136,12 @@ Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 
 ## TODO
 * pool class for better memory manage.
-* complete api docs.
 * collision listeners.
 * implement audio.
-* stand alone entities.
+* entity components (geometry, aspect, animation, camera);
 * consider to make finger, keyboard, mouse and gamepad as stand alone managers
 * refactor components (the case of camera)
-* how to implement custom systems and components (settings, globals or perstate "activables").
+* customizable systems, entities settings.
+* managers events (onDraw, on switch, before update, ecc)
 * event manager
 * time event class?
-* resize on resize event and display rotation. (landscape and potrait.)
