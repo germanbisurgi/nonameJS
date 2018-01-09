@@ -18,7 +18,7 @@ var MathManager = function () {
         return self.randomChoice([true, false]);
     };
 
-    self.limit = function(x, min, max) {
+    self.clamp = function(x, min, max) {
         return Math.max(min, Math.min(max, x));
     };
 

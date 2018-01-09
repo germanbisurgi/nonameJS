@@ -121,20 +121,21 @@ myState.update = function () {
                     ));
                     myState.shipBody.SetAngle(myState.spaceshipAngle);
                     // force
-                    myState. controllerOffset = myState.math.distance(0,0,leftController.offsetX,leftController.offsetY);
+                    myState.controllerOffset = Math.floor(myState.math.distance(0,0,leftController.offsetX, leftController.offsetY)) || 0;
+                    myState.spaceshipForce = myState.math.clamp(myState.controllerOffset * 8, 0, 600);
                     myState.shipBody.ApplyForce(
                         {
-                            'x': Math.cos(myState.spaceshipAngle) * myState. controllerOffset,
-                            'y': Math.sin(myState.spaceshipAngle) * myState. controllerOffset
+                            'x': Math.cos(myState.spaceshipAngle) * myState.spaceshipForce,
+                            'y': Math.sin(myState.spaceshipAngle) * myState.spaceshipForce
                         },
                         myState.shipBody.GetWorldCenter()
                     );
+                    console.log(myState.shipBody.GetLinearVelocity());
                 }
             }
         } else {
             if (!rightController) {
                 rightController = _finger;
-                //myState.shipBody.ApplyForce({'x': cos * _finger.offsetY * -15, 'y': sin * _finger.offsetY * -15}, myState.shipBody.GetWorldCenter());
             }
         }
     });
@@ -154,6 +155,12 @@ myState.afterRender = function () {
         myState.render.context.beginPath();
         myState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
         myState.render.context.stroke();
+
+        if (myState.spaceshipForce) {
+            myState.render.context.fillStyle = "cyan";
+            myState.render.context.fillText(myState.spaceshipForce, _finger.currentX -5, _finger.currentY - 40);
+        }
+
     });
 
     myState.render.context.fillStyle = "yellow";
