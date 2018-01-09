@@ -12,11 +12,14 @@ var RenderManager = function (_game) {
         // use with resizeFit
         self.context = self.canvas.getContext("2d");
         self.screen.appendChild(self.canvas);
+        self.resize();
+        window.addEventListener('resize', function () {
+            self.resize();
+        });
     }
 
-    self.scale = function () {
+    self.resize = function () {
         self.screen.setAttribute('style', 'height: 100vh; width: 100vw;');
-
         self.canvas.width = _game.settings.screen.clientWidth;
         self.canvas.height = _game.settings.screen.clientHeight;
         self.camera.width = self.canvas.width;

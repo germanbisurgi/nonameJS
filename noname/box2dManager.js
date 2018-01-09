@@ -32,9 +32,11 @@ var Box2dManager = function(_game) {
         self.debugDraw.SetDrawScale(self.scale);
         self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit || b2DebugDraw.e_jointBit);
         self.world.SetDebugDraw(self.debugDraw);
+        self.resize();
+        window.addEventListener('resize', function () {
+            self.resize();
+        }, true);
     }
-
-    self.init();
 
     self.resize = function () {
         self.canvas.width = _game.settings.screen.clientWidth
@@ -186,5 +188,7 @@ var Box2dManager = function(_game) {
     self.clear = function () {
         self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     };
+
+    self.init();
 
 };

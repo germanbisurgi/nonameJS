@@ -68,11 +68,9 @@ var Game = function (_settings) {
                     var renderEntities = self.state.current.entities.pool.filter(function (_entity) {
                         return _entity.state === self.state.current.name;
                     })
-                    self.render.scale();
                     self.render.clear();
                     self.render.draw(renderEntities);
 
-                    self.box2d.resize();
                     self.box2d.clear();
                     self.box2d.draw();
 
