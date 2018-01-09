@@ -130,7 +130,6 @@ myState.update = function () {
                         },
                         myState.shipBody.GetWorldCenter()
                     );
-                    console.log(myState.shipBody.GetLinearVelocity());
                 }
             }
         } else {
