@@ -132,6 +132,23 @@ myState.update = function () {
         } else {
             if (!rightController) {
                 rightController = _finger;
+                // angle
+                myState.spaceshipAngle = myState.shipBody.GetAngle();
+                myState.spaceshipPosition = myState.shipBody.GetPosition();
+                // bullet
+                myState.bullet = myState.box2d.addBody(
+                    myState.spaceshipPosition.x * 30 + Math.cos(myState.spaceshipAngle) * 3 * 30,
+                    myState.spaceshipPosition.y * 30 + Math.sin(myState.spaceshipAngle) * 3 * 30,
+                    'dynamic'
+                );
+                myState.bulletFixture = myState.box2d.addCircle(myState.bullet, 5, 0, 0);
+                myState.bullet.ApplyForce(
+                    {
+                        'x': Math.cos(myState.spaceshipAngle) * 700,
+                        'y': Math.sin(myState.spaceshipAngle) * 700
+                    },
+                    myState.bullet.GetWorldCenter()
+                );
             }
         }
     });

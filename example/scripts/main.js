@@ -4,5 +4,5 @@ var game = new noname.game({
     dps: 30,
     states: [myState],
     initialState: 'myState',
-    box2dDebug: false
+    box2dDebug: true
 });
