@@ -7,6 +7,7 @@ myState.preload = function () {
     myState.assets.queueImage('starfield', 'example/assets/images/starfield.png');
     myState.assets.queueImage('arrow', 'example/assets/images/arrow.png');
     myState.assets.queueImage('mine', 'example/assets/images/mine.png');
+    myState.assets.queueImage('bullet', 'example/assets/images/bullet.png');
 };
 
 myState.loading = function () {
@@ -144,8 +145,8 @@ myState.update = function () {
                 myState.bulletFixture = myState.box2d.addCircle(myState.bullet, 5, 0, 0);
                 myState.bullet.ApplyForce(
                     {
-                        'x': Math.cos(myState.spaceshipAngle) * 700,
-                        'y': Math.sin(myState.spaceshipAngle) * 700
+                        'x': Math.cos(myState.spaceshipAngle) * 100,
+                        'y': Math.sin(myState.spaceshipAngle) * 100
                     },
                     myState.bullet.GetWorldCenter()
                 );
