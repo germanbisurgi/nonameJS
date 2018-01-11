@@ -145,8 +145,8 @@ myState.update = function () {
                 myState.bulletFixture = myState.box2d.addCircle(myState.bullet, 5, 0, 0);
                 myState.bullet.ApplyForce(
                     {
-                        'x': Math.cos(myState.spaceshipAngle) * 2000 + myState.spaceship.GetLinearVelocity() * 30,
-                        'y': Math.sin(myState.spaceshipAngle) * 2000 + myState.spaceship.GetLinearVelocity() * 30
+                        'x': Math.cos(myState.spaceshipAngle) * 5000,
+                        'y': Math.sin(myState.spaceshipAngle) * 5000
                     },
                     myState.bullet.GetWorldCenter()
                 );
