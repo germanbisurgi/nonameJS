@@ -6,11 +6,53 @@
 var AssetManager = function () {
     "use strict";
     var self = this;
+
+    /**
+    * Is true if the asset manager is loading assets otherwise is false.
+    *
+    * @property loading
+    * @type {Array}
+    */
     self.loading = false;
+
+    /**
+    * An array of assets that were queued in the preload phase.
+    *
+    * @property queue
+    * @type {Array}
+    */
     self.queue = [];
+
+    /**
+    * assets loading errors count.
+    *
+    * @property success
+    * @type {Int}
+    */
     self.success = 0;
+
+    /**
+    * assets loading errors count.
+    *
+    * @property errors
+    * @type {Int}
+    */
     self.errors = 0;
+
+    /**
+    * The name of the latest loaded assset.
+    *
+    * @property lastLoaded
+    * @type {String}
+    */
     self.lastLoaded = null;
+
+    /**
+    * The array holding all the assets of the game.
+    *
+    * @property pool
+    * @type {Array}
+    */
     self.pool = [];
 
     self.reset = function () {
@@ -22,6 +64,7 @@ var AssetManager = function () {
     /**
      * Returns an array with the games assets as items.
      *
+     * @method list
      * @return {array} Assets array.
      */
     self.list = function () {
@@ -31,6 +74,7 @@ var AssetManager = function () {
     /**
      * Queue an audio file to be loaded when the loadAll() method will be called.
      *
+     * @method queueAudio
      * @param  {string} name The asset name ('shot')
      * @param  {string} path The path of the asset (asset/path/shot.wav)
      */
@@ -45,6 +89,7 @@ var AssetManager = function () {
     /**
      * Queue an image file to be loaded when the loadAll() method will be called.
      *
+     * @method queueImage
      * @param  {string} name The asset name ('player')
      * @param  {string} path The path of the asset (asset/path/player.png)
      */
@@ -59,6 +104,7 @@ var AssetManager = function () {
     /**
      * Retrieves an asset from the assetManager pool.
      *
+     * @method get
      * @param  {[type]} name The name of the asset to be retrieved.
      * @return {[type]} asset A game asset like an Image or an Audio file.
      */
@@ -72,9 +118,6 @@ var AssetManager = function () {
         return output;
     };
 
-    /**
-     * Loads all queued assets and will call loadComplete right after.
-     */
     self.loadAll = function () {
         if (self.queue.length > 0) {
             self.loading = true;
@@ -145,6 +188,7 @@ var AssetManager = function () {
     /**
      * Returns the loading progress in percent.
      *
+     * @method progress
      * @return {number} progress The loading progress in percent.
      */
     self.progress = function () {
@@ -158,6 +202,7 @@ var AssetManager = function () {
     /**
      * Returns true if all assets were loaded.
      *
+     * @method loadComplete
      * @return {boolean} boolean Is true if all assets were loaded.
      */
     self.loadComplete  = function () {

@@ -102,18 +102,569 @@
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
     </ul>
 
     <div>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+                <div class="index-section methods">
+                    <h3>Methods</h3>
 
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_get">get</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_list">list</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_loadComplete">loadComplete</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_progress">progress</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_queueAudio">queueAudio</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_queueImage">queueImage</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_errors">errors</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_lastLoaded">lastLoaded</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_loading">loading</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pool">pool</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_queue">queue</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_success">success</a>
+
+                            </li>
+                    </ul>
+                </div>
 
 
         </div>
 
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
 
+<div id="method_get" class="method item">
+    <h3 class="name"><code>get</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">type</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l104"><code>noname\assetManager.js:104</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Retrieves an asset from the assetManager pool.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">type</span>
+
+
+                    <div class="param-description">
+                        <p>The name of the asset to be retrieved.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">type</span>:
+                    <p>asset A game asset like an Image or an Audio file.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_list" class="method item">
+    <h3 class="name"><code>list</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l64"><code>noname\assetManager.js:64</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns an array with the games assets as items.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>Assets array.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_loadComplete" class="method item">
+    <h3 class="name"><code>loadComplete</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l202"><code>noname\assetManager.js:202</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns true if all assets were loaded.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>boolean Is true if all assets were loaded.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_progress" class="method item">
+    <h3 class="name"><code>progress</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l188"><code>noname\assetManager.js:188</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns the loading progress in percent.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Number</span>:
+                    <p>progress The loading progress in percent.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_queueAudio" class="method item">
+    <h3 class="name"><code>queueAudio</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+                <li class="arg">
+                        <code>path</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l74"><code>noname\assetManager.js:74</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Queue an audio file to be loaded when the loadAll() method will be called.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The asset name ('shot')</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The path of the asset (asset/path/shot.wav)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_queueImage" class="method item">
+    <h3 class="name"><code>queueImage</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+                <li class="arg">
+                        <code>path</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l89"><code>noname\assetManager.js:89</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Queue an image file to be loaded when the loadAll() method will be called.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The asset name ('player')</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The path of the asset (asset/path/player.png)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_errors" class="property item">
+    <h3 class="name"><code>errors</code></h3>
+    <span class="type">Int</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l34"><code>noname\assetManager.js:34</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>assets loading errors count.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_lastLoaded" class="property item">
+    <h3 class="name"><code>lastLoaded</code></h3>
+    <span class="type">String</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l42"><code>noname\assetManager.js:42</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The name of the latest loaded assset.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_loading" class="property item">
+    <h3 class="name"><code>loading</code></h3>
+    <span class="type">Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l10"><code>noname\assetManager.js:10</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Is true if the asset manager is loading assets otherwise is false.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_pool" class="property item">
+    <h3 class="name"><code>pool</code></h3>
+    <span class="type">Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l50"><code>noname\assetManager.js:50</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The array holding all the assets of the game.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_queue" class="property item">
+    <h3 class="name"><code>queue</code></h3>
+    <span class="type">Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l18"><code>noname\assetManager.js:18</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>An array of assets that were queued in the preload phase.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_success" class="property item">
+    <h3 class="name"><code>success</code></h3>
+    <span class="type">Int</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_assetManager.js.html#l26"><code>noname\assetManager.js:26</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>assets loading errors count.</p>
+
+    </div>
+
+
+
+</div>
+            </div>
 
 
     </div>
