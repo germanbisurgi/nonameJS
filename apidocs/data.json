@@ -122,7 +122,7 @@
     "classitems": [
         {
             "file": "noname\\assetManager.js",
-            "line": 10,
+            "line": 9,
             "description": "Is true if the asset manager is loading assets otherwise is false.",
             "itemtype": "property",
             "name": "loading",
@@ -131,7 +131,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 18,
+            "line": 16,
             "description": "An array of assets that were queued in the preload phase.",
             "itemtype": "property",
             "name": "queue",
@@ -140,7 +140,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 26,
+            "line": 23,
             "description": "assets loading errors count.",
             "itemtype": "property",
             "name": "success",
@@ -149,7 +149,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 34,
+            "line": 30,
             "description": "assets loading errors count.",
             "itemtype": "property",
             "name": "errors",
@@ -158,7 +158,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 42,
+            "line": 37,
             "description": "The name of the latest loaded assset.",
             "itemtype": "property",
             "name": "lastLoaded",
@@ -167,7 +167,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 50,
+            "line": 44,
             "description": "The array holding all the assets of the game.",
             "itemtype": "property",
             "name": "pool",
@@ -176,7 +176,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 64,
+            "line": 57,
             "description": "Returns an array with the games assets as items.",
             "itemtype": "method",
             "name": "list",
@@ -188,7 +188,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 74,
+            "line": 66,
             "description": "Queue an audio file to be loaded when the loadAll() method will be called.",
             "itemtype": "method",
             "name": "queueAudio",
@@ -208,7 +208,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 89,
+            "line": 80,
             "description": "Queue an image file to be loaded when the loadAll() method will be called.",
             "itemtype": "method",
             "name": "queueImage",
@@ -228,7 +228,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 104,
+            "line": 94,
             "description": "Retrieves an asset from the assetManager pool.",
             "itemtype": "method",
             "name": "get",
@@ -247,7 +247,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 188,
+            "line": 177,
             "description": "Returns the loading progress in percent.",
             "itemtype": "method",
             "name": "progress",
@@ -259,7 +259,7 @@
         },
         {
             "file": "noname\\assetManager.js",
-            "line": 202,
+            "line": 190,
             "description": "Returns true if all assets were loaded.",
             "itemtype": "method",
             "name": "loadComplete",
@@ -271,8 +271,10 @@
         },
         {
             "file": "noname\\clock.js",
-            "line": 18,
+            "line": 17,
             "description": "Is actually the game loop delta.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Number}",
             "class": "Clock"
         },
@@ -280,40 +282,65 @@
             "file": "noname\\clock.js",
             "line": 24,
             "description": "Milliseconds since the Clock was started.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Number}",
             "class": "Clock"
         },
         {
             "file": "noname\\clock.js",
-            "line": 32,
+            "line": 33,
             "description": "controls how fast time elapses on that clock.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Number}",
             "class": "Clock"
         },
         {
             "file": "noname\\clock.js",
-            "line": 38,
+            "line": 40,
             "description": "If the clock is paused or not.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Boolean}",
             "class": "Clock"
         },
         {
             "file": "noname\\clock.js",
-            "line": 44,
+            "line": 47,
             "description": "Actual delta time divided by desired delta.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Number}",
             "class": "Clock"
         },
         {
             "file": "noname\\clock.js",
-            "line": 50,
+            "line": 54,
             "description": "An array of clock events.",
+            "itemtype": "property",
+            "name": "current",
             "type": "{Array}",
             "class": "Clock"
         },
         {
             "file": "noname\\clock.js",
-            "line": 68,
+            "line": 61,
+            "description": "Update the clock properties.",
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "delta",
+                    "description": "The current loop delta.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Clock"
+        },
+        {
+            "file": "noname\\clock.js",
+            "line": 78,
             "description": "Calls a function at specified intervals (in milliseconds). It is synchronized\nwhith the clock so motion will be considered in th equation.",
             "itemtype": "method",
             "name": "setInterval",
@@ -342,7 +369,7 @@
         },
         {
             "file": "noname\\clock.js",
-            "line": 82,
+            "line": 91,
             "description": "Calls a function after a specified number of milliseconds. It is synchronized\nwhith the clock so motion will be considered in th equation.",
             "itemtype": "method",
             "name": "setTimeout",
@@ -371,7 +398,7 @@
         },
         {
             "file": "noname\\clock.js",
-            "line": 108,
+            "line": 116,
             "description": "Removes a clock event from the clock events array.",
             "itemtype": "method",
             "name": "clearEvent",
@@ -386,7 +413,7 @@
         },
         {
             "file": "noname\\clock.js",
-            "line": 135,
+            "line": 142,
             "description": "Pauses the clock but not the game.",
             "itemtype": "method",
             "name": "pause",
@@ -394,7 +421,7 @@
         },
         {
             "file": "noname\\clock.js",
-            "line": 144,
+            "line": 150,
             "description": "Unpauses the clock.",
             "itemtype": "method",
             "name": "continue",
@@ -583,7 +610,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 11,
+            "line": 10,
             "description": "The current state thst being played.",
             "itemtype": "property",
             "name": "current",
@@ -592,7 +619,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 19,
+            "line": 17,
             "description": "The array holding all the states of the game.",
             "itemtype": "property",
             "name": "pool",
@@ -601,7 +628,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 27,
+            "line": 24,
             "description": "Add all the states given in the game setting object.\nIf specified in the game settings will set the initial state otherwise the first\nelement in the array will be used as initial state.",
             "itemtype": "method",
             "name": "init",
@@ -609,7 +636,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 45,
+            "line": 41,
             "description": "Adds a new state object to the pool.",
             "itemtype": "method",
             "name": "add",
@@ -624,7 +651,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 55,
+            "line": 50,
             "description": "Set the given state as current (active) state.",
             "itemtype": "method",
             "name": "switch",
@@ -639,7 +666,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 69,
+            "line": 63,
             "description": "Get a state by name.",
             "itemtype": "method",
             "name": "get",
@@ -657,30 +684,5 @@
             "class": "StateManager"
         }
     ],
-    "warnings": [
-        {
-            "message": "Missing item type\nIs actually the game loop delta.",
-            "line": " noname\\clock.js:18"
-        },
-        {
-            "message": "Missing item type\nMilliseconds since the Clock was started.",
-            "line": " noname\\clock.js:24"
-        },
-        {
-            "message": "Missing item type\ncontrols how fast time elapses on that clock.",
-            "line": " noname\\clock.js:32"
-        },
-        {
-            "message": "Missing item type\nIf the clock is paused or not.",
-            "line": " noname\\clock.js:38"
-        },
-        {
-            "message": "Missing item type\nActual delta time divided by desired delta.",
-            "line": " noname\\clock.js:44"
-        },
-        {
-            "message": "Missing item type\nAn array of clock events.",
-            "line": " noname\\clock.js:50"
-        }
-    ]
+    "warnings": []
 }

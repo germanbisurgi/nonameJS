@@ -1,6 +1,5 @@
 /**
  * Track fingers touching on the game surface
- *
  * @param  {object} _game [description]
  * @class Fingers
  */

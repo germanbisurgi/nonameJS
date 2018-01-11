@@ -7,7 +7,6 @@
 * You should not directly instantiate this class because it will not added to The
 * clockManager pool and therefore will not be updated. Use the add method on the
 * ClockManager instead.
-*
 * @class Clock
 */
 var Clock = function (_game) {
@@ -17,12 +16,14 @@ var Clock = function (_game) {
 
     /**
      * Is actually the game loop delta.
+     * @property current
      * @type {Number}
      */
     self.delta = 0;
 
     /**
      * Milliseconds since the Clock was started.
+     * @property current
      * @type {Number}
      */
     self.elapsed = 0;
@@ -31,28 +32,37 @@ var Clock = function (_game) {
 
     /**
      * controls how fast time elapses on that clock.
+     * @property current
      * @type {Number}
      */
     self.motion = 1;
 
     /**
      * If the clock is paused or not.
+     * @property current
      * @type {Boolean}
      */
     self.paused = false;
 
     /**
      * Actual delta time divided by desired delta.
+     * @property current
      * @type {Number}
      */
     self.rate = 1;
 
     /**
      * An array of clock events.
+     * @property current
      * @type {Array}
      */
     self.events = [];
 
+    /**
+     * Update the clock properties.
+     * @method update
+     * @param  {number} delta The current loop delta.
+     */
     self.update = function (_delta) {
         self.delta = 0;
         if (!self.paused) {
@@ -68,7 +78,6 @@ var Clock = function (_game) {
     /**
      * Calls a function at specified intervals (in milliseconds). It is synchronized
      * whith the clock so motion will be considered in th equation.
-     *
      * @method setInterval
      * @param  {function} function The function that will be called.
      * @param  {number} milliseconds The interval time in milliseconds.
@@ -82,7 +91,6 @@ var Clock = function (_game) {
     /**
      * Calls a function after a specified number of milliseconds. It is synchronized
      * whith the clock so motion will be considered in th equation.
-     *
      * @method setTimeout
      * @param  {function} function The function that will be called.
      * @param  {number} milliseconds The interval time in milliseconds.
@@ -107,7 +115,6 @@ var Clock = function (_game) {
 
     /**
      * Removes a clock event from the clock events array.
-     *
      * @method clearEvent
      * @param  {event} event The event that will be removed.
      */
@@ -134,7 +141,6 @@ var Clock = function (_game) {
 
     /**
      * Pauses the clock but not the game.
-     *
      * @method pause
      */
     self.pause = function() {
@@ -143,7 +149,6 @@ var Clock = function (_game) {
 
     /**
      * Unpauses the clock.
-     *
      * @method continue
      */
     self.continue = function() {
