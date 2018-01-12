@@ -5,9 +5,12 @@ var LoopManager = function (_game) {
     self.delta = null;
     self.paused = false;
     self.frames = 0;
+    self.lastTime = 0;
+    self.offset = 0;
 
     self.init = function () {
         self.fps = _game.settings.fps || 60;
+        self.offset = self.fps >= 10 ? 0.5 : 0;
         window.requestAnimFrame = (function(){
           return  window.requestAnimationFrame       ||
                   window.webkitRequestAnimationFrame ||
@@ -19,13 +22,12 @@ var LoopManager = function (_game) {
     };
 
     self.start = function(_task) {
-        var lastTime = performance.now();
-        var offset = self.fps >= 10 ? 0.5 : 0; // fixes draw skips. look also clock class
+        self.lastTime = performance.now();
         function tick(timestamp) {
             if (!self.paused) {
-                self.delta = timestamp - lastTime;
-                if ((self.delta + offset) >= 1000 / self.fps) {
-                    lastTime = timestamp;
+                self.delta = timestamp - self.lastTime;
+                if ((self.delta + self.offset) >= 1000 / self.fps) {
+                    self.lastTime = timestamp;
                     self.frames++;
                     _task();
                 }
