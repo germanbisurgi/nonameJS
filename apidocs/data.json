@@ -126,7 +126,7 @@
             "description": "Is true if the asset manager is loading assets otherwise is false.",
             "itemtype": "property",
             "name": "loading",
-            "type": "{Array}",
+            "type": "{Boolean}",
             "class": "AssetManager"
         },
         {
@@ -144,7 +144,7 @@
             "description": "assets loading errors count.",
             "itemtype": "property",
             "name": "success",
-            "type": "{Int}",
+            "type": "{Number}",
             "class": "AssetManager"
         },
         {
@@ -153,7 +153,7 @@
             "description": "assets loading errors count.",
             "itemtype": "property",
             "name": "errors",
-            "type": "{Int}",
+            "type": "{Number}",
             "class": "AssetManager"
         },
         {
@@ -194,12 +194,12 @@
             "name": "queueAudio",
             "params": [
                 {
-                    "name": "name",
+                    "name": "_name",
                     "description": "The asset name ('shot')",
                     "type": "String"
                 },
                 {
-                    "name": "path",
+                    "name": "_path",
                     "description": "The path of the asset (asset/path/shot.wav)",
                     "type": "String"
                 }
@@ -214,12 +214,12 @@
             "name": "queueImage",
             "params": [
                 {
-                    "name": "name",
+                    "name": "_name",
                     "description": "The asset name ('player')",
                     "type": "String"
                 },
                 {
-                    "name": "path",
+                    "name": "_path",
                     "description": "The path of the asset (asset/path/player.png)",
                     "type": "String"
                 }
@@ -234,14 +234,14 @@
             "name": "get",
             "params": [
                 {
-                    "name": "name",
+                    "name": "_name",
                     "description": "The name of the asset to be retrieved.",
-                    "type": "[type]"
+                    "type": "String"
                 }
             ],
             "return": {
                 "description": "asset A game asset like an Image or an Audio file.",
-                "type": "[type]"
+                "type": "Boolean"
             },
             "class": "AssetManager"
         },
@@ -331,7 +331,7 @@
             "name": "update",
             "params": [
                 {
-                    "name": "delta",
+                    "name": "_delta",
                     "description": "The current loop delta.",
                     "type": "Number"
                 }
@@ -346,17 +346,17 @@
             "name": "setInterval",
             "params": [
                 {
-                    "name": "function",
+                    "name": "_function",
                     "description": "The function that will be called.",
                     "type": "Function"
                 },
                 {
-                    "name": "milliseconds",
+                    "name": "_milliseconds",
                     "description": "The interval time in milliseconds.",
                     "type": "Number"
                 },
                 {
-                    "name": "context",
+                    "name": "_context",
                     "description": "What will be 'this' in the function.",
                     "type": "Object"
                 }
@@ -375,17 +375,17 @@
             "name": "setTimeout",
             "params": [
                 {
-                    "name": "function",
+                    "name": "_function",
                     "description": "The function that will be called.",
                     "type": "Function"
                 },
                 {
-                    "name": "milliseconds",
+                    "name": "_milliseconds",
                     "description": "The interval time in milliseconds.",
                     "type": "Number"
                 },
                 {
-                    "name": "context",
+                    "name": "_context",
                     "description": "What will be 'this' in the function.",
                     "type": "Object"
                 }
@@ -404,7 +404,7 @@
             "name": "clearEvent",
             "params": [
                 {
-                    "name": "event",
+                    "name": "_event",
                     "description": "The event that will be removed.",
                     "type": "Event"
                 }
@@ -642,7 +642,7 @@
             "name": "add",
             "params": [
                 {
-                    "name": "state",
+                    "name": "_state",
                     "description": "The state object you want to add to the pool.",
                     "type": "Object"
                 }
@@ -657,7 +657,7 @@
             "name": "switch",
             "params": [
                 {
-                    "name": "stateName",
+                    "name": "_stateName",
                     "description": "The state name you want to switch to.",
                     "type": "String"
                 }
@@ -672,7 +672,7 @@
             "name": "get",
             "params": [
                 {
-                    "name": "stateName",
+                    "name": "_stateName",
                     "description": "The name of the state you want to retrieve.",
                     "type": "String"
                 }
