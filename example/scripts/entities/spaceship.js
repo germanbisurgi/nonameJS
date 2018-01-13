@@ -81,5 +81,6 @@ var Spaceship = function (_state) {
     };
 
     self.destroy = function () {
+        // find a way to remove bodies and entities;
     }
 };
