@@ -46,4 +46,4 @@ var TileSpriteComponent = function (_image) {
             }
         }
     };
-}
+};

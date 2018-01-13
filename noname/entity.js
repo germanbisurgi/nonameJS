@@ -7,13 +7,13 @@ var Entity = function (_state, _clock) {
 
     self.setClock = function (_clock) {
         self.clock(_clock);
-    }
+    };
 
     self.addComponent = function (_component) {
         for (var _property in _component) {
             self[_property] = _component[_property];
         }
-    }
+    };
 
     self.print = function () {
         console.log(self);

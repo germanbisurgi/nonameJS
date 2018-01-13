@@ -58,9 +58,9 @@ var Game = function (_settings) {
 
             if (self.state.current.created) {
                 self.clock.update(self.loop.delta);
-                if (true) { // TOTO physics condition
-                    self.box2d.update();
-                }
+
+                self.box2d.update(); // TODO physics condition.
+
                 self.state.current.update();
 
                 if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
@@ -82,7 +82,7 @@ var Game = function (_settings) {
             }
         });
 
-    }
+    };
 
     self.init();
 

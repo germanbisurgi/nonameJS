@@ -12,25 +12,25 @@ var CameraComponent = function (_x, _y, _width, _height) {
     this.move = function (_x, _y) {
         this.x += this.clock.toPPS(_x);
         this.y += this.clock.toPPS(_y);
-    }
+    };
     this.setPosition = function (_x, _y) {
         this.x = _x;
         this.y = _y;
-    }
+    };
     this.scale = function (_w, _h) {
         this.width *= _w;
         this.height *= _h;
-    }
+    };
     this.setSize = function (_w, _h) {
         this.width = _w;
         this.height = _h;
-    }
+    };
     this.rotate = function (_degrees) {
         this.angle += this.clock.toDPS(_degrees);
-    }
+    };
     this.setAngle = function (_degrees) {
         this.angle = _degrees;
-    }
+    };
     this.setTransform = function (_x, _y, _width, _height, _angle) {
         if (_x || _y) {
             this.setPosition(_x, _y);
@@ -41,7 +41,7 @@ var CameraComponent = function (_x, _y, _width, _height) {
         if (_angle) {
             this.setAngle(_angle);
         }
-    }
+    };
     this.getTransform = function () {
         // this can killperformance(object creation in loop)
         return {
@@ -51,18 +51,18 @@ var CameraComponent = function (_x, _y, _width, _height) {
             height: this.height,
             angle: this.angle
         }
-    }
+    };
     this.follow = function (_entity) {
         this.x += (this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2) - this.x) * this.lerp;
         this.y += (this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2) - this.y) * this.lerp;
-    }
+    };
     this.setZoom = function (_zoom) {
         this.zoom += this.clock.toPPS(_zoom);
         if (this.zoom < 0) {
             this.zoom = 0;
         }
-    }
+    };
     this.setLerp = function (_lerp) {
         this.lerp = _lerp;
     }
-}
+};

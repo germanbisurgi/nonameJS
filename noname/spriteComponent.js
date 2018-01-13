@@ -42,4 +42,4 @@ var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
             }
         }
     };
-}
+};

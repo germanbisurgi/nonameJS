@@ -9,13 +9,12 @@ var EntityManager = function (_game) {
     self.prepare = function() {
         self.active = self.pool.filter(function (_entity) {
             return _entity.state === self.game.state.current.name;
-        })
+        });
         self.prepared = true;
     };
 
     self.create = function() {
-        var entity = new noname.entity(self.game.state.current.name, self.game.clock.master);
-        return entity;
+        return new noname.entity(self.game.state.current.name, self.game.clock.master);
     };
 
     self.add = function(_entity) {

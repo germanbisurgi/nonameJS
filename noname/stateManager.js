@@ -41,7 +41,7 @@ var StateManager = function (_game) {
     /**
     * Adds a new state object to the pool.
     * @method add
-    * @param {Object} state The state object you want to add to the pool.
+    * @param {Object} _state The state object you want to add to the pool.
     */
     self.add = function(_state) {
         self.pool.push(_state);
@@ -50,7 +50,7 @@ var StateManager = function (_game) {
     /**
     * Set the given state as current (active) state.
     * @method switch
-    * @param {String} stateName The state name you want to switch to.
+    * @param {String} _stateName The state name you want to switch to.
     */
     self.switch = function(_stateName) {
         self.pool.forEach(function (_state) {
@@ -63,10 +63,10 @@ var StateManager = function (_game) {
     /**
     * Get a state by name.
     * @method get
-    * @param {String} stateName The name of the state you want to retrieve.
+    * @param {String} _stateName The name of the state you want to retrieve.
     * @return {Object} Returns a state otherwise returns false.
     */
-    self.get = function(_name) {
+    self.get = function(_stateName) {
         var output = false;
         self.pool.forEach(function (_state) {
             if (_state.name === _name) {

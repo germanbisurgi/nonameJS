@@ -61,7 +61,7 @@ var Clock = function (_game) {
     /**
      * Update the clock properties.
      * @method update
-     * @param  {number} delta The current loop delta.
+     * @param  {Number} _delta The current loop delta.
      */
     self.update = function (_delta) {
         self.delta = 0;
@@ -79,27 +79,27 @@ var Clock = function (_game) {
      * Calls a function at specified intervals (in milliseconds). It is synchronized
      * whith the clock so motion will be considered in th equation.
      * @method setInterval
-     * @param  {function} function The function that will be called.
-     * @param  {number} milliseconds The interval time in milliseconds.
-     * @param  {object} context What will be 'this' in the function.
+     * @param  {function} _function The function that will be called.
+     * @param  {number} _milliseconds The interval time in milliseconds.
+     * @param  {object} _context What will be 'this' in the function.
      * @return {object} event the event that holds the event data.
      */
     self.setInterval = function (_function, _milliseconds, _context) {
         return self.createEvent(_function, _milliseconds, _context, false);
-    }
+    };
 
     /**
      * Calls a function after a specified number of milliseconds. It is synchronized
      * whith the clock so motion will be considered in th equation.
      * @method setTimeout
-     * @param  {function} function The function that will be called.
-     * @param  {number} milliseconds The interval time in milliseconds.
-     * @param  {object} context What will be 'this' in the function.
+     * @param  {function} _function The function that will be called.
+     * @param  {number} _milliseconds The interval time in milliseconds.
+     * @param  {object} _context What will be 'this' in the function.
      * @return {object} event the event that holds the event data.
      */
     self.setTimeout = function (_function, _milliseconds, _context) {
         return self.createEvent(_function, _milliseconds, _context, true);
-    }
+    };
 
     self.createEvent = function (_function, _milliseconds, _context, _once) {
         var event = {
@@ -108,22 +108,22 @@ var Clock = function (_game) {
             elapsed: 0,
             lastElapsed: 0,
             once: _once
-        }
+        };
         self.events.push(event);
         return event;
-    }
+    };
 
     /**
      * Removes a clock event from the clock events array.
      * @method clearEvent
-     * @param  {event} event The event that will be removed.
+     * @param  {event} _event The event that will be removed.
      */
     self.clearEvent = function (_event) {
         var index = self.events.indexOf(_event);
         if (index > -1) {
             self.events.splice(index, 1);
         }
-    }
+    };
 
     self.updateEvents = function () {
         self.events.forEach(function (_event) {
@@ -137,7 +137,7 @@ var Clock = function (_game) {
             }
             _event.lastElapsed = self.elapsed;
         });
-    }
+    };
 
     /**
      * Pauses the clock but not the game.

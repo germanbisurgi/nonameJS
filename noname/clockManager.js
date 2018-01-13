@@ -6,7 +6,7 @@ var ClockManager = function (_game) {
 
     self.init = function () {
         self.master = self.create();
-    }
+    };
 
     self.update = function (_delta) {
         self.master.update(_delta);

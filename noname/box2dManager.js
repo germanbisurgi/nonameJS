@@ -4,11 +4,11 @@ var b2Body            = Box2D.Dynamics.b2Body;
 var b2FixtureDef      = Box2D.Dynamics.b2FixtureDef;
 var b2Fixture         = Box2D.Dynamics.b2Fixture;
 var b2World           = Box2D.Dynamics.b2World;
-var b2MassData        = Box2D.Collision.Shapes.b2MassData;
+//var b2MassData        = Box2D.Collision.Shapes.b2MassData;
 var b2PolygonShape    = Box2D.Collision.Shapes.b2PolygonShape;
 var b2CircleShape     = Box2D.Collision.Shapes.b2CircleShape;
 var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
-var b2Contacts        = Box2D.Dynamics.Contacts;
+//var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
 var Box2dManager = function(_game) {
@@ -36,36 +36,34 @@ var Box2dManager = function(_game) {
         window.addEventListener('resize', function () {
             self.resize();
         }, true);
-    }
+    };
 
     self.resize = function () {
-        self.canvas.width = _game.settings.screen.clientWidth
+        self.canvas.width = _game.settings.screen.clientWidth;
         self.canvas.height = _game.settings.screen.clientHeight;
     };
 
     self.addCircle = function (_body, _radius, _offsetX, _offsetY) {
         var fixtureDef = self.circle(_radius);
         fixtureDef.shape.m_p = {x: _offsetX / self.scale || 0, y: _offsetY / self.scale || 0};
-        var fixture = _body.CreateFixture(fixtureDef);
-        return fixture;
+        return _body.CreateFixture(fixtureDef);
     };
 
     self.addRectangle = function (_body, _width, _height, _offsetX, _offsetY) {
         var fixtureDef = self.rectangle(_width, _height);
-        fixtureDef.shape.m_vertices.forEach(function (vert) {
-            vert.x +=  _offsetX / self.scale || 0;
-            vert.y +=  _offsetY / self.scale || 0;
+        fixtureDef.shape.m_vertices.forEach(function (_vert) {
+            console.log('TODO check x and y');
+            _vert.x +=  _offsetX / self.scale || 0;
+            _vert.y +=  _offsetY / self.scale || 0;
         });
         fixtureDef.shape.m_centroid.x +=  _offsetX / self.scale || 0;
         fixtureDef.shape.m_centroid.y +=  _offsetY / self.scale || 0;
-        var fixture = _body.CreateFixture(fixtureDef);
-        return fixture;
+        return _body.CreateFixture(fixtureDef);
     };
 
     self.addPolygon = function (_body, _points) {
         var fixtureDef = self.polygon(_points);
-        var fixture = _body.CreateFixture(fixtureDef);
-        return fixture;
+        return _body.CreateFixture(fixtureDef);
     };
 
     self.addEdge = function (_x1, _y1, _x2, _y2, _type) {
@@ -106,8 +104,7 @@ var Box2dManager = function(_game) {
         if (_type === 'static')    {bodyDef.type = b2Body.b2_staticBody;}
         if (_type === 'dynamic')   {bodyDef.type = b2Body.b2_dynamicBody;}
         if (_type === 'kinematic') {bodyDef.type = b2Body.b2_kinematicBody;}
-        var body = self.world.CreateBody(bodyDef);
-        return body;
+        return self.world.CreateBody(bodyDef);
     };
 
     self.getFixtureDef = function() {

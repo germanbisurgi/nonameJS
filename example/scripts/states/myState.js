@@ -47,14 +47,18 @@ myState.create = function () {
     myState.lastCameraTransform = myState.camera.getTransform();
     myState.currentCameraTransform = null;
 
-    // setInterval
-    /*myState.interval = myState.clock.master.setInterval(function () {
-        console.log('interval')
-    }, 1000, myState);
+    myState.spaceshipCanShot = false;
 
-    myState.timeOut = myState.clock.master.setTimeout(function () {
+    // setInterval
+    myState.interval = myState.clock.master.setInterval(function () {
+        myState.spaceshipCanShot = true;
+    }, 500, myState);
+
+    /*myState.timeOut = myState.clock.master.setTimeout(function () {
         console.log('timeout');
     }, 1000, myState);*/
+
+    myState.inputs.fingers.limit = 2;
 
 };
 
@@ -133,23 +137,34 @@ myState.update = function () {
         } else {
             if (!rightController) {
                 rightController = _finger;
-                // angle
-                myState.spaceshipAngle = myState.shipBody.GetAngle();
-                myState.spaceshipPosition = myState.shipBody.GetPosition();
-                // bullet
-                myState.bullet = myState.box2d.addBody(
-                    myState.spaceshipPosition.x * 30 + Math.cos(myState.spaceshipAngle) * 3 * 30,
-                    myState.spaceshipPosition.y * 30 + Math.sin(myState.spaceshipAngle) * 3 * 30,
-                    'dynamic'
-                );
-                myState.bulletFixture = myState.box2d.addCircle(myState.bullet, 5, 0, 0);
-                myState.bullet.ApplyForce(
-                    {
-                        'x': Math.cos(myState.spaceshipAngle) * 5000,
-                        'y': Math.sin(myState.spaceshipAngle) * 5000
-                    },
-                    myState.bullet.GetWorldCenter()
-                );
+                if (myState.spaceshipCanShot) {
+
+                    myState.spaceshipCanShot = false;
+
+                    // angle
+                    myState.spaceshipAngle = myState.shipBody.GetAngle();
+                    myState.spaceshipPosition = myState.shipBody.GetPosition();
+                    // bullet
+                    myState.bullet = myState.box2d.addBody(
+                        myState.spaceshipPosition.x * 30 + Math.cos(myState.spaceshipAngle) * 3 * 30,
+                        myState.spaceshipPosition.y * 30 + Math.sin(myState.spaceshipAngle) * 3 * 30,
+                        'dynamic'
+                    );
+                    myState.bulletFixture = myState.box2d.addCircle(myState.bullet, 5, 0, 0);
+                    myState.bullet.ApplyForce(
+                        {
+                            'x': Math.cos(myState.spaceshipAngle) * 5000,
+                            'y': Math.sin(myState.spaceshipAngle) * 5000
+                        },
+                        myState.bullet.GetWorldCenter()
+                    );
+
+                    console.log('shot');
+
+
+
+
+                }
             }
         }
     });
@@ -159,9 +174,7 @@ myState.update = function () {
 myState.afterRender = function () {
 
     myState.inputs.fingers.pool.forEach(function (_finger) {
-        var halfWindow = window.innerWidth / 2;
-        var strokeStyle = _finger.startX <= halfWindow ? 'cyan' : 'magenta';
-        myState.render.context.strokeStyle = strokeStyle;
+        myState.render.context.strokeStyle = _finger.startX <= window.innerWidth / 2 ? 'cyan' : 'magenta';
         myState.render.context.lineWidth = "6";
         myState.render.context.beginPath();
         myState.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
@@ -184,6 +197,6 @@ myState.afterRender = function () {
         myState.mine.x + myState.mine.width / 2,
         myState.mine.y + myState.mine.height / 2
     ));
-    myState.render.context.fillText(distanceGoal, window.innerWidth / 10, window.innerHeight / 10);
+    myState.render.context.fillText(String(distanceGoal), window.innerWidth / 10, window.innerHeight / 10);
 
-}
+};

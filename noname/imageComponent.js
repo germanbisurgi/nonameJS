@@ -11,4 +11,4 @@ var ImageComponent = function (_image) {
         this.sourceWidth = _w;
         this.sourceHeight = _h;
     }
-}
+};

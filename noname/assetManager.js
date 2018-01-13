@@ -9,7 +9,7 @@ var AssetManager = function () {
     /**
     * Is true if the asset manager is loading assets otherwise is false.
     * @property loading
-    * @type {Array}
+    * @type {Boolean}
     */
     self.loading = false;
 
@@ -23,14 +23,14 @@ var AssetManager = function () {
     /**
     * assets loading errors count.
     * @property success
-    * @type {Int}
+    * @type {Number}
     */
     self.success = 0;
 
     /**
     * assets loading errors count.
     * @property errors
-    * @type {Int}
+    * @type {Number}
     */
     self.errors = 0;
 
@@ -66,8 +66,8 @@ var AssetManager = function () {
     /**
      * Queue an audio file to be loaded when the loadAll() method will be called.
      * @method queueAudio
-     * @param  {string} name The asset name ('shot')
-     * @param  {string} path The path of the asset (asset/path/shot.wav)
+     * @param  {string} _name The asset name ('shot')
+     * @param  {string} _path The path of the asset (asset/path/shot.wav)
      */
     self.queueAudio = function(_name, _path) {
         self.queue.push({
@@ -80,22 +80,22 @@ var AssetManager = function () {
     /**
      * Queue an image file to be loaded when the loadAll() method will be called.
      * @method queueImage
-     * @param  {string} name The asset name ('player')
-     * @param  {string} path The path of the asset (asset/path/player.png)
+     * @param  {string} _name The asset name ('player')
+     * @param  {string} _path The path of the asset (asset/path/player.png)
      */
     self.queueImage = function(_name, _path) {
         self.queue.push({
             type: 'image',
             name: _name,
-            path: _path,
+            path: _path
         });
     };
 
     /**
      * Retrieves an asset from the assetManager pool.
      * @method get
-     * @param  {[type]} name The name of the asset to be retrieved.
-     * @return {[type]} asset A game asset like an Image or an Audio file.
+     * @param  {String} _name The name of the asset to be retrieved.
+     * @return {Boolean} asset A game asset like an Image or an Audio file.
      */
     self.get = function(_name) {
         var output = false;
@@ -112,7 +112,7 @@ var AssetManager = function () {
             self.loading = true;
             self.queue.forEach(function (_asset) {
                 if (self.get(_asset.name)) {
-                    console.log('Asset already loaded ->', asset.name);
+                    console.log('Asset already loaded ->', _asset.name);
                     self.success++;
                     if (self.loadComplete()) {
                         self.loading = false;

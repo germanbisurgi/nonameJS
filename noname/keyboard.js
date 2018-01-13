@@ -46,7 +46,7 @@ var Keyboard = function() {
         num6: false,
         num7: false,
         num8: false,
-        num9: false,
+        num9: false
     };
 
     document.addEventListener('keydown', function (event) {
@@ -154,7 +154,7 @@ var Keyboard = function() {
     }, false);
 
     self.pressing = function (_keys) {
-        var countPressed = 0
+        var countPressed = 0;
         _keys.forEach( function (_key) {
             if (self.keys[_key]) {
                 countPressed++;

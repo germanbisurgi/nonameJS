@@ -17,15 +17,15 @@ var State = function (_name) {
         self.camera = _game.render.camera;
         self.box2d = _game.box2d;
         self.initialized = true;
-    }
+    };
 
-    self.preload = function () {}
+    self.preload = function () {};
 
-    self.loading = function () {}
+    self.loading = function () {};
 
-    self.create = function () {}
+    self.create = function () {};
 
-    self.update = function () {}
+    self.update = function () {};
 
     self.afterRender = function () {}
 

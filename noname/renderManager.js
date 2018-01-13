@@ -16,7 +16,7 @@ var RenderManager = function (_game) {
         window.addEventListener('resize', function () {
             self.resize();
         });
-    }
+    };
 
     self.resize = function () {
         self.screen.setAttribute('style', 'height: 100vh; width: 100vw;');
@@ -48,8 +48,7 @@ var RenderManager = function (_game) {
             self.camera.width = self.canvas.width;
             self.camera.height = self.canvas.height;
         }
-    }
-
+    };
 
     self.scaleFit = function () {
         var widthToHeight = 640 / 480;
@@ -58,7 +57,6 @@ var RenderManager = function (_game) {
         var newWidthToHeight = newWidth / newHeight;
 
         self.screen.setAttribute('style', 'position: absolute; left: 50%; top: 50%;');
-
 
         if (newWidthToHeight > widthToHeight) {
             // window width is too wide relative to desired game width
@@ -79,7 +77,7 @@ var RenderManager = function (_game) {
         self.canvas.height = newHeight;
         self.camera.width = self.canvas.width;
         self.camera.height = self.canvas.height;
-    }
+    };
 
     self.clear = function () {
         self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);

@@ -39,7 +39,7 @@ var LoopManager = function (_game) {
 
     self.timestamp = function () {
         return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
-    }
+    };
 
     self.pause = function () {
        self.paused = true;
