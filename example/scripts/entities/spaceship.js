@@ -1,51 +1,85 @@
 var Spaceship = function (_state) {
     var self = this;
-    self.state = _state;
-    self.entity = null;
+    self.body = _state.box2d.addBody(5, -50, 'dynamic');
+    self.body.SetAngularDamping(5);
+    self.body.SetLinearDamping(0.5);
+    self.position = self.body.GetPosition();
+    self.angle = self.body.GetAngle();
+    self.force = null;
+    self.fixture1 = _state.box2d.addCircle(self.body, 50, -13, 0);
+    self.fixture2 = _state.box2d.addCircle(self.body, 28, 30, 0);
+    self.image = _state.entities.addImage('falcon', 0, 0, 130, 100);
+    self.canShot = false;
+    self.canShotInterval = _state.clock.master.setInterval(function () {
+        self.canShot = true;
+    }, 200, _state);
+    self.leftController = null;
+    self.rightController = null;
+    self.controllerOffset = null;
 
-    self.create = function () {
-        self.state.shipBody = self.state.box2d.addBody(5, -50, 'dynamic');
-        self.state.shipFixture1 = self.state.box2d.addCircle(self.state.shipBody, 50, -13, 0);
-        self.state.shipFixture2 = self.state.box2d.addCircle(self.state.shipBody, 28, 30, 0);
-        self.state.shipImage = self.state.entities.addImage('falcon', 0, 0, 130, 100);
-        self.state.shipBody.SetAngularDamping(5);
-        self.state.shipBody.SetLinearDamping(0.5);
-    }
 
     self.update = function () {
-        //touch controller
-        var leftController = null;
-        var rightController = null;
-        self.state.inputs.fingers.pool.forEach(function (_finger) {
+        self.leftController = null;
+        self.rightController = null;
+        _state.inputs.fingers.pool.forEach(function (_finger) {
             if (_finger.startX <= window.innerWidth / 2 ) {
-                if (!leftController) {
-                    leftController = _finger;
-                    if (leftController.offsetX !== 0 && leftController.offsetY !== 0) {
+                if (!self.leftController) {
+                    self.leftController = _finger;
+                    if (self.leftController.offsetX !== 0 && self.leftController.offsetY !== 0) {
                         // angle
-                        self.state.spaceshipAngle = self.state.math.toRadians(self.state.math.angleToPointer(
-                            leftController.offsetX,
-                            leftController.offsetY,
+                        self.angle = _state.math.toRadians(_state.math.angleToPointer(
+                            self.leftController.offsetX,
+                            self.leftController.offsetY,
                             0,
                             0
                         ));
-                        self.state.shipBody.SetAngle(self.state.spaceshipAngle);
+                        self.body.SetAngle(self.angle);
                         // force
-                        self.state. controllerOffset = self.state.math.distance(0,0,leftController.offsetX,leftController.offsetY);
-                        self.state.shipBody.ApplyForce(
+                        self.controllerOffset = Math.floor(_state.math.distance(0,0,self.leftController.offsetX, self.leftController.offsetY)) || 0;
+                        self.force = _state.math.clamp(self.controllerOffset * 8, 0, 600);
+                        self.body.ApplyForce(
                             {
-                                'x': Math.cos(self.state.spaceshipAngle) * self.state. controllerOffset,
-                                'y': Math.sin(self.state.spaceshipAngle) * self.state. controllerOffset
+                                'x': Math.cos(self.angle) * self.force,
+                                'y': Math.sin(self.angle) * self.force
                             },
-                            self.state.shipBody.GetWorldCenter()
+                            self.body.GetWorldCenter()
                         );
                     }
                 }
             } else {
-                if (!rightController) {
-                    rightController = _finger;
-                    //self.state.shipBody.ApplyForce({'x': cos * _finger.offsetY * -5, 'y': sin * _finger.offsetY * -5}, self.state.shipBody.GetWorldCenter());
+                if (!self.rightController) {
+                    self.rightController = _finger;
+                    if (self.canShot) {
+
+                        self.canShot = false;
+
+                        // angle
+                        self.angle = self.body.GetAngle();
+                        self.position = self.body.GetPosition();
+                        // bullet
+                        _state.bullet = _state.box2d.addBody(
+                            self.position.x * 30 + Math.cos(self.angle) * 3 * 30,
+                            self.position.y * 30 + Math.sin(self.angle) * 3 * 30,
+                            'dynamic'
+                        );
+                        _state.bulletFixture = _state.box2d.addCircle(_state.bullet, 5, 0, 0);
+                        _state.bullet.ApplyForce(
+                            {
+                                'x': Math.cos(self.angle) * 5000,
+                                'y': Math.sin(self.angle) * 5000
+                            },
+                            _state.bullet.GetWorldCenter()
+                        );
+                    }
                 }
             }
         });
+
+        _state.box2d.followBody(self.image, self.body);
+        _state.camera.follow(self.image);
+
+    };
+
+    self.destroy = function () {
     }
-}
+};
