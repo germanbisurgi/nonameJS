@@ -95,7 +95,7 @@ var AssetManager = function () {
      * Retrieves an asset from the assetManager pool.
      * @method get
      * @param  {String} _name The name of the asset to be retrieved.
-     * @return {Boolean} asset A game asset like an Image or an Audio file.
+     * @return {Object} asset A game asset like an Image or an Audio file.
      */
     self.get = function(_name) {
         var output = false;

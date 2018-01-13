@@ -69,7 +69,7 @@ var StateManager = function (_game) {
     self.get = function(_stateName) {
         var output = false;
         self.pool.forEach(function (_state) {
-            if (_state.name === _name) {
+            if (_state.name === _stateName) {
                 output = _state;
             }
         });
