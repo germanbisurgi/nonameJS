@@ -35,7 +35,7 @@ var AssetManager = function () {
     self.errors = 0;
 
     /**
-    * The name of the latest loaded assset.
+    * The name of the latest loaded asset.
     * @property lastLoaded
     * @type {String}
     */

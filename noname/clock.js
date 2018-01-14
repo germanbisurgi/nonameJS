@@ -2,7 +2,7 @@
 * Tracking time within a game, synchronize animations and manage time related
 * events like setTimeout and setInterval.
 * All clocks are updated by the clockManager who has a 'master' clock itself to
-* sync created clocks. All entities are synchronizez with the master clock untill
+* sync created clocks. All entities are synchronizes with the master clock until
 * you change it.
 * You should not directly instantiate this class because it will not added to The
 * clockManager pool and therefore will not be updated. Use the add method on the
@@ -77,7 +77,7 @@ var Clock = function (_game) {
 
     /**
      * Calls a function at specified intervals (in milliseconds). It is synchronized
-     * whith the clock so motion will be considered in th equation.
+     * with the clock so motion will be considered in th equation.
      * @method setInterval
      * @param  {function} _function The function that will be called.
      * @param  {number} _milliseconds The interval time in milliseconds.
@@ -90,7 +90,7 @@ var Clock = function (_game) {
 
     /**
      * Calls a function after a specified number of milliseconds. It is synchronized
-     * whith the clock so motion will be considered in th equation.
+     * with the clock so motion will be considered in th equation.
      * @method setTimeout
      * @param  {function} _function The function that will be called.
      * @param  {number} _milliseconds The interval time in milliseconds.
@@ -148,7 +148,7 @@ var Clock = function (_game) {
     };
 
     /**
-     * Unpauses the clock.
+     * Continues the clock.
      * @method continue
      */
     self.continue = function() {
@@ -163,7 +163,7 @@ var Clock = function (_game) {
         return _degrees * self.delta * self.motion / 1000;
     };
 
-    self.toMSPS = function(_miliseconds) {
-        return _miliseconds * self.delta * self.motion;
+    self.toMSPS = function(_milliseconds) {
+        return _milliseconds * self.delta * self.motion;
     };
 };

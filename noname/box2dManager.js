@@ -52,7 +52,7 @@ var Box2dManager = function(_game) {
     self.addRectangle = function (_body, _width, _height, _offsetX, _offsetY) {
         var fixtureDef = self.rectangle(_width, _height);
         fixtureDef.shape.m_vertices.forEach(function (_vert) {
-            console.log('TODO check x and y');
+            // TODO check x and y
             _vert.x +=  _offsetX / self.scale || 0;
             _vert.y +=  _offsetY / self.scale || 0;
         });

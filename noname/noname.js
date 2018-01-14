@@ -8,15 +8,15 @@ var noname = {
     entityManager: EntityManager,
     renderManager: RenderManager,
     box2dManager: Box2dManager,
+    camera: Camera,
     game: Game,
     state: State,
     entity: Entity,
     clock: Clock,
     keyboard: Keyboard,
     fingers: Fingers,
-    matrixComponent: MatrixComponent,
+    transformComponent: TransformComponent,
     imageComponent: ImageComponent,
     spriteComponent: SpriteComponent,
-    tileSpriteComponent: TileSpriteComponent,
-    cameraComponent: CameraComponent
+    tileSpriteComponent: TileSpriteComponent
 };

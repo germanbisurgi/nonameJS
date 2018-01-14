@@ -1,4 +1,4 @@
-var MatrixComponent = function (_x, _y, _width, _height) {
+var TransformComponent = function (_x, _y, _width, _height) {
     this.x = _x || 0;
     this.y = _y || 0;
     this.width = _width || 50;

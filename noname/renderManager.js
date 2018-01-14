@@ -3,7 +3,7 @@ var RenderManager = function (_game) {
     var self = this;
     self.canvas = null;
     self.context = null;
-    self.camera = _game.entities.addCamera(0, 0, 0, 0);
+    self.camera = new noname.camera(0, 0, 0, 0);
     self.screen = _game.settings.screen;
 
     self.init = function () {

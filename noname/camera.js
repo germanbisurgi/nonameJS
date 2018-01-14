@@ -1,4 +1,4 @@
-var CameraComponent = function (_x, _y, _width, _height) {
+var Camera = function (_x, _y, _width, _height) {
     this.x = _x || 0;
     this.y = _y || 0;
     this.width = _width || 50;
@@ -43,7 +43,7 @@ var CameraComponent = function (_x, _y, _width, _height) {
         }
     };
     this.getTransform = function () {
-        // this can killperformance(object creation in loop)
+        // this can kill performance(object creation in loop)
         return {
             x: this.x,
             y: this.y,
@@ -62,7 +62,4 @@ var CameraComponent = function (_x, _y, _width, _height) {
             this.zoom = 0;
         }
     };
-    this.setLerp = function (_lerp) {
-        this.lerp = _lerp;
-    }
 };

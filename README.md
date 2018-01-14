@@ -145,3 +145,4 @@ Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 * managers events (onDraw, on switch, before update, ecc)
 * event manager
 * time event class?
+* component can see each others?
