@@ -37,7 +37,7 @@ var MathManager = function () {
 
     /**
      * Returns true or false randomly.
-     * @returns {boolean} A random bollean (true or false);
+     * @returns {boolean} A random boolean (true or false);
      */
     self.randomBool = function() {
         return self.randomChoice([true, false]);
