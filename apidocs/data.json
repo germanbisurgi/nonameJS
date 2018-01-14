@@ -636,17 +636,17 @@
             "params": [
                 {
                     "name": "_min",
-                    "description": "",
+                    "description": "the min value.",
                     "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": "",
+                    "description": "The max value.",
                     "type": "Number"
                 }
             ],
             "return": {
-                "description": "",
+                "description": "A generated random number.",
                 "type": "Number"
             },
             "class": "MathManager"
@@ -658,17 +658,17 @@
             "params": [
                 {
                     "name": "_min",
-                    "description": "",
+                    "description": "the min value.",
                     "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": "",
+                    "description": "The max value.",
                     "type": "Number"
                 }
             ],
             "return": {
-                "description": "",
+                "description": "A generated and rounded random number.",
                 "type": "Number"
             },
             "class": "MathManager"
@@ -685,7 +685,7 @@
                 }
             ],
             "return": {
-                "description": "",
+                "description": "The choice(item of the array).",
                 "type": "*"
             },
             "class": "MathManager"
@@ -695,7 +695,7 @@
             "line": 38,
             "description": "Returns true or false randomly.",
             "return": {
-                "description": "",
+                "description": "A random bollean (true or false);",
                 "type": "Boolean"
             },
             "class": "MathManager"
@@ -706,18 +706,18 @@
             "description": "Limit a given number to given min and max boundaries.",
             "params": [
                 {
-                    "name": "_x",
-                    "description": "",
+                    "name": "_number",
+                    "description": "The number to clamp.",
                     "type": "Number"
                 },
                 {
                     "name": "_min",
-                    "description": "",
+                    "description": "the min value.",
                     "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": "",
+                    "description": "The max value.",
                     "type": "Number"
                 }
             ],
@@ -733,18 +733,18 @@
             "description": "Returns true if a number is >= than the min number and\n<= than the max number.",
             "params": [
                 {
-                    "name": "_n",
+                    "name": "_number",
                     "description": "The number to check.",
                     "type": "Number"
                 },
                 {
                     "name": "_min",
-                    "description": "the min number.",
+                    "description": "the min value..",
                     "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": "the max number.",
+                    "description": "The max value.",
                     "type": "Number"
                 }
             ],
@@ -763,12 +763,12 @@
             "params": [
                 {
                     "name": "_degrees",
-                    "description": "",
+                    "description": "Angle in degrees.",
                     "type": "Number"
                 }
             ],
             "return": {
-                "description": "",
+                "description": "Angle in radians.",
                 "type": "Number"
             },
             "class": "MathManager"
@@ -782,12 +782,12 @@
             "params": [
                 {
                     "name": "_radians",
-                    "description": "",
+                    "description": "Angle in radians.",
                     "type": "Number"
                 }
             ],
             "return": {
-                "description": "",
+                "description": "Angle in degrees.",
                 "type": "Number"
             },
             "class": "MathManager"
@@ -821,7 +821,7 @@
                 }
             ],
             "return": {
-                "description": "",
+                "description": "The distance between 2 points.",
                 "type": "Number"
             },
             "class": "MathManager"
@@ -889,8 +889,8 @@
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "X: *, y: *"
+                "description": "{x: *, y: *}",
+                "type": "Object"
             },
             "class": "MathManager"
         },

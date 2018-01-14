@@ -95,9 +95,9 @@ var MathManager = function () {
 
     /**
      * Returns a random number between a min and a max number.
-     * @param {number} _min
-     * @param {number} _max
-     * @returns {number}
+     * @param {number} _min the min value.
+     * @param {number} _max The max value.
+     * @returns {number} A generated random number.
      */
     self.random = function(_min, _max) {
         return (_min + (Math.random() * (_max - _min)));
@@ -105,9 +105,9 @@ var MathManager = function () {
 
     /**
      * Returns a random rounded number between a min and a max number.
-     * @param {number} _min
-     * @param {number} _max
-     * @returns {number}
+     * @param {number} _min the min value.
+     * @param {number} _max The max value.
+     * @returns {number} A generated and rounded random number.
      */
     self.randomInt = function(_min, _max) {
         return Math.round(this.random(_min, _max));
@@ -116,7 +116,7 @@ var MathManager = function () {
     /**
      * Will return a random choice given an array of choices.
      * @param  {array} _choices Array of choices.
-     * @returns {*}
+     * @returns {*} The choice(item of the array).
      */
     self.randomChoice = function(_choices) {
         return _choices[self.randomInt(0, _choices.length-1)];
@@ -124,7 +124,7 @@ var MathManager = function () {
 
     /**
      * Returns true or false randomly.
-     * @returns {boolean}
+     * @returns {boolean} A random bollean (true or false);
      */
     self.randomBool = function() {
         return self.randomChoice([true, false]);
@@ -132,32 +132,32 @@ var MathManager = function () {
 
     /**
      * Limit a given number to given min and max boundaries.
-     * @param {number} _x
-     * @param {number} _min
-     * @param {number} _max
+     * @param {number} _number The number to clamp.
+     * @param {number} _min the min value.
+     * @param {number} _max The max value.
      * @returns {number}
      */
-    self.clamp = function(_x, _min, _max) {
-        return Math.max(_min, Math.min(_max, _x));
+    self.clamp = function(_number, _min, _max) {
+        return Math.max(_min, Math.min(_max, _number));
     };
 
     /**
      * Returns true if a number is &gt;= than the min number and
      * &lt;= than the max number.
-     * @param {number} _n The number to check.
-     * @param {number} _min the min number.
-     * @param {number} _max the max number.
+     * @param {number} _number The number to check.
+     * @param {number} _min the min value..
+     * @param {number} _max The max value.
      * @returns {boolean}
      */
-    self.between = function(_n, _min, _max) {
-        return ((_n &gt;= _min) &amp;&amp; (_n &lt;= _max));
+    self.between = function(_number, _min, _max) {
+        return ((_number &gt;= _min) &amp;&amp; (_number &lt;= _max));
     };
 
     /**
      * Converts degrees to radians.
      * @method toRadians
-     * @param {number} _degrees
-     * @returns {number}
+     * @param {number} _degrees Angle in degrees.
+     * @returns {number} Angle in radians.
      */
     self.toRadians = function(_degrees) {
         return _degrees * 0.0174532925199432957;
@@ -166,8 +166,8 @@ var MathManager = function () {
     /**
      * Converts radians to degrees.
      * @method toDegrees
-     * @param {number} _radians
-     * @returns {number}
+     * @param {number} _radians Angle in radians.
+     * @returns {number} Angle in degrees.
      */
     self.toDegrees = function(_radians) {
         return _radians * 57.295779513082320876;
@@ -180,7 +180,7 @@ var MathManager = function () {
      * @param {number} _y1
      * @param {number} _x2
      * @param {number} _y2
-     * @returns {number}
+     * @returns {number} The distance between 2 points.
      */
     self.distance = function (_x1, _y1, _x2, _y2) {
         return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
@@ -206,7 +206,7 @@ var MathManager = function () {
      * @param {number} _originX Origin x.
      * @param {number} _originY Origin y.
      * @param {number} _radius How far the point will be from the origin.
-     * @returns {{x: *, y: *}}
+     * @returns {object} {x: *, y: *}
      */
     self.angleToPoint = function (_angle, _originX, _originY, _radius) {
         return {
