@@ -73,11 +73,11 @@ myState.update = function () {
 
     // compass
     myState.compassImage.setPosition(myState.camera.x / myState.camera.zoom, myState.camera.y / myState.camera.zoom);
-    myState.compassAngle = myState.math.angleToPointer(
-        myState.spaceship.image.x + myState.spaceship.image.width / 2,
-        myState.spaceship.image.y + myState.spaceship.image.height / 2,
+    myState.compassAngle = myState.math.pointToAngle(
         myState.mine.x + myState.mine.width / 2,
-        myState.mine.y + myState.mine.height / 2
+        myState.mine.y + myState.mine.height / 2,
+        myState.spaceship.image.x + myState.spaceship.image.width / 2,
+        myState.spaceship.image.y + myState.spaceship.image.height / 2
     );
     myState.compassImage.setAngle(myState.compassAngle);
 

@@ -12,7 +12,8 @@ var Spaceship = function (_state) {
     self.canShot = false;
     self.canShotInterval = _state.clock.master.setInterval(function () {
         self.canShot = true;
-    }, 200, _state);
+    }, 500, _state);
+    self.bulletPosition = null;
     self.leftController = null;
     self.rightController = null;
     self.controllerOffset = null;
@@ -27,11 +28,11 @@ var Spaceship = function (_state) {
                     self.leftController = _finger;
                     if (self.leftController.offsetX !== 0 && self.leftController.offsetY !== 0) {
                         // angle
-                        self.angle = _state.math.toRadians(_state.math.angleToPointer(
-                            self.leftController.offsetX,
-                            self.leftController.offsetY,
+                        self.angle = _state.math.toRadians(_state.math.pointToAngle(
                             0,
-                            0
+                            0,
+                            self.leftController.offsetX,
+                            self.leftController.offsetY
                         ));
                         self.body.SetAngle(self.angle);
                         // force
@@ -52,14 +53,16 @@ var Spaceship = function (_state) {
                     if (self.canShot) {
 
                         self.canShot = false;
-
-                        // angle
-                        self.angle = self.body.GetAngle();
-                        self.position = self.body.GetPosition();
+                        self.bulletPosition = _state.math.angleToPoint(
+                            self.body.GetAngle(),
+                            self.body.GetPosition().x * 30,
+                            self.body.GetPosition().y * 30,
+                            50
+                        );
                         // bullet
                         _state.bullet = _state.box2d.addBody(
-                            self.position.x * 30 + Math.cos(self.angle) * 3 * 30,
-                            self.position.y * 30 + Math.sin(self.angle) * 3 * 30,
+                            self.bulletPosition.x,
+                            self.bulletPosition.y,
                             'dynamic'
                         );
                         _state.bulletFixture = _state.box2d.addCircle(_state.bullet, 5, 0, 0);

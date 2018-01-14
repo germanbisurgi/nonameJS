@@ -38,8 +38,23 @@ var MathManager = function () {
         return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
     };
 
-    self.angleToPointer = function (_x1, _y1, _x2, _y2) {
-        return self.toDegrees(Math.atan2(_y1 - _y2, _x1 - _x2));
+    /**
+     *  Return the angle that aims to a point given an origin point.
+     * @param _originX Origin x
+     * @param _originY Origin y
+     * @param _pointX Point x
+     * @param _pointY Point y
+     * @returns {Number} The angle in radians
+     */
+    self.pointToAngle = function (_originX, _originY, _pointX, _pointY) {
+        return self.toDegrees(Math.atan2(_pointY - _originY, _pointX - _originX));
+    };
+
+    self.angleToPoint = function (_angle, _originX, _originY, _radius) {
+        return {
+            x: Math.cos(_angle) * _radius + _originX,
+            y: Math.sin(_angle) * _radius + _originY
+        }
     };
 
     self.normalize = function (_angle) {
