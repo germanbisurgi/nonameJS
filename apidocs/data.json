@@ -636,11 +636,13 @@
             "params": [
                 {
                     "name": "_min",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -656,11 +658,13 @@
             "params": [
                 {
                     "name": "_min",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -676,7 +680,8 @@
             "params": [
                 {
                     "name": "_choices",
-                    "description": "Array of choices."
+                    "description": "Array of choices.",
+                    "type": "Array"
                 }
             ],
             "return": {
@@ -702,15 +707,18 @@
             "params": [
                 {
                     "name": "_x",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_min",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -726,15 +734,18 @@
             "params": [
                 {
                     "name": "_n",
-                    "description": "The number to check."
+                    "description": "The number to check.",
+                    "type": "Number"
                 },
                 {
                     "name": "_min",
-                    "description": "the min number."
+                    "description": "the min number.",
+                    "type": "Number"
                 },
                 {
                     "name": "_max",
-                    "description": "the max number."
+                    "description": "the max number.",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -752,7 +763,8 @@
             "params": [
                 {
                     "name": "_degrees",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -770,7 +782,8 @@
             "params": [
                 {
                     "name": "_radians",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -788,19 +801,23 @@
             "params": [
                 {
                     "name": "_x1",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_y1",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_x2",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "_y2",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -818,19 +835,23 @@
             "params": [
                 {
                     "name": "_originX",
-                    "description": "Origin x"
+                    "description": "Origin x",
+                    "type": "Number"
                 },
                 {
                     "name": "_originY",
-                    "description": "Origin y"
+                    "description": "Origin y",
+                    "type": "Number"
                 },
                 {
                     "name": "_pointX",
-                    "description": "Point x"
+                    "description": "Point x",
+                    "type": "Number"
                 },
                 {
                     "name": "_pointY",
-                    "description": "Point y"
+                    "description": "Point y",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -848,19 +869,23 @@
             "params": [
                 {
                     "name": "_angle",
-                    "description": "an angle in radians."
+                    "description": "an angle in radians.",
+                    "type": "Number"
                 },
                 {
                     "name": "_originX",
-                    "description": "Origin x."
+                    "description": "Origin x.",
+                    "type": "Number"
                 },
                 {
                     "name": "_originY",
-                    "description": "Origin y."
+                    "description": "Origin y.",
+                    "type": "Number"
                 },
                 {
                     "name": "_radius",
-                    "description": "How far the point will be from the origin."
+                    "description": "How far the point will be from the origin.",
+                    "type": "Number"
                 }
             ],
             "return": {
