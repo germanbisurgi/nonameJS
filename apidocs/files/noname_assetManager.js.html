@@ -42,6 +42,7 @@
                                 <li><a href="../classes/Clock.html">Clock</a></li>
                                 <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
+                                <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
                             </ul>
                 
@@ -181,7 +182,7 @@ var AssetManager = function () {
      * Retrieves an asset from the assetManager pool.
      * @method get
      * @param  {String} _name The name of the asset to be retrieved.
-     * @return {Boolean} asset A game asset like an Image or an Audio file.
+     * @return {Object} asset A game asset like an Image or an Audio file.
      */
     self.get = function(_name) {
         var output = false;

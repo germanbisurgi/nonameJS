@@ -1,5 +1,4 @@
 var myState = new noname.state('myState');
-var speed = 150;
 
 // ---------------------------------------------------------------------- preload
 
@@ -69,7 +68,6 @@ myState.update = function () {
         myState.starfield.scroll('up', myState.spaceship.body.GetLinearVelocity().y * 4);
     }
     myState.lastCameraTransform = myState.currentCameraTransform;
-
 
     // compass
     myState.compassImage.setPosition(myState.camera.x / myState.camera.zoom, myState.camera.y / myState.camera.zoom);

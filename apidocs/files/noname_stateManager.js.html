@@ -42,6 +42,7 @@
                                 <li><a href="../classes/Clock.html">Clock</a></li>
                                 <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
+                                <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
                             </ul>
                 
@@ -155,7 +156,7 @@ var StateManager = function (_game) {
     self.get = function(_stateName) {
         var output = false;
         self.pool.forEach(function (_state) {
-            if (_state.name === _name) {
+            if (_state.name === _stateName) {
                 output = _state;
             }
         });

@@ -37,6 +37,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "noname\\mathManager.js": {
+            "name": "noname\\mathManager.js",
+            "modules": {},
+            "classes": {
+                "MathManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "noname\\stateManager.js": {
             "name": "noname\\stateManager.js",
             "modules": {},
@@ -104,6 +113,18 @@
                     "type": "Object"
                 }
             ]
+        },
+        "MathManager": {
+            "name": "MathManager",
+            "shortname": "MathManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\mathManager.js",
+            "line": 1,
+            "description": "This class have a cosy set of Math methods and helpers."
         },
         "StateManager": {
             "name": "StateManager",
@@ -241,7 +262,7 @@
             ],
             "return": {
                 "description": "asset A game asset like an Image or an Audio file.",
-                "type": "Boolean"
+                "type": "Object"
             },
             "class": "AssetManager"
         },
@@ -609,6 +630,246 @@
             "class": "Events"
         },
         {
+            "file": "noname\\mathManager.js",
+            "line": 9,
+            "description": "Returns a random number between a min and a max number.",
+            "params": [
+                {
+                    "name": "_min",
+                    "description": ""
+                },
+                {
+                    "name": "_max",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 19,
+            "description": "Returns a random rounded number between a min and a max number.",
+            "params": [
+                {
+                    "name": "_min",
+                    "description": ""
+                },
+                {
+                    "name": "_max",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 29,
+            "description": "Will return a random choice given an array of choices.",
+            "params": [
+                {
+                    "name": "_choices",
+                    "description": "Array of choices."
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 38,
+            "description": "Returns true or false randomly.",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 46,
+            "description": "Limit a given number to given min and max boundaries.",
+            "params": [
+                {
+                    "name": "_x",
+                    "description": ""
+                },
+                {
+                    "name": "_min",
+                    "description": ""
+                },
+                {
+                    "name": "_max",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 57,
+            "description": "Returns true if a number is >= than the min number and\n<= than the max number.",
+            "params": [
+                {
+                    "name": "_n",
+                    "description": "The number to check."
+                },
+                {
+                    "name": "_min",
+                    "description": "the min number."
+                },
+                {
+                    "name": "_max",
+                    "description": "the max number."
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 69,
+            "description": "Converts degrees to radians.",
+            "itemtype": "method",
+            "name": "toRadians",
+            "params": [
+                {
+                    "name": "_degrees",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 79,
+            "description": "Converts radians to degrees.",
+            "itemtype": "method",
+            "name": "toDegrees",
+            "params": [
+                {
+                    "name": "_radians",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 89,
+            "description": "Returns the distance between 2 points.",
+            "itemtype": "method",
+            "name": "distance",
+            "params": [
+                {
+                    "name": "_x1",
+                    "description": ""
+                },
+                {
+                    "name": "_y1",
+                    "description": ""
+                },
+                {
+                    "name": "_x2",
+                    "description": ""
+                },
+                {
+                    "name": "_y2",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 102,
+            "description": "Calculate an angle from a given point.",
+            "itemtype": "method",
+            "name": "pointToAngle",
+            "params": [
+                {
+                    "name": "_originX",
+                    "description": "Origin x"
+                },
+                {
+                    "name": "_originY",
+                    "description": "Origin y"
+                },
+                {
+                    "name": "_pointX",
+                    "description": "Point x"
+                },
+                {
+                    "name": "_pointY",
+                    "description": "Point y"
+                }
+            ],
+            "return": {
+                "description": "The angle in radians",
+                "type": "Number"
+            },
+            "class": "MathManager"
+        },
+        {
+            "file": "noname\\mathManager.js",
+            "line": 115,
+            "description": "Calculates a point from a given angle.",
+            "itemtype": "method",
+            "name": "angleToPoint",
+            "params": [
+                {
+                    "name": "_angle",
+                    "description": "an angle in radians."
+                },
+                {
+                    "name": "_originX",
+                    "description": "Origin x."
+                },
+                {
+                    "name": "_originY",
+                    "description": "Origin y."
+                },
+                {
+                    "name": "_radius",
+                    "description": "How far the point will be from the origin."
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "X: *, y: *"
+            },
+            "class": "MathManager"
+        },
+        {
             "file": "noname\\stateManager.js",
             "line": 10,
             "description": "The current state thst being played.",
@@ -684,5 +945,78 @@
             "class": "StateManager"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:9"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:19"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:29"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:38"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:46"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:57"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:69"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:79"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:89"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:102"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " noname\\mathManager.js:115"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " noname\\mathManager.js:115"
+        },
+        {
+            "message": "Missing item type\nReturns a random number between a min and a max number.",
+            "line": " noname\\mathManager.js:9"
+        },
+        {
+            "message": "Missing item type\nReturns a random rounded number between a min and a max number.",
+            "line": " noname\\mathManager.js:19"
+        },
+        {
+            "message": "Missing item type\nWill return a random choice given an array of choices.",
+            "line": " noname\\mathManager.js:29"
+        },
+        {
+            "message": "Missing item type\nReturns true or false randomly.",
+            "line": " noname\\mathManager.js:38"
+        },
+        {
+            "message": "Missing item type\nLimit a given number to given min and max boundaries.",
+            "line": " noname\\mathManager.js:46"
+        },
+        {
+            "message": "Missing item type\nReturns true if a number is >= than the min number and\n<= than the max number.",
+            "line": " noname\\mathManager.js:57"
+        }
+    ]
 }

@@ -5,6 +5,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Clock",
         "Events",
         "Fingers",
+        "MathManager",
         "StateManager"
     ],
     "modules": [],
