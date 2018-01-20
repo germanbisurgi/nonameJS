@@ -45,6 +45,10 @@ myState.create = function () {
     myState.spaceship = new Spaceship(myState);
     console.log(myState.spaceship);
 
+
+    // zoom
+    myState.camera.zoom = 0.5;
+
 };
 
 // ---------------------------------------------------------------------- update
