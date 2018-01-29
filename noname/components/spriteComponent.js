@@ -1,44 +1,46 @@
 var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
-    this.image = _image;
-    this.sourceX = 0;
-    this.sourceY = 0;
-    this.sourceWidth = _sourceWidth;
-    this.sourceHeight = _sourceHeight;
-    this.opacity = 1.0;
-    this.delay = 0;
-    this.counter = 0;
-    this.animations = [];
-    this.lastAnimation = null;
-    this.addAnimation = function (_name, _sequence) {
-        if (!this.getAnimation(_name)) {
-            this.animations.push({
+    'use strict';
+    var self = this;
+    self.image = _image;
+    self.sourceX = 0;
+    self.sourceY = 0;
+    self.sourceWidth = _sourceWidth;
+    self.sourceHeight = _sourceHeight;
+    self.opacity = 1.0;
+    self.delay = 0;
+    self.counter = 0;
+    self.animations = [];
+    self.lastAnimation = null;
+    self.addAnimation = function (_name, _sequence) {
+        if (!self.getAnimation(_name)) {
+            self.animations.push({
                 name: _name,
                 sequence: _sequence
             });
         }
     };
-    this.getAnimation = function (_animationName) {
+    self.getAnimation = function (_animationName) {
         var output = false;
-        this.animations.forEach(function(animation) {
+        self.animations.forEach(function(animation) {
             if (animation.name === _animationName) {
                 output = animation;
             }
         });
         return output;
     };
-    this.play = function (_animationName, _delay) {
-        if (!this.clock.paused) {
-            var animation = this.getAnimation(_animationName);
+    self.play = function (_animationName, _delay) {
+        if (!self.owner.clock.paused) {
+            var animation = self.getAnimation(_animationName);
             if (animation) {
-                this.lastAnimation = _animationName;
-                var columns = this.image.width / this.sourceWidth;
-                this.delay += this.clock.delta * this.clock.motion;
-                if (this.delay >= _delay) {
-                    this.counter = (this.counter + 1) % animation.sequence.length;
-                    this.delay = 0;
+                self.lastAnimation = _animationName;
+                var columns = self.image.width / self.sourceWidth;
+                self.delay += self.owner.clock.delta * self.owner.clock.motion;
+                if (self.delay >= _delay) {
+                    self.counter = (self.counter + 1) % animation.sequence.length;
+                    self.delay = 0;
                 }
-                this.sourceY = Math.floor((animation.sequence[this.counter] + 1) / columns) * this.sourceHeight;
-                this.sourceX = this.sourceWidth * animation.sequence[this.counter]  - this.image.width * this.sourceY / this.sourceHeight;
+                self.sourceY = Math.floor((animation.sequence[self.counter] + 1) / columns) * self.sourceHeight;
+                self.sourceX = self.sourceWidth * animation.sequence[self.counter]  - self.image.width * self.sourceY / self.sourceHeight;
             }
         }
     };

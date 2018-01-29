@@ -1,22 +1,14 @@
 var Entity = function (_state, _clock) {
-    "use strict";
-    var self = this;
-    self.state = _state;
-    self.clock = _clock;
-    self.draw = true;
+	"use strict";
+	var self = this;
 
-    self.setClock = function (_clock) {
-        self.clock(_clock);
-    };
+	self.addComponent = function (_componentName, _component) {
+		self[_componentName] = _component;
+		self[_componentName].owner = self;
+	};
 
-    self.addComponent = function (_component) {
-        for (var _property in _component) {
-            self[_property] = _component[_property];
-        }
-    };
-
-    self.print = function () {
-        console.log(self);
-    }
+	self.removeComponent = function (_componentName) {
+		delete self[_componentName];
+	};
 
 };

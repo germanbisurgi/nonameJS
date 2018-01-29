@@ -24,7 +24,7 @@ var Events = function () {
 	self.emitted = [];
 
 
-    /**
+	/**
 	* Returns the event if exists.
 	* @method get
 	* @param {String} eventName
@@ -41,7 +41,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Returns the listeners of an event.
 	* @method getListeners
 	* @param {event} Event
@@ -52,7 +52,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Returns the listener of an event if it have it.
 	* @method getListener
 	* @param {event} Event
@@ -70,7 +70,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Creates an event and adds to it an event listener.
 	* If the event already exists, it just adds the listener to the event.
 	* @method on
@@ -98,7 +98,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* The same as "on" but the listener will be executed only once.
 	* @method once
 	* @param {String} Event name
@@ -110,7 +110,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Removes a listener of an event. If the event have no more listeners
 	* the event will be removed to.
 	* @method off
@@ -137,7 +137,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Adds the event to the emitted events pool. The listeners of this events
 	* will be emitted when the "update" method will be called in order of priority.
 	* @method emit
@@ -151,7 +151,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Removes all events in the pool.
 	* @method clear
 	*/
@@ -160,7 +160,7 @@ var Events = function () {
 	}
 
 
-    /**
+	/**
 	* Call all the listeners functions of the emitted events order by priority.
 	* and removes the listeners that have trigger only once.
 	* @method update
@@ -169,8 +169,8 @@ var Events = function () {
 		if (self.emitted !== []) {
 			self.emitted.forEach(function (event) {
 				event.listeners.sort(function(a, b) {
-		            return a.priority - b.priority;
-		        });
+					return a.priority - b.priority;
+				});
 				event.listeners.forEach(function (listener) {
 					listener.listener();
 					window.requestAnimationFrame(function () {

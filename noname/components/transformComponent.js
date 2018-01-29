@@ -1,57 +1,70 @@
-var TransformComponent = function (_x, _y, _width, _height) {
-    this.x = _x || 0;
-    this.y = _y || 0;
-    this.width = _width || 50;
-    this.height = _height || 50;
-    this.anchorX = 0.5;
-    this.anchorY = 0.5;
-    this.angle = 0;
-    this.move = function (_x, _y) {
-        this.x += this.clock.toPPS(_x);
-        this.y += this.clock.toPPS(_y);
+var TransformComponent = function (_x, _y, _width, _height, _angle, _anchorX, _anchorY) {
+    'use strict';
+    var self = this;
+    self.x = _x || 0;
+    self.y = _y || 0;
+    self.width = _width || 50;
+    self.height = _height || 50;
+    self.angle = _angle || 0;
+    self.anchorX = _anchorX || 0.5;
+    self.anchorY = _anchorY || 0.5;
+
+    self.translate = function (_x, _y) {
+        self.x += self.clock.toPPS(_x);
+        self.y += self.clock.toPPS(_y);
     };
-    this.setPosition = function (_x, _y) {
-        this.x = _x;
-        this.y = _y;
+
+    self.setPosition = function (_x, _y) {
+        self.x = _x;
+        self.y = _y;
     };
-    this.follow = function (_entity) {
-        this.setPosition(
-            (_entity.x + _entity.width  / 2) - (this.width  / 2),
-            (_entity.y + _entity.height / 2) - (this.height / 2)
+
+    self.follow = function (_entity) {
+        self.setPosition(
+            (_entity.x + _entity.width  / 2) - (self.width  / 2),
+            (_entity.y + _entity.height / 2) - (self.height / 2)
         );
     };
-    this.scale = function (_w, _h) {
-        this.width *= _w;
-        this.height *= _h;
+
+    self.scale = function (_w, _h) {
+        self.width *= _w;
+        self.height *= _h;
     };
-    this.setSize = function (_w, _h) {
-        this.width = _w;
-        this.height = _h;
+
+    self.setSize = function (_w, _h) {
+        self.width = _w;
+        self.height = _h;
     };
-    this.rotate = function (_degrees) {
-        this.angle += this.clock.toDPS(_degrees);
+
+    self.rotate = function (_degrees) {
+        self.angle += self.clock.toDPS(_degrees);
     };
-    this.setAngle = function (_degrees) {
-        this.angle = _degrees;
+
+    self.setAngle = function (_degrees) {
+        self.angle = _degrees;
     };
-    this.setTransform = function (_x, _y, _width, _height, _angle) {
+
+    self.setTransform = function (_x, _y, _width, _height, _angle) {
         if (_x || _y) {
-            this.setPosition(_x, _y);
+            self.setPosition(_x, _y);
         }
         if (_width || _height) {
-            this.setSize(_width, _height);
+            self.setSize(_width, _height);
         }
         if (_angle) {
-            this.setAngle(_angle);
+            self.setAngle(_angle);
         }
     };
-    this.getTransform = function () {
+
+    self.getTransform = function () {
         return {
-            x: this.x,
-            y: this.y,
-            width: this.width,
-            height: this.height,
-            angle: this.angle
+            x: self.x,
+            y: self.y,
+            width: self.width,
+            height: self.height,
+            angle: self.angle,
+            anchorX: self.anchorX,
+            anchorY: self.anchorY
         }
     }
 };

@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "array-bracket-spacing": ["error", "always"],
+    "block-spacing": [ "error", "always" ],
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "camelcase": ["error", { "properties": "never" }],
+    "curly": "error",
+    "eqeqeq": ["error", "smart"],
+    "indent": ["error", "tab"],
+    "no-alert": "error",
+    "no-console": ["error", {"allow": ["warn", "log"]}],
+    "no-floating-decimal": "error",
+    "no-invalid-this": "error",
+    "no-multi-spaces": "error",
+    "no-multi-str": "error",
+    "no-new-func": "error",
+    "no-new-wrappers": "error",
+    "no-redeclare": "error",
+    "no-self-assign": "error",
+    "no-self-compare": "error",
+    "yoda": ["error", "never"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
+}

@@ -1,48 +1,50 @@
 var TileSpriteComponent = function (_image) {
-    this.image = _image;
-    this.sourceX = 0;
-    this.sourceY = 0;
-    this.sourceWidth = _image.width;
-    this.sourceHeight = _image.height;
-    this.opacity = 1.0;
-    this.tempCanvas = null;
-    this.tempContext = null;
+    'use strict';
+    var self = this;
+    self.image = _image;
+    self.sourceX = 0;
+    self.sourceY = 0;
+    self.sourceWidth = _image.width;
+    self.sourceHeight = _image.height;
+    self.opacity = 1.0;
+    self.tempCanvas = null;
+    self.tempContext = null;
 
-    this.tempCanvas = document.createElement('canvas');
-    this.tempContext = this.tempCanvas.getContext('2d');
-    this.tempCanvas.width = this.sourceWidth * 2;
-    this.tempCanvas.height = this.sourceHeight * 2;
-    this.tempContext.drawImage(this.image, 0, 0, this.sourceWidth * 0.5, this.sourceHeight * 0.5);
-    this.tempContext.drawImage(this.image, this.sourceWidth * 0.5, 0, this.sourceWidth * 0.5, this.sourceHeight * 0.5);
-    this.tempContext.drawImage(this.image, 0, this.sourceHeight * 0.5, this.sourceWidth * 0.5, this.sourceHeight * 0.5);
-    this.tempContext.drawImage(this.image, this.sourceWidth * 0.5, this.sourceHeight * 0.5, this.sourceWidth * 0.5, this.sourceHeight * 0.5);
-    this.image = this.tempCanvas;
-    this.sourceWidth  *= 0.5;
-    this.sourceHeight *= 0.5;
+    self.tempCanvas = document.createElement('canvas');
+    self.tempContext = self.tempCanvas.getContext('2d');
+    self.tempCanvas.width = self.sourceWidth * 2;
+    self.tempCanvas.height = self.sourceHeight * 2;
+    self.tempContext.drawImage(self.image, 0, 0, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
+    self.tempContext.drawImage(self.image, self.sourceWidth * 0.5, 0, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
+    self.tempContext.drawImage(self.image, 0, self.sourceHeight * 0.5, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
+    self.tempContext.drawImage(self.image, self.sourceWidth * 0.5, self.sourceHeight * 0.5, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
+    self.image = self.tempCanvas;
+    self.sourceWidth  *= 0.5;
+    self.sourceHeight *= 0.5;
 
-    this.scroll = function (_direction, _velocity) {
+    self.scroll = function (_direction, _velocity) {
         if (_direction ==='left') {
-            this.sourceX += this.clock.toPPS(_velocity);
-            if (this.sourceX + this.sourceWidth >= this.sourceWidth * 2) {
-                this.sourceX = 0;
+            self.sourceX += self.owner.clock.toPPS(_velocity);
+            if (self.sourceX + self.sourceWidth >= self.sourceWidth * 2) {
+                self.sourceX = 0;
             }
         }
         if (_direction ==='right') {
-            this.sourceX -= this.clock.toPPS(_velocity);
-            if (this.sourceX <= 0) {
-                this.sourceX = this.sourceWidth;
+            self.sourceX -= self.owner.clock.toPPS(_velocity);
+            if (self.sourceX <= 0) {
+                self.sourceX = self.sourceWidth;
             }
         }
         if (_direction ==='up') {
-            this.sourceY += this.clock.toPPS(_velocity);
-            if (this.sourceY + this.sourceHeight >= this.sourceHeight * 2) {
-                this.sourceY = 0;
+            self.sourceY += self.owner.clock.toPPS(_velocity);
+            if (self.sourceY + self.sourceHeight >= self.sourceHeight * 2) {
+                self.sourceY = 0;
             }
         }
         if (_direction ==='down') {
-            this.sourceY -= this.clock.toPPS(_velocity);
-            if (this.sourceY <= 0) {
-                this.sourceY = this.sourceHeight;
+            self.sourceY -= self.owner.clock.toPPS(_velocity);
+            if (self.sourceY <= 0) {
+                self.sourceY = self.sourceHeight;
             }
         }
     };
