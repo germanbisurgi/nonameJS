@@ -10,7 +10,7 @@ var RenderManager = function (_game) {
 		self.canvas = document.createElement('canvas');
 		self.canvas.setAttribute('style', 'position: absolute;');
 		// use with resizeFit
-		self.context = self.canvas.getContext("2d");
+		self.context = self.canvas.getContext('2d');
 		self.screen.appendChild(self.canvas);
 		self.resize();
 		window.addEventListener('resize', function () {
@@ -98,7 +98,7 @@ var RenderManager = function (_game) {
 		if (_entities.length > 0) {
 			_entities.forEach(function (e) {
 				if (e.renderable.image) {
-					if (self.inCamera(e)) {//TODO culling
+					if (self.inCamera(e)) { //TODO culling
 						self.context.save();
 						self.context.translate(
 							e.transform.x + (e.transform.width * e.transform.anchorX),
@@ -106,18 +106,17 @@ var RenderManager = function (_game) {
 						);
 						self.context.rotate(self.toRadians(e.transform.angle));
 						self.context.globalAlpha = e.opacity;
-
-							self.context.drawImage(
-								e.renderable.image,
-								e.renderable.sourceX,
-								e.renderable.sourceY,
-								e.renderable.sourceWidth,
-								e.renderable.sourceHeight,
-								e.transform.width  * -e.transform.anchorX,
-								e.transform.height * -e.transform.anchorY,
-								e.transform.width,
-								e.transform.height
-							);
+						self.context.drawImage(
+							e.renderable.image,
+							e.renderable.sourceX,
+							e.renderable.sourceY,
+							e.renderable.sourceWidth,
+							e.renderable.sourceHeight,
+							e.transform.width * -e.transform.anchorX,
+							e.transform.height * -e.transform.anchorY,
+							e.transform.width,
+							e.transform.height
+						);
 						self.context.restore();
 					}
 				}

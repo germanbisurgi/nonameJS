@@ -3,7 +3,7 @@
  * @class MathManager
  */
 var MathManager = function () {
-	"use strict";
+	'use strict';
 	var self = this;
 
 	/**
@@ -125,11 +125,11 @@ var MathManager = function () {
 		return {
 			x: Math.cos(_angle) * _radius + _originX,
 			y: Math.sin(_angle) * _radius + _originY
-		}
+		};
 	};
 
 	self.normalize = function (_angle) {
-		_angle =  _angle % 360;
+		_angle = _angle % 360;
 		_angle = (_angle + 360) % 360;
 		if (_angle > 180) {
 			_angle -= 360;

@@ -4,7 +4,7 @@
  * @class Fingers
  */
 var Fingers = function(_game) {
-	"use strict";
+	'use strict';
 	var self = this;
 	self.pool = [];
 	self.limit = 10;

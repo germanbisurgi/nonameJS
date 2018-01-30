@@ -50,7 +50,7 @@ var Camera = function (_x, _y, _width, _height) {
 			width: this.width,
 			height: this.height,
 			angle: this.angle
-		}
+		};
 	};
 	this.follow = function (_entity) {
 		this.x += (this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2) - this.x) * this.lerp;

@@ -12,12 +12,12 @@ var LoopManager = function (_game) {
 		self.fps = _game.settings.fps || 60;
 		self.offset = self.fps >= 10 ? 0.5 : 0;
 		window.requestAnimFrame = (function(){
-		  return  window.requestAnimationFrame       ||
-				  window.webkitRequestAnimationFrame ||
-				  window.mozRequestAnimationFrame    ||
-				  function( callback ){
-					window.setTimeout(callback, 1000 / self.fps);
-				  };
+			return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			function( callback ){
+				window.setTimeout(callback, 1000 / self.fps);
+			};
 		})();
 	};
 

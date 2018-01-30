@@ -1,5 +1,5 @@
 var Entity = function (_state, _clock) {
-	"use strict";
+	'use strict';
 	var self = this;
 
 	self.addComponent = function (_componentName, _component) {

@@ -34,11 +34,11 @@ var Events = function () {
 		var output = false;
 		self.pool.forEach(function (event) {
 			if (event.name === pEventName) {
-				output = event
+				output = event;
 			}
 		});
 		return output;
-	}
+	};
 
 
 	/**
@@ -49,7 +49,7 @@ var Events = function () {
 	*/
 	self.getListeners = function (pEvent) {
 		return pEvent.listeners;
-	}
+	};
 
 
 	/**
@@ -67,7 +67,7 @@ var Events = function () {
 			}
 		});
 		return output;
-	}
+	};
 
 
 	/**
@@ -84,18 +84,18 @@ var Events = function () {
 			priority: pPriority ? pPriority : 0,
 			listener: pListener,
 			once: pOnce ? pOnce : false
-		}
+		};
 		if (event) {
 			event.listeners.push(listener);
 		} else {
-			var event = {
+			event = {
 				name: pEventName,
-				listeners: [],
+				listeners: []
 			};
 			event.listeners.push(listener);
 			self.pool.push(event);
 		}
-	}
+	};
 
 
 	/**
@@ -107,7 +107,7 @@ var Events = function () {
 	*/
 	self.once = function (pEventName, pListener, pPriority) {
 		self.on(pEventName, pListener, pPriority, true);
-	}
+	};
 
 
 	/**
@@ -118,23 +118,24 @@ var Events = function () {
 	* @param {function} Listener (the function that will be called)
 	*/
 	self.off = function (pEventName, pListener) {
+		var index;
 		var event = self.get(pEventName);
 		if (!event) {
 			return false;
 		} else {
 			var listener = self.getListener(event, pListener);
-			var index = event.listeners.indexOf(listener);
+			index = event.listeners.indexOf(listener);
 			if (index > -1) {
 				event.listeners.splice(index, 1);
 			}
 		}
 		if (event.listeners.length === 0) {
-			var index = self.pool.indexOf(event);
+			index = self.pool.indexOf(event);
 			if (index > -1) {
 				self.pool.splice(index, 1);
 			}
 		}
-	}
+	};
 
 
 	/**
@@ -144,11 +145,11 @@ var Events = function () {
 	* @param {String} Event name
 	*/
 	self.emit = function (pEventName) {
-		var event = self.get(pEventName)
+		var event = self.get(pEventName);
 		if (event) {
-			self.emitted.push(event)
+			self.emitted.push(event);
 		}
-	}
+	};
 
 
 	/**
@@ -157,7 +158,7 @@ var Events = function () {
 	*/
 	self.clear = function () {
 		self.pool = [];
-	}
+	};
 
 
 	/**
@@ -175,13 +176,13 @@ var Events = function () {
 					listener.listener();
 					window.requestAnimationFrame(function () {
 						if (listener.once === true) {
-							self.off(event.name, listener.listener)
+							self.off(event.name, listener.listener);
 						}
 					});
 				});
 			});
 			self.emitted = [];
 		}
-	}
+	};
 
-}
+};

@@ -1,5 +1,5 @@
 var Keyboard = function() {
-	"use strict";
+	'use strict';
 	var self = this;
 	self.keys = {
 		enter: false,
@@ -161,6 +161,6 @@ var Keyboard = function() {
 			}
 		});
 		return countPressed === _keys.length;
-	}
+	};
 
 };

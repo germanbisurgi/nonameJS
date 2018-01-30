@@ -3,7 +3,7 @@
 * @class AssetManager
 */
 var AssetManager = function () {
-	"use strict";
+	'use strict';
 	var self = this;
 
 	/**

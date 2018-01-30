@@ -10,7 +10,7 @@
 * @class Clock
 */
 var Clock = function (_game) {
-	"use strict";
+	'use strict';
 	var self = this;
 	self.current = 0;
 
@@ -131,7 +131,7 @@ var Clock = function (_game) {
 			if (_event.elapsed >= _event.interval) {
 				_event.function();
 				if (_event.once) {
-					self.clearEvent(_event)
+					self.clearEvent(_event);
 				}
 				_event.elapsed = 0;
 			}

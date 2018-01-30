@@ -12,7 +12,7 @@ var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
 var Box2dManager = function(_game) {
-	"use strict";
+	'use strict';
 	var self = this;
 	self.scale = 30;
 	self.fps = _game.settings.fps;
@@ -25,7 +25,7 @@ var Box2dManager = function(_game) {
 	self.init = function () {
 		self.canvas = document.createElement('canvas');
 		self.canvas.setAttribute('style', 'position: absolute; opacity: 0.6; pointer-events: none;');
-		self.context = self.canvas.getContext("2d");
+		self.context = self.canvas.getContext('2d');
 		self.screen.appendChild(self.canvas);
 		self.debugDraw = new b2DebugDraw();
 		self.debugDraw.SetSprite(self.context);
@@ -101,9 +101,15 @@ var Box2dManager = function(_game) {
 		bodyDef.linearDamping   = 0;
 		bodyDef.linearVelocity  = {'x': 0, 'y': 0};
 		bodyDef.userData        = '';
-		if (_type === 'static')    {bodyDef.type = b2Body.b2_staticBody;}
-		if (_type === 'dynamic')   {bodyDef.type = b2Body.b2_dynamicBody;}
-		if (_type === 'kinematic') {bodyDef.type = b2Body.b2_kinematicBody;}
+		if (_type === 'static') {
+			bodyDef.type = b2Body.b2_staticBody;
+		}
+		if (_type === 'dynamic') {
+			bodyDef.type = b2Body.b2_dynamicBody;
+		}
+		if (_type === 'kinematic') {
+			bodyDef.type = b2Body.b2_kinematicBody;
+		}
 		return self.world.CreateBody(bodyDef);
 	};
 
