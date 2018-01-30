@@ -124,7 +124,7 @@ var RenderManager = function (_game) {
 		self.context.restore();
 	};
 
-	self.inCamera = function (_entity) {
+	self.inCamera = function () {
 		return true;
 	};
 

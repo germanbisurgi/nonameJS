@@ -17,6 +17,7 @@ var Box2dManager = function (_game) {
 	self.scale = 30;
 	self.fps = _game.settings.fps;
 	self.world = new b2World(new b2Vec2(0, 0), true);
+	self.bodies = [];
 	self.debugDraw = null;
 	self.canvas = null;
 	self.context = null;
@@ -38,53 +39,7 @@ var Box2dManager = function (_game) {
 		}, true);
 	};
 
-	self.resize = function () {
-		self.canvas.width = _game.settings.screen.clientWidth;
-		self.canvas.height = _game.settings.screen.clientHeight;
-	};
-
-	self.addCircle = function (_body, _radius, _offsetX, _offsetY) {
-		var fixtureDef = self.circle(_radius);
-		fixtureDef.shape.m_p = {x: _offsetX / self.scale || 0, y: _offsetY / self.scale || 0};
-		return _body.CreateFixture(fixtureDef);
-	};
-
-	self.addRectangle = function (_body, _width, _height, _offsetX, _offsetY) {
-		var fixtureDef = self.rectangle(_width, _height);
-		fixtureDef.shape.m_vertices.forEach(function (_vert) {
-			// TODO check x and y
-			_vert.x +=  _offsetX / self.scale || 0;
-			_vert.y +=  _offsetY / self.scale || 0;
-		});
-		fixtureDef.shape.m_centroid.x +=  _offsetX / self.scale || 0;
-		fixtureDef.shape.m_centroid.y +=  _offsetY / self.scale || 0;
-		return _body.CreateFixture(fixtureDef);
-	};
-
-	self.addPolygon = function (_body, _points) {
-		var fixtureDef = self.polygon(_points);
-		return _body.CreateFixture(fixtureDef);
-	};
-
-	self.addEdge = function (_x1, _y1, _x2, _y2, _type) {
-		var body = self.addBody(_x1, _y1, _type);
-		var fixture = self.edge(0, 0, _x2 - _x1, _y2 - _y1);
-		body.CreateFixture(fixture);
-		return body;
-	};
-
-	self.followBody = function (_entity, _body) {
-		_entity.x = _body.GetPosition().x * self.scale - _entity.width / 2;
-		_entity.y = _body.GetPosition().y * self.scale - _entity.height / 2;
-		_entity.angle = _body.GetAngle() * 57.295779513082320876;
-	};
-
-	self.followFixture = function (_entity, _fixture) {
-		var body = _fixture.GetBody();
-		_entity.x = (_fixture.GetAABB().GetCenter().x * self.scale - _entity.width  / 2);
-		_entity.y = (_fixture.GetAABB().GetCenter().y * self.scale - _entity.height / 2);
-		_entity.angle = body.GetAngle() * 57.295779513082320876;
-	};
+	/* create a body */
 
 	self.addBody = function (_x, _y, _type) {
 		var bodyDef = new b2BodyDef();
@@ -110,8 +65,51 @@ var Box2dManager = function (_game) {
 		if (_type === 'kinematic') {
 			bodyDef.type = b2Body.b2_kinematicBody;
 		}
-		return self.world.CreateBody(bodyDef);
+		var body = self.world.CreateBody(bodyDef);
+
+		// addCircle
+		body.addCircle = function (_radius, _offsetX, _offsetY) {
+			var fixtureDef = self.getCircleFixture(_radius);
+			fixtureDef.shape.m_p = {
+				x: _offsetX / self.scale || 0,
+				y: _offsetY / self.scale || 0
+			};
+			this.CreateFixture(fixtureDef);
+		};
+
+		// addRectangle
+		body.addRectangle = function (_width, _height, _offsetX, _offsetY) {
+			var fixtureDef = self.getRectangleFixture(_width, _height);
+			fixtureDef.shape.m_vertices.forEach(function (_vert) {
+				_vert.x += _offsetX / self.scale || 0;
+				_vert.y += _offsetY / self.scale || 0;
+			});
+			fixtureDef.shape.m_centroid.x += _offsetX / self.scale || 0;
+			fixtureDef.shape.m_centroid.y += _offsetY / self.scale || 0;
+			this.CreateFixture(fixtureDef);
+		};
+
+		// addPolygon
+		body.addPolygon = function (_points, _offsetX, _offsetY) {
+			var fixtureDef = self.getPolygonFixture(_points);
+			fixtureDef.shape.m_vertices.forEach(function (_vert) {
+				_vert.x += _offsetX / self.scale || 0;
+				_vert.y += _offsetY / self.scale || 0;
+			});
+			return this.CreateFixture(fixtureDef);
+		};
+
+		// addEdge
+		body.addEdge = function (_x1, _y1, _x2, _y2) {
+			var fixtureDef = self.getEdgeFixture(_x1, _y1, _x2, _y2);
+			return this.CreateFixture(fixtureDef);
+		};
+
+		self.bodies.push(body);
+		return body;
 	};
+
+	/* fixtures */
 
 	self.getFixtureDef = function () {
 		var fixDef = new b2FixtureDef();
@@ -122,20 +120,20 @@ var Box2dManager = function (_game) {
 		return fixDef;
 	};
 
-	self.circle = function (_radius) {
+	self.getCircleFixture = function (_radius) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2CircleShape(_radius / self.scale);
 		return fixDef;
 	};
 
-	self.rectangle = function (_width, _height) {
+	self.getRectangleFixture = function (_width, _height) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		fixDef.shape.SetAsBox(_width * 0.5 / self.scale, _height * 0.5 / self.scale);
 		return fixDef;
 	};
 
-	self.polygon = function (_points) {
+	self.getPolygonFixture = function (_points) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		_points.forEach(function (_point) {
@@ -146,7 +144,7 @@ var Box2dManager = function (_game) {
 		return fixDef;
 	};
 
-	self.edge = function (_x1, _y1, _x2, _y2) {
+	self.getEdgeFixture = function (_x1, _y1, _x2, _y2) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		_x1 /= self.scale;
@@ -168,6 +166,19 @@ var Box2dManager = function (_game) {
 		self.world.ClearForces();
 	};
 
+	self.followBody = function (_entity, _body) {
+		_entity.x = _body.GetPosition().x * self.scale - _entity.width / 2;
+		_entity.y = _body.GetPosition().y * self.scale - _entity.height / 2;
+		_entity.angle = _body.GetAngle() * 57.295779513082320876;
+	};
+
+	self.followFixture = function (_entity, _fixture) {
+		var body = _fixture.GetBody();
+		_entity.x = (_fixture.GetAABB().GetCenter().x * self.scale - _entity.width  / 2);
+		_entity.y = (_fixture.GetAABB().GetCenter().y * self.scale - _entity.height / 2);
+		_entity.angle = body.GetAngle() * 57.295779513082320876;
+	};
+
 	self.draw = function () {
 		if (self.debugDraw) {
 			self.context.save();
@@ -182,6 +193,11 @@ var Box2dManager = function (_game) {
 			self.world.DrawDebugData();
 			self.context.restore();
 		}
+	};
+
+	self.resize = function () {
+		self.canvas.width = _game.settings.screen.clientWidth;
+		self.canvas.height = _game.settings.screen.clientHeight;
 	};
 
 	self.toRadians = function (_degrees) {

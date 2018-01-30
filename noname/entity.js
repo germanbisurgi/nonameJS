@@ -1,4 +1,4 @@
-var Entity = function (_state, _clock) {
+var Entity = function () {
 	'use strict';
 	var self = this;
 
