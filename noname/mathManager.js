@@ -12,7 +12,7 @@ var MathManager = function () {
 	 * @param {number} _max The max value.
 	 * @returns {number} A generated random number.
 	 */
-	self.random = function(_min, _max) {
+	self.random = function (_min, _max) {
 		return (_min + (Math.random() * (_max - _min)));
 	};
 
@@ -22,7 +22,7 @@ var MathManager = function () {
 	 * @param {number} _max The max value.
 	 * @returns {number} A generated and rounded random number.
 	 */
-	self.randomInt = function(_min, _max) {
+	self.randomInt = function (_min, _max) {
 		return Math.round(this.random(_min, _max));
 	};
 
@@ -31,15 +31,15 @@ var MathManager = function () {
 	 * @param  {array} _choices Array of choices.
 	 * @returns {*} The choice(item of the array).
 	 */
-	self.randomChoice = function(_choices) {
-		return _choices[self.randomInt(0, _choices.length-1)];
+	self.randomChoice = function (_choices) {
+		return _choices[self.randomInt(0, _choices.length - 1)];
 	};
 
 	/**
 	 * Returns true or false randomly.
 	 * @returns {boolean} A random boolean (true or false);
 	 */
-	self.randomBool = function() {
+	self.randomBool = function () {
 		return self.randomChoice([true, false]);
 	};
 
@@ -50,7 +50,7 @@ var MathManager = function () {
 	 * @param {number} _max The max value.
 	 * @returns {number}
 	 */
-	self.clamp = function(_number, _min, _max) {
+	self.clamp = function (_number, _min, _max) {
 		return Math.max(_min, Math.min(_max, _number));
 	};
 
@@ -62,7 +62,7 @@ var MathManager = function () {
 	 * @param {number} _max The max value.
 	 * @returns {boolean}
 	 */
-	self.between = function(_number, _min, _max) {
+	self.between = function (_number, _min, _max) {
 		return ((_number >= _min) && (_number <= _max));
 	};
 
@@ -72,7 +72,7 @@ var MathManager = function () {
 	 * @param {number} _degrees Angle in degrees.
 	 * @returns {number} Angle in radians.
 	 */
-	self.toRadians = function(_degrees) {
+	self.toRadians = function (_degrees) {
 		return _degrees * 0.0174532925199432957;
 	};
 
@@ -82,7 +82,7 @@ var MathManager = function () {
 	 * @param {number} _radians Angle in radians.
 	 * @returns {number} Angle in degrees.
 	 */
-	self.toDegrees = function(_radians) {
+	self.toDegrees = function (_radians) {
 		return _radians * 57.295779513082320876;
 	};
 
@@ -136,5 +136,4 @@ var MathManager = function () {
 		}
 		return _angle;
 	};
-
 };

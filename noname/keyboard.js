@@ -1,4 +1,4 @@
-var Keyboard = function() {
+var Keyboard = function () {
 	'use strict';
 	var self = this;
 	self.keys = {
@@ -155,12 +155,11 @@ var Keyboard = function() {
 
 	self.pressing = function (_keys) {
 		var countPressed = 0;
-		_keys.forEach( function (_key) {
+		_keys.forEach(function (_key) {
 			if (self.keys[_key]) {
 				countPressed++;
 			}
 		});
 		return countPressed === _keys.length;
 	};
-
 };

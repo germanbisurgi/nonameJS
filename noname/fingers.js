@@ -3,7 +3,7 @@
  * @param  {object} _game [description]
  * @class Fingers
  */
-var Fingers = function(_game) {
+var Fingers = function (_game) {
 	'use strict';
 	var self = this;
 	self.pool = [];
@@ -23,7 +23,7 @@ var Fingers = function(_game) {
 				});
 			}
 		}
-	}, false );
+	}, false);
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
@@ -34,16 +34,16 @@ var Fingers = function(_game) {
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
 			finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
 		}
-	}, false );
+	}, false);
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var finger = self.get(event.changedTouches[i].identifier);
 			self.remove(finger);
 		}
-	}, false );
+	}, false);
 
-	self.get = function(_id) {
+	self.get = function (_id) {
 		var output = false;
 		self.pool.forEach(function (_finger) {
 			if (_finger.id === _id) {
@@ -53,7 +53,7 @@ var Fingers = function(_game) {
 		return output;
 	};
 
-	self.remove = function(_item) {
+	self.remove = function (_item) {
 		var index = self.pool.indexOf(_item);
 		if (index > -1) {
 			self.pool.splice(index, 1);

@@ -21,7 +21,7 @@ var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
 	};
 	self.getAnimation = function (_animationName) {
 		var output = false;
-		self.animations.forEach(function(animation) {
+		self.animations.forEach(function (animation) {
 			if (animation.name === _animationName) {
 				output = animation;
 			}

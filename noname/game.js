@@ -35,7 +35,7 @@ var Game = function (_settings) {
 		self.box2d = new noname.box2dManager(self);
 		self.inputs = new noname.inputManager(self);
 
-		self.loop.start(function() {
+		self.loop.start(function () {
 
 			if (!self.state.current.initialized) {
 				self.state.current.initialize(self);

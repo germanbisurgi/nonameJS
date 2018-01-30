@@ -94,11 +94,10 @@ var RenderManager = function (_game) {
 		// camera zoom.
 		self.context.scale(self.camera.zoom, self.camera.zoom);
 
-
 		if (_entities.length > 0) {
 			_entities.forEach(function (e) {
 				if (e.renderable.image) {
-					if (self.inCamera(e)) { //TODO culling
+					if (self.inCamera(e)) { // TODO culling
 						self.context.save();
 						self.context.translate(
 							e.transform.x + (e.transform.width * e.transform.anchorX),
@@ -134,5 +133,4 @@ var RenderManager = function (_game) {
 	};
 
 	self.init();
-
 };

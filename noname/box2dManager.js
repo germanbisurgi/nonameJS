@@ -11,7 +11,7 @@ var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts        = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
-var Box2dManager = function(_game) {
+var Box2dManager = function (_game) {
 	'use strict';
 	var self = this;
 	self.scale = 30;
@@ -86,7 +86,7 @@ var Box2dManager = function(_game) {
 		_entity.angle = body.GetAngle() * 57.295779513082320876;
 	};
 
-	self.addBody = function(_x, _y, _type) {
+	self.addBody = function (_x, _y, _type) {
 		var bodyDef = new b2BodyDef();
 		bodyDef.position.x      = _x / self.scale;
 		bodyDef.position.y      = _y / self.scale;
@@ -99,7 +99,7 @@ var Box2dManager = function(_game) {
 		bodyDef.bullet          = false;
 		bodyDef.fixedRotation   = false;
 		bodyDef.linearDamping   = 0;
-		bodyDef.linearVelocity  = {'x': 0, 'y': 0};
+		bodyDef.linearVelocity  = {x: 0, y: 0};
 		bodyDef.userData        = '';
 		if (_type === 'static') {
 			bodyDef.type = b2Body.b2_staticBody;
@@ -113,7 +113,7 @@ var Box2dManager = function(_game) {
 		return self.world.CreateBody(bodyDef);
 	};
 
-	self.getFixtureDef = function() {
+	self.getFixtureDef = function () {
 		var fixDef = new b2FixtureDef();
 		fixDef.density     = 1;
 		fixDef.friction    = 0.5;
@@ -122,20 +122,20 @@ var Box2dManager = function(_game) {
 		return fixDef;
 	};
 
-	self.circle = function(_radius) {
+	self.circle = function (_radius) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2CircleShape(_radius / self.scale);
 		return fixDef;
 	};
 
-	self.rectangle = function(_width, _height) {
+	self.rectangle = function (_width, _height) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		fixDef.shape.SetAsBox(_width * 0.5 / self.scale, _height * 0.5 / self.scale);
 		return fixDef;
 	};
 
-	self.polygon = function(_points) {
+	self.polygon = function (_points) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		_points.forEach(function (_point) {
@@ -146,7 +146,7 @@ var Box2dManager = function(_game) {
 		return fixDef;
 	};
 
-	self.edge = function(_x1, _y1, _x2, _y2) {
+	self.edge = function (_x1, _y1, _x2, _y2) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
 		_x1 /= self.scale;
@@ -157,18 +157,18 @@ var Box2dManager = function(_game) {
 		return fixDef;
 	};
 
-	self.contactListener = function() {
+	self.contactListener = function () {
 		var listener = new b2ContactListener();
 		self.world.SetContactListener(listener);
 		return listener;
 	};
 
-	self.update = function() {
-		self.world.Step(1/self.fps, 8, 3);
+	self.update = function () {
+		self.world.Step(1 / self.fps, 8, 3);
 		self.world.ClearForces();
 	};
 
-	self.draw = function() {
+	self.draw = function () {
 		if (self.debugDraw) {
 			self.context.save();
 			// camera rotation

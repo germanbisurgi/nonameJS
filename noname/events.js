@@ -15,14 +15,12 @@ var Events = function () {
 	*/
 	self.pool = [];
 
-
 	/**
 	* All the emitted events the will be triggered in the next update call
 	* @property emitted
 	* @type {Emitted events Array}
 	*/
 	self.emitted = [];
-
 
 	/**
 	* Returns the event if exists.
@@ -40,7 +38,6 @@ var Events = function () {
 		return output;
 	};
 
-
 	/**
 	* Returns the listeners of an event.
 	* @method getListeners
@@ -50,7 +47,6 @@ var Events = function () {
 	self.getListeners = function (pEvent) {
 		return pEvent.listeners;
 	};
-
 
 	/**
 	* Returns the listener of an event if it have it.
@@ -68,7 +64,6 @@ var Events = function () {
 		});
 		return output;
 	};
-
 
 	/**
 	* Creates an event and adds to it an event listener.
@@ -97,7 +92,6 @@ var Events = function () {
 		}
 	};
 
-
 	/**
 	* The same as "on" but the listener will be executed only once.
 	* @method once
@@ -108,7 +102,6 @@ var Events = function () {
 	self.once = function (pEventName, pListener, pPriority) {
 		self.on(pEventName, pListener, pPriority, true);
 	};
-
 
 	/**
 	* Removes a listener of an event. If the event have no more listeners
@@ -137,7 +130,6 @@ var Events = function () {
 		}
 	};
 
-
 	/**
 	* Adds the event to the emitted events pool. The listeners of this events
 	* will be emitted when the "update" method will be called in order of priority.
@@ -151,7 +143,6 @@ var Events = function () {
 		}
 	};
 
-
 	/**
 	* Removes all events in the pool.
 	* @method clear
@@ -159,7 +150,6 @@ var Events = function () {
 	self.clear = function () {
 		self.pool = [];
 	};
-
 
 	/**
 	* Call all the listeners functions of the emitted events order by priority.
@@ -169,7 +159,7 @@ var Events = function () {
 	self.update = function () {
 		if (self.emitted !== []) {
 			self.emitted.forEach(function (event) {
-				event.listeners.sort(function(a, b) {
+				event.listeners.sort(function (a, b) {
 					return a.priority - b.priority;
 				});
 				event.listeners.forEach(function (listener) {

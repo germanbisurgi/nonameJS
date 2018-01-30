@@ -143,7 +143,7 @@ var Clock = function (_game) {
 	 * Pauses the clock but not the game.
 	 * @method pause
 	 */
-	self.pause = function() {
+	self.pause = function () {
 		self.paused = true;
 	};
 
@@ -151,19 +151,19 @@ var Clock = function (_game) {
 	 * Continues the clock.
 	 * @method continue
 	 */
-	self.continue = function() {
+	self.continue = function () {
 		self.paused = false;
 	};
 
-	self.toPPS = function(_velocity) {
+	self.toPPS = function (_velocity) {
 		return _velocity * self.delta * self.motion / 1000;
 	};
 
-	self.toDPS = function(_degrees) {
+	self.toDPS = function (_degrees) {
 		return _degrees * self.delta * self.motion / 1000;
 	};
 
-	self.toMSPS = function(_milliseconds) {
+	self.toMSPS = function (_milliseconds) {
 		return _milliseconds * self.delta * self.motion;
 	};
 };

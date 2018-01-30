@@ -11,19 +11,19 @@ var LoopManager = function (_game) {
 	self.init = function () {
 		self.fps = _game.settings.fps || 60;
 		self.offset = self.fps >= 10 ? 0.5 : 0;
-		window.requestAnimFrame = (function(){
+		window.requestAnimFrame = (function () {
 			return window.requestAnimationFrame ||
 			window.webkitRequestAnimationFrame ||
 			window.mozRequestAnimationFrame ||
-			function( callback ){
+			function (callback) {
 				window.setTimeout(callback, 1000 / self.fps);
 			};
 		})();
 	};
 
-	self.start = function(_task) {
+	self.start = function (_task) {
 		self.lastTime = performance.now();
-		function tick(timestamp) {
+		function tick (timestamp) {
 			if (!self.paused) {
 				self.delta = timestamp - self.lastTime;
 				if ((self.delta + self.offset) >= 1000 / self.fps) {
@@ -42,11 +42,11 @@ var LoopManager = function (_game) {
 	};
 
 	self.pause = function () {
-	   self.paused = true;
+		self.paused = true;
 	};
 
 	self.continue = function () {
-	   self.paused = false;
+		self.paused = false;
 	};
 
 	self.isPaused = function () {
@@ -58,5 +58,4 @@ var LoopManager = function (_game) {
 	};
 
 	self.init();
-
 };

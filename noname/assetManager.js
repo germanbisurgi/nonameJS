@@ -69,7 +69,7 @@ var AssetManager = function () {
 	 * @param  {string} _name The asset name ('shot')
 	 * @param  {string} _path The path of the asset (asset/path/shot.wav)
 	 */
-	self.queueAudio = function(_name, _path) {
+	self.queueAudio = function (_name, _path) {
 		self.queue.push({
 			type: 'audio',
 			name: _name,
@@ -83,7 +83,7 @@ var AssetManager = function () {
 	 * @param  {string} _name The asset name ('player')
 	 * @param  {string} _path The path of the asset (asset/path/player.png)
 	 */
-	self.queueImage = function(_name, _path) {
+	self.queueImage = function (_name, _path) {
 		self.queue.push({
 			type: 'image',
 			name: _name,
@@ -97,7 +97,7 @@ var AssetManager = function () {
 	 * @param  {String} _name The name of the asset to be retrieved.
 	 * @return {Object} asset A game asset like an Image or an Audio file.
 	 */
-	self.get = function(_name) {
+	self.get = function (_name) {
 		var output = false;
 		self.pool.forEach(function (_asset) {
 			if (_asset.name === _name) {
@@ -132,17 +132,17 @@ var AssetManager = function () {
 
 	self.loadImage = function (_asset) {
 		var img = new Image();
-		img.onload = function() {
+		img.onload = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
-			if (self.loadComplete ()) {
+			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
 			}
 		};
-		img.onerror = function() {
+		img.onerror = function () {
 			self.errors++;
-			if (self.loadComplete ()) {
+			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
 			}
@@ -154,17 +154,17 @@ var AssetManager = function () {
 
 	self.loadAudio = function (_asset) {
 		var audio = new Audio();
-		audio.oncanplaythrough = function() {
+		audio.oncanplaythrough = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
-			if (self.loadComplete ()) {
+			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
 			}
 		};
-		audio.onerror = function() {
+		audio.onerror = function () {
 			self.errors++;
-			if (self.loadComplete ()) {
+			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
 			}

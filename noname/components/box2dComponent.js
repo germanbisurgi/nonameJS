@@ -7,7 +7,8 @@ var Box2dComponent = function (_x, _y, _type, _state) {
 		var fixtureDef = _state.box2d.circle(_radius);
 		fixtureDef.shape.m_p = {
 			x: _offsetX / _state.box2d.scale || 0,
-			y: _offsetY / _state.box2d.scale || 0};
+			y: _offsetY / _state.box2d.scale || 0
+		};
 		self.body.CreateFixture(fixtureDef);
 	};
 

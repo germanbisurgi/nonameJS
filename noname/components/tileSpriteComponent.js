@@ -23,25 +23,25 @@ var TileSpriteComponent = function (_image) {
 	self.sourceHeight *= 0.5;
 
 	self.scroll = function (_direction, _velocity) {
-		if (_direction ==='left') {
+		if (_direction === 'left') {
 			self.sourceX += self.owner.clock.toPPS(_velocity);
 			if (self.sourceX + self.sourceWidth >= self.sourceWidth * 2) {
 				self.sourceX = 0;
 			}
 		}
-		if (_direction ==='right') {
+		if (_direction === 'right') {
 			self.sourceX -= self.owner.clock.toPPS(_velocity);
 			if (self.sourceX <= 0) {
 				self.sourceX = self.sourceWidth;
 			}
 		}
-		if (_direction ==='up') {
+		if (_direction === 'up') {
 			self.sourceY += self.owner.clock.toPPS(_velocity);
 			if (self.sourceY + self.sourceHeight >= self.sourceHeight * 2) {
 				self.sourceY = 0;
 			}
 		}
-		if (_direction ==='down') {
+		if (_direction === 'down') {
 			self.sourceY -= self.owner.clock.toPPS(_velocity);
 			if (self.sourceY <= 0) {
 				self.sourceY = self.sourceHeight;
