@@ -53,7 +53,7 @@ var Camera = function (_x, _y, _width, _height) {
 		};
 	};
 	this.follow = function (_entity) {
-		this.x += (this.zoom * (_entity.x + _entity.width  / 2) - (this.width  / 2) - this.x) * this.lerp;
+		this.x += (this.zoom * (_entity.x + _entity.width / 2) - (this.width / 2) - this.x) * this.lerp;
 		this.y += (this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2) - this.y) * this.lerp;
 	};
 	this.setZoom = function (_zoom) {

@@ -40,7 +40,7 @@ var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
 					self.delay = 0;
 				}
 				self.sourceY = Math.floor((animation.sequence[self.counter] + 1) / columns) * self.sourceHeight;
-				self.sourceX = self.sourceWidth * animation.sequence[self.counter]  - self.image.width * self.sourceY / self.sourceHeight;
+				self.sourceX = self.sourceWidth * animation.sequence[self.counter] - self.image.width * self.sourceY / self.sourceHeight;
 			}
 		}
 	};

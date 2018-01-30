@@ -192,7 +192,7 @@ var AssetManager = function () {
 	 * @method loadComplete
 	 * @return {boolean} boolean Is true if all assets were loaded.
 	 */
-	self.loadComplete  = function () {
+	self.loadComplete = function () {
 		return self.queue.length === self.success + self.errors;
 	};
 

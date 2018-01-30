@@ -19,7 +19,7 @@ var TileSpriteComponent = function (_image) {
 	self.tempContext.drawImage(self.image, 0, self.sourceHeight * 0.5, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
 	self.tempContext.drawImage(self.image, self.sourceWidth * 0.5, self.sourceHeight * 0.5, self.sourceWidth * 0.5, self.sourceHeight * 0.5);
 	self.image = self.tempCanvas;
-	self.sourceWidth  *= 0.5;
+	self.sourceWidth *= 0.5;
 	self.sourceHeight *= 0.5;
 
 	self.scroll = function (_direction, _velocity) {

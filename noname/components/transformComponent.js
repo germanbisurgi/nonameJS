@@ -21,7 +21,7 @@ var TransformComponent = function (_x, _y, _width, _height, _angle, _anchorX, _a
 
 	self.follow = function (_entity) {
 		self.setPosition(
-			(_entity.x + _entity.width  / 2) - (self.width  / 2),
+			(_entity.x + _entity.width / 2) - (self.width / 2),
 			(_entity.y + _entity.height / 2) - (self.height / 2)
 		);
 	};
