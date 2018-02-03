@@ -28,6 +28,7 @@ devState.create = function () {
 	devState.myBody.addEdge(50, 0, 50, -50);
 	devState.myBody.addEdge(50, -50, 0, -50);
 	devState.myBody.addEdge(0, -50, 0, -0);
+
 	console.log(devState.myBody);
 
 };

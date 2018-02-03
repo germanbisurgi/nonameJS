@@ -37,6 +37,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "noname\\keyboard.js": {
+            "name": "noname\\keyboard.js",
+            "modules": {},
+            "classes": {
+                "Keyboard": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "noname\\mathManager.js": {
             "name": "noname\\mathManager.js",
             "modules": {},
@@ -80,7 +89,7 @@
             "extension_for": [],
             "file": "noname\\clock.js",
             "line": 1,
-            "description": "Tracking time within a game, synchronize animations and manage time related\nevents like setTimeout and setInterval.\nAll clocks are updated by the clockManager who has a 'master' clock itself to\nsync created clocks. All entities are synchronizez with the master clock untill\nyou change it.\nYou should not directly instantiate this class because it will not added to The\nclockManager pool and therefore will not be updated. Use the add method on the\nClockManager instead."
+            "description": "Tracking time within a game, synchronize animations and manage time related\nevents like setTimeout and setInterval.\nAll clocks are updated by the clockManager who has a 'master' clock itself to\nsync created clocks. All entities are synchronizes with the master clock until\nyou change it.\nYou should not directly instantiate this class because it will not added to The\nclockManager pool and therefore will not be updated. Use the add method on the\nClockManager instead."
         },
         "Events": {
             "name": "Events",
@@ -113,6 +122,18 @@
                     "type": "Object"
                 }
             ]
+        },
+        "Keyboard": {
+            "name": "Keyboard",
+            "shortname": "Keyboard",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\keyboard.js",
+            "line": 1,
+            "description": "Keyboards allows to listen if a specific key was pressed, being holded or released"
         },
         "MathManager": {
             "name": "MathManager",
@@ -180,7 +201,7 @@
         {
             "file": "noname\\assetManager.js",
             "line": 37,
-            "description": "The name of the latest loaded assset.",
+            "description": "The name of the latest loaded asset.",
             "itemtype": "property",
             "name": "lastLoaded",
             "type": "{String}",
@@ -362,7 +383,7 @@
         {
             "file": "noname\\clock.js",
             "line": 78,
-            "description": "Calls a function at specified intervals (in milliseconds). It is synchronized\nwhith the clock so motion will be considered in th equation.",
+            "description": "Calls a function at specified intervals (in milliseconds). It is synchronized\nwith the clock so motion will be considered in th equation.",
             "itemtype": "method",
             "name": "setInterval",
             "params": [
@@ -391,7 +412,7 @@
         {
             "file": "noname\\clock.js",
             "line": 91,
-            "description": "Calls a function after a specified number of milliseconds. It is synchronized\nwhith the clock so motion will be considered in th equation.",
+            "description": "Calls a function after a specified number of milliseconds. It is synchronized\nwith the clock so motion will be considered in th equation.",
             "itemtype": "method",
             "name": "setTimeout",
             "params": [
@@ -443,7 +464,7 @@
         {
             "file": "noname\\clock.js",
             "line": 150,
-            "description": "Unpauses the clock.",
+            "description": "Continues the clock.",
             "itemtype": "method",
             "name": "continue",
             "class": "Clock"
@@ -459,7 +480,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 19,
+            "line": 18,
             "description": "All the emitted events the will be triggered in the next update call",
             "itemtype": "property",
             "name": "emitted",
@@ -468,7 +489,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 27,
+            "line": 25,
             "description": "Returns the event if exists.",
             "itemtype": "method",
             "name": "get",
@@ -487,7 +508,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 44,
+            "line": 41,
             "description": "Returns the listeners of an event.",
             "itemtype": "method",
             "name": "getListeners",
@@ -506,7 +527,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 55,
+            "line": 51,
             "description": "Returns the listener of an event if it have it.",
             "itemtype": "method",
             "name": "getListener",
@@ -530,7 +551,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 73,
+            "line": 68,
             "description": "Creates an event and adds to it an event listener.\nIf the event already exists, it just adds the listener to the event.",
             "itemtype": "method",
             "name": "on",
@@ -555,7 +576,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 101,
+            "line": 95,
             "description": "The same as \"on\" but the listener will be executed only once.",
             "itemtype": "method",
             "name": "once",
@@ -580,7 +601,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 113,
+            "line": 106,
             "description": "Removes a listener of an event. If the event have no more listeners\nthe event will be removed to.",
             "itemtype": "method",
             "name": "off",
@@ -600,7 +621,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 140,
+            "line": 133,
             "description": "Adds the event to the emitted events pool. The listeners of this events\nwill be emitted when the \"update\" method will be called in order of priority.",
             "itemtype": "method",
             "name": "emit",
@@ -615,7 +636,7 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 154,
+            "line": 146,
             "description": "Removes all events in the pool.",
             "itemtype": "method",
             "name": "clear",
@@ -623,11 +644,31 @@
         },
         {
             "file": "noname\\events.js",
-            "line": 163,
+            "line": 154,
             "description": "Call all the listeners functions of the emitted events order by priority.\nand removes the listeners that have trigger only once.",
             "itemtype": "method",
             "name": "update",
             "class": "Events"
+        },
+        {
+            "file": "noname\\keyboard.js",
+            "line": 38,
+            "description": "Return true if the passed key is being pressed or holded.",
+            "itemtype": "method",
+            "name": "pressing",
+            "params": [
+                {
+                    "name": "_key",
+                    "description": "The key.",
+                    "type": "String"
+                },
+                {
+                    "name": "_milliseconds",
+                    "description": "elapsed time in milliseconds since the key was pressed.",
+                    "type": "Int"
+                }
+            ],
+            "class": "Keyboard"
         },
         {
             "file": "noname\\mathManager.js",
@@ -695,7 +736,7 @@
             "line": 38,
             "description": "Returns true or false randomly.",
             "return": {
-                "description": "A random bollean (true or false);",
+                "description": "A random boolean (true or false);",
                 "type": "Boolean"
             },
             "class": "MathManager"

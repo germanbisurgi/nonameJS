@@ -3,7 +3,6 @@ var noname = {
 	assetManager: AssetManager,
 	loopManager: LoopManager,
 	mathManager: MathManager,
-	inputManager: InputManager,
 	clockManager: ClockManager,
 	entityManager: EntityManager,
 	renderManager: RenderManager,
