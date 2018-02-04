@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\keyboard.js</title>
+    <title>noname\keys.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -42,7 +42,7 @@
                                 <li><a href="../classes/Clock.html">Clock</a></li>
                                 <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
-                                <li><a href="../classes/Keyboard.html">Keyboard</a></li>
+                                <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
                             </ul>
@@ -82,62 +82,122 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\keyboard.js</h1>
+<h1 class="file-heading">File: noname\keys.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
  * Keyboards allows to listen if a specific key was pressed, being holded or released
- * @class Keyboard
+ * @class Keys
  */
-var Keyboard = function (_game) {
+var Keys = function (_game) {
 	&#x27;use strict&#x27;;
 	var self = this;
 
-	self.keys = {};
+	/**
+	 * Keys that are being tracked. As soon as a key is pressed it will be tracked.
+	 * @property tracked
+	 * @type {Object}
+	 */
+	self.tracked = {};
 
 	document.addEventListener(&#x27;keydown&#x27;, function (event) {
 		event.preventDefault();
-		if (!self.keys[event.key]) {
-			self.keys[event.key] = {
+		if (!self.tracked[event.key]) {
+			self.tracked[event.key] = {
+				justPressed: true,
 				pressed: true,
-				milliseconds: 0
+				released: false,
+				milliseconds: 0,
+				pressFrame: _game.loop.frames,
+				releaseFrame: _game.loop.frames
 			};
 		} else {
-			self.keys[event.key].pressed = true;
+			self.tracked[event.key].pressed = true;
+			if (self.tracked[event.key].pressFrame === 0) {
+				self.tracked[event.key].pressFrame = _game.loop.frames;
+			}
 		}
-
 	}, false);
 
 	document.addEventListener(&#x27;keyup&#x27;, function (event) {
 		event.preventDefault();
-		self.keys[event.key].pressed = false;
-		self.keys[event.key].milliseconds = 0;
+		self.tracked[event.key].pressed = false;
+		self.tracked[event.key].released = true;
+		self.tracked[event.key].milliseconds = 0;
+		self.tracked[event.key].releaseFrame = _game.loop.frames;
+		self.tracked[event.key].pressFrame = 0;
 	}, false);
 
 	self.update = function () {
-		for (var key in self.keys) {
-			if (self.keys[key].pressed) {
-				self.keys[key].milliseconds += _game.clock.master.delta;
+
+		for (var key in self.tracked) {
+
+			if (self.tracked[key].pressed) {
+				self.tracked[key].milliseconds += _game.clock.master.delta;
 			}
+
+			if (self.tracked[key].released &amp;&amp; self.tracked[key].releaseFrame === _game.loop.frames - 1) {
+				self.tracked[key].released = true;
+			} else {
+				self.tracked[key].released = false;
+			}
+
+			if (self.tracked[key].pressed &amp;&amp; self.tracked[key].pressFrame === _game.loop.frames - 1) {
+				self.tracked[key].justPressed = true;
+			} else {
+				self.tracked[key].justPressed = false;
+			}
+
+		}
+
+	};
+
+	/**
+	 * Return true if the passed key was just pressed.
+	 *
+	 * @method justPressed
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Boolean}
+	 */
+	self.justPressed = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].justPressed) {
+			_callback();
 		}
 	};
 
 	/**
-	 * Return true if the passed key is being pressed or holded.
+	 * Return true if the passed key was pressed.
+	 *
+	 * @method released
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Boolean}
+	 */
+	self.released = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].released) {
+			_callback();
+		}
+	};
+
+	/**
+	 * Return true if the passed key was pressed.
 	 *
 	 * @method pressing
 	 * @param  {string} _key The key.
-	 * @param  {int} _milliseconds elapsed time in milliseconds since the key was pressed.
+	 * @param  {Function} _callback A callback function. It holds the millisecond since pressed
+	 * @return {Boolean}
 	 */
-	self.pressing = function (_key, _milliseconds) {
-		if (!_milliseconds){
-			_milliseconds = 0;
-		}
-		if (!self.keys[_key]) {
+	self.pressing = function (_key, _callback) {
+		if (!self.tracked[_key]) {
 			return false;
-		} else {
-			return self.keys[_key].pressed &amp;&amp; self.keys[_key].milliseconds &gt;= _milliseconds;
+		} else if (self.tracked[_key].pressed) {
+			_callback(self.tracked[_key].milliseconds);
 		}
 	};
 };

@@ -37,11 +37,11 @@
             "fors": {},
             "namespaces": {}
         },
-        "noname\\keyboard.js": {
-            "name": "noname\\keyboard.js",
+        "noname\\keys.js": {
+            "name": "noname\\keys.js",
             "modules": {},
             "classes": {
-                "Keyboard": 1
+                "Keys": 1
             },
             "fors": {},
             "namespaces": {}
@@ -123,15 +123,15 @@
                 }
             ]
         },
-        "Keyboard": {
-            "name": "Keyboard",
-            "shortname": "Keyboard",
+        "Keys": {
+            "name": "Keys",
+            "shortname": "Keys",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "noname\\keyboard.js",
+            "file": "noname\\keys.js",
             "line": 1,
             "description": "Keyboards allows to listen if a specific key was pressed, being holded or released"
         },
@@ -651,9 +651,66 @@
             "class": "Events"
         },
         {
-            "file": "noname\\keyboard.js",
-            "line": 38,
-            "description": "Return true if the passed key is being pressed or holded.",
+            "file": "noname\\keys.js",
+            "line": 9,
+            "description": "Keys that are being tracked. As soon as a key is pressed it will be tracked.",
+            "itemtype": "property",
+            "name": "tracked",
+            "type": "{Object}",
+            "class": "Keys"
+        },
+        {
+            "file": "noname\\keys.js",
+            "line": 68,
+            "description": "Return true if the passed key was just pressed.",
+            "itemtype": "method",
+            "name": "justPressed",
+            "params": [
+                {
+                    "name": "_key",
+                    "description": "The key.",
+                    "type": "String"
+                },
+                {
+                    "name": "_callback",
+                    "description": "A callback function.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Keys"
+        },
+        {
+            "file": "noname\\keys.js",
+            "line": 84,
+            "description": "Return true if the passed key was pressed.",
+            "itemtype": "method",
+            "name": "released",
+            "params": [
+                {
+                    "name": "_key",
+                    "description": "The key.",
+                    "type": "String"
+                },
+                {
+                    "name": "_callback",
+                    "description": "A callback function.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Keys"
+        },
+        {
+            "file": "noname\\keys.js",
+            "line": 100,
+            "description": "Return true if the passed key was pressed.",
             "itemtype": "method",
             "name": "pressing",
             "params": [
@@ -663,12 +720,16 @@
                     "type": "String"
                 },
                 {
-                    "name": "_milliseconds",
-                    "description": "elapsed time in milliseconds since the key was pressed.",
-                    "type": "Int"
+                    "name": "_callback",
+                    "description": "A callback function. It holds the millisecond since pressed",
+                    "type": "Function"
                 }
             ],
-            "class": "Keyboard"
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Keys"
         },
         {
             "file": "noname\\mathManager.js",
