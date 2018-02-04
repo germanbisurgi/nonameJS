@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\events.js</title>
+    <title>noname\clockManager.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -83,186 +83,67 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\events.js</h1>
+<h1 class="file-heading">File: noname\clockManager.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-* Used to create custom events and attach to them one or more listeners that
-* can be triggered once or multiple times.
-* @class Events
-* @constructor
-*/
-var Events = function () {
+ * Manages all the game game clocks. Per default only one clock, the &quot;Master Clock&quot;
+ * is created and added to this manager as a property (not in its pool).
+ * the master clock synchronizes a lot of game activities like sprite animations,
+ * timers, ecc.If you want to apply a different clock with different properties
+ * you have to create a new clock for that. For example if you want that only
+ * entities of a certain type move in slow motion you must to create a new clock
+ * add it to this entities and change the motion property of that clock.
+ * New clocks should always be created with the clock manager create method
+ * otherwise it will be not updated.
+ * @param  {object} _game a reference to the game.
+ * @class ClockManager
+ */
+var ClockManager = function (_game) {
 	&#x27;use strict&#x27;;
 	var self = this;
 
 	/**
-	* All the created events
-	* @property pool
-	* @type {Events Array}
-	*/
+	 * The default clock that synchronizes the game artifacts (animations, timers, ecc).
+	 * @property master
+	 * @type {Clock}
+	 */
+	self.master = null;
+
+	/**
+	 * The collection of created clocks.
+	 * @property pool
+	 * @type {Array}
+	 */
 	self.pool = [];
 
-	/**
-	* All the emitted events the will be triggered in the next update call
-	* @property emitted
-	* @type {Emitted events Array}
-	*/
-	self.emitted = [];
+	self.init = function () {
+		self.master = self.create();
+	};
 
-	/**
-	* Returns the event if exists.
-	* @method get
-	* @param {String} eventName
-	* @return {Event}
-	*/
-	self.get = function (pEventName) {
-		var output = false;
-		self.pool.forEach(function (event) {
-			if (event.name === pEventName) {
-				output = event;
-			}
+	self.update = function (_delta) {
+		self.pool.forEach(function (clock) {
+			clock.update(_delta);
 		});
-		return output;
+	};
+
+	self.add = function (_clock) {
+		self.pool.push(_clock);
 	};
 
 	/**
-	* Returns the listeners of an event.
-	* @method getListeners
-	* @param {event} Event
-	* @return {Listeners array}
-	*/
-	self.getListeners = function (pEvent) {
-		return pEvent.listeners;
+	 * Creates a new clock and add it to the clocks pool.
+	 * @method create
+	 * @return {Clock}
+	 */
+	self.create = function () {
+		var clock = new noname.clock(_game);
+		self.add(clock);
+		return clock;
 	};
 
-	/**
-	* Returns the listener of an event if it have it.
-	* @method getListener
-	* @param {event} Event
-	* @param {listener} Listener (the function that will be called)
-	* @return {Listeners}
-	*/
-	self.getListener = function (pEvent, pListener) {
-		var output = false;
-		pEvent.listeners.forEach(function (listener) {
-			if (listener.listener === pListener) {
-				output = listener;
-			}
-		});
-		return output;
-	};
-
-	/**
-	* Creates an event and adds to it an event listener.
-	* If the event already exists, it just adds the listener to the event.
-	* @method on
-	* @param {String} Event name
-	* @param {function} Listener (the function that will be called)
-	* @param {Number} Priority. The smaller the higher the priority.
-	*/
-	self.on = function (pEventName, pListener, pPriority, pOnce) {
-		var event = self.get(pEventName);
-		var listener = {
-			priority: pPriority ? pPriority : 0,
-			listener: pListener,
-			once: pOnce ? pOnce : false
-		};
-		if (event) {
-			event.listeners.push(listener);
-		} else {
-			event = {
-				name: pEventName,
-				listeners: []
-			};
-			event.listeners.push(listener);
-			self.pool.push(event);
-		}
-	};
-
-	/**
-	* The same as &quot;on&quot; but the listener will be executed only once.
-	* @method once
-	* @param {String} Event name
-	* @param {function} Listener (the function that will be called)
-	* @param {Number} Priority. The smaller the higher the priority.
-	*/
-	self.once = function (pEventName, pListener, pPriority) {
-		self.on(pEventName, pListener, pPriority, true);
-	};
-
-	/**
-	* Removes a listener of an event. If the event have no more listeners
-	* the event will be removed to.
-	* @method off
-	* @param {String} Event name
-	* @param {function} Listener (the function that will be called)
-	*/
-	self.off = function (pEventName, pListener) {
-		var index;
-		var event = self.get(pEventName);
-		if (!event) {
-			return false;
-		} else {
-			var listener = self.getListener(event, pListener);
-			index = event.listeners.indexOf(listener);
-			if (index &gt; -1) {
-				event.listeners.splice(index, 1);
-			}
-		}
-		if (event.listeners.length === 0) {
-			index = self.pool.indexOf(event);
-			if (index &gt; -1) {
-				self.pool.splice(index, 1);
-			}
-		}
-	};
-
-	/**
-	* Adds the event to the emitted events pool. The listeners of this events
-	* will be emitted when the &quot;update&quot; method will be called in order of priority.
-	* @method emit
-	* @param {String} Event name
-	*/
-	self.emit = function (pEventName) {
-		var event = self.get(pEventName);
-		if (event) {
-			self.emitted.push(event);
-		}
-	};
-
-	/**
-	* Removes all events in the pool.
-	* @method clear
-	*/
-	self.clear = function () {
-		self.pool = [];
-	};
-
-	/**
-	* Call all the listeners functions of the emitted events order by priority.
-	* and removes the listeners that have trigger only once.
-	* @method update
-	*/
-	self.update = function () {
-		if (self.emitted !== []) {
-			self.emitted.forEach(function (event) {
-				event.listeners.sort(function (a, b) {
-					return a.priority - b.priority;
-				});
-				event.listeners.forEach(function (listener) {
-					listener.listener();
-					window.requestAnimationFrame(function () {
-						if (listener.once === true) {
-							self.off(event.name, listener.listener);
-						}
-					});
-				});
-			});
-			self.emitted = [];
-		}
-	};
+	self.init();
 
 };
 

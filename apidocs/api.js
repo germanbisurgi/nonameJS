@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "AssetManager",
         "Clock",
+        "ClockManager",
         "Events",
         "Fingers",
         "Keys",

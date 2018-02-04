@@ -19,6 +19,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "noname\\clockManager.js": {
+            "name": "noname\\clockManager.js",
+            "modules": {},
+            "classes": {
+                "ClockManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "noname\\events.js": {
             "name": "noname\\events.js",
             "modules": {},
@@ -91,6 +100,25 @@
             "line": 1,
             "description": "Tracking time within a game, synchronize animations and manage time related\nevents like setTimeout and setInterval.\nAll clocks are updated by the clockManager who has a 'master' clock itself to\nsync created clocks. All entities are synchronizes with the master clock until\nyou change it.\nYou should not directly instantiate this class because it will not added to The\nclockManager pool and therefore will not be updated. Use the add method on the\nClockManager instead."
         },
+        "ClockManager": {
+            "name": "ClockManager",
+            "shortname": "ClockManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\clockManager.js",
+            "line": 1,
+            "description": "Manages all the game game clocks. Per default only one clock, the \"Master Clock\"\nis created and added to this manager as a property (not in its pool).\nthe master clock synchronizes a lot of game activities like sprite animations,\ntimers, ecc.If you want to apply a different clock with different properties\nyou have to create a new clock for that. For example if you want that only\nentities of a certain type move in slow motion you must to create a new clock\nadd it to this entities and change the motion property of that clock.\nNew clocks should always be created with the clock manager create method\notherwise it will be not updated.",
+            "params": [
+                {
+                    "name": "_game",
+                    "description": "a reference to the game.",
+                    "type": "Object"
+                }
+            ]
+        },
         "Events": {
             "name": "Events",
             "shortname": "Events",
@@ -114,7 +142,7 @@
             "extension_for": [],
             "file": "noname\\fingers.js",
             "line": 1,
-            "description": "Track fingers touching on the game surface",
+            "description": "Track fingers touching on the canvas element.",
             "params": [
                 {
                     "name": "_game",
@@ -468,6 +496,36 @@
             "itemtype": "method",
             "name": "continue",
             "class": "Clock"
+        },
+        {
+            "file": "noname\\clockManager.js",
+            "line": 18,
+            "description": "The default clock that synchronizes the game artifacts (animations, timers, ecc).",
+            "itemtype": "property",
+            "name": "master",
+            "type": "{Clock}",
+            "class": "ClockManager"
+        },
+        {
+            "file": "noname\\clockManager.js",
+            "line": 25,
+            "description": "The collection of created clocks.",
+            "itemtype": "property",
+            "name": "pool",
+            "type": "{Array}",
+            "class": "ClockManager"
+        },
+        {
+            "file": "noname\\clockManager.js",
+            "line": 46,
+            "description": "Creates a new clock and add it to the clocks pool.",
+            "itemtype": "method",
+            "name": "create",
+            "return": {
+                "description": "",
+                "type": "Clock"
+            },
+            "class": "ClockManager"
         },
         {
             "file": "noname\\events.js",

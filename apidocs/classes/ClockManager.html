@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Fingers</title>
+    <title>ClockManager</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -83,12 +83,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Fingers Class</h1>
+<h1>ClockManager Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/noname_fingers.js.html#l1"><code>noname\fingers.js:1</code></a>
+            Defined in: <a href="../files/noname_clockManager.js.html#l1"><code>noname\clockManager.js:1</code></a>
         </div>
 
 
@@ -96,7 +96,15 @@
 
 
 <div class="box intro">
-    <p>Track fingers touching on the canvas element.</p>
+    <p>Manages all the game game clocks. Per default only one clock, the &quot;Master Clock&quot;
+is created and added to this manager as a property (not in its pool).
+the master clock synchronizes a lot of game activities like sprite animations,
+timers, ecc.If you want to apply a different clock with different properties
+you have to create a new clock for that. For example if you want that only
+entities of a certain type move in slow motion you must to create a new clock
+add it to this entities and change the motion property of that clock.
+New clocks should always be created with the clock manager create method
+otherwise it will be not updated.</p>
 
 </div>
 
@@ -105,18 +113,143 @@
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
     </ul>
 
     <div>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+                <div class="index-section methods">
+                    <h3>Methods</h3>
 
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_create">create</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_master">master</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_pool">pool</a>
+
+                            </li>
+                    </ul>
+                </div>
 
 
         </div>
 
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
 
+<div id="method_create" class="method item">
+    <h3 class="name"><code>create</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Clock.html" class="crosslink">Clock</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_clockManager.js.html#l46"><code>noname\clockManager.js:46</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Creates a new clock and add it to the clocks pool.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/Clock.html" class="crosslink">Clock</a></span>:
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+<div id="property_master" class="property item">
+    <h3 class="name"><code>master</code></h3>
+    <span class="type"><a href="../classes/Clock.html" class="crosslink">Clock</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_clockManager.js.html#l18"><code>noname\clockManager.js:18</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The default clock that synchronizes the game artifacts (animations, timers, ecc).</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_pool" class="property item">
+    <h3 class="name"><code>pool</code></h3>
+    <span class="type">Array</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_clockManager.js.html#l25"><code>noname\clockManager.js:25</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The collection of created clocks.</p>
+
+    </div>
+
+
+
+</div>
+            </div>
 
 
     </div>
