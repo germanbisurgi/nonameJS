@@ -703,7 +703,7 @@
             ],
             "return": {
                 "description": "",
-                "type": "Boolean"
+                "type": "Callback"
             },
             "class": "Keys"
         },
@@ -727,7 +727,7 @@
             ],
             "return": {
                 "description": "",
-                "type": "Boolean"
+                "type": "Callback"
             },
             "class": "Keys"
         },

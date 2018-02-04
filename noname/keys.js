@@ -87,7 +87,7 @@ var Keys = function (_game) {
 	 * @method released
 	 * @param  {String} _key The key.
 	 * @param  {Function} _callback A callback function.
-	 * @return {Boolean}
+	 * @return {Callback}
 	 */
 	self.released = function (_key, _callback) {
 		if (!self.tracked[_key]) {
@@ -104,7 +104,7 @@ var Keys = function (_game) {
 	 * @param  {string} _key The key.
 	 * @param  {Function} _callback A callback function. It holds the millisecond since the
 	 * key was pressed.
-	 * @return {Boolean}
+	 * @return {Callback}
 	 */
 	self.pressing = function (_key, _callback) {
 		if (!self.tracked[_key]) {
