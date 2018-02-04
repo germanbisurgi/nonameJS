@@ -33,7 +33,7 @@ var Game = function (_settings) {
 		self.entities = new noname.entityManager(self);
 		self.render = new noname.renderManager(self);
 		self.box2d = new noname.box2dManager(self);
-		self.keyboard = new noname.keyboard(self);
+		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
 
 		self.loop.start(function () {
@@ -60,7 +60,7 @@ var Game = function (_settings) {
 			if (self.state.current.created) {
 				self.clock.update(self.loop.delta);
 
-				self.keyboard.update();
+				self.keys.update();
 
 				self.box2d.update(); // TODO physics condition.
 

@@ -1,14 +1,14 @@
-var b2Vec2            = Box2D.Common.Math.b2Vec2;
-var b2BodyDef         = Box2D.Dynamics.b2BodyDef;
-var b2Body            = Box2D.Dynamics.b2Body;
-var b2FixtureDef      = Box2D.Dynamics.b2FixtureDef;
-var b2Fixture         = Box2D.Dynamics.b2Fixture;
-var b2World           = Box2D.Dynamics.b2World;
-var b2MassData        = Box2D.Collision.Shapes.b2MassData;
-var b2PolygonShape    = Box2D.Collision.Shapes.b2PolygonShape;
-var b2CircleShape     = Box2D.Collision.Shapes.b2CircleShape;
-var b2DebugDraw       = Box2D.Dynamics.b2DebugDraw;
-var b2Contacts        = Box2D.Dynamics.Contacts;
+var b2Vec2 = Box2D.Common.Math.b2Vec2;
+var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+var b2Body = Box2D.Dynamics.b2Body;
+var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+var b2Fixture = Box2D.Dynamics.b2Fixture;
+var b2World = Box2D.Dynamics.b2World;
+var b2MassData = Box2D.Collision.Shapes.b2MassData;
+var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
 var Box2dManager = function (_game) {
@@ -43,19 +43,19 @@ var Box2dManager = function (_game) {
 
 	self.addBody = function (_x, _y, _type) {
 		var bodyDef = new b2BodyDef();
-		bodyDef.position.x      = _x / self.scale;
-		bodyDef.position.y      = _y / self.scale;
-		bodyDef.active          = true;
-		bodyDef.allowSleep      = true;
-		bodyDef.angle           = 0;
-		bodyDef.angularDamping  = 0;
+		bodyDef.position.x = _x / self.scale;
+		bodyDef.position.y = _y / self.scale;
+		bodyDef.active = true;
+		bodyDef.allowSleep = true;
+		bodyDef.angle = 0;
+		bodyDef.angularDamping = 0;
 		bodyDef.angularVelocity = 0;
-		bodyDef.awake           = true;
-		bodyDef.bullet          = false;
-		bodyDef.fixedRotation   = false;
-		bodyDef.linearDamping   = 0;
-		bodyDef.linearVelocity  = {x: 0, y: 0};
-		bodyDef.userData        = '';
+		bodyDef.awake = true;
+		bodyDef.bullet = false;
+		bodyDef.fixedRotation = false;
+		bodyDef.linearDamping = 0;
+		bodyDef.linearVelocity = {x: 0, y: 0};
+		bodyDef.userData = '';
 		if (_type === 'static') {
 			bodyDef.type = b2Body.b2_staticBody;
 		}
@@ -113,9 +113,9 @@ var Box2dManager = function (_game) {
 
 	self.getFixtureDef = function () {
 		var fixDef = new b2FixtureDef();
-		fixDef.density     = 1;
-		fixDef.friction    = 0.5;
-		fixDef.isSensor    = false;
+		fixDef.density = 1;
+		fixDef.friction = 0.5;
+		fixDef.isSensor = false;
 		fixDef.restitution = 0.0;
 		return fixDef;
 	};
@@ -174,7 +174,7 @@ var Box2dManager = function (_game) {
 
 	self.followFixture = function (_entity, _fixture) {
 		var body = _fixture.GetBody();
-		_entity.x = (_fixture.GetAABB().GetCenter().x * self.scale - _entity.width  / 2);
+		_entity.x = (_fixture.GetAABB().GetCenter().x * self.scale - _entity.width / 2);
 		_entity.y = (_fixture.GetAABB().GetCenter().y * self.scale - _entity.height / 2);
 		_entity.angle = body.GetAngle() * 57.295779513082320876;
 	};
