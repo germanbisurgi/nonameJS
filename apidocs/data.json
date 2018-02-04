@@ -1057,7 +1057,7 @@
         {
             "file": "noname\\stateManager.js",
             "line": 10,
-            "description": "The current state thst being played.",
+            "description": "The current state that is being played.",
             "itemtype": "property",
             "name": "current",
             "type": "{Object}",
@@ -1112,7 +1112,7 @@
         },
         {
             "file": "noname\\stateManager.js",
-            "line": 63,
+            "line": 68,
             "description": "Get a state by name.",
             "itemtype": "method",
             "name": "get",
@@ -1127,6 +1127,22 @@
                 "description": "Returns a state otherwise returns false.",
                 "type": "Object"
             },
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 84,
+            "description": "Switch to the next state in the states array.",
+            "itemtype": "method",
+            "name": "switchNext",
+            "class": "StateManager"
+        },
+        {
+            "file": "noname\\stateManager.js",
+            "line": 94,
+            "description": "Switch to the previous state in the states array.",
+            "itemtype": "method",
+            "name": "switchPrevious",
             "class": "StateManager"
         }
     ],
