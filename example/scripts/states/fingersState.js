@@ -19,7 +19,6 @@ fingersState.update = function () {
 
 fingersState.afterRender = function () {
 	fingersState.fingers.tracked.forEach(function (_finger) {
-		console.log(_finger);
 		fingersState.render.context.strokeStyle = 'cyan';
 		fingersState.render.context.lineWidth = '6';
 		fingersState.render.context.beginPath();
