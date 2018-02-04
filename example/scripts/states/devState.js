@@ -18,11 +18,11 @@ devState.create = function () {
 	devState.myBody.addCircle(5, 0, -5);
 	devState.myBody.addRectangle(50, 50, -50, 25);
 	devState.myBody.addPolygon([
-		{x:   0, y:  0},
-		{x:  50, y:  0},
+		{x: 0, y: 0},
+		{x: 50, y: 0},
 		{x: 100, y: 25},
-		{x:  50, y: 50},
-		{x:   0, y: 50}
+		{x: 50, y: 50},
+		{x: 0, y: 50}
 	], -10, 10);
 	devState.myBody.addEdge(0, 0, 50, 0);
 	devState.myBody.addEdge(50, 0, 50, -50);

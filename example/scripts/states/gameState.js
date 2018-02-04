@@ -1,4 +1,4 @@
-var gameState = new Bamboo.state('gameState');
+/* var gameState = new Bamboo.state('gameState');
 
 gameState.create = function () {
 
@@ -97,4 +97,4 @@ gameState.update = function () {
 gameState.postRender = function () {
 	this.renderer.context.fillText('currentState:    ' + this.name, 200, 15);
 	this.renderer.context.fillText('state time:      ' +  Math.floor(this.time.current / 1000), 200, 30);
-};
+}; */

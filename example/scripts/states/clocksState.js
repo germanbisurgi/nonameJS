@@ -17,22 +17,14 @@ clocksState.create = function () {
 	/* slow block */
 	clocksState.slowBlock = new noname.entity();
 	clocksState.slowBlock.addComponent('transform', new noname.transformComponent(50, 150, 50, 50));
-	clocksState.slowBlock.addComponent('clock', clocksState.clock.master);
-
 	clocksState.slowBlock.addComponent('clock', clocksState.clock.create());
 	clocksState.slowBlock.clock.motion = 0.5;
-
 	clocksState.slowBlock.addComponent('renderable', new noname.imageComponent(clocksState.assets.get('stone')));
 	clocksState.entities.add(clocksState.slowBlock);
 
 };
 
 clocksState.update = function () {
-
-	console.log(
-		clocksState.fastBlock.clock.elapsed,
-		clocksState.slowBlock.clock.elapsed
-	);
 
 	// rotates 90 degrees * motion (1.0) per second = 90 degrees per second
 	clocksState.fastBlock.transform.rotate(90);
