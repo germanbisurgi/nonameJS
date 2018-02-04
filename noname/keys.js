@@ -17,53 +17,83 @@ var Keys = function (_game) {
 		event.preventDefault();
 		if (!self.tracked[event.key]) {
 			self.tracked[event.key] = {
+				justPressed: true,
 				pressed: true,
 				released: false,
-				justReleased: true,
-				milliseconds: 0
+				milliseconds: 0,
+				pressFrame: _game.loop.frames,
+				releaseFrame: _game.loop.frames
 			};
 		} else {
 			self.tracked[event.key].pressed = true;
+			if (self.tracked[event.key].pressFrame === 0) {
+				self.tracked[event.key].pressFrame = _game.loop.frames;
+			}
 		}
-
 	}, false);
 
 	document.addEventListener('keyup', function (event) {
 		event.preventDefault();
 		self.tracked[event.key].pressed = false;
 		self.tracked[event.key].released = true;
-		self.tracked[event.key].justReleased = true;
 		self.tracked[event.key].milliseconds = 0;
+		self.tracked[event.key].releaseFrame = _game.loop.frames;
+		self.tracked[event.key].pressFrame = 0;
 	}, false);
 
 	self.update = function () {
+
 		for (var key in self.tracked) {
 
 			if (self.tracked[key].pressed) {
 				self.tracked[key].milliseconds += _game.clock.master.delta;
 			}
 
-			if (self.tracked[key].justReleased) {
-				self.tracked[key].justReleased = false;
+			if (self.tracked[key].released && self.tracked[key].releaseFrame === _game.loop.frames - 1) {
+				self.tracked[key].released = true;
 			} else {
 				self.tracked[key].released = false;
 			}
 
+			if (self.tracked[key].pressed && self.tracked[key].pressFrame === _game.loop.frames - 1) {
+				self.tracked[key].justPressed = true;
+			} else {
+				self.tracked[key].justPressed = false;
+			}
+
+		}
+
+	};
+
+	/**
+	 * Return true if the passed key was just pressed.
+	 *
+	 * @method justPressed
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Boolean}
+	 */
+	self.justPressed = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].justPressed) {
+			_callback();
 		}
 	};
 
 	/**
-	 * Return true if the passed key is being was holded.
+	 * Return true if the passed key was pressed.
 	 *
-	 * @method holding
-	 * @param  {string} _key The key.
-	 * @param  {int} _milliseconds Holding time.
+	 * @method released
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Boolean}
 	 */
-	self.holding = function (_key, _milliseconds) {
+	self.released = function (_key, _callback) {
 		if (!self.tracked[_key]) {
 			return false;
-		} else {
-			return self.tracked[_key].pressed && self.tracked[_key].milliseconds >= _milliseconds;
+		} else if (self.tracked[_key].released) {
+			_callback();
 		}
 	};
 
@@ -72,26 +102,14 @@ var Keys = function (_game) {
 	 *
 	 * @method pressing
 	 * @param  {string} _key The key.
+	 * @param  {Function} _callback A callback function. It holds the millisecond since pressed
+	 * @return {Boolean}
 	 */
-	self.releasing = function (_key) {
+	self.pressing = function (_key, _callback) {
 		if (!self.tracked[_key]) {
 			return false;
-		} else {
-			return self.tracked[_key].released;
-		}
-	};
-
-	/**
-	 * Return true if the passed key was pressed.
-	 *
-	 * @method pressing
-	 * @param  {string} _key The key.
-	 */
-	self.pressing = function (_key) {
-		if (!self.tracked[_key]) {
-			return false;
-		} else {
-			return self.tracked[_key].pressed;
+		} else if (self.tracked[_key].pressed) {
+			_callback(self.tracked[_key].milliseconds);
 		}
 	};
 };
