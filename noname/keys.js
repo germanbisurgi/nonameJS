@@ -66,12 +66,12 @@ var Keys = function (_game) {
 	};
 
 	/**
-	 * Return true if the passed key was just pressed.
+	 * Executes a callback function if the passed key was just pressed.
 	 *
 	 * @method justPressed
 	 * @param  {String} _key The key.
 	 * @param  {Function} _callback A callback function.
-	 * @return {Boolean}
+	 * @return {Callback}
 	 */
 	self.justPressed = function (_key, _callback) {
 		if (!self.tracked[_key]) {
@@ -82,7 +82,7 @@ var Keys = function (_game) {
 	};
 
 	/**
-	 * Return true if the passed key was pressed.
+	 * Executes a callback function if the passed key was pressed.
 	 *
 	 * @method released
 	 * @param  {String} _key The key.
@@ -98,11 +98,12 @@ var Keys = function (_game) {
 	};
 
 	/**
-	 * Return true if the passed key was pressed.
+	 * Executes a callback function if the passed key was pressed.
 	 *
 	 * @method pressing
 	 * @param  {string} _key The key.
-	 * @param  {Function} _callback A callback function. It holds the millisecond since pressed
+	 * @param  {Function} _callback A callback function. It holds the millisecond since the
+	 * key was pressed.
 	 * @return {Boolean}
 	 */
 	self.pressing = function (_key, _callback) {

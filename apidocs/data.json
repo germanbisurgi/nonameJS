@@ -662,7 +662,7 @@
         {
             "file": "noname\\keys.js",
             "line": 68,
-            "description": "Return true if the passed key was just pressed.",
+            "description": "Executes a callback function if the passed key was just pressed.",
             "itemtype": "method",
             "name": "justPressed",
             "params": [
@@ -679,14 +679,14 @@
             ],
             "return": {
                 "description": "",
-                "type": "Boolean"
+                "type": "Callback"
             },
             "class": "Keys"
         },
         {
             "file": "noname\\keys.js",
             "line": 84,
-            "description": "Return true if the passed key was pressed.",
+            "description": "Executes a callback function if the passed key was pressed.",
             "itemtype": "method",
             "name": "released",
             "params": [
@@ -710,7 +710,7 @@
         {
             "file": "noname\\keys.js",
             "line": 100,
-            "description": "Return true if the passed key was pressed.",
+            "description": "Executes a callback function if the passed key was pressed.",
             "itemtype": "method",
             "name": "pressing",
             "params": [
@@ -721,7 +721,7 @@
                 },
                 {
                     "name": "_callback",
-                    "description": "A callback function. It holds the millisecond since pressed",
+                    "description": "A callback function. It holds the millisecond since the\nkey was pressed.",
                     "type": "Function"
                 }
             ],
