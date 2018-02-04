@@ -1,5 +1,5 @@
 /**
- * Track fingers touching on the game surface
+ * Track fingers touching on the canvas element.
  * @param  {object} _game [description]
  * @class Fingers
  */

@@ -67,10 +67,10 @@ var Clock = function (_game) {
 		self.delta = 0;
 		if (!self.paused) {
 			self.lastTime = self.current;
-			self.current = self.lastTime + _delta * self.motion;
+			self.current = self.lastTime + _delta;
 			self.delta = self.current - self.lastTime;
 			self.rate = self.delta / (1000 / _game.loop.fps);
-			self.elapsed += self.delta * self.motion / 2;
+			self.elapsed += self.delta * self.motion;
 			self.updateEvents();
 		}
 	};

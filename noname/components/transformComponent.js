@@ -10,8 +10,8 @@ var TransformComponent = function (_x, _y, _width, _height, _angle, _anchorX, _a
 	self.anchorY = _anchorY || 0.5;
 
 	self.translate = function (_x, _y) {
-		self.x += self.clock.toPPS(_x);
-		self.y += self.clock.toPPS(_y);
+		self.x += self.owner.clock.toPPS(_x);
+		self.y += self.owner.clock.toPPS(_y);
 	};
 
 	self.setPosition = function (_x, _y) {
@@ -37,7 +37,7 @@ var TransformComponent = function (_x, _y, _width, _height, _angle, _anchorX, _a
 	};
 
 	self.rotate = function (_degrees) {
-		self.angle += self.clock.toDPS(_degrees);
+		self.angle += self.owner.clock.toDPS(_degrees);
 	};
 
 	self.setAngle = function (_degrees) {
