@@ -6,13 +6,13 @@
 var Fingers = function (_game) {
 	'use strict';
 	var self = this;
-	self.pool = [];
+	self.tracked = [];
 	self.limit = 10;
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			if (self.pool.length < self.limit) {
-				self.pool.push({
+			if (self.tracked.length < self.limit) {
+				self.tracked.push({
 					id: event.changedTouches[i].identifier,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
 					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
@@ -45,7 +45,7 @@ var Fingers = function (_game) {
 
 	self.get = function (_id) {
 		var output = false;
-		self.pool.forEach(function (_finger) {
+		self.tracked.forEach(function (_finger) {
 			if (_finger.id === _id) {
 				output = _finger;
 			}
@@ -54,9 +54,9 @@ var Fingers = function (_game) {
 	};
 
 	self.remove = function (_item) {
-		var index = self.pool.indexOf(_item);
+		var index = self.tracked.indexOf(_item);
 		if (index > -1) {
-			self.pool.splice(index, 1);
+			self.tracked.splice(index, 1);
 		}
 	};
 

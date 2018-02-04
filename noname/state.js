@@ -5,6 +5,7 @@ var State = function (_name) {
 	self.initialized = false;
 	self.preloaded = false;
 	self.created = false;
+	self.justEntered = true;
 
 	self.initialize = function (_game) {
 		self.loop = _game.loop;
@@ -17,7 +18,12 @@ var State = function (_name) {
 		self.render = _game.render;
 		self.camera = _game.render.camera;
 		self.box2d = _game.box2d;
+		self.state = _game.state;
 		self.initialized = true;
+	};
+
+	self.enter = function () {
+		console.log('enter', self.name);
 	};
 
 	self.preload = function () {};
@@ -29,4 +35,8 @@ var State = function (_name) {
 	self.update = function () {};
 
 	self.afterRender = function () {};
+
+	self.exit = function () {
+		console.log('exit', self.name);
+	};
 };

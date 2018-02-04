@@ -35,6 +35,8 @@ gameState.afterCreate = function () {
 
 gameState.update = function () {
 
+	console.log('gameState');
+
 	var keyboard = this.inputs.keyboard;
 
 	// cursor controls

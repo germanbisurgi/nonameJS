@@ -23,6 +23,8 @@ myState.loading = function () {
 
 myState.create = function () {
 
+	console.log('myState');
+
 	var loading = document.querySelector('.loading');
 	loading.innerText = 'load complete';
 
@@ -79,6 +81,14 @@ myState.update = function () {
 		myState.spaceship.image.y + myState.spaceship.image.height / 2
 	);
 	myState.compassImage.setAngle(myState.compassAngle);
+
+	fingersState.keys.justPressed('b', function () {
+		fingersState.state.switch('keysState');
+	});
+
+	fingersState.keys.justPressed('n', function () {
+		fingersState.state.switch('clocksState');
+	});
 
 };
 

@@ -8,7 +8,7 @@ var StateManager = function (_game) {
 	var self = this;
 
 	/**
-	* The current state thst being played.
+	* The current state that is being played.
 	* @property current
 	* @type {Object}
 	*/
@@ -55,7 +55,12 @@ var StateManager = function (_game) {
 	self.switch = function (_stateName) {
 		self.pool.forEach(function (_state) {
 			if (_state.name === _stateName) {
+				if (self.current) {
+					self.current.exit();
+				}
 				self.current = _state;
+				self.current.enter();
+				self.current.justEntered = true;
 			}
 		});
 	};
@@ -74,6 +79,29 @@ var StateManager = function (_game) {
 			}
 		});
 		return output;
+	};
+
+	/**
+	 * Switch to the next state in the states array.
+	 * @method switchNext
+	 */
+	self.switchNext = function () {
+		var currentIndex = self.pool.indexOf(self.current);
+		var nextIndex = (currentIndex + 1) % self.pool.length;
+		self.switch(self.pool[nextIndex].name);
+	};
+
+	/**
+	 * Switch to the previous state in the states array.
+	 * @method switchPrevious
+	 */
+	self.switchPrevious = function () {
+		var currentIndex = self.pool.indexOf(self.current);
+		var previousIndex = currentIndex - 1;
+		if (previousIndex < 0) {
+			previousIndex = self.pool.length - 1;
+		}
+		self.switch(self.pool[previousIndex].name);
 	};
 
 	self.init();

@@ -4,13 +4,12 @@ var EntityManager = function (_game) {
 	self.game = _game;
 	self.pool = [];
 	self.active = [];
-	self.prepared = false;
 
 	self.prepare = function () {
+		console.log('preparing entities');
 		self.active = self.pool.filter(function (_entity) {
 			return _entity.state === self.game.state.current.name;
 		});
-		self.prepared = true;
 	};
 
 	self.create = function () {

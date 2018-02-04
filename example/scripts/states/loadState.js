@@ -27,6 +27,7 @@ loadState.preload = function () {
 };
 
 loadState.loading = function () {
+	console.log('loadState');
 	var loadingProgress = document.querySelector('.loading-progress');
 	loadingProgress.innerText = this.assets.loadProgress().percent + '%' + this.assets.loadProgress().lastLoaded;
 };

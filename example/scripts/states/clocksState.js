@@ -6,6 +6,8 @@ clocksState.preload = function () {
 
 clocksState.create = function () {
 
+	console.log('clocksState');
+
 	/* fast block */
 	clocksState.fastBlock = new noname.entity();
 	clocksState.fastBlock.addComponent('transform', new noname.transformComponent(50, 50, 50, 50));
@@ -31,4 +33,12 @@ clocksState.update = function () {
 
 	// rotates 90 degrees * motion (0.5) per second = 45 degrees per second.
 	clocksState.slowBlock.transform.rotate(90);
+
+	clocksState.keys.justPressed('b', function () {
+		clocksState.state.switchPrevious();
+	});
+
+	clocksState.keys.justPressed('n', function () {
+		clocksState.state.switchNext();
+	});
 };

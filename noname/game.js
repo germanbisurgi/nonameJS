@@ -58,6 +58,13 @@ var Game = function (_settings) {
 			}
 
 			if (self.state.current.created) {
+
+				if (self.state.current.justEntered) {
+					self.state.current.justEntered = false;
+					self.entities.prepare();
+					// prepare bodies
+				}
+
 				self.clock.update(self.loop.delta);
 
 				self.keys.update();
@@ -67,10 +74,6 @@ var Game = function (_settings) {
 				self.state.current.update();
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
-
-					if (!self.entities.prepared) {
-						self.entities.prepare();
-					}
 
 					self.render.clear();
 					self.render.draw(self.entities.active);
@@ -83,6 +86,7 @@ var Game = function (_settings) {
 					self.state.current.afterRender();
 				}
 			}
+
 		});
 
 	};
