@@ -153,7 +153,33 @@ var AssetManager = function () {
 	};
 
 	self.loadAudio = function (_asset) {
-		var audio = new Audio();
+		var context = new (window.AudioContext || window.webkitAudioContext)();
+		var request = new XMLHttpRequest();
+		var audio = null;
+		request.open('GET', _asset.path, true);
+		request.responseType = 'arraybuffer';
+		request.onload = function () {
+			context.decodeAudioData(request.response, function (buffer) {
+				audio = buffer;
+				audio.name = _asset.name;
+				self.lastLoaded = _asset.name;
+				self.pool.push(audio);
+				self.success++;
+				if (self.loadComplete()) {
+					self.loading = false;
+					self.reset();
+				}
+			}, function () {
+				self.errors++;
+				if (self.loadComplete()) {
+					self.loading = false;
+					self.reset();
+				}
+			});
+		};
+		request.send();
+
+		/* var audio = new Audio();
 		audio.oncanplaythrough = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
@@ -171,7 +197,7 @@ var AssetManager = function () {
 		};
 		audio.src = _asset.path;
 		audio.name = _asset.name;
-		self.pool.push(audio);
+		self.pool.push(audio); */
 	};
 
 	/**

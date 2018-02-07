@@ -19,11 +19,9 @@ var State = function (_name) {
 		self.camera = _game.render.camera;
 		self.box2d = _game.box2d;
 		self.state = _game.state;
+		self.audio = _game.audio;
+		self.events = _game.events;
 		self.initialized = true;
-	};
-
-	self.enter = function () {
-		console.log('enter', self.name);
 	};
 
 	self.preload = function () {};
@@ -36,7 +34,4 @@ var State = function (_name) {
 
 	self.afterRender = function () {};
 
-	self.exit = function () {
-		console.log('exit', self.name);
-	};
 };

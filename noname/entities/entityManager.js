@@ -6,7 +6,6 @@ var EntityManager = function (_game) {
 	self.active = [];
 
 	self.prepare = function () {
-		console.log('preparing entities');
 		self.active = self.pool.filter(function (_entity) {
 			return _entity.state === self.game.state.current.name;
 		});

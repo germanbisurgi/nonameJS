@@ -55,11 +55,7 @@ var StateManager = function (_game) {
 	self.switch = function (_stateName) {
 		self.pool.forEach(function (_state) {
 			if (_state.name === _stateName) {
-				if (self.current) {
-					self.current.exit();
-				}
 				self.current = _state;
-				self.current.enter();
 				self.current.justEntered = true;
 			}
 		});

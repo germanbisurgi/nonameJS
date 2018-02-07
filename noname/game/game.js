@@ -32,9 +32,11 @@ var Game = function (_settings) {
 		self.clock = new noname.clockManager(self);
 		self.entities = new noname.entityManager(self);
 		self.render = new noname.renderManager(self);
+		self.events = new noname.eventManager(self);
 		self.box2d = new noname.box2dManager(self);
 		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
+		self.audio = new noname.audioManager(self);
 
 		self.loop.start(function () {
 
@@ -62,15 +64,13 @@ var Game = function (_settings) {
 				if (self.state.current.justEntered) {
 					self.state.current.justEntered = false;
 					self.entities.prepare();
-					// prepare bodies
 				}
 
+				// todo systems pattern?
 				self.clock.update(self.loop.delta);
-
 				self.keys.update();
-
+				self.events.update();
 				self.box2d.update(); // TODO physics condition.
-
 				self.state.current.update();
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {

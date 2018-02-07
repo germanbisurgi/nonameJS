@@ -9,12 +9,6 @@ physicsState.create = function () {
 
 	console.log('physicsState');
 
-	/* entity */
-	physicsState.myEntity = new noname.entity();
-	physicsState.myEntity.addComponent('transform', new noname.transformComponent(50, 50, 50, 50));
-	physicsState.myEntity.addComponent('clock', physicsState.clock.master);
-	physicsState.myEntity.addComponent('renderable', new noname.imageComponent(physicsState.assets.get('stone')));
-
 	/* body */
 	physicsState.myBody = physicsState.box2d.addBody(100, 100, 'dynamic');
 	physicsState.myBody.addCircle(5, 0, -5);
@@ -30,8 +24,6 @@ physicsState.create = function () {
 	physicsState.myBody.addEdge(50, 0, 50, -50);
 	physicsState.myBody.addEdge(50, -50, 0, -50);
 	physicsState.myBody.addEdge(0, -50, 0, -0);
-
-	console.log(physicsState.myBody);
 
 };
 
