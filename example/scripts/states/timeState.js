@@ -6,7 +6,7 @@ timeState.create = function () {
 	console.log('timeState');
 	timeState.clock.master.setInterval(function () {
 		console.log('hallo');
-	}, 1000)
+	}, 1000);
 };
 
 timeState.update = function () {

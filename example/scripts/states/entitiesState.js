@@ -15,7 +15,6 @@ entitiesState.create = function () {
 	entitiesState.myEntity.addComponent('renderable', new noname.imageComponent(entitiesState.assets.get('stone')));
 	entitiesState.entities.add(entitiesState.myEntity);
 
-
 };
 
 entitiesState.update = function () {};

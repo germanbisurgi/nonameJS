@@ -12,6 +12,6 @@ var game = new noname.game({
 		entitiesState,
 		timeState
 	],
-	initialState: 'timeState',
+	initialState: 'entitiesState',
 	box2dDebug: true
 });
