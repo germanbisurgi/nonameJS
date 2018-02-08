@@ -9,8 +9,9 @@ var game = new noname.game({
 		keysState,
 		audioState,
 		eventsState,
-		entitiesState
+		entitiesState,
+		timeState
 	],
-	initialState: 'entitiesState',
+	initialState: 'timeState',
 	box2dDebug: true
 });

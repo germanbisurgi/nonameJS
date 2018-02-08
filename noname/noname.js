@@ -11,6 +11,7 @@ var noname = {
 	eventManager: EventManager,
 	camera: Camera,
 	event: Event,
+	timeEvent: TimeEvent,
 	eventListener: EventListener,
 	game: Game,
 	state: State,

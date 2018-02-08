@@ -102,13 +102,7 @@ var Clock = function (_game) {
 	};
 
 	self.createEvent = function (_function, _milliseconds, _context, _once) {
-		var event = {
-			interval: _milliseconds,
-			function: _function.bind(_context),
-			elapsed: 0,
-			lastElapsed: 0,
-			once: _once
-		};
+		var event = new noname.timeEvent(_function, _milliseconds, _context, _once);
 		self.events.push(event);
 		return event;
 	};
