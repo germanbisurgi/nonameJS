@@ -13,6 +13,7 @@ var noname = {
 	event: Event,
 	timeEvent: TimeEvent,
 	eventListener: EventListener,
+	track: Track,
 	game: Game,
 	state: State,
 	entity: Entity,
