@@ -15,6 +15,13 @@ var StateManager = function (_game) {
 	self.current = null;
 
 	/**
+	 * The name of the state taht will be active in the next tick.
+	 * @property pool
+	 * @type {Array}
+	 */
+	self.scheduled = null;
+
+	/**
 	* The array holding all the states of the game.
 	* @property pool
 	* @type {Array}
@@ -32,9 +39,9 @@ var StateManager = function (_game) {
 			self.add(_state);
 		});
 		if (typeof _game.settings.initialState !== 'undefined' && self.get(_game.settings.initialState)) {
-			self.switch(_game.settings.initialState);
+			self.scheduled = _game.settings.initialState;
 		} else {
-			self.switch(self.pool[0].name);
+			self.scheduled = self.pool[0].name;
 		}
 	};
 
@@ -53,12 +60,20 @@ var StateManager = function (_game) {
 	* @param {String} _stateName The state name you want to switch to.
 	*/
 	self.switch = function (_stateName) {
-		self.pool.forEach(function (_state) {
-			if (_state.name === _stateName) {
-				self.current = _state;
-				self.current.justEntered = true;
-			}
-		});
+		self.scheduled = _stateName;
+		console.log(self.scheduled)
+	};
+
+	self.actualSwitch = function () {
+		if (self.scheduled) {
+			self.pool.forEach(function (_state) {
+				if (_state.name === self.scheduled) {
+					self.current = _state;
+					self.current.justEntered = true;
+				}
+			});
+			self.scheduled = null;
+		}
 	};
 
 	/**
