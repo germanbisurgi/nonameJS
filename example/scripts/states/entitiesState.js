@@ -6,15 +6,21 @@ entitiesState.preload = function () {
 
 entitiesState.create = function () {
 
-	console.log('entitiesState');
-
 	/* entity */
 	entitiesState.myEntity = new noname.entity();
 	entitiesState.myEntity.addComponent('transform', new noname.transformComponent(50, 50, 50, 50));
-	entitiesState.myEntity.addComponent('clock', entitiesState.clock.master);
+	entitiesState.myEntity.addComponent('clock', entitiesState.time.masterClock);
 	entitiesState.myEntity.addComponent('renderable', new noname.imageComponent(entitiesState.assets.get('stone')));
 	entitiesState.entities.add(entitiesState.myEntity);
 
 };
 
-entitiesState.update = function () {};
+entitiesState.update = function () {
+	entitiesState.keys.justPressed('b', function () {
+		entitiesState.state.switchPrevious();
+	});
+
+	entitiesState.keys.justPressed('n', function () {
+		entitiesState.state.switchNext();
+	});
+};

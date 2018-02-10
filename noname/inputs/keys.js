@@ -46,7 +46,7 @@ var Keys = function (_game) {
 		for (var key in self.tracked) {
 
 			if (self.tracked[key].pressed) {
-				self.tracked[key].milliseconds += _game.clock.master.delta;
+				self.tracked[key].milliseconds += _game.time.masterClock.delta;
 			}
 
 			if (self.tracked[key].released && self.tracked[key].releaseFrame === _game.loop.frames - 1) {

@@ -3,15 +3,14 @@ var game = new noname.game({
 	fps: 60,
 	dps: 60,
 	states: [
-		clocksState,
-		physicsState,
+		timeState,
 		fingersState,
+		physicsState,
 		keysState,
 		audioState,
 		eventsState,
-		entitiesState,
-		timeState
+		entitiesState
 	],
-	initialState: 'entitiesState',
+	initialState: 'timeState',
 	box2dDebug: true
 });

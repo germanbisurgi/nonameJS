@@ -29,7 +29,7 @@ var Game = function (_settings) {
 		self.state = new noname.stateManager(self);
 		self.math = new noname.mathManager();
 		self.assets = new noname.assetManager();
-		self.clock = new noname.clockManager(self);
+		self.time = new noname.timeManager(self);
 		self.entities = new noname.entityManager(self);
 		self.render = new noname.renderManager(self);
 		self.events = new noname.eventManager(self);
@@ -39,6 +39,8 @@ var Game = function (_settings) {
 		self.audio = new noname.audioManager(self);
 
 		self.loop.start(function () {
+
+			self.state.actualSwitch();
 
 			if (!self.state.current.initialized) {
 				self.state.current.initialize(self);
@@ -67,7 +69,7 @@ var Game = function (_settings) {
 				}
 
 				// todo systems pattern?
-				self.clock.update(self.loop.delta);
+				self.time.update(self.loop.delta);
 				self.keys.update();
 				self.events.update();
 				self.box2d.update(); // TODO physics condition.
@@ -84,6 +86,7 @@ var Game = function (_settings) {
 					}
 
 					self.state.current.afterRender();
+
 				}
 			}
 

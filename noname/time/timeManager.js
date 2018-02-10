@@ -9,18 +9,18 @@
  * New clocks should always be created with the clock manager create method
  * otherwise it will be not updated.
  * @param  {object} _game a reference to the game.
- * @class ClockManager
+ * @class TimeManager
  */
-var ClockManager = function (_game) {
+var TimeManager = function (_game) {
 	'use strict';
 	var self = this;
 
 	/**
 	 * The default clock that synchronizes the game artifacts (animations, timers, ecc).
-	 * @property master
+	 * @property masterClock
 	 * @type {Clock}
 	 */
-	self.master = null;
+	self.masterClock = null;
 
 	/**
 	 * The collection of created clocks.
@@ -30,7 +30,7 @@ var ClockManager = function (_game) {
 	self.pool = [];
 
 	self.init = function () {
-		self.master = self.create();
+		self.masterClock = self.create();
 	};
 
 	self.update = function (_delta) {
