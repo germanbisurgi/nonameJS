@@ -5,7 +5,6 @@ audioState.preload = function () {
 };
 
 audioState.create = function () {
-	console.log('audioState');
 	var audioBuffer = audioState.assets.get('tic');
 	audioState.audio.play(audioBuffer, 0);
 };
