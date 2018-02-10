@@ -2,13 +2,14 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "AssetManager",
+        "AudioManager",
         "Clock",
-        "ClockManager",
-        "Events",
         "Fingers",
         "Keys",
         "MathManager",
-        "StateManager"
+        "StateManager",
+        "TimeManager",
+        "Track"
     ],
     "modules": [],
     "allModules": [],

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\fingers.js</title>
+    <title>noname\audio\track.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -39,13 +39,14 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/AudioManager.html">AudioManager</a></li>
                                 <li><a href="../classes/Clock.html">Clock</a></li>
-                                <li><a href="../classes/ClockManager.html">ClockManager</a></li>
-                                <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeManager.html">TimeManager</a></li>
+                                <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
@@ -83,72 +84,168 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\fingers.js</h1>
+<h1 class="file-heading">File: noname\audio\track.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Track fingers touching on the canvas element.
- * @param  {object} _game [description]
- * @class Fingers
+ * Is an abstraction of the web audio api and eases the creations and utilization
+ * of sounds.
+ * @param  {object} _audioMamaner The audio context this track belong to.
+ * @param  {object} _settings A settings object to set initial values of the track.
+ * @class Track
  */
-var Fingers = function (_game) {
+var Track = function (_audioMamaner, _settings) {
 	&#x27;use strict&#x27;;
 	var self = this;
-	self.tracked = [];
-	self.limit = 10;
 
-	_game.render.canvas.addEventListener(&#x27;touchstart&#x27;, function (event) {
-		for (var i = 0; i &lt; event.changedTouches.length; i++) {
-			if (self.tracked.length &lt; self.limit) {
-				self.tracked.push({
-					id: event.changedTouches[i].identifier,
-					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-					currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-					offsetX: 0,
-					offsetY: 0
-				});
-			}
-		}
-	}, false);
+	/**
+	 * The audio context this track belong to.
+	 * @property context
+	 * @type {Object}
+	 */
+	self.context = _audioMamaner.context;
 
-	_game.render.canvas.addEventListener(&#x27;touchmove&#x27;, function (event) {
-		event.preventDefault();
-		for (var i = 0; i &lt; event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].identifier);
-			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
-			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
-			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
-			finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
-		}
-	}, false);
+	/**
+	 * Web audio buffer objects.
+	 * @property audioBuffer
+	 * @type {Object}
+	 */
+	self.audioBuffer = _settings.audioBuffer;
 
-	_game.render.canvas.addEventListener(&#x27;touchend&#x27;, function (event) {
-		for (var i = 0; i &lt; event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].identifier);
-			self.remove(finger);
-		}
-	}, false);
+	/**
+	 * Web audio gain node used to set the track volume.
+	 * @property gainNode
+	 * @type {Object}
+	 */
+	self.gainNode = self.context.createGain();
 
-	self.get = function (_id) {
-		var output = false;
-		self.tracked.forEach(function (_finger) {
-			if (_finger.id === _id) {
-				output = _finger;
-			}
-		});
-		return output;
-	};
+	/**
+	 * Web audio gain node used to set the track volume.
+	 * @property lastTime
+	 * @type {Number}
+	 */
+	self.playbackTime = 0;
 
-	self.remove = function (_item) {
-		var index = self.tracked.indexOf(_item);
-		if (index &gt; -1) {
-			self.tracked.splice(index, 1);
+	/**
+	 * A boolean tha says if the Track is being played or not.
+	 * @property isPlaying
+	 * @type {Bollean}
+	 */
+	self.isPlaying = false;
+
+	self.lastTime = 0;
+
+	self.init = function () {
+		self.gainNode.connect(self.context.destination);
+		if (_settings.volume) {
+			self.gainNode.gain.value = _settings.volume;
 		}
 	};
 
+	/**
+	 * Play the Track. Triggers the onPlay method.
+	 * @method play
+	 */
+	self.play = function () {
+		if (!self.isPlaying) {
+			self.source = self.context.createBufferSource();
+			self.source.buffer = self.audioBuffer;
+			self.source.onended = function () {
+				self.playbackTime = 0;
+				self.isPlaying = false;
+			};
+			self.source.connect(self.gainNode);
+			self.source.start(0, self.playbackTime);
+			self.onPlay();
+			self.isPlaying = true;
+			self.lastTime = self.context.currentTime;
+		}
+	};
+
+	/**
+	 * Get/set the volume of the specific Track, from 0.0 to 1.0. Triggers the onVolume method.
+	 * @method volume
+	 */
+	self.volume = function (_volume) {
+		if (_volume) {
+			self.gainNode.gain.value = _volume;
+		}
+		self.onVolume();
+		return self.gainNode.gain.value;
+	};
+
+	/**
+	 * Pauses the Track, saving the seek of playback. Triggers the onPause method.
+	 * @method pause
+	 */
+	self.pause = function () {
+		if (self.isPlaying) {
+			self.source.stop();
+			self.isPlaying = false;
+			self.playbackTime = self.context.currentTime - self.lastTime + self.playbackTime;
+			self.onPause();
+		}
+	};
+
+	/**
+	 * Stops the Track resetting seek to 0. Triggers the onStop method.
+	 * @method stop
+	 */
+	self.stop = function () {
+		if (self.isPlaying) {
+			self.source.stop();
+			self.isPlaying = false;
+			self.playbackTime = 0;
+			self.onStop();
+		}
+	};
+
+	/**
+	 * Get/set the position of playback for a Track. Triggers the onSeek method.
+	 * @params {Number} _seek The position to move current playback to (in seconds).
+	 * @method seek
+	 */
+	self.seek = function (_seek) {
+		if (_seek &lt; 0) {
+			return false;
+		}
+		self.playbackTime = _seek;
+	};
+
+	/**
+	 * Fires when the sound begins playing.
+	 * @method onPlay
+	 */
+	self.onPlay = function () {
+		// console.log(&#x27;onPlay&#x27;);
+	};
+
+	/**
+	 * Fires when the sound&#x27;s volume has changed.
+	 * @method onVolume
+	 */
+	self.onVolume = function () {
+		// console.log(&#x27;onVolume&#x27;);
+	};
+
+	/**
+	 * Fires when the sound has been paused.
+	 * @method onPause
+	 */
+	self.onPause = function () {
+		// console.log(&#x27;onPause&#x27;);
+	};
+
+	/**
+	 * Fires when the sound has been stopped.
+	 * @method onStop
+	 */
+	self.onStop = function () {
+		// console.log(&#x27;onStop&#x27;);
+	};
+
+	self.init();
 };
 
     </pre>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>StateManager</title>
+    <title>Track</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -84,12 +84,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>StateManager Class</h1>
+<h1>Track Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/noname_state_stateManager.js.html#l1"><code>noname\state\stateManager.js:1</code></a>
+            Defined in: <a href="../files/noname_audio_track.js.html#l1"><code>noname\audio\track.js:1</code></a>
         </div>
 
 
@@ -97,8 +97,8 @@
 
 
 <div class="box intro">
-    <p>This manager allows you to add and switch your states. To change from
-game state to main menu state or map A to map B are the daily bread of this manager.</p>
+    <p>Is an abstraction of the web audio api and eases the creations and utilization
+of sounds.</p>
 
 </div>
 
@@ -120,27 +120,39 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_add">add</a>
+                                <a href="#method_onPause">onPause</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_get">get</a>
+                                <a href="#method_onPlay">onPlay</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_init">init</a>
+                                <a href="#method_onStop">onStop</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_switch">switch</a>
+                                <a href="#method_onVolume">onVolume</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_switchNext">switchNext</a>
+                                <a href="#method_pause">pause</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_switchPrevious">switchPrevious</a>
+                                <a href="#method_play">play</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_seek">seek</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_stop">stop</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_volume">volume</a>
 
                             </li>
                     </ul>
@@ -151,15 +163,23 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_current">current</a>
+                                <a href="#property_audioBuffer">audioBuffer</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_pool">pool</a>
+                                <a href="#property_context">context</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_pool">pool</a>
+                                <a href="#property_gainNode">gainNode</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_isPlaying">isPlaying</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_lastTime">lastTime</a>
 
                             </li>
                     </ul>
@@ -171,13 +191,199 @@ game state to main menu state or map A to map B are the daily bread of this mana
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_add" class="method item">
-    <h3 class="name"><code>add</code></h3>
+<div id="method_onPause" class="method item">
+    <h3 class="name"><code>onPause</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l142"><code>noname\audio\track.js:142</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Fires when the sound has been paused.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_onPlay" class="method item">
+    <h3 class="name"><code>onPlay</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l126"><code>noname\audio\track.js:126</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Fires when the sound begins playing.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_onStop" class="method item">
+    <h3 class="name"><code>onStop</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l150"><code>noname\audio\track.js:150</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Fires when the sound has been stopped.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_onVolume" class="method item">
+    <h3 class="name"><code>onVolume</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l134"><code>noname\audio\track.js:134</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Fires when the sound's volume has changed.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_pause" class="method item">
+    <h3 class="name"><code>pause</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l88"><code>noname\audio\track.js:88</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Pauses the Track, saving the seek of playback. Triggers the onPause method.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_play" class="method item">
+    <h3 class="name"><code>play</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l56"><code>noname\audio\track.js:56</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Play the Track. Triggers the onPlay method.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_seek" class="method item">
+    <h3 class="name"><code>seek</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>_state</code>
+                        <code>_seek</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -192,7 +398,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l48"><code>noname\state\stateManager.js:48</code></a>
+        <a href="../files/noname_audio_track.js.html#l114"><code>noname\audio\track.js:114</code></a>
         </p>
 
 
@@ -200,7 +406,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     </div>
 
     <div class="description">
-        <p>Adds a new state object to the pool.</p>
+        <p>Get/set the position of playback for a Track. Triggers the onSeek method.</p>
 
     </div>
 
@@ -209,12 +415,12 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">_state</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">_seek</code>
+                        <span class="type">Number</span>
 
 
                     <div class="param-description">
-                        <p>The state object you want to add to the pool.</p>
+                        <p>The position to move current playback to (in seconds).</p>
 
                     </div>
 
@@ -225,74 +431,8 @@ game state to main menu state or map A to map B are the daily bread of this mana
 
 
 </div>
-<div id="method_get" class="method item">
-    <h3 class="name"><code>get</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_stateName</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_state_stateManager.js.html#l79"><code>noname\state\stateManager.js:79</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get a state by name.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_stateName</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                        <p>The name of the state you want to retrieve.</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Object</span>:
-                    <p>Returns a state otherwise returns false.</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
+<div id="method_stop" class="method item">
+    <h3 class="name"><code>stop</code></h3>
 
         <span class="paren">()</span>
 
@@ -306,7 +446,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l31"><code>noname\state\stateManager.js:31</code></a>
+        <a href="../files/noname_audio_track.js.html#l101"><code>noname\audio\track.js:101</code></a>
         </p>
 
 
@@ -314,9 +454,7 @@ game state to main menu state or map A to map B are the daily bread of this mana
     </div>
 
     <div class="description">
-        <p>Add all the states given in the game setting object.
-If specified in the game settings will set the initial state otherwise the first
-element in the array will be used as initial state.</p>
+        <p>Stops the Track resetting seek to 0. Triggers the onStop method.</p>
 
     </div>
 
@@ -324,62 +462,8 @@ element in the array will be used as initial state.</p>
 
 
 </div>
-<div id="method_switch" class="method item">
-    <h3 class="name"><code>switch</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_stateName</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_state_stateManager.js.html#l57"><code>noname\state\stateManager.js:57</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the given state as current (active) state.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_stateName</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                        <p>The state name you want to switch to.</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_switchNext" class="method item">
-    <h3 class="name"><code>switchNext</code></h3>
+<div id="method_volume" class="method item">
+    <h3 class="name"><code>volume</code></h3>
 
         <span class="paren">()</span>
 
@@ -393,7 +477,7 @@ element in the array will be used as initial state.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l95"><code>noname\state\stateManager.js:95</code></a>
+        <a href="../files/noname_audio_track.js.html#l76"><code>noname\audio\track.js:76</code></a>
         </p>
 
 
@@ -401,38 +485,7 @@ element in the array will be used as initial state.</p>
     </div>
 
     <div class="description">
-        <p>Switch to the next state in the states array.</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_switchPrevious" class="method item">
-    <h3 class="name"><code>switchPrevious</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_state_stateManager.js.html#l105"><code>noname\state\stateManager.js:105</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Switch to the previous state in the states array.</p>
+        <p>Get/set the volume of the specific Track, from 0.0 to 1.0. Triggers the onVolume method.</p>
 
     </div>
 
@@ -445,8 +498,8 @@ element in the array will be used as initial state.</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_current" class="property item">
-    <h3 class="name"><code>current</code></h3>
+<div id="property_audioBuffer" class="property item">
+    <h3 class="name"><code>audioBuffer</code></h3>
     <span class="type">Object</span>
 
 
@@ -456,23 +509,23 @@ element in the array will be used as initial state.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l10"><code>noname\state\stateManager.js:10</code></a>
+        <a href="../files/noname_audio_track.js.html#l19"><code>noname\audio\track.js:19</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The current state that is being played.</p>
+        <p>Web audio buffer objects.</p>
 
     </div>
 
 
 
 </div>
-<div id="property_pool" class="property item">
-    <h3 class="name"><code>pool</code></h3>
-    <span class="type">Array</span>
+<div id="property_context" class="property item">
+    <h3 class="name"><code>context</code></h3>
+    <span class="type">Object</span>
 
 
 
@@ -481,23 +534,23 @@ element in the array will be used as initial state.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l17"><code>noname\state\stateManager.js:17</code></a>
+        <a href="../files/noname_audio_track.js.html#l12"><code>noname\audio\track.js:12</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The name of the state taht will be active in the next tick.</p>
+        <p>The audio context this track belong to.</p>
 
     </div>
 
 
 
 </div>
-<div id="property_pool" class="property item">
-    <h3 class="name"><code>pool</code></h3>
-    <span class="type">Array</span>
+<div id="property_gainNode" class="property item">
+    <h3 class="name"><code>gainNode</code></h3>
+    <span class="type">Object</span>
 
 
 
@@ -506,14 +559,64 @@ element in the array will be used as initial state.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_state_stateManager.js.html#l24"><code>noname\state\stateManager.js:24</code></a>
+        <a href="../files/noname_audio_track.js.html#l26"><code>noname\audio\track.js:26</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The array holding all the states of the game.</p>
+        <p>Web audio gain node used to set the track volume.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_isPlaying" class="property item">
+    <h3 class="name"><code>isPlaying</code></h3>
+    <span class="type">Bollean</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l40"><code>noname\audio\track.js:40</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>A boolean tha says if the Track is being played or not.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_lastTime" class="property item">
+    <h3 class="name"><code>lastTime</code></h3>
+    <span class="type">Number</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_audio_track.js.html#l33"><code>noname\audio\track.js:33</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Web audio gain node used to set the track volume.</p>
 
     </div>
 

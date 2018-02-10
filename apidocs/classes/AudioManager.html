@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Keys</title>
+    <title>AudioManager</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -84,12 +84,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Keys Class</h1>
+<h1>AudioManager Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/noname_inputs_keys.js.html#l1"><code>noname\inputs\keys.js:1</code></a>
+            Defined in: <a href="../files/noname_audio_audioManager.js.html#l1"><code>noname\audio\audioManager.js:1</code></a>
         </div>
 
 
@@ -97,7 +97,8 @@
 
 
 <div class="box intro">
-    <p>Keyboards allows to listen if a specific key was pressed, being holded or released</p>
+    <p>Is an abstraction of the web audio api and eases the creations and utilization
+of sounds.</p>
 
 </div>
 
@@ -119,15 +120,7 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_justPressed">justPressed</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_pressing">pressing</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_released">released</a>
+                                <a href="#method_createTrack">createTrack</a>
 
                             </li>
                     </ul>
@@ -138,7 +131,7 @@
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_tracked">tracked</a>
+                                <a href="#property_context">context</a>
 
                             </li>
                     </ul>
@@ -150,22 +143,19 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_justPressed" class="method item">
-    <h3 class="name"><code>justPressed</code></h3>
+<div id="method_createTrack" class="method item">
+    <h3 class="name"><code>createTrack</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>_key</code>
-                </li>
-                <li class="arg">
-                        <code>_callback</code>
+                        <code>_settings</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
 
         <span class="returns-inline">
-            <span class="type">Callback</span>
+            <span class="type"><a href="../classes/Track.html" class="crosslink">Track</a></span>
         </span>
 
 
@@ -177,7 +167,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_inputs_keys.js.html#l68"><code>noname\inputs\keys.js:68</code></a>
+        <a href="../files/noname_audio_audioManager.js.html#l18"><code>noname\audio\audioManager.js:18</code></a>
         </p>
 
 
@@ -185,7 +175,7 @@
     </div>
 
     <div class="description">
-        <p>Executes a callback function if the passed key was just pressed.</p>
+        <p>Creates a new Track.</p>
 
     </div>
 
@@ -194,23 +184,12 @@
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">_key</code>
-                        <span class="type">String</span>
+                        <code class="param-name">_settings</code>
+                        <span class="type">Object</span>
 
 
                     <div class="param-description">
-                        <p>The key.</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">_callback</code>
-                        <span class="type">Function</span>
-
-
-                    <div class="param-description">
-                        <p>A callback function.</p>
+                        <p>A settings object to set initial values of the track.</p>
 
                     </div>
 
@@ -222,164 +201,7 @@
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                        <span class="type">Callback</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_pressing" class="method item">
-    <h3 class="name"><code>pressing</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_key</code>
-                </li>
-                <li class="arg">
-                        <code>_callback</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Callback</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_inputs_keys.js.html#l100"><code>noname\inputs\keys.js:100</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Executes a callback function if the passed key was pressed.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_key</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                        <p>The key.</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">_callback</code>
-                        <span class="type">Function</span>
-
-
-                    <div class="param-description">
-                        <p>A callback function. It holds the millisecond since the
-key was pressed.</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Callback</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_released" class="method item">
-    <h3 class="name"><code>released</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_key</code>
-                </li>
-                <li class="arg">
-                        <code>_callback</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Callback</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_inputs_keys.js.html#l84"><code>noname\inputs\keys.js:84</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Executes a callback function if the passed key was pressed.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_key</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                        <p>The key.</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">_callback</code>
-                        <span class="type">Function</span>
-
-
-                    <div class="param-description">
-                        <p>A callback function.</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Callback</span>:
+                        <span class="type"><a href="../classes/Track.html" class="crosslink">Track</a></span>:
             </div>
         </div>
 
@@ -390,8 +212,8 @@ key was pressed.</p>
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-<div id="property_tracked" class="property item">
-    <h3 class="name"><code>tracked</code></h3>
+<div id="property_context" class="property item">
+    <h3 class="name"><code>context</code></h3>
     <span class="type">Object</span>
 
 
@@ -401,14 +223,14 @@ key was pressed.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_inputs_keys.js.html#l9"><code>noname\inputs\keys.js:9</code></a>
+        <a href="../files/noname_audio_audioManager.js.html#l11"><code>noname\audio\audioManager.js:11</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Keys that are being tracked. As soon as a key is pressed it will be tracked.</p>
+        <p>The audio context.</p>
 
     </div>
 

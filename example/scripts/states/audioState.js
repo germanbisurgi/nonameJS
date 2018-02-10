@@ -10,18 +10,14 @@ audioState.preload = function () {
 
 audioState.create = function () {
 
-	audioState.kick = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('kick')
-	});
+	audioState.kick = audioState.audio.createTrack({audioBuffer: audioState.assets.get('kick')});
 
 	audioState.snare = audioState.audio.createTrack({
 		audioBuffer: audioState.assets.get('snare'),
 		volume: 0.3
 	});
 
-	audioState.psycho = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('psycho')
-	});
+	audioState.psycho = audioState.audio.createTrack({audioBuffer: audioState.assets.get('psycho')});
 
 };
 

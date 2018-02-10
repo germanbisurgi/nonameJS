@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\clock.js</title>
+    <title>noname\time\clock.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -39,13 +39,14 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/AudioManager.html">AudioManager</a></li>
                                 <li><a href="../classes/Clock.html">Clock</a></li>
-                                <li><a href="../classes/ClockManager.html">ClockManager</a></li>
-                                <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeManager.html">TimeManager</a></li>
+                                <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
@@ -83,7 +84,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\clock.js</h1>
+<h1 class="file-heading">File: noname\time\clock.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -191,13 +192,7 @@ var Clock = function (_game) {
 	};
 
 	self.createEvent = function (_function, _milliseconds, _context, _once) {
-		var event = {
-			interval: _milliseconds,
-			function: _function.bind(_context),
-			elapsed: 0,
-			lastElapsed: 0,
-			once: _once
-		};
+		var event = new noname.timeEvent(_function, _milliseconds, _context, _once);
 		self.events.push(event);
 		return event;
 	};

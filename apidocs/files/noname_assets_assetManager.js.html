@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\assetManager.js</title>
+    <title>noname\assets\assetManager.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -39,13 +39,14 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/AudioManager.html">AudioManager</a></li>
                                 <li><a href="../classes/Clock.html">Clock</a></li>
-                                <li><a href="../classes/ClockManager.html">ClockManager</a></li>
-                                <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeManager.html">TimeManager</a></li>
+                                <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
@@ -83,7 +84,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\assetManager.js</h1>
+<h1 class="file-heading">File: noname\assets\assetManager.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -242,7 +243,33 @@ var AssetManager = function () {
 	};
 
 	self.loadAudio = function (_asset) {
-		var audio = new Audio();
+		var context = new (window.AudioContext || window.webkitAudioContext)();
+		var request = new XMLHttpRequest();
+		var audio = null;
+		request.open(&#x27;GET&#x27;, _asset.path, true);
+		request.responseType = &#x27;arraybuffer&#x27;;
+		request.onload = function () {
+			context.decodeAudioData(request.response, function (buffer) {
+				audio = buffer;
+				audio.name = _asset.name;
+				self.lastLoaded = _asset.name;
+				self.pool.push(audio);
+				self.success++;
+				if (self.loadComplete()) {
+					self.loading = false;
+					self.reset();
+				}
+			}, function () {
+				self.errors++;
+				if (self.loadComplete()) {
+					self.loading = false;
+					self.reset();
+				}
+			});
+		};
+		request.send();
+
+		/* var audio = new Audio();
 		audio.oncanplaythrough = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
@@ -260,7 +287,7 @@ var AssetManager = function () {
 		};
 		audio.src = _asset.path;
 		audio.name = _asset.name;
-		self.pool.push(audio);
+		self.pool.push(audio); */
 	};
 
 	/**

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\mathManager.js</title>
+    <title>noname\time\timeManager.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -39,13 +39,14 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/AudioManager.html">AudioManager</a></li>
                                 <li><a href="../classes/Clock.html">Clock</a></li>
-                                <li><a href="../classes/ClockManager.html">ClockManager</a></li>
-                                <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeManager.html">TimeManager</a></li>
+                                <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
@@ -83,148 +84,68 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\mathManager.js</h1>
+<h1 class="file-heading">File: noname\time\timeManager.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * This class have a cosy set of Math methods and helpers.
- * @class MathManager
+ * Manages all the game game clocks. Per default only one clock, the &quot;Master Clock&quot;
+ * is created and added to this manager as a property (not in its pool).
+ * the master clock synchronizes a lot of game activities like sprite animations,
+ * timers, ecc.If you want to apply a different clock with different properties
+ * you have to create a new clock for that. For example if you want that only
+ * entities of a certain type move in slow motion you must to create a new clock
+ * add it to this entities and change the motion property of that clock.
+ * New clocks should always be created with the clock manager create method
+ * otherwise it will be not updated.
+ * @param  {object} _game a reference to the game.
+ * @class TimeManager
  */
-var MathManager = function () {
+var TimeManager = function (_game) {
 	&#x27;use strict&#x27;;
 	var self = this;
 
 	/**
-	 * Returns a random number between a min and a max number.
-	 * @param {number} _min the min value.
-	 * @param {number} _max The max value.
-	 * @returns {number} A generated random number.
+	 * The default clock that synchronizes the game artifacts (animations, timers, ecc).
+	 * @property masterClock
+	 * @type {Clock}
 	 */
-	self.random = function (_min, _max) {
-		return (_min + (Math.random() * (_max - _min)));
+	self.masterClock = null;
+
+	/**
+	 * The collection of created clocks.
+	 * @property pool
+	 * @type {Array}
+	 */
+	self.pool = [];
+
+	self.init = function () {
+		self.masterClock = self.create();
+	};
+
+	self.update = function (_delta) {
+		self.pool.forEach(function (clock) {
+			clock.update(_delta);
+		});
+	};
+
+	self.add = function (_clock) {
+		self.pool.push(_clock);
 	};
 
 	/**
-	 * Returns a random rounded number between a min and a max number.
-	 * @param {number} _min the min value.
-	 * @param {number} _max The max value.
-	 * @returns {number} A generated and rounded random number.
+	 * Creates a new clock and add it to the clocks pool.
+	 * @method create
+	 * @return {Clock}
 	 */
-	self.randomInt = function (_min, _max) {
-		return Math.round(this.random(_min, _max));
+	self.create = function () {
+		var clock = new noname.clock(_game);
+		self.add(clock);
+		return clock;
 	};
 
-	/**
-	 * Will return a random choice given an array of choices.
-	 * @param  {array} _choices Array of choices.
-	 * @returns {*} The choice(item of the array).
-	 */
-	self.randomChoice = function (_choices) {
-		return _choices[self.randomInt(0, _choices.length - 1)];
-	};
+	self.init();
 
-	/**
-	 * Returns true or false randomly.
-	 * @returns {boolean} A random boolean (true or false);
-	 */
-	self.randomBool = function () {
-		return self.randomChoice([true, false]);
-	};
-
-	/**
-	 * Limit a given number to given min and max boundaries.
-	 * @param {number} _number The number to clamp.
-	 * @param {number} _min the min value.
-	 * @param {number} _max The max value.
-	 * @returns {number}
-	 */
-	self.clamp = function (_number, _min, _max) {
-		return Math.max(_min, Math.min(_max, _number));
-	};
-
-	/**
-	 * Returns true if a number is &gt;= than the min number and
-	 * &lt;= than the max number.
-	 * @param {number} _number The number to check.
-	 * @param {number} _min the min value..
-	 * @param {number} _max The max value.
-	 * @returns {boolean}
-	 */
-	self.between = function (_number, _min, _max) {
-		return ((_number &gt;= _min) &amp;&amp; (_number &lt;= _max));
-	};
-
-	/**
-	 * Converts degrees to radians.
-	 * @method toRadians
-	 * @param {number} _degrees Angle in degrees.
-	 * @returns {number} Angle in radians.
-	 */
-	self.toRadians = function (_degrees) {
-		return _degrees * 0.0174532925199432957;
-	};
-
-	/**
-	 * Converts radians to degrees.
-	 * @method toDegrees
-	 * @param {number} _radians Angle in radians.
-	 * @returns {number} Angle in degrees.
-	 */
-	self.toDegrees = function (_radians) {
-		return _radians * 57.295779513082320876;
-	};
-
-	/**
-	 * Returns the distance between 2 points.
-	 * @method distance
-	 * @param {number} _x1
-	 * @param {number} _y1
-	 * @param {number} _x2
-	 * @param {number} _y2
-	 * @returns {number} The distance between 2 points.
-	 */
-	self.distance = function (_x1, _y1, _x2, _y2) {
-		return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
-	};
-
-	/**
-	 * Calculate an angle from a given point.
-	 * @method pointToAngle
-	 * @param {number} _originX Origin x
-	 * @param {number} _originY Origin y
-	 * @param {number} _pointX Point x
-	 * @param {number} _pointY Point y
-	 * @returns {number} The angle in radians
-	 */
-	self.pointToAngle = function (_originX, _originY, _pointX, _pointY) {
-		return self.toDegrees(Math.atan2(_pointY - _originY, _pointX - _originX));
-	};
-
-	/**
-	 * Calculates a point from a given angle.
-	 * @function angleToPoint
-	 * @param {number} _angle an angle in radians.
-	 * @param {number} _originX Origin x.
-	 * @param {number} _originY Origin y.
-	 * @param {number} _radius How far the point will be from the origin.
-	 * @returns {object} {x: *, y: *}
-	 */
-	self.angleToPoint = function (_angle, _originX, _originY, _radius) {
-		return {
-			x: Math.cos(_angle) * _radius + _originX,
-			y: Math.sin(_angle) * _radius + _originY
-		};
-	};
-
-	self.normalize = function (_angle) {
-		_angle = _angle % 360;
-		_angle = (_angle + 360) % 360;
-		if (_angle &gt; 180) {
-			_angle -= 360;
-		}
-		return _angle;
-	};
 };
 
     </pre>

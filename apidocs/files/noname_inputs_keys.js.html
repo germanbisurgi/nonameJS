@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>noname\stateManager.js</title>
+    <title>noname\inputs\keys.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -39,13 +39,14 @@
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/AssetManager.html">AssetManager</a></li>
+                                <li><a href="../classes/AudioManager.html">AudioManager</a></li>
                                 <li><a href="../classes/Clock.html">Clock</a></li>
-                                <li><a href="../classes/ClockManager.html">ClockManager</a></li>
-                                <li><a href="../classes/Events.html">Events</a></li>
                                 <li><a href="../classes/Fingers.html">Fingers</a></li>
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeManager.html">TimeManager</a></li>
+                                <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
@@ -83,117 +84,125 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: noname\stateManager.js</h1>
+<h1 class="file-heading">File: noname\inputs\keys.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-* This manager allows you to add and switch your states. To change from
-* game state to main menu state or map A to map B are the daily bread of this manager.
-* @class StateManager
-*/
-var StateManager = function (_game) {
+ * Keyboards allows to listen if a specific key was pressed, being holded or released
+ * @class Keys
+ */
+var Keys = function (_game) {
 	&#x27;use strict&#x27;;
 	var self = this;
 
 	/**
-	* The current state that is being played.
-	* @property current
-	* @type {Object}
-	*/
-	self.current = null;
+	 * Keys that are being tracked. As soon as a key is pressed it will be tracked.
+	 * @property tracked
+	 * @type {Object}
+	 */
+	self.tracked = {};
 
-	/**
-	* The array holding all the states of the game.
-	* @property pool
-	* @type {Array}
-	*/
-	self.pool = [];
-
-	/**
-	* Add all the states given in the game setting object.
-	* If specified in the game settings will set the initial state otherwise the first
-	* element in the array will be used as initial state.
-	* @method init
-	*/
-	self.init = function () {
-		_game.settings.states.forEach(function (_state) {
-			self.add(_state);
-		});
-		if (typeof _game.settings.initialState !== &#x27;undefined&#x27; &amp;&amp; self.get(_game.settings.initialState)) {
-			self.switch(_game.settings.initialState);
+	document.addEventListener(&#x27;keydown&#x27;, function (event) {
+		event.preventDefault();
+		if (!self.tracked[event.key]) {
+			self.tracked[event.key] = {
+				justPressed: true,
+				pressed: true,
+				released: false,
+				milliseconds: 0,
+				pressFrame: _game.loop.frames,
+				releaseFrame: _game.loop.frames
+			};
 		} else {
-			self.switch(self.pool[0].name);
+			self.tracked[event.key].pressed = true;
+			if (self.tracked[event.key].pressFrame === 0) {
+				self.tracked[event.key].pressFrame = _game.loop.frames;
+			}
+		}
+	}, false);
+
+	document.addEventListener(&#x27;keyup&#x27;, function (event) {
+		event.preventDefault();
+		self.tracked[event.key].pressed = false;
+		self.tracked[event.key].released = true;
+		self.tracked[event.key].milliseconds = 0;
+		self.tracked[event.key].releaseFrame = _game.loop.frames;
+		self.tracked[event.key].pressFrame = 0;
+	}, false);
+
+	self.update = function () {
+
+		for (var key in self.tracked) {
+
+			if (self.tracked[key].pressed) {
+				self.tracked[key].milliseconds += _game.time.masterClock.delta;
+			}
+
+			if (self.tracked[key].released &amp;&amp; self.tracked[key].releaseFrame === _game.loop.frames - 1) {
+				self.tracked[key].released = true;
+			} else {
+				self.tracked[key].released = false;
+			}
+
+			if (self.tracked[key].pressed &amp;&amp; self.tracked[key].pressFrame === _game.loop.frames - 1) {
+				self.tracked[key].justPressed = true;
+			} else {
+				self.tracked[key].justPressed = false;
+			}
+
+		}
+
+	};
+
+	/**
+	 * Executes a callback function if the passed key was just pressed.
+	 *
+	 * @method justPressed
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Callback}
+	 */
+	self.justPressed = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].justPressed) {
+			_callback();
 		}
 	};
 
 	/**
-	* Adds a new state object to the pool.
-	* @method add
-	* @param {Object} _state The state object you want to add to the pool.
-	*/
-	self.add = function (_state) {
-		self.pool.push(_state);
-	};
-
-	/**
-	* Set the given state as current (active) state.
-	* @method switch
-	* @param {String} _stateName The state name you want to switch to.
-	*/
-	self.switch = function (_stateName) {
-		self.pool.forEach(function (_state) {
-			if (_state.name === _stateName) {
-				if (self.current) {
-					self.current.exit();
-				}
-				self.current = _state;
-				self.current.enter();
-				self.current.justEntered = true;
-			}
-		});
-	};
-
-	/**
-	* Get a state by name.
-	* @method get
-	* @param {String} _stateName The name of the state you want to retrieve.
-	* @return {Object} Returns a state otherwise returns false.
-	*/
-	self.get = function (_stateName) {
-		var output = false;
-		self.pool.forEach(function (_state) {
-			if (_state.name === _stateName) {
-				output = _state;
-			}
-		});
-		return output;
-	};
-
-	/**
-	 * Switch to the next state in the states array.
-	 * @method switchNext
+	 * Executes a callback function if the passed key was pressed.
+	 *
+	 * @method released
+	 * @param  {String} _key The key.
+	 * @param  {Function} _callback A callback function.
+	 * @return {Callback}
 	 */
-	self.switchNext = function () {
-		var currentIndex = self.pool.indexOf(self.current);
-		var nextIndex = (currentIndex + 1) % self.pool.length;
-		self.switch(self.pool[nextIndex].name);
-	};
-
-	/**
-	 * Switch to the previous state in the states array.
-	 * @method switchPrevious
-	 */
-	self.switchPrevious = function () {
-		var currentIndex = self.pool.indexOf(self.current);
-		var previousIndex = currentIndex - 1;
-		if (previousIndex &lt; 0) {
-			previousIndex = self.pool.length - 1;
+	self.released = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].released) {
+			_callback();
 		}
-		self.switch(self.pool[previousIndex].name);
 	};
 
-	self.init();
+	/**
+	 * Executes a callback function if the passed key was pressed.
+	 *
+	 * @method pressing
+	 * @param  {string} _key The key.
+	 * @param  {Function} _callback A callback function. It holds the millisecond since the
+	 * key was pressed.
+	 * @return {Callback}
+	 */
+	self.pressing = function (_key, _callback) {
+		if (!self.tracked[_key]) {
+			return false;
+		} else if (self.tracked[_key].pressed) {
+			_callback(self.tracked[_key].milliseconds);
+		}
+	};
 };
 
     </pre>
