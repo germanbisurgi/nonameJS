@@ -59,23 +59,26 @@ var Track = function (_audioMamaner, _settings) {
 	};
 
 	self.seek = function (_seek) {
+		if (_seek < 0) {
+			return false;
+		}
 		self.playbackTime = _seek;
 	};
 
 	self.onPlay = function () {
-		console.log('onPlay');
+		// console.log('onPlay');
 	};
 
 	self.onVolume = function () {
-		console.log('onVolume');
+		// console.log('onVolume');
 	};
 
 	self.onPause = function () {
-		console.log('onPause');
+		// console.log('onPause');
 	};
 
 	self.onStop = function () {
-		console.log('onStop');
+		// console.log('onStop');
 	};
 
 	self.init();
