@@ -61,7 +61,7 @@ var StateManager = function (_game) {
 	*/
 	self.switch = function (_stateName) {
 		self.scheduled = _stateName;
-		console.log(self.scheduled)
+		console.log(self.scheduled);
 	};
 
 	self.actualSwitch = function () {
