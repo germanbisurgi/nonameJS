@@ -2,8 +2,6 @@ var keysState = new noname.state('keysState');
 
 keysState.create = function () {
 
-	console.log('keysState');
-
 };
 
 keysState.update = function () {

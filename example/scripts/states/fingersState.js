@@ -3,7 +3,6 @@ var fingersState = new noname.state('fingersState');
 fingersState.preload = function () {};
 
 fingersState.create = function () {
-	console.log('fingerState');
 };
 
 fingersState.update = function () {

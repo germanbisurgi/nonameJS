@@ -3,7 +3,6 @@ var eventsState = new noname.state('eventsState');
 eventsState.preload = function () {};
 
 eventsState.create = function () {
-	console.log('eventsState');
 
 	eventsState.events.on('12', function () {
 		console.log('i am tired');

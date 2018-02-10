@@ -7,8 +7,6 @@ physicsState.preload = function () {
 
 physicsState.create = function () {
 
-	console.log('physicsState');
-
 	/* body */
 	physicsState.myBody = physicsState.box2d.addBody(100, 100, 'dynamic');
 	physicsState.myBody.addCircle(5, 0, -5);
