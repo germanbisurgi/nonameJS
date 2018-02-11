@@ -44,7 +44,8 @@ var Fingers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.tracked[i];
+			var id = event.changedTouches[i].identifier;
+			var finger = self.tracked[id];
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;
