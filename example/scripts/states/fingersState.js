@@ -8,15 +8,16 @@ fingersState.create = function () {
 fingersState.update = function () {
 
 	fingersState.fingers.justTouched(0, function (_finger) {
-		console.log('just touched');
+		//console.log('just touched');
 	});
 
 	fingersState.fingers.touching(0, function (_finger) {
-		console.log('touching since', _finger.milliseconds);
+		//console.log('touching since', _finger.milliseconds);
 	});
 
 	fingersState.fingers.released(0, function (_finger) {
-		console.log('released');
+		alert(_finger.id)
+		//console.log('released');
 	});
 
 	fingersState.keys.justPressed('b', function () {
