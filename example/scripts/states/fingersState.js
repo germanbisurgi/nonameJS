@@ -40,22 +40,22 @@ fingersState.afterRender = function () {
 			fingersState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
 			fingersState.render.context.stroke();
 			fingersState.render.context.fillText(
-				'id: ' + _finger.id,
+				'id: ' + Math.floor(_finger.id),
 				_finger.startX - 30,
 				_finger.startY - 100
 			);
 			fingersState.render.context.fillText(
-				'startX: ' + _finger.startX + ', startY: ' + _finger.startY,
+				'startX: ' + Math.floor(_finger.startX) + ', startY: ' + Math.floor(_finger.startY),
 				_finger.startX - 30,
 				_finger.startY - 90
 			);
 			fingersState.render.context.fillText(
-				'currentX: ' + _finger.currentX + ', currentY: ' + _finger.currentY,
+				'currentX: ' + Math.floor(_finger.currentX) + ', currentY: ' + Math.floor(_finger.currentY),
 				_finger.startX - 30,
 				_finger.startY - 80
 			);
 			fingersState.render.context.fillText(
-				'offsetX: ' + _finger.offsetX + ', offsetY: ' + _finger.offsetY,
+				'offsetX: ' + Math.floor(_finger.offsetX) + ', offsetY: ' + Math.floor(_finger.offsetY),
 				_finger.startX - 30,
 				_finger.startY - 70
 			);
