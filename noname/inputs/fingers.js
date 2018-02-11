@@ -25,7 +25,7 @@ var Fingers = function (_game) {
 					released: false,
 					milliseconds: 0,
 					pressFrame: _game.loop.frames,
-					releaseFrame: _game.loop.frames,
+					releaseFrame: _game.loop.frames
 				};
 			}
 		}

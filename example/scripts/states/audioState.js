@@ -7,13 +7,13 @@ audioState.preload = function () {
 audioState.create = function () {
 
 	audioState.tic = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('tic')
+		audioBuffer: audioState.assets.get('tic'),
+		volume: 1.0
 	});
 
 };
 
 audioState.update = function () {
-
 
 	if (audioState.fingers.count() > 0) {
 		audioState.tic.play();

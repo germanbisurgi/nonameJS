@@ -531,6 +531,70 @@
             "class": "Track"
         },
         {
+            "file": "noname\\inputs\\fingers.js",
+            "line": 92,
+            "description": "Executes a callback function if the finger with the matching id no more\njust touched the canvas.",
+            "itemtype": "method",
+            "name": "justPressed",
+            "params": [
+                {
+                    "name": "_id",
+                    "description": "The finger id.",
+                    "type": "Number"
+                },
+                {
+                    "name": "_callback",
+                    "description": "A callback function.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Callback"
+            },
+            "class": "Fingers"
+        },
+        {
+            "file": "noname\\inputs\\fingers.js",
+            "line": 108,
+            "description": "Executes a callback function if the finger with the matching id no more\ntouches the canvas.",
+            "itemtype": "method",
+            "name": "released",
+            "params": [
+                {
+                    "name": "_id",
+                    "description": "The finger id.",
+                    "type": "Number"
+                },
+                {
+                    "name": "_callback",
+                    "description": "A callback function.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Fingers"
+        },
+        {
+            "file": "noname\\inputs\\fingers.js",
+            "line": 123,
+            "description": "Executes a callback function if the finger with the matching id is\ntouching the canvas.",
+            "itemtype": "method",
+            "name": "touching",
+            "params": [
+                {
+                    "name": "_id",
+                    "description": "The finger id.",
+                    "type": "Number"
+                },
+                {
+                    "name": "_callback",
+                    "description": "A callback function. It holds the millisecond since the\nfinger touched the canvas.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Fingers"
+        },
+        {
             "file": "noname\\inputs\\keys.js",
             "line": 9,
             "description": "Keys that are being tracked. As soon as a key is pressed it will be tracked.",
@@ -553,19 +617,15 @@
                 },
                 {
                     "name": "_callback",
-                    "description": "A callback function.",
+                    "description": "A callback function. It holds the key.",
                     "type": "Function"
                 }
             ],
-            "return": {
-                "description": "",
-                "type": "Callback"
-            },
             "class": "Keys"
         },
         {
             "file": "noname\\inputs\\keys.js",
-            "line": 84,
+            "line": 83,
             "description": "Executes a callback function if the passed key was pressed.",
             "itemtype": "method",
             "name": "released",
@@ -577,19 +637,15 @@
                 },
                 {
                     "name": "_callback",
-                    "description": "A callback function.",
+                    "description": "A callback function. It holds the key.",
                     "type": "Function"
                 }
             ],
-            "return": {
-                "description": "",
-                "type": "Callback"
-            },
             "class": "Keys"
         },
         {
             "file": "noname\\inputs\\keys.js",
-            "line": 100,
+            "line": 98,
             "description": "Executes a callback function if the passed key was pressed.",
             "itemtype": "method",
             "name": "pressing",
@@ -601,14 +657,10 @@
                 },
                 {
                     "name": "_callback",
-                    "description": "A callback function. It holds the millisecond since the\nkey was pressed.",
+                    "description": "A callback function. It holds the key.",
                     "type": "Function"
                 }
             ],
-            "return": {
-                "description": "",
-                "type": "Callback"
-            },
             "class": "Keys"
         },
         {
