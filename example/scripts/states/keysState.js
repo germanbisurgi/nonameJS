@@ -6,15 +6,15 @@ keysState.create = function () {
 
 keysState.update = function () {
 
-	keysState.keys.justPressed('k', function () {
+	keysState.keys.justPressed('k', function (_key) {
 		console.log('just pressed');
 	});
 
-	keysState.keys.pressing('k', function (_milliseconds) {
-		console.log('pressing since', _milliseconds);
+	keysState.keys.pressing('k', function (_key) {
+		console.log('pressing since', _key.milliseconds);
 	});
 
-	keysState.keys.released('k', function () {
+	keysState.keys.released('k', function (_key) {
 		console.log('released');
 	});
 

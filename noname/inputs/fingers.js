@@ -101,7 +101,7 @@ var Fingers = function (_game) {
 		if (!self.tracked[_id]) {
 			return false;
 		} else if (self.tracked[_id].justTouched) {
-			_callback();
+			_callback(self.tracked[_id]);
 		}
 	};
 
@@ -116,7 +116,7 @@ var Fingers = function (_game) {
 		if (!self.tracked[_id]) {
 			return false;
 		} else if (self.tracked[_id].released) {
-			_callback();
+			_callback(self.tracked[_id]);
 		}
 	};
 
@@ -132,7 +132,7 @@ var Fingers = function (_game) {
 		if (!self.tracked[_id]) {
 			return false;
 		} else if (self.tracked[_id].touching) {
-			_callback(self.tracked[_id].milliseconds);
+			_callback(self.tracked[_id]);
 		}
 	};
 
