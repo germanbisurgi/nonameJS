@@ -30,7 +30,7 @@ fingersState.update = function () {
 
 fingersState.afterRender = function () {
 	fingersState.fingers.tracked.forEach(function (_finger) {
-		if (_finger.active) {
+		if (_finger.touching) {
 			fingersState.render.context.strokeStyle = 'cyan';
 			fingersState.render.context.lineWidth = '6';
 			fingersState.render.context.beginPath();
