@@ -71,6 +71,7 @@ var Game = function (_settings) {
 				// todo systems pattern?
 				self.time.update(self.loop.delta);
 				self.keys.update();
+				self.fingers.update();
 				self.events.update();
 				self.box2d.update(); // TODO physics condition.
 				self.state.current.update();
