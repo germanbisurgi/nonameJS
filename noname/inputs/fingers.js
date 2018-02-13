@@ -34,7 +34,7 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.tracked[i];
+			self.get(event.changedTouches[i].identifier);
 			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
 			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
@@ -44,8 +44,10 @@ var Fingers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var id = event.changedTouches[i].identifier;
+			var id = self.get(event.changedTouches[i].identifier);
 			var finger = self.tracked[id];
+			console.log(finger)
+
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;

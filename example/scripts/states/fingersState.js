@@ -16,7 +16,7 @@ fingersState.update = function () {
 	});
 
 	fingersState.fingers.released(0, function (_finger) {
-		alert(_finger.id)
+		console.log(_finger.id)
 		//console.log('released');
 	});
 
