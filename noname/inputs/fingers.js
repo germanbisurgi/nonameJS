@@ -10,6 +10,7 @@ var Fingers = function (_game) {
 	self.limit = 10;
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
+		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			if (self.tracked.length < self.limit) {
 				self.tracked[event.changedTouches[i].identifier] = {
