@@ -34,11 +34,7 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-<<<<<<< HEAD
-			var finger = self.get(event.changedTouches[i]);
-=======
-			self.get(event.changedTouches[i].identifier);
->>>>>>> gh-pages
+			var finger = self.get(event.changedTouches[i].identifier);
 			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
 			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
@@ -48,15 +44,7 @@ var Fingers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-<<<<<<< HEAD
-			var id = event.changedTouches[i].identifier;
-			var finger = self.get(event.changedTouches[i]);
-=======
-			var id = self.get(event.changedTouches[i].identifier);
-			var finger = self.tracked[id];
-			console.log(finger)
-
->>>>>>> gh-pages
+			var finger = self.get(event.changedTouches[i].identifier);
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;
