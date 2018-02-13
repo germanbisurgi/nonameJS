@@ -15,10 +15,6 @@ audioState.create = function () {
 
 audioState.update = function () {
 
-	if (audioState.fingers.count() > 0) {
-		audioState.tic.play();
-	}
-
 	audioState.keys.justPressed('t', function () {
 		audioState.tic.play();
 	});
