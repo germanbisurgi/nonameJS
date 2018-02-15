@@ -73,7 +73,7 @@ var Fingers = function (_game) {
 				} else {
 					self.tracked[finger].justTouched = false;
 				}
-				logger.log(_game.loop.frames);
+				logger.log(self.tracked);
 
 			}
 		}
