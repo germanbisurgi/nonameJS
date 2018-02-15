@@ -10,16 +10,14 @@ var Fingers = function (_game) {
 	self.limit = 10;
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
-		event.preventDefault();
-		var id = 0;
-		for (var i = 0; i < event.touches.length; i++) {
-			//if (self.tracked.length < self.limit) {
-				var finger = {
-					id: id,
-					startX: event.touches[i].clientX - _game.render.screen.offsetLeft,
-					startY: event.touches[i].clientY - _game.render.screen.offsetTop,
-					currentX: event.touches[i].clientX - _game.render.screen.offsetLeft,
-					currentY: event.touches[i].clientY - _game.render.screen.offsetTop,
+		for (var i = 0; i < event.changedTouches.length; i++) {
+			if (self.tracked.length < self.limit) {
+				self.tracked[event.changedTouches[i].identifier] = {
+					id: event.changedTouches[i].identifier,
+					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+					currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
 					offsetX: 0,
 					offsetY: 0,
 					justTouched: true,
@@ -28,27 +26,25 @@ var Fingers = function (_game) {
 					milliseconds: 0,
 					pressFrame: _game.loop.frames,
 					releaseFrame: _game.loop.frames
-				}
-				self.tracked.push(finger);
-				id++;
-			//}
+				};
+			}
 		}
 	}, false);
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
-		for (var i = 0; i < event.touches.length; i++) {
-			var finger = self.getByDistance(event.touches[i]);
-			finger.currentX = event.touches[i].clientX - _game.render.screen.offsetLeft;
-			finger.currentY = event.touches[i].clientY - _game.render.screen.offsetTop;
-			finger.offsetX = event.touches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
-			finger.offsetY = event.touches[i].clientY - _game.render.screen.offsetTop - finger.startY;
+		for (var i = 0; i < event.changedTouches.length; i++) {
+			var finger = self.tracked[i];
+			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
+			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
+			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
+			finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
 		}
 	}, false);
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.getByDistance(event.changedTouches[i]);
+			var finger = self.tracked[i];
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;
@@ -59,10 +55,8 @@ var Fingers = function (_game) {
 
 	self.update = function () {
 		if (self.tracked.length > 0) {
+
 			for (var finger in self.tracked) {
-
-			logger.log(self.tracked[finger]);
-
 
 				if (self.tracked[finger].touching) {
 					self.tracked[finger].milliseconds += _game.time.masterClock.delta;
@@ -83,31 +77,6 @@ var Fingers = function (_game) {
 			}
 		}
 
-	};
-
-	self.distance = function (_x1, _y1, _x2, _y2) {
-		return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
-	};
-
-	self.getByDistance = function (_touch) {
-		var output = false;
-		var cachedDistance = 999999999999999;
-		self.tracked.forEach(function (_finger) {
-
-			var distance = self.distance(
-				_touch.clientX  - _game.render.screen.offsetLeft,
-				_touch.clientY - _game.render.screen.offsetTop,
-				_finger.currentX,
-				_finger.currentY
-			)
-
-			if (distance < cachedDistance) {
-				cachedDistance = distance;
-				output = _finger;
-			}
-
-		});
-		return output;
 	};
 
 	self.get = function (_id) {
