@@ -6,7 +6,7 @@ fingersState.create = function () {};
 
 fingersState.update = function () {
 
-	logger.log(fingersState.fingers.tracked);
+	//logger.log(fingersState.fingers.tracked);
 
 	fingersState.fingers.justTouched(0, function (_finger) {
 		console.log(_finger.id, 'just touched');
