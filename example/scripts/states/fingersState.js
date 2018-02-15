@@ -40,7 +40,7 @@ fingersState.afterRender = function () {
 			fingersState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
 			fingersState.render.context.stroke();
 			fingersState.render.context.fillText(
-				'id: ' + Math.floor(_finger.id),
+				'id: ' + _finger.id,
 				_finger.startX - 30,
 				_finger.startY - 100
 			);

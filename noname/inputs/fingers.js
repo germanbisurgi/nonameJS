@@ -29,7 +29,6 @@ var Fingers = function (_game) {
 					pressFrame: _game.loop.frames,
 					releaseFrame: _game.loop.frames
 				}
-				logger.log(finger, i)
 				self.tracked.push(finger);
 				id++;
 			//}
@@ -62,7 +61,7 @@ var Fingers = function (_game) {
 		if (self.tracked.length > 0) {
 			for (var finger in self.tracked) {
 
-			//	logger.log(self.tracked[finger]);
+			logger.log(self.tracked[finger]);
 
 
 				if (self.tracked[finger].touching) {
