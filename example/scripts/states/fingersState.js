@@ -1,6 +1,4 @@
 var fingersState = new noname.state('fingersState');
-var loggerContainer = document.querySelector('.logger');
-var logger = new Logger(loggerContainer);
 
 fingersState.preload = function () {};
 
@@ -34,7 +32,7 @@ fingersState.update = function () {
 	});
 };
 
-fingersState.afterRender = function () {
+/*fingersState.afterRender = function () {
 	fingersState.fingers.tracked.forEach(function (_finger) {
 		if (_finger.touching) {
 			fingersState.render.context.strokeStyle = 'cyan';
@@ -67,4 +65,4 @@ fingersState.afterRender = function () {
 			);
 		}
 	});
-};
+};*/
