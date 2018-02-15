@@ -1,0 +1,48 @@
+.logger {
+    color: magenta;
+    font-family: monospace;
+    font-size: 10px;
+    padding: 15px;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.logger-entry {
+    margin: 5px 0;
+}
+
+.logger-boolean {
+    color: rgb(188, 163, 202);
+}
+
+.logger-undefined {
+    color: grey;
+}
+
+.logger-null {
+    color: grey;
+}
+
+.logger-object {
+    color: #F1E293;
+}
+
+.logger-number {
+    color: rgb(156, 180, 219);
+}
+
+.logger-string {
+    color: rgb(227, 151, 154);
+}
+
+.logger-function {
+    color: green;
+}
+
+.logger-array {
+    color: cyan;
+}

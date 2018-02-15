@@ -1,4 +1,6 @@
 var fingersState = new noname.state('fingersState');
+var loggerContainer = document.querySelector('.logger');
+var logger = new Logger(loggerContainer);
 
 fingersState.preload = function () {};
 
@@ -7,14 +9,17 @@ fingersState.create = function () {};
 fingersState.update = function () {
 
 	fingersState.fingers.justTouched(0, function (_finger) {
-		// console.log(_finger.id, 'just touched');
+		console.log(_finger.id, 'just touched');
+		logger.log(_finger);
 	});
 
 	fingersState.fingers.touching(0, function (_finger) {
+		logger.log(_finger);
 		// console.log(_finger.id + ' touching since', _finger.milliseconds);
 	});
 
 	fingersState.fingers.released(0, function (_finger) {
+		logger.log(_finger);
 		// console.log(_finger.id,'released');
 	});
 
