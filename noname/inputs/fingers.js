@@ -13,7 +13,7 @@ var Fingers = function (_game) {
 		event.preventDefault();
 		for (var i = 0; i < event.touches.length; i++) {
 
-			event.changedTouches[i].id = i;
+			event.touches[i].id = i;
 			logger.log(event.touches.length)
 
 			if (self.tracked.length < self.limit) {
