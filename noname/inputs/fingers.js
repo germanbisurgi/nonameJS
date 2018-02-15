@@ -14,7 +14,7 @@ var Fingers = function (_game) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			//if (self.tracked.length < self.limit) {
 				var finger = {
-					id: i,
+					id: event.changedTouches[i].identifier,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
 					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
 					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
