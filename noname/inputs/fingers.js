@@ -12,11 +12,9 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			if (self.tracked.length < self.limit && i <= self.tracked.length && !self.get(i)) {
-				event.changedTouches[i].id = self.tracked.length;
+			if (self.tracked.length < self.limit && !self.get(event.changedTouches[i].identifier)) {
 				self.tracked.push({
-					//id: event.changedTouches[i].identifier,
-					id: self.tracked.length,
+					id: event.changedTouches[i].identifier,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
 					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
 					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
@@ -37,7 +35,7 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].id);
+			var finger = self.get(event.changedTouches[i].identifier);
 			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
 			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
@@ -45,16 +43,16 @@ var Fingers = function (_game) {
 		}
 	}, false);
 
-	/*_game.render.canvas.addEventListener('touchend', function (event) {
+	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].id);
+			var finger = self.get(event.changedTouches[i].identifier);
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;
 			finger.releaseFrame = _game.loop.frames;
 			finger.pressFrame = 0;
 		}
-	}, false);*/
+	}, false);
 
 	self.update = function () {
 		if (self.tracked.length > 0) {
