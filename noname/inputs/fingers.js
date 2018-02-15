@@ -12,9 +12,13 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
+
+			event.changedTouches[i].id = i;
+			console.log(event.changedTouches[i])
+
 			if (self.tracked.length < self.limit) {
-				self.tracked[event.changedTouches[i].identifier] = {
-					id: event.changedTouches[i].identifier,
+				self.tracked[i] = {
+					id: i,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
 					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
 					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
