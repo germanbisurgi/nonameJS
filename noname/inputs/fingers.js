@@ -13,7 +13,7 @@ var Fingers = function (_game) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			logger.log(i)
-			if (self.tracked.length < self.limit) {
+			//if (self.tracked.length < self.limit) {
 				self.tracked.push({
 					id: i,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
@@ -29,7 +29,7 @@ var Fingers = function (_game) {
 					pressFrame: _game.loop.frames,
 					releaseFrame: _game.loop.frames
 				});
-			}
+			//}
 		}
 	}, false);
 
