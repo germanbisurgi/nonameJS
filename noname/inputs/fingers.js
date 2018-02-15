@@ -12,10 +12,6 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.touches.length; i++) {
-
-			event.touches[i].id = i;
-			logger.log(event.touches.length)
-
 			if (self.tracked.length < self.limit) {
 				self.tracked[i] = {
 					id: i,
@@ -38,8 +34,9 @@ var Fingers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
+		console.log(event.changedTouches)
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].identifier);
+			var finger = self.getByDistance(event.changedTouches[i]);
 			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
 			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
@@ -49,7 +46,7 @@ var Fingers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].identifier);
+			var finger = self.getByDistance(event.changedTouches[i]);
 			finger.touching = false;
 			finger.released = true;
 			finger.milliseconds = 0;
@@ -81,6 +78,31 @@ var Fingers = function (_game) {
 			}
 		}
 
+	};
+
+	self.distance = function (_x1, _y1, _x2, _y2) {
+		return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
+	};
+
+	self.getByDistance = function (_touch) {
+		console.log('getByDistance', _touch)
+		var output = false;
+		var cachedDistance = 999999999999999;
+		self.tracked.forEach(function (_finger) {
+
+			var distance = self.distance(
+				_touch.clientX  - _game.render.screen.offsetLeft,
+				_touch.clientY - _game.render.screen.offsetTop,
+				_finger.currentX,
+				_finger.currentY
+			)
+
+			if (distance < cachedDistance) {
+				output = _finger;
+			}
+
+		});
+		return output;
 	};
 
 	self.get = function (_id) {
