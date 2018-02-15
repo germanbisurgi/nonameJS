@@ -13,7 +13,7 @@ var Fingers = function (_game) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			if (self.tracked.length < self.limit) {
-				self.tracked[event.changedTouches[i].identifier] = {
+				self.tracked.push({
 					id: event.changedTouches[i].identifier,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
 					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
@@ -27,12 +27,12 @@ var Fingers = function (_game) {
 					milliseconds: 0,
 					pressFrame: _game.loop.frames,
 					releaseFrame: _game.loop.frames
-				};
+				});
 			}
 		}
 	}, false);
 
-	/*_game.render.canvas.addEventListener('touchmove', function (event) {
+	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var finger = self.get(event.changedTouches[i].identifier);
@@ -52,7 +52,7 @@ var Fingers = function (_game) {
 			finger.releaseFrame = _game.loop.frames;
 			finger.pressFrame = 0;
 		}
-	}, false);*/
+	}, false);
 
 	self.update = function () {
 		if (self.tracked.length > 0) {
