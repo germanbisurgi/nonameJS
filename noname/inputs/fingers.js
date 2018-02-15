@@ -87,7 +87,6 @@ var Fingers = function (_game) {
 	};
 
 	self.getByDistance = function (_touch) {
-		console.log('getByDistance', _touch)
 		var output = false;
 		var cachedDistance = 999999999999999;
 		self.tracked.forEach(function (_finger) {
