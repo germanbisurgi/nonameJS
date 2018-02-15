@@ -12,6 +12,7 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
+			logger.log(i)
 			if (self.tracked.length < self.limit) {
 				self.tracked.push({
 					id: i,
@@ -58,7 +59,7 @@ var Fingers = function (_game) {
 		if (self.tracked.length > 0) {
 			for (var finger in self.tracked) {
 
-				logger.log(self.tracked[finger]);
+			//	logger.log(self.tracked[finger]);
 
 
 				if (self.tracked[finger].touching) {
