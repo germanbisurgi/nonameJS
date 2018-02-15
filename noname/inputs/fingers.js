@@ -12,7 +12,7 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			if (self.tracked.length < self.limit) {
+			//if (self.tracked.length < self.limit) {
 				self.tracked[event.changedTouches[i].identifier] = {
 					id: event.changedTouches[i].identifier,
 					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
@@ -28,7 +28,7 @@ var Fingers = function (_game) {
 					pressFrame: _game.loop.frames,
 					releaseFrame: _game.loop.frames
 				};
-			}
+			//}
 		}
 	}, false);
 
@@ -57,9 +57,11 @@ var Fingers = function (_game) {
 	self.update = function () {
 		if (self.tracked.length > 0) {
 			for (var finger in self.tracked) {
+
 				if (self.tracked[finger].touching) {
 					self.tracked[finger].milliseconds += _game.time.masterClock.delta;
 				}
+
 				if (self.tracked[finger].released && self.tracked[finger].releaseFrame === _game.loop.frames - 1) {
 					self.tracked[finger].released = true;
 				} else {
