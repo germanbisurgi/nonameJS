@@ -14,7 +14,7 @@ var Fingers = function (_game) {
 		for (var i = 0; i < event.touches.length; i++) {
 
 			event.changedTouches[i].id = i;
-			console.log(event.touches[i])
+			logger.log(event.touches.length)
 
 			if (self.tracked.length < self.limit) {
 				self.tracked[i] = {
