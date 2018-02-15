@@ -56,26 +56,22 @@ var Fingers = function (_game) {
 
 	self.update = function () {
 		if (self.tracked.length > 0) {
-			logger.log(1);
 			for (var finger in self.tracked) {
-				logger.log(2);
 				if (self.tracked[finger].touching) {
 					self.tracked[finger].milliseconds += _game.time.masterClock.delta;
 				}
-				logger.log(3);
 				if (self.tracked[finger].released && self.tracked[finger].releaseFrame === _game.loop.frames - 1) {
 					self.tracked[finger].released = true;
 				} else {
 					self.tracked[finger].released = false;
 				}
-				logger.log(4);
 
 				if (self.tracked[finger].touching && self.tracked[finger].pressFrame === _game.loop.frames - 1) {
 					self.tracked[finger].justTouched = true;
 				} else {
 					self.tracked[finger].justTouched = false;
 				}
-				logger.log(5);
+				logger.log(_game.loop.frames);
 
 			}
 		}
