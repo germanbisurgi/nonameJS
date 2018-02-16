@@ -46,7 +46,7 @@ var Logger = function(_container) {
     self.container = _container;
     self.output = '';
     self.depth = 1;
-    self.maxDepth = 3;
+    self.maxDepth = 1;
     self.path = '';
 
     self.log = function() {
@@ -131,6 +131,17 @@ var Logger = function(_container) {
         }
 
     }
+
+    self.goDeeper = function(_value) {
+        self.maxDepth++;
+    };
+
+    self.goShallower = function(_value) {
+        self.maxDepth--;
+        if (self.maxDepth < 0) {
+            self.maxDepth = 0;
+        }
+    };
 
     self.recursive = function(_object, _function) {
         for (var _property in _object) {

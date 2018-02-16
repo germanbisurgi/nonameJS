@@ -15,29 +15,51 @@
             <div class="logger-control logger-up">up</div>
             <br />
             <div class="logger-control logger-down">down</div>
+            <br />
+            <div class="logger-control logger-deeper">deeper</div>
+            <br />
+            <div class="logger-control logger-shallower">shallower</div>
         </div>
 
         <script>
             var loggerElement = document.querySelector('.logger');
             var loggerDown = document.querySelector('.logger-down');
             var loggerUp = document.querySelector('.logger-up');
+            var loggerDeeper = document.querySelector('.logger-deeper');
+            var loggerShallower = document.querySelector('.logger-shallower');
             var scrollingUp = false;
             var scrollingDown = false;
             loggerDown.onmousedown = function (_event) {
                 _event.preventDefault();
-                loggerElement.scrollTop += window.innerHeight / 3;
+                loggerElement.scrollTop += window.innerHeight / 2.5;
             }
             loggerUp.onmousedown = function (_event) {
                 _event.preventDefault();
-                loggerElement.scrollTop -= window.innerHeight / 3;
+                loggerElement.scrollTop -= window.innerHeight / 2.5;
             }
             loggerDown.ontouchstart = function (_event) {
                 _event.preventDefault();
-                loggerElement.scrollTop += window.innerHeight / 3;
+                loggerElement.scrollTop += window.innerHeight / 2.5;
             }
             loggerUp.ontouchstart = function (_event) {
                 _event.preventDefault();
-                loggerElement.scrollTop -= window.innerHeight / 3;
+                loggerElement.scrollTop -= window.innerHeight / 2.5;
+            }
+            loggerDeeper.onmousedown = function (_event) {
+                _event.preventDefault();
+                logger.goDeeper();
+            }
+            loggerShallower.onmousedown = function (_event) {
+                _event.preventDefault();
+                logger.goShallower();
+            }
+            loggerDeeper.ontouchstart = function (_event) {
+                _event.preventDefault();
+                logger.goDeeper();
+            }
+            loggerShallower.ontouchstart = function (_event) {
+                _event.preventDefault();
+                logger.goShallower();
             }
 
         </script>

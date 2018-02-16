@@ -40,7 +40,7 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
-			logger.log(self.fingers);
+			logger.log(logger.depth, logger.maxDepth, self.state);
 
 			self.state.actualSwitch();
 
