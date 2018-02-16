@@ -6,7 +6,6 @@ fingersState.create = function () {};
 
 fingersState.update = function () {
 
-
 	fingersState.fingers.justTouched(1, function (_finger) {
 		console.log('just touched');
 	});
@@ -26,6 +25,7 @@ fingersState.update = function () {
 	fingersState.keys.justPressed('n', function () {
 		fingersState.state.switchNext();
 	});
+
 };
 
 fingersState.afterRender = function () {

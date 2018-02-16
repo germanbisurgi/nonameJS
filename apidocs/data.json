@@ -73,6 +73,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "noname\\time\\timeEvent.js": {
+            "name": "noname\\time\\timeEvent.js",
+            "modules": {},
+            "classes": {
+                "TimeEvent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "noname\\time\\timeManager.js": {
             "name": "noname\\time\\timeManager.js",
             "modules": {},
@@ -206,6 +215,18 @@
             "file": "noname\\time\\clock.js",
             "line": 1,
             "description": "Tracking time within a game, synchronize animations and manage time related\nevents like setTimeout and setInterval.\nAll clocks are updated by the clockManager who has a 'master' clock itself to\nsync created clocks. All entities are synchronizes with the master clock until\nyou change it.\nYou should not directly instantiate this class because it will not added to The\nclockManager pool and therefore will not be updated. Use the add method on the\nClockManager instead."
+        },
+        "TimeEvent": {
+            "name": "TimeEvent",
+            "shortname": "TimeEvent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "noname\\time\\timeEvent.js",
+            "line": 1,
+            "description": "A TimeEvent hooks into a Clock and is an object that is generated when you\nare wanting to executed a callback at a specific point in time."
         },
         "TimeManager": {
             "name": "TimeManager",
@@ -532,14 +553,14 @@
         },
         {
             "file": "noname\\inputs\\fingers.js",
-            "line": 92,
+            "line": 107,
             "description": "Executes a callback function if the finger with the matching id no more\njust touched the canvas.",
             "itemtype": "method",
             "name": "justPressed",
             "params": [
                 {
-                    "name": "_id",
-                    "description": "The finger id.",
+                    "name": "_number",
+                    "description": "The finger number.",
                     "type": "Number"
                 },
                 {
@@ -556,14 +577,14 @@
         },
         {
             "file": "noname\\inputs\\fingers.js",
-            "line": 108,
+            "line": 122,
             "description": "Executes a callback function if the finger with the matching id no more\ntouches the canvas.",
             "itemtype": "method",
             "name": "released",
             "params": [
                 {
-                    "name": "_id",
-                    "description": "The finger id.",
+                    "name": "_number",
+                    "description": "The finger number.",
                     "type": "Number"
                 },
                 {
@@ -576,22 +597,26 @@
         },
         {
             "file": "noname\\inputs\\fingers.js",
-            "line": 123,
-            "description": "Executes a callback function if the finger with the matching id is\ntouching the canvas.",
+            "line": 136,
+            "description": "Executes a callback function if the finger with the matching id no more\njust touched the canvas.",
             "itemtype": "method",
-            "name": "touching",
+            "name": "justPressed",
             "params": [
                 {
-                    "name": "_id",
-                    "description": "The finger id.",
+                    "name": "_number",
+                    "description": "The finger number.",
                     "type": "Number"
                 },
                 {
                     "name": "_callback",
-                    "description": "A callback function. It holds the millisecond since the\nfinger touched the canvas.",
+                    "description": "A callback function.",
                     "type": "Function"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "Callback"
+            },
             "class": "Fingers"
         },
         {
@@ -1185,6 +1210,42 @@
             "itemtype": "method",
             "name": "continue",
             "class": "Clock"
+        },
+        {
+            "file": "noname\\time\\timeEvent.js",
+            "line": 10,
+            "description": "Time in milliseconds before the event occurs.",
+            "itemtype": "property",
+            "name": "interval",
+            "type": "{Number}",
+            "class": "TimeEvent"
+        },
+        {
+            "file": "noname\\time\\timeEvent.js",
+            "line": 17,
+            "description": "The function that is to be executed when the event occurs.",
+            "itemtype": "property",
+            "name": "function",
+            "type": "{function}",
+            "class": "TimeEvent"
+        },
+        {
+            "file": "noname\\time\\timeEvent.js",
+            "line": 24,
+            "description": "Elapsed time in milliseconds sice creation of this object.",
+            "itemtype": "property",
+            "name": "elapsed",
+            "type": "{Number}",
+            "class": "TimeEvent"
+        },
+        {
+            "file": "noname\\time\\timeEvent.js",
+            "line": 32,
+            "description": "If the event should occur once or executed again.",
+            "itemtype": "property",
+            "name": "once",
+            "type": "{Bollean}",
+            "class": "TimeEvent"
         },
         {
             "file": "noname\\time\\timeManager.js",

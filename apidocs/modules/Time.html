@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AudioManager</title>
+    <title>Time</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -45,13 +45,13 @@
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
-                                <li><a href="../classes/TimeEvent.html">TimeEvent</a></li>
                                 <li><a href="../classes/TimeManager.html">TimeManager</a></li>
                                 <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
                 
                 
                             <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/Time.html">Time</a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,162 +85,85 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>AudioManager Class</h1>
-<div class="box meta">
+<h1>Time Module</h1>
+<div class="box clearfix meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/noname_audio_audioManager.js.html#l1"><code>noname\audio\audioManager.js:1</code></a>
+            Defined in: <a href="../files/noname_time_timeManager.js.html#l1"><code>noname\time\timeManager.js:1</code></a>
         </div>
-
 
 </div>
 
 
 <div class="box intro">
-    <p>Is an abstraction of the web audio api and eases the creations and utilization
-of sounds.</p>
+    <p>Tracking time within a game, synchronize animations and manage time related
+events like setTimeout and setInterval.
+All clocks are updated by the clockManager who has a 'master' clock itself to
+sync created clocks. All entities are synchronizes with the master clock until
+you change it.
+You should not directly instantiate this class because it will not added to The
+clockManager pool and therefore will not be updated. Use the add method on the
+ClockManager instead.</p>
 
 </div>
 
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+            <p>This module provides the following classes:</p>
 
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                            <li class="index-item method">
-                                <a href="#method_createTrack">createTrack</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                            <li class="index-item property">
-                                <a href="#property_context">context</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-
-        </div>
-
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_createTrack" class="method item">
-    <h3 class="name"><code>createTrack</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_settings</code>
+            <ul class="module-classes">
+                <li class="module-class">
+                    <a href="../classes/AssetManager.html">
+                        AssetManager
+                    </a>
                 </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Track.html" class="crosslink">Track</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_audio_audioManager.js.html#l18"><code>noname\audio\audioManager.js:18</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Creates a new Track.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_settings</code>
-                        <span class="type">Object</span>
-
-
-                    <div class="param-description">
-                        <p>A settings object to set initial values of the track.</p>
-
-                    </div>
-
+                <li class="module-class">
+                    <a href="../classes/AudioManager.html">
+                        AudioManager
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/Clock.html">
+                        Clock
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/Fingers.html">
+                        Fingers
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/Keys.html">
+                        Keys
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/MathManager.html">
+                        MathManager
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/StateManager.html">
+                        StateManager
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/TimeManager.html">
+                        TimeManager
+                    </a>
+                </li>
+                <li class="module-class">
+                    <a href="../classes/Track.html">
+                        Track
+                    </a>
                 </li>
             </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/Track.html" class="crosslink">Track</a></span>:
-            </div>
-        </div>
-
-
-</div>
-            </div>
-
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-<div id="property_context" class="property item">
-    <h3 class="name"><code>context</code></h3>
-    <span class="type">Object</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_audio_audioManager.js.html#l11"><code>noname\audio\audioManager.js:11</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>The audio context.</p>
-
     </div>
 
 
-
-</div>
-            </div>
-
-
+    <div class="yui3-u-1-2">
     </div>
 </div>
                     </div>

@@ -8,6 +8,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Keys",
         "MathManager",
         "StateManager",
+        "TimeEvent",
         "TimeManager",
         "Track"
     ],

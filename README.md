@@ -135,13 +135,4 @@ This manager´s job is to draw everything that is visible on the canvas.
 Is a wrapper of the Erin box2dweb library that manage the physics of your game.
 
 ## TODO
-* object pools.
 * collision listeners.
-* implement audio.
-* redefine entity (transform anc clock as standard components)
-* consider to make finger, keyboard, mouse and gamepad as stand alone managers
-* customizable systems, entities settings.
-* managers events (onDraw, on switch, before update, ecc)
-* event manager
-* time event class?
-* component can see each others? yes

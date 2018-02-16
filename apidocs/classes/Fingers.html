@@ -45,6 +45,7 @@
                                 <li><a href="../classes/Keys.html">Keys</a></li>
                                 <li><a href="../classes/MathManager.html">MathManager</a></li>
                                 <li><a href="../classes/StateManager.html">StateManager</a></li>
+                                <li><a href="../classes/TimeEvent.html">TimeEvent</a></li>
                                 <li><a href="../classes/TimeManager.html">TimeManager</a></li>
                                 <li><a href="../classes/Track.html">Track</a></li>
                             </ul>
@@ -122,11 +123,11 @@
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_released">released</a>
+                                <a href="#method_justPressed">justPressed</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_touching">touching</a>
+                                <a href="#method_released">released</a>
 
                             </li>
                     </ul>
@@ -145,7 +146,7 @@
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>_id</code>
+                        <code>_number</code>
                 </li>
                 <li class="arg">
                         <code>_callback</code>
@@ -166,7 +167,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_inputs_fingers.js.html#l92"><code>noname\inputs\fingers.js:92</code></a>
+        <a href="../files/noname_inputs_fingers.js.html#l107"><code>noname\inputs\fingers.js:107</code></a>
         </p>
 
 
@@ -184,12 +185,91 @@ just touched the canvas.</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">_id</code>
+                        <code class="param-name">_number</code>
                         <span class="type">Number</span>
 
 
                     <div class="param-description">
-                        <p>The finger id.</p>
+                        <p>The finger number.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">_callback</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>A callback function.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Callback</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_justPressed" class="method item">
+    <h3 class="name"><code>justPressed</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>_number</code>
+                </li>
+                <li class="arg">
+                        <code>_callback</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Callback</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/noname_inputs_fingers.js.html#l136"><code>noname\inputs\fingers.js:136</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Executes a callback function if the finger with the matching id no more
+just touched the canvas.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">_number</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>The finger number.</p>
 
                     </div>
 
@@ -224,7 +304,7 @@ just touched the canvas.</p>
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>_id</code>
+                        <code>_number</code>
                 </li>
                 <li class="arg">
                         <code>_callback</code>
@@ -242,7 +322,7 @@ just touched the canvas.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/noname_inputs_fingers.js.html#l108"><code>noname\inputs\fingers.js:108</code></a>
+        <a href="../files/noname_inputs_fingers.js.html#l122"><code>noname\inputs\fingers.js:122</code></a>
         </p>
 
 
@@ -260,12 +340,12 @@ touches the canvas.</p>
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">_id</code>
+                        <code class="param-name">_number</code>
                         <span class="type">Number</span>
 
 
                     <div class="param-description">
-                        <p>The finger id.</p>
+                        <p>The finger number.</p>
 
                     </div>
 
@@ -277,76 +357,6 @@ touches the canvas.</p>
 
                     <div class="param-description">
                         <p>A callback function.</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_touching" class="method item">
-    <h3 class="name"><code>touching</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>_id</code>
-                </li>
-                <li class="arg">
-                        <code>_callback</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/noname_inputs_fingers.js.html#l123"><code>noname\inputs\fingers.js:123</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Executes a callback function if the finger with the matching id is
-touching the canvas.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">_id</code>
-                        <span class="type">Number</span>
-
-
-                    <div class="param-description">
-                        <p>The finger id.</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">_callback</code>
-                        <span class="type">Function</span>
-
-
-                    <div class="param-description">
-                        <p>A callback function. It holds the millisecond since the
-finger touched the canvas.</p>
 
                     </div>
 
