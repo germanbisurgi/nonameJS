@@ -8,6 +8,13 @@ audioState.preload = function () {
 
 audioState.create = function () {
 
+	var btn = document.createElement('button');
+	btn.innerText = 'audioooooooo';
+	btn.onclick = function () {
+		audioState.tic.play();
+	}
+	document.body.appendChild(btn);
+
 	audioState.tic = audioState.audio.createTrack({
 		audioBuffer: audioState.assets.get('tic'),
 		volume: 1.0
