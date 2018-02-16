@@ -46,7 +46,7 @@ var Logger = function(_container) {
     self.container = _container;
     self.output = '';
     self.depth = 1;
-    self.maxDepth = 1;
+    self.maxDepth = 3;
     self.path = '';
 
     self.log = function() {

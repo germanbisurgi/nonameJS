@@ -37,6 +37,19 @@
             loggerUp.onmouseup = function () {
                 scrollingUp = false;
             }
+            loggerDown.ontouchstart = function () {
+                scrollingDown = true;
+            }
+            loggerUp.ontouchstart = function () {
+                scrollingUp = true;
+            }
+            loggerDown.ontouchend = function () {
+                scrollingDown = false;
+
+            }
+            loggerUp.ontouchend = function () {
+                scrollingUp = false;
+            }
             setInterval(function () {
                 if (scrollingDown) {
                     loggerElement.scrollTop += window.innerHeight / 10;
