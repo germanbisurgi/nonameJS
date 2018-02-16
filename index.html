@@ -12,10 +12,9 @@
         <div class="screen"></div>
         <div class="logger"></div>
         <div class="logger-controls">
-            <button class="logger-control logger-up">up</button>
+            <div class="logger-control logger-up">up</div>
             <br />
-            <br />
-            <button class="logger-control logger-down">down</button>
+            <div class="logger-control logger-down">down</div>
         </div>
 
         <script>
@@ -24,48 +23,22 @@
             var loggerUp = document.querySelector('.logger-up');
             var scrollingUp = false;
             var scrollingDown = false;
-            loggerDown.onmousedown = function () {
-
-                scrollingDown = true;
+            loggerDown.onmousedown = function (_event) {
+                _event.preventDefault();
+                loggerElement.scrollTop += window.innerHeight / 3;
             }
-            loggerUp.onmousedown = function (event) {
-                event.preventDefault();
-                scrollingUp = true;
-            }
-            loggerDown.onmouseup = function (_event) {
-                _event.pr_eventDefault();                
-                scrollingDown = false;
-
-            }
-            loggerUp.onmouseup = function (_event) {
-                _event.pr_eventDefault();                
-                scrollingUp = false;
+            loggerUp.onmousedown = function (_event) {
+                _event.preventDefault();
+                loggerElement.scrollTop -= window.innerHeight / 3;
             }
             loggerDown.ontouchstart = function (_event) {
-                _event.pr_eventDefault();                
-                scrollingDown = true;
+                _event.preventDefault();
+                loggerElement.scrollTop += window.innerHeight / 3;
             }
             loggerUp.ontouchstart = function (_event) {
-                _event.pr_eventDefault();                
-                scrollingUp = true;
+                _event.preventDefault();
+                loggerElement.scrollTop -= window.innerHeight / 3;
             }
-            loggerDown.ontouchend = function (_event) {
-                _event.pr_eventDefault();                
-                scrollingDown = false;
-
-            }
-            loggerUp.ontouchend = function (_event) {
-                _event.preventDefault();                
-                scrollingUp = false;
-            }
-            setInterval(function () {
-                if (scrollingDown) {
-                    loggerElement.scrollTop += window.innerHeight / 60;
-                }
-                if (scrollingUp) {
-                    loggerElement.scrollTop -= window.innerHeight / 60;
-                }
-            }, 0);
 
         </script>
 
