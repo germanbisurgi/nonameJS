@@ -19,7 +19,7 @@ var Fingers = function (_game) {
 		source.start(0);
 		setTimeout(function() {
 			if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
-				console.log('unlock audio');
+				_game.audio.unlocked = true;
 			}
 		}, 0);
 
@@ -69,6 +69,8 @@ var Fingers = function (_game) {
 	}, false);
 
 	self.update = function () {
+
+		logger.log(_game.audio.unlocked);
 
 		if (self.justToucing.length > 0) {
 			self.justToucing.forEach(function (_finger) {

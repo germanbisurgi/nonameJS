@@ -8,6 +8,8 @@ var AudioManager = function (_game) {
 	'use strict';
 	var self = this;
 
+	self.unlocked = false;
+
 	/**
 	 * The audio context.
 	 * @property context
