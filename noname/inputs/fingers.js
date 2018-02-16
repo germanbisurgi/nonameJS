@@ -11,18 +11,18 @@ var Fingers = function (_game) {
 	self.releasing = [];
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
-
-		var buffer = _game.audio.context.createBuffer(1, 1, 22050);
-		var source = _game.audio.context.createBufferSource();
-		source.buffer = buffer;
-		source.connect(_game.audio.context.destination);
-		source.start(0);
-		setTimeout(function() {
-			if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
-				_game.audio.unlocked = true;
-			}
-		}, 0);
-
+		if (!_game.audio.unlocked) {
+			var buffer = _game.audio.context.createBuffer(1, 1, 22050);
+			var source = _game.audio.context.createBufferSource();
+			source.buffer = buffer;
+			source.connect(_game.audio.context.destination);
+			source.start(0);
+			setTimeout(function() {
+				if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+					_game.audio.unlocked = true;
+				}
+			}, 0);
+		}
 
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
