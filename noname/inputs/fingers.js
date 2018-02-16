@@ -7,140 +7,129 @@ var Fingers = function (_game) {
 	'use strict';
 	var self = this;
 	self.tracked = [];
-	self.limit = 10;
-
-	Touch.prototype._identifier = self.tracked.length;
+	self.justToucing = [];
+	self.releasing = [];
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
+		event.preventDefault();
+		// push to tracked
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			if (self.tracked.length < self.limit) {
-				self.tracked[event.changedTouches[i].identifier] = {
-					id: event.changedTouches[i].identifier,
-					startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-					startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-					currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-					currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-					offsetX: 0,
-					offsetY: 0,
-					justTouched: true,
-					touching: true,
-					released: false,
-					milliseconds: 0,
-					pressFrame: _game.loop.frames,
-					releaseFrame: _game.loop.frames
-				};
+			var touch = event.changedTouches[i];
+			var finger = {
+				number: i,
+				startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+				startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+				currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
+				currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+				offsetX: 0,
+				offsetY: 0,
+				milliseconds: 0,
+				identifier: touch.identifier,
+				startFrame: _game.loop.frames
 			}
+			self.tracked.push(finger);
+			self.justToucing.push(finger);
 		}
 	}, false);
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
+		//get by identifier and update it
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			console.log(event.changedTouches[i]._identifier)
-
-			var finger = self.get(event.changedTouches[i].identifier);
+			var touch = event.changedTouches[i];
+			var finger = self.getByIdentifier(touch.identifier, self.tracked);
 			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
 			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
 			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
 			finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
 		}
+
+
 	}, false);
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
+		event.preventDefault();
+		//get by identifier and remove it
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var finger = self.get(event.changedTouches[i].identifier);
-			finger.touching = false;
-			finger.released = true;
-			finger.milliseconds = 0;
+			var touch = event.changedTouches[i];
+			var finger = self.getByIdentifier(touch.identifier, self.tracked);
 			finger.releaseFrame = _game.loop.frames;
-			finger.pressFrame = 0;
+			self.releasing.push(finger);
+			self.remove(finger, self.tracked);
 		}
 	}, false);
 
 	self.update = function () {
 
-		logger.log(self.tracked);
+		logger.log(self.justToucing);
 
-		if (self.tracked.length > 0) {
-
-			for (var finger in self.tracked) {
-
-				if (self.tracked[finger].touching) {
-					self.tracked[finger].milliseconds += _game.time.masterClock.delta;
+		// update just touched array.
+		if (self.justToucing.length > 0) {
+			self.justToucing.forEach(function (_finger) {
+				if (_finger.startFrame < _game.loop.frames - 1) {
+					self.remove(_finger, self.justToucing);
 				}
+			});
+		}
 
-				if (self.tracked[finger].released && self.tracked[finger].releaseFrame === _game.loop.frames - 1) {
-					self.tracked[finger].released = true;
-				} else {
-					self.tracked[finger].released = false;
+		// update released array.
+		if (self.releasing.length > 0) {
+			self.releasing.forEach(function (_finger) {
+				if (_finger.releaseFrame < _game.loop.frames - 1) {
+					self.remove(_finger, self.releasing);
 				}
-
-				if (self.tracked[finger].touching && self.tracked[finger].pressFrame === _game.loop.frames - 1) {
-					self.tracked[finger].justTouched = true;
-				} else {
-					self.tracked[finger].justTouched = false;
-				}
-
-			}
+			});
 		}
 
 	};
 
-	self.get = function (_id) {
+	self.getByIdentifier = function (_identifier, _array) {
 		var output = false;
-		self.tracked.forEach(function (_finger) {
-			if (_finger.id === _id) {
+		_array.forEach(function (_finger) {
+			if (_finger.identifier === _identifier) {
 				output = _finger;
 			}
 		});
 		return output;
 	};
 
-	/**
-	 * Executes a callback function if the finger with the matching id no more
-	 * just touched the canvas.
-	 * @method justPressed
-	 * @param  {Number} _id The finger id.
-	 * @param  {Function} _callback A callback function.
-	 * @return {Callback}
-	 */
-	self.justTouched = function (_id, _callback) {
-		if (!self.tracked[_id]) {
-			return false;
-		} else if (self.tracked[_id].justTouched) {
-			_callback(self.tracked[_id]);
+	self.getByNumber = function (_number, _array) {
+		var output = false;
+		_array.forEach(function (_finger) {
+			if (_finger.number === _number) {
+				output = _finger;
+			}
+		});
+		return output;
+	};
+
+	self.remove = function (_item, _array) {
+		var index = _array.indexOf(_item);
+		if (index > -1) {
+			_array.splice(index, 1);
 		}
 	};
 
-	/**
-	 * Executes a callback function if the finger with the matching id no more
-	 * touches the canvas.
-	 * @method released
-	 * @param  {Number} _id The finger id.
-	 * @param  {Function} _callback A callback function.
-	 */
-	self.released = function (_id, _callback) {
-		if (!self.tracked[_id]) {
-			return false;
-		} else if (self.tracked[_id].released) {
-			_callback(self.tracked[_id]);
+	self.touching = function (_number, _callback) {
+		var finger = self.getByNumber(_number, self.tracked)
+		if (finger) {
+			_callback(finger);
 		}
 	};
 
-	/**
-	 * Executes a callback function if the finger with the matching id is
-	 * touching the canvas.
-	 * @method touching
-	 * @param  {Number} _id The finger id.
-	 * @param  {Function} _callback A callback function. It holds the millisecond since the
-	 * finger touched the canvas.
-	 */
-	self.touching = function (_id, _callback) {
-		if (!self.tracked[_id]) {
-			return false;
-		} else if (self.tracked[_id].touching) {
-			_callback(self.tracked[_id]);
+	self.released = function (_number, _callback) {
+		var finger = self.getByNumber(_number, self.releasing)
+		if (finger) {
+			_callback(finger);
 		}
 	};
+
+	self.justTouched = function (_number, _callback) {
+		var finger = self.getByNumber(_number, self.justToucing)
+		if (finger) {
+			_callback(finger);
+		}
+	};
+
 
 };
