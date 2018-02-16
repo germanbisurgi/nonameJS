@@ -1,8 +1,9 @@
 .logger {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     color: magenta;
     font-family: monospace;
-    font-size: 10px;
+    font-size: 11px;
+    overflow: hidden;
     padding: 15px;
     pointer-events: none;
     position: fixed;
@@ -10,6 +11,16 @@
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.logger-controls {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.logger-control {
+    width: 80px;
 }
 
 .logger-entry {

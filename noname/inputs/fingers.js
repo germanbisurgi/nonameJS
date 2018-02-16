@@ -70,8 +70,6 @@ var Fingers = function (_game) {
 
 	self.update = function () {
 
-		logger.log(_game.audio.unlocked);
-
 		if (self.justToucing.length > 0) {
 			self.justToucing.forEach(function (_finger) {
 				if (_finger.startFrame < _game.loop.frames - 1) {

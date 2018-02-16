@@ -11,6 +11,40 @@
         <p class="loading" style="position: absolute; z-index: 1;">loading</p>
         <div class="screen"></div>
         <div class="logger"></div>
+        <div class="logger-controls">
+            <button class="logger-control logger-up">up</button>
+            <button class="logger-control logger-down">down</button>
+        </div>
+
+        <script>
+            var loggerElement = document.querySelector('.logger');
+            var loggerDown = document.querySelector('.logger-down');
+            var loggerUp = document.querySelector('.logger-up');
+            var scrollingUp = false;
+            var scrollingDown = false;
+            loggerDown.onmousedown = function () {
+                scrollingDown = true;
+            }
+            loggerUp.onmousedown = function () {
+                scrollingUp = true;
+            }
+            loggerDown.onmouseup = function () {
+                scrollingDown = false;
+
+            }
+            loggerUp.onmouseup = function () {
+                scrollingUp = false;
+            }
+            setInterval(function () {
+                if (scrollingDown) {
+                    loggerElement.scrollTop += window.innerHeight / 20;
+                }
+                if (scrollingUp) {
+                    loggerElement.scrollTop -= window.innerHeight / 20;
+                }
+            }, 0);
+
+        </script>
 
         <script src="libs/box2dweb.js"></script>
         <script src="libs/logger.js"></script>

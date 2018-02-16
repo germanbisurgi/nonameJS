@@ -1,10 +1,52 @@
+JSON.stringifyOnce = function(obj, replacer, indent){
+    var printedObjects = [];
+    var printedObjectKeys = [];
+
+    function printOnceReplacer(key, value){
+        if ( printedObjects.length > 2000){ // browsers will not print more than 20K, I don't see the point to allow 2K.. algorithm will not be fast anyway if we have too many objects
+        return 'object too long';
+        }
+        var printedObjIndex = false;
+        printedObjects.forEach(function(obj, index){
+            if(obj===value){
+                printedObjIndex = index;
+            }
+        });
+
+        if ( key == ''){ //root element
+             printedObjects.push(obj);
+            printedObjectKeys.push("root");
+             return value;
+        }
+
+        else if(printedObjIndex+"" != "false" && typeof(value)=="object"){
+            if ( printedObjectKeys[printedObjIndex] == "root"){
+                return "(pointer to root)";
+            }else{
+                return "(see " + ((!!value && !!value.constructor) ? value.constructor.name.toLowerCase()  : typeof(value)) + " with key " + printedObjectKeys[printedObjIndex] + ")";
+            }
+        }else{
+
+            var qualifiedKey = key || "(empty key)";
+            printedObjects.push(value);
+            printedObjectKeys.push(qualifiedKey);
+            if(replacer){
+                return replacer(key, value);
+            }else{
+                return value;
+            }
+        }
+    }
+    return JSON.stringify(obj, printOnceReplacer, indent);
+};
+
 var Logger = function(_container) {
     'use strict';
     var self = this;
     self.container = _container;
     self.output = '';
     self.depth = 1;
-    self.maxDepth = 10;
+    self.maxDepth = 1;
     self.path = '';
 
     self.log = function() {
@@ -189,7 +231,8 @@ var Logger = function(_container) {
 
     self.printFunction = function(_value) {
         var output = '<span style="display: inline-block" class="logger-function">';
-        output += _value;
+        //output += _value;
+        output += 'function';
         output += '</span style="display: inline-block">';
         output += '<br />';
         return output;
@@ -197,7 +240,7 @@ var Logger = function(_container) {
 
     self.printArray = function(_value) {
         var output = '<pre style="display: inline.block;" class="logger-array">';
-        output += JSON.stringify(_value, null, 8);
+        output += JSON.stringifyOnce(_value, null, 8);
         output += '</pre>';
         output += '<br />';
         return output;
@@ -218,7 +261,8 @@ var Logger = function(_container) {
                 output += '<span style="display: inline-block;" class="logger-object">';
                 output += self.classOf(_value);
                 if (self.classOf(_value) !== 'Object') {
-                    output += ' => ' + JSON.stringify(_value, null, 4);
+                    //output += ' => ' + JSON.stringifyOnce(_value, null, 4);
+                    output += ' {} '
                 }
                 output += '</span>';
             } else {
@@ -229,5 +273,18 @@ var Logger = function(_container) {
         });
         return output;
     };
+
+    self.stringify = function (_object, _indent) {
+        var seen = [];
+        var string = JSON.stringify(_object, function (key, value) {
+            if (value != null && typeof value == "object") {
+                if (seen.indexOf(value) >= 0) return;
+                seen.push(value);
+            }
+            return 'CIRCLE';
+        }, _indent);
+        seen = null;
+        return string;
+    }
 
 };
