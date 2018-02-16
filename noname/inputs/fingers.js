@@ -13,14 +13,14 @@ var Fingers = function (_game) {
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 		event.preventDefault();
 		// push to tracked
-		for (var i = 0; i < event.changedTouches.length; i++) {
-			var touch = event.changedTouches[i];
+		for (var i = 0; i < event.touches.length; i++) {
+			var touch = event.touches[i];
 			var finger = {
-				number: self.tracked.length,
-				startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-				startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-				currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-				currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+				number: i,
+				startX: event.touches[i].clientX - _game.render.screen.offsetLeft,
+				startY: event.touches[i].clientY - _game.render.screen.offsetTop,
+				currentX: event.touches[i].clientX - _game.render.screen.offsetLeft,
+				currentY: event.touches[i].clientY - _game.render.screen.offsetTop,
 				offsetX: 0,
 				offsetY: 0,
 				milliseconds: 0,
