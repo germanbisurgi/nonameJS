@@ -16,7 +16,7 @@ var Fingers = function (_game) {
 		for (var i = 0; i < event.touches.length; i++) {
 			var touch = event.touches[i];
 			var finger = {
-				number: i,
+				number: i + event.touches.length,
 				startX: event.touches[i].clientX - _game.render.screen.offsetLeft,
 				startY: event.touches[i].clientY - _game.render.screen.offsetTop,
 				currentX: event.touches[i].clientX - _game.render.screen.offsetLeft,
