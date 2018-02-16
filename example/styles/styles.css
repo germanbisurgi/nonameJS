@@ -15,8 +15,8 @@
 
 .logger-controls {
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 30px;
+    bottom: 40%;
 }
 
 .logger-control {

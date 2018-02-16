@@ -13,6 +13,8 @@
         <div class="logger"></div>
         <div class="logger-controls">
             <button class="logger-control logger-up">up</button>
+            <br />
+            <br />
             <button class="logger-control logger-down">down</button>
         </div>
 
@@ -37,10 +39,10 @@
             }
             setInterval(function () {
                 if (scrollingDown) {
-                    loggerElement.scrollTop += window.innerHeight / 20;
+                    loggerElement.scrollTop += window.innerHeight / 10;
                 }
                 if (scrollingUp) {
-                    loggerElement.scrollTop -= window.innerHeight / 20;
+                    loggerElement.scrollTop -= window.innerHeight / 10;
                 }
             }, 0);
 
