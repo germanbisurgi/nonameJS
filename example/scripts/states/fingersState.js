@@ -7,16 +7,16 @@ fingersState.create = function () {};
 fingersState.update = function () {
 
 
-	fingersState.fingers.justTouched(0, function (_finger) {
-		console.log('just touched', _finger);
+	fingersState.fingers.justTouched(1, function (_finger) {
+		console.log('just touched');
 	});
 
-	fingersState.fingers.touching(0, function (_finger) {
-		//console.log('touching', _finger);
+	fingersState.fingers.touching(1, function (_finger) {
+		console.log('touching');
 	});
 
-	fingersState.fingers.released(0, function (_finger) {
-		console.log('released', _finger);
+	fingersState.fingers.released(1, function (_finger) {
+		console.log('released');
 	});
 
 	fingersState.keys.justPressed('b', function () {
