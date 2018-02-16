@@ -44,17 +44,17 @@ fingersState.afterRender = function () {
 			_finger.startY - 100
 		);
 		fingersState.render.context.fillText(
-			'startX: ' + Math.floor(_finger.startX) + ', startY: ' + Math.floor(_finger.startY),
+			'startX: ' + _finger.startX + ', startY: ' + _finger.startY,
 			_finger.startX - 30,
 			_finger.startY - 90
 		);
 		fingersState.render.context.fillText(
-			'currentX: ' + Math.floor(_finger.currentX) + ', currentY: ' + Math.floor(_finger.currentY),
+			'currentX: ' + _finger.currentX + ', currentY: ' + _finger.currentY,
 			_finger.startX - 30,
 			_finger.startY - 80
 		);
 		fingersState.render.context.fillText(
-			'offsetX: ' + Math.floor(_finger.offsetX) + ', offsetY: ' + Math.floor(_finger.offsetY),
+			'offsetX: ' + _finger.offsetX + ', offsetY: ' + _finger.offsetY,
 			_finger.startX - 30,
 			_finger.startY - 70
 		);

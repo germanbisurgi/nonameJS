@@ -17,10 +17,10 @@ var Fingers = function (_game) {
 			var touch = event.changedTouches[i];
 			var finger = {
 				number: event.touches.length,
-				startX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-				startY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
-				currentX: event.changedTouches[i].clientX - _game.render.screen.offsetLeft,
-				currentY: event.changedTouches[i].clientY - _game.render.screen.offsetTop,
+				startX:  Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
+				startY:  Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
+				currentX:  Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
+				currentY:  Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
 				offsetX: 0,
 				offsetY: 0,
 				milliseconds: 0,
@@ -38,10 +38,10 @@ var Fingers = function (_game) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var touch = event.changedTouches[i];
 			var finger = self.getByIdentifier(touch.identifier, self.tracked);
-			finger.currentX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft;
-			finger.currentY = event.changedTouches[i].clientY - _game.render.screen.offsetTop;
-			finger.offsetX = event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX;
-			finger.offsetY = event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY;
+			finger.currentX =  Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft);
+			finger.currentY =  Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop);
+			finger.offsetX =  Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX);
+			finger.offsetY =  Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY);
 		}
 
 
