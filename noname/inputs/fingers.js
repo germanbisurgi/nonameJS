@@ -61,7 +61,7 @@ var Fingers = function (_game) {
 
 	self.update = function () {
 
-		logger.log(self.justToucing);
+		logger.log(self.tracked);
 
 		// update just touched array.
 		if (self.justToucing.length > 0) {
