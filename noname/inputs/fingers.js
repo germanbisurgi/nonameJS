@@ -56,6 +56,8 @@ var Fingers = function (_game) {
 	self.update = function () {
 		if (self.tracked.length > 0) {
 
+			logger.log(self.tracked)
+
 			for (var finger in self.tracked) {
 
 				if (self.tracked[finger].touching) {

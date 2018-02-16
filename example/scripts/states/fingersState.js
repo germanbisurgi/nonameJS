@@ -12,11 +12,11 @@ fingersState.update = function () {
 	});
 
 	fingersState.fingers.touching(0, function (_finger) {
-		// console.log(_finger.id + ' touching since', _finger.milliseconds);
+		console.log(_finger.id + ' touching since', _finger.milliseconds);
 	});
 
 	fingersState.fingers.released(0, function (_finger) {
-		// console.log(_finger.id,'released');
+		console.log(_finger.id,'released', fingersState.loop.frames);
 	});
 
 	fingersState.keys.justPressed('b', function () {
