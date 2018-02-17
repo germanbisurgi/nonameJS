@@ -138,8 +138,8 @@ var Logger = function(_container) {
 
     self.goShallower = function(_value) {
         self.maxDepth--;
-        if (self.maxDepth < 0) {
-            self.maxDepth = 0;
+        if (self.maxDepth < 1) {
+            self.maxDepth = 1;
         }
     };
 
