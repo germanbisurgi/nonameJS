@@ -40,7 +40,7 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
-			logger.log(logger.depth, logger.maxDepth, self.state);
+			logger.log(self.box2d);
 
 			self.state.actualSwitch();
 
