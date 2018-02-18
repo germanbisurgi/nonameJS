@@ -17,8 +17,8 @@ var Fingers = function (_game) {
 			source.buffer = buffer;
 			source.connect(_game.audio.context.destination);
 			source.start(0);
-			setTimeout(function() {
-				if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+			setTimeout(function () {
+				if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
 					_game.audio.unlocked = true;
 				}
 			}, 0);

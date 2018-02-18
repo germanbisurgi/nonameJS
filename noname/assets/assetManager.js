@@ -52,10 +52,6 @@ var AssetManager = function () {
 
 	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-	self.init = function () {
-
-	}
-
 	self.reset = function () {
 		self.queue = [];
 		self.success = 0;

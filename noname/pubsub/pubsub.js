@@ -9,14 +9,14 @@ var PubSub = function () {
 		var subscription = {
 			subscriber: _subscriber,
 			topic: topic.name,
-			function: _function,
-		}
+			function: _function
+		};
 		topic.subscriptions.push(subscription);
 		return subscription;
 	};
 
 	self.unsubscribe = function (_subscription) {
-		var topic = self.searchTopic(_subscription.topic)
+		var topic = self.searchTopic(_subscription.topic);
 		if (!topic) {
 			return false;
 		}
@@ -44,7 +44,7 @@ var PubSub = function () {
 			var topic = {
 				name: _topicName,
 				subscriptions: []
-			}
+			};
 			self.topics.push(topic);
 			output = topic;
 		}
