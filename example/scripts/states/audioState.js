@@ -2,18 +2,25 @@ var audioState = new noname.state('audioState');
 
 audioState.preload = function () {
 
+
 	var loading = document.querySelector('.loading');
+	var asset = document.querySelector('.loading-asset');
+	var progress = document.querySelector('.loading-progress');
 
 	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
 	audioState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
 	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
 
 	var subscription = audioState.assets.pubsub.subscribe('onload', function (_data) {
-		loading.innerText = 'loading: ' + _data.name;
+		asset.innerText = 'loading: ' + _data.name;
+		progress.setAttribute('style', 'width: ' + audioState.assets.progress()  + '%;');
 	});
 
 	audioState.assets.pubsub.subscribe('done', function () {
-		loading.innerText = 'loading: DONE';
+		asset.innerText = 'loading: DONE';
+		setTimeout(function () {
+			loading.setAttribute('style', 'display: none;');
+		}, 1000);
 	});
 
 };

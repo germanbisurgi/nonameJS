@@ -1,0 +1,33 @@
+.loading {
+    background: #020202;
+    height: 100vh;
+    position: fixed;
+    width: 100vw;
+    z-index: 1
+}
+
+.loading-asset {
+    color: black;
+    font-family: monospace;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-bar {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+}
+
+.loading-progress {
+    background: white;
+    border-radius: 10px;
+    height: 30px;
+}
