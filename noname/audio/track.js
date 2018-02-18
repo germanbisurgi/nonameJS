@@ -65,7 +65,8 @@ var Track = function (_audioMamaner, _settings) {
 				self.playbackTime = 0;
 				self.isPlaying = false;
 			};
-			self.source.connect(self.gainNode);
+			// self.source.connect(self.gainNode);
+			self.source.connect(self.context.destination);
 			self.source.start(0, self.playbackTime);
 			self.onPlay();
 			self.isPlaying = true;
