@@ -24,7 +24,7 @@ var Fingers = function (_game) {
 			}, 0);
 		}
 
-		// event.preventDefault();
+		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var touch = event.changedTouches[i];
 			var finger = {
@@ -45,7 +45,7 @@ var Fingers = function (_game) {
 	}, false);
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
-		// event.preventDefault();
+		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var touch = event.changedTouches[i];
 			var finger = self.getByIdentifier(touch.identifier, self.tracked);
@@ -58,7 +58,7 @@ var Fingers = function (_game) {
 	}, false);
 
 	_game.render.canvas.addEventListener('touchend', function (event) {
-		// event.preventDefault();
+		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var touch = event.changedTouches[i];
 			var finger = self.getByIdentifier(touch.identifier, self.tracked);
