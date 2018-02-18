@@ -4,21 +4,15 @@ audioState.preload = function () {
 
 	var loading = document.querySelector('.loading');
 
+	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
 	audioState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
 	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
-	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
 
-	audioState.assets.pubsub.subscribe('audioState', 'onload', function (_data) {
-		console.log(_data.name);
+	var subscription = audioState.assets.pubsub.subscribe('onload', function (_data) {
 		loading.innerText = 'loading: ' + _data.name;
 	});
 
-	audioState.assets.pubsub.subscribe('audioState', 'onerror', function (_data) {
-		console.log(_data.name);
-	});
-
-	audioState.assets.pubsub.subscribe('audioState', 'done', function () {
-		console.log('done');
+	audioState.assets.pubsub.subscribe('done', function () {
 		loading.innerText = 'loading: DONE';
 	});
 
@@ -44,6 +38,8 @@ audioState.create = function () {
 };
 
 audioState.update = function () {
+
+	logger.log(audioState.assets.pubsub)
 
 	audioState.fingers.justTouched(1, function (_finger) {
 		audioState.motor.play();

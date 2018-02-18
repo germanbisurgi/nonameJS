@@ -4,10 +4,9 @@ var PubSub = function () {
 
 	self.topics = [];
 
-	self.subscribe = function (_subscriber, _topicName, _function) {
+	self.subscribe = function (_topicName, _function) {
 		var topic = self.openTopic(_topicName);
 		var subscription = {
-			subscriber: _subscriber,
 			topic: topic.name,
 			function: _function
 		};
