@@ -1,22 +1,30 @@
 var eventsState = new noname.state('eventsState');
+var pubsub = new noname.pubsub();
+
 
 eventsState.preload = function () {};
 
 eventsState.create = function () {
 
-	eventsState.events.on('12', function () {
-		console.log('i am tired');
+
+	var subscription = pubsub.subscribe('alfonso', 'mySignal', function (_data) {
+		console.log(_data)
 	});
 
-	eventsState.events.on('12', function () {
-		console.log('time to sleep');
+	pubsub.subscribe('gennaro', 'mySignal', function (_data) {
+		console.log(_data)
 	});
 
-	eventsState.events.trigger('12');
+	pubsub.public('mySignal', {data: 'banana'});
+
+	pubsub.unsubscribe(subscription);
 
 };
 
 eventsState.update = function () {
+
+	logger.log(pubsub)
+
 	eventsState.keys.justPressed('b', function () {
 		eventsState.state.switchPrevious();
 	});

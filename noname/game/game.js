@@ -32,7 +32,6 @@ var Game = function (_settings) {
 		self.time = new noname.timeManager(self);
 		self.entities = new noname.entityManager(self);
 		self.render = new noname.renderManager(self);
-		self.events = new noname.eventManager(self);
 		self.box2d = new noname.box2dManager(self);
 		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
@@ -72,7 +71,6 @@ var Game = function (_settings) {
 				self.time.update(self.loop.delta);
 				self.keys.update();
 				self.fingers.update();
-				self.events.update();
 				self.box2d.update(); // TODO physics condition.
 				self.state.current.update();
 

@@ -14,6 +14,6 @@ var game = new noname.game({
 		eventsState,
 		entitiesState
 	],
-	initialState: 'audioState',
+	initialState: 'eventsState',
 	box2dDebug: false
 });
