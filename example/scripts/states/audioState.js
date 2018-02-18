@@ -17,6 +17,9 @@ audioState.create = function () {
 
 audioState.update = function () {
 
+	logger.log(audioState.kick);
+
+
 	audioState.fingers.justTouched(1, function (_finger) {
 		audioState.kick.play();
 	});
