@@ -10,7 +10,7 @@ audioState.preload = function () {
 
 	audioState.assets.pubsub.subscribe('audioState', 'onload', function (_data) {
 		console.log(_data.name);
-		loading.innerText = 'loaded: ' + _data.name
+		loading.innerText = 'loading: ' + _data.name;
 	});
 
 	audioState.assets.pubsub.subscribe('audioState', 'onerror', function (_data) {
@@ -19,7 +19,7 @@ audioState.preload = function () {
 
 	audioState.assets.pubsub.subscribe('audioState', 'done', function () {
 		console.log('done');
-		loading.innerText = 'DONE';
+		loading.innerText = 'loading: DONE';
 	});
 
 };
