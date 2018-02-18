@@ -24,6 +24,8 @@ var Fingers = function (_game) {
 			}, 0);
 		}
 
+		_game.state.current.tic.play();
+
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var touch = event.changedTouches[i];

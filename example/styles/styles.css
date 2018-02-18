@@ -1,10 +1,10 @@
 .logger {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.5);
     color: magenta;
     font-family: monospace;
     font-size: 11px;
     overflow: hidden;
-    padding: 15px;
+    padding: 30px;
     pointer-events: none;
     position: fixed;
     top: 0;
@@ -17,15 +17,28 @@
     position: fixed;
     right: 30px;
     bottom: 50%;
-    transform: translate(0%, 50%);
+    transform: translate(0%, 50%)7
+    width: 100px;
 }
 
 .logger-control {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 15px;
     padding: 5px;
     text-align: center;
-    width: 100px;
+    width: 100%;
+}
+
+.logger-range {
+    /*transform-origin: 75px 75px;
+    transform: rotate(90deg);*/
+    width: 100%;
+}
+
+.logger-control:active {
+    background: rgba(255, 255, 255, 1);
 }
 
 .logger-entry {

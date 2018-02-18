@@ -18,7 +18,7 @@ audioState.create = function () {
 audioState.update = function () {
 
 	audioState.fingers.justTouched(1, function (_finger) {
-		audioState.tic.play();
+		// audioState.tic.play();
 	});
 
 	audioState.keys.justPressed('t', function () {

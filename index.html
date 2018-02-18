@@ -12,79 +12,10 @@
         <div class="screen"></div>
         <div class="logger"></div>
         <div class="logger-controls">
-            <div class="logger-control logger-up">up</div>
-            <br />
-            <div class="logger-control logger-down">down</div>
-            <br />
-            <div class="logger-control logger-deeper">deeper</div>
-            <br />
             <div class="logger-control logger-shallower">shallower</div>
+            <div class="logger-control logger-deeper">deeper</div>
+            <input class="logger-range" type="range" min="0" max="1" value="0" step="0.01">
         </div>
-
-        <script>
-            var loggerElement = document.querySelector('.logger');
-            var loggerDown = document.querySelector('.logger-down');
-            var loggerUp = document.querySelector('.logger-up');
-            var loggerDeeper = document.querySelector('.logger-deeper');
-            var loggerShallower = document.querySelector('.logger-shallower');
-            var scrollingUp = false;
-            var scrollingDown = false;
-            var getScroll = function (_event) {
-
-                var targetPosition = null;
-                var targetWith = null;
-                var targetTouchPosition = null;
-
-                if (_event.constructor.name === 'MouseEvent') {
-                    targetPosition = _event.target.getBoundingClientRect().left;
-                    targetWith = _event.target.clientWidth;
-                    targetTouchPosition = Math.floor(_event.pageX - targetPosition);
-                }
-
-                if (_event.constructor.name === 'TouchEvent') {
-                    targetPosition = _event.targetTouches[0].target.getBoundingClientRect().left;
-                    targetWith = _event.targetTouches[0].target.clientWidth;
-                    targetTouchPosition = Math.floor(_event.targetTouches[0].pageX - targetPosition);
-                }
-
-                var intensity = targetTouchPosition * 100 / targetWith;
-                var scroll = window.innerHeight * intensity / 100 * 2;
-                return scroll;
-            }
-            loggerDown.onmousedown = function (_event) {
-                _event.preventDefault();
-                loggerElement.scrollTop += getScroll(_event);
-            }
-            loggerUp.onmousedown = function (_event) {
-                _event.preventDefault();
-                loggerElement.scrollTop -= getScroll(_event);
-            }
-            loggerDown.ontouchstart = function (_event) {
-                _event.preventDefault();
-                loggerElement.scrollTop += getScroll(_event);
-            }
-            loggerUp.ontouchstart = function (_event) {
-                _event.preventDefault();
-                loggerElement.scrollTop -= getScroll(_event);
-            }
-            loggerDeeper.onmousedown = function (_event) {
-                _event.preventDefault();
-                logger.goDeeper();
-            }
-            loggerShallower.onmousedown = function (_event) {
-                _event.preventDefault();
-                logger.goShallower();
-            }
-            loggerDeeper.ontouchstart = function (_event) {
-                _event.preventDefault();
-                logger.goDeeper();
-            }
-            loggerShallower.ontouchstart = function (_event) {
-                _event.preventDefault();
-                logger.goShallower();
-            }
-
-        </script>
 
         <script src="libs/box2dweb.js"></script>
         <script src="libs/logger.js"></script>
@@ -131,5 +62,34 @@
         <script src="example/scripts/entities/spaceship.js"></script>
 
         <script src="example/scripts/main.js"></script>
+        <script>
+            var loggerElement = document.querySelector('.logger');
+            var loggerDeeper = document.querySelector('.logger-deeper');
+            var loggerShallower = document.querySelector('.logger-shallower');
+            var loggerRange = document.querySelector('.logger-range');
+            loggerDeeper.onmousedown = function (_event) {
+            _event.preventDefault();
+            logger.goDeeper();
+            logger.refresh();
+            };
+            loggerShallower.onmousedown = function (_event) {
+            _event.preventDefault();
+            logger.goShallower();
+            logger.refresh();
+            };
+            loggerDeeper.ontouchstart = function (_event) {
+            _event.preventDefault();
+            logger.goDeeper();
+            logger.refresh();
+            };
+            loggerShallower.ontouchstart = function (_event) {
+            _event.preventDefault();
+            logger.goShallower();
+            logger.refresh();
+            };
+            loggerRange.oninput = function (_event) {
+            loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
+            };
+        </script>
     </body>
 </html>
