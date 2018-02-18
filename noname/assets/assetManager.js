@@ -48,6 +48,8 @@ var AssetManager = function () {
 	*/
 	self.pool = [];
 
+	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
 	self.reset = function () {
 		self.queue = [];
 		self.success = 0;
@@ -153,13 +155,12 @@ var AssetManager = function () {
 	};
 
 	self.loadAudio = function (_asset) {
-		var context = new (window.AudioContext || window.webkitAudioContext)();
 		var request = new XMLHttpRequest();
 		var audio = null;
 		request.open('GET', _asset.path, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function () {
-			context.decodeAudioData(request.response, function (buffer) {
+			self.audioContext.decodeAudioData(request.response, function (buffer) {
 				audio = buffer;
 				audio.name = _asset.name;
 				self.lastLoaded = _asset.name;
