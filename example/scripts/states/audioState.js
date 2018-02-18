@@ -16,7 +16,7 @@ audioState.create = function () {
 
 	audioState.tic = audioState.audio.createTrack({
 		audioBuffer: audioState.assets.get('tic'),
-		volume: 1.0
+		volume: 0.5
 	});
 
 };
@@ -27,11 +27,11 @@ audioState.update = function () {
 
 
 	audioState.fingers.justTouched(1, function (_finger) {
-		audioState.tic.play();
+		audioState.kick.play();
 	});
 
 	audioState.fingers.justTouched(2, function (_finger) {
-		audioState.kick.play();
+		audioState.tic.play();
 	});
 
 	audioState.keys.justPressed('t', function () {
