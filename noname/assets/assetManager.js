@@ -48,7 +48,13 @@ var AssetManager = function () {
 	*/
 	self.pool = [];
 
+	self.pubsub = new noname.pubsub();
+
 	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+	self.init = function () {
+
+	}
 
 	self.reset = function () {
 		self.queue = [];
@@ -137,6 +143,7 @@ var AssetManager = function () {
 		img.onload = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
+			self.pubsub.publish('onload', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
@@ -144,6 +151,7 @@ var AssetManager = function () {
 		};
 		img.onerror = function () {
 			self.errors++;
+			self.pubsub.publish('onerror', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
@@ -166,15 +174,19 @@ var AssetManager = function () {
 				self.lastLoaded = _asset.name;
 				self.pool.push(audio);
 				self.success++;
+				self.pubsub.publish('onload', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
+					self.pubsub.publish('done');
 				}
 			}, function () {
 				self.errors++;
+				self.pubsub.publish('onerror', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
+					self.pubsub.publish('done', audio);
 				}
 			});
 		};

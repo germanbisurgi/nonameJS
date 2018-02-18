@@ -26,7 +26,7 @@ var PubSub = function () {
 		}
 	};
 
-	self.public = function (_topicName, _data) {
+	self.publish = function (_topicName, _data) {
 		var topic = self.openTopic(_topicName);
 		topic.subscriptions.forEach(function (_listener) {
 			_listener.function(_data);

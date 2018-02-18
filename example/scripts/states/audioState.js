@@ -2,9 +2,25 @@ var audioState = new noname.state('audioState');
 
 audioState.preload = function () {
 
+	var loading = document.querySelector('.loading');
+
 	audioState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
 	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
 	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
+
+	audioState.assets.pubsub.subscribe('audioState', 'onload', function (_data) {
+		console.log(_data.name);
+		loading.innerText = 'loaded: ' + _data.name
+	});
+
+	audioState.assets.pubsub.subscribe('audioState', 'onerror', function (_data) {
+		console.log(_data.name);
+	});
+
+	audioState.assets.pubsub.subscribe('audioState', 'done', function () {
+		console.log('done');
+		loading.innerText = 'DONE';
+	});
 
 };
 
