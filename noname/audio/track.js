@@ -57,7 +57,7 @@ var Track = function (_audioMamaner, _settings) {
 	 * Play the Track. Triggers the onPlay method.
 	 * @method play
 	 */
-	self.play = function () {
+	/*self.play = function () {
 		//if (!self.isPlaying) {
 			self.source = self.context.createBufferSource();
 			self.source.buffer = self.audioBuffer;
@@ -70,6 +70,14 @@ var Track = function (_audioMamaner, _settings) {
 			self.onPlay();
 			self.isPlaying = true;
 			self.lastTime = self.context.currentTime;
+		//}
+	};*/
+	self.source = self.context.createMediaElementSource(self.audioBuffer);
+
+	self.play = function () {
+			self.source.buffer = self.audioBuffer;
+			self.source.connect(self.gainNode);
+			self.audioBuffer.play();
 		//}
 	};
 
