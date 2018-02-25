@@ -10,7 +10,7 @@ eventsState.create = function () {
 
 eventsState.update = function () {
 
-	//logger.log(eventsState.pubsub);
+	// logger.log(eventsState.pubsub);
 
 	eventsState.keys.justPressed('b', function () {
 		eventsState.state.switchPrevious();

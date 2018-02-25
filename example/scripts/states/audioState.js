@@ -15,9 +15,9 @@ audioState.preload = function () {
 		loading.setAttribute('style', 'display: block;');
 	});
 
-	var subscription = audioState.assets.pubsub.subscribe('onload', function (_data) {
+	audioState.assets.pubsub.subscribe('onload', function (_data) {
 		asset.innerText = 'loading: ' + _data.name;
-		progress.setAttribute('style', 'width: ' + audioState.assets.progress()  + '%;');
+		progress.setAttribute('style', 'width: ' + audioState.assets.progress() + '%;');
 	});
 
 	audioState.assets.pubsub.subscribe('done', function () {
