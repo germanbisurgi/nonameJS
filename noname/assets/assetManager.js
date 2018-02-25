@@ -59,15 +59,6 @@ var AssetManager = function () {
 	};
 
 	/**
-	 * Returns an array with the games assets as items.
-	 * @method list
-	 * @return {array} Assets array.
-	 */
-	self.list = function () {
-		return self.pool;
-	};
-
-	/**
 	 * Queue an audio file to be loaded when the loadAll() method will be called.
 	 * @method queueAudio
 	 * @param  {string} _name The asset name ('shot')
@@ -113,8 +104,6 @@ var AssetManager = function () {
 
 	self.loadAll = function () {
 		if (self.queue.length > 0) {
-			self.pubsub.publish('loading');
-			self.loading = true;
 			self.queue.forEach(function (_asset) {
 				if (self.get(_asset.name)) {
 					console.log('Asset already loaded ->', _asset.name);
@@ -122,8 +111,11 @@ var AssetManager = function () {
 					if (self.loadComplete()) {
 						self.loading = false;
 						self.reset();
+						self.pubsub.publish('done');
 					}
 				} else {
+					self.pubsub.publish('loading');
+					self.loading = true;
 					if (_asset.type === 'image') {
 						self.loadImage(_asset);
 					}
@@ -144,6 +136,7 @@ var AssetManager = function () {
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
+				self.pubsub.publish('done');
 			}
 		};
 		img.onerror = function () {
@@ -152,6 +145,7 @@ var AssetManager = function () {
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
+				self.pubsub.publish('done');
 			}
 		};
 		img.src = _asset.path;
@@ -189,25 +183,6 @@ var AssetManager = function () {
 		};
 		request.send();
 
-		/* var audio = new Audio();
-		audio.oncanplaythrough = function () {
-			self.lastLoaded = _asset.name;
-			self.success++;
-			if (self.loadComplete()) {
-				self.loading = false;
-				self.reset();
-			}
-		};
-		audio.onerror = function () {
-			self.errors++;
-			if (self.loadComplete()) {
-				self.loading = false;
-				self.reset();
-			}
-		};
-		audio.src = _asset.path;
-		audio.name = _asset.name;
-		self.pool.push(audio); */
 	};
 
 	/**
