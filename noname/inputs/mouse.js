@@ -49,6 +49,10 @@ var Mouse = function (_game) {
 		self.remove(button, self.tracked);
 	}, false);
 
+	_game.render.canvas.oncontextmenu = function () {
+		return false;
+	};
+
 	self.remove = function (_item, _array) {
 		var index = _array.indexOf(_item);
 		if (index > -1) {
