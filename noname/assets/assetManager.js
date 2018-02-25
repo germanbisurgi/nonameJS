@@ -113,6 +113,7 @@ var AssetManager = function () {
 
 	self.loadAll = function () {
 		if (self.queue.length > 0) {
+			self.pubsub.publish('loading');
 			self.loading = true;
 			self.queue.forEach(function (_asset) {
 				if (self.get(_asset.name)) {

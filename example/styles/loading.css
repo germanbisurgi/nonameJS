@@ -1,5 +1,6 @@
 .loading {
     background: #020202;
+    display: none;
     height: 100vh;
     position: fixed;
     width: 100vw;

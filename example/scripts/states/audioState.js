@@ -2,7 +2,6 @@ var audioState = new noname.state('audioState');
 
 audioState.preload = function () {
 
-
 	var loading = document.querySelector('.loading');
 	var asset = document.querySelector('.loading-asset');
 	var progress = document.querySelector('.loading-progress');
@@ -10,6 +9,11 @@ audioState.preload = function () {
 	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
 	audioState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
 	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
+
+	audioState.assets.pubsub.subscribe('loading', function () {
+		console.log('loading');
+		loading.setAttribute('style', 'display: block;');
+	});
 
 	var subscription = audioState.assets.pubsub.subscribe('onload', function (_data) {
 		asset.innerText = 'loading: ' + _data.name;
@@ -46,22 +50,18 @@ audioState.create = function () {
 
 audioState.update = function () {
 
-	logger.log(audioState.assets.pubsub)
+	logger.log(audioState.assets.pubsub);
 
-	audioState.fingers.justTouched(1, function (_finger) {
+	audioState.fingers.justTouched(1, function () {
 		audioState.motor.play();
 	});
 
-	audioState.fingers.justTouched(2, function (_finger) {
+	audioState.fingers.justTouched(2, function () {
 		audioState.tic.play();
 	});
 
 	audioState.keys.justPressed('t', function () {
 		audioState.kick.play();
-	});
-
-	audioState.keys.justPressed('e', function () {
-		audioState.snare.play();
 	});
 
 	audioState.keys.justPressed('b', function () {
