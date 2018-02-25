@@ -11,7 +11,6 @@ var game = new noname.game({
 		physicsState,
 		keysState,
 		audioState,
-		eventsState,
 		entitiesState
 	],
 	initialState: 'audioState',

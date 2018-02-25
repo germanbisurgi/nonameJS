@@ -39,6 +39,8 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
+			logger.log(self.assets);
+
 			self.state.actualSwitch();
 
 			if (!self.state.current.initialized) {

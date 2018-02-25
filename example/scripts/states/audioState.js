@@ -11,7 +11,6 @@ audioState.preload = function () {
 	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
 
 	audioState.assets.pubsub.subscribe('loading', function () {
-		console.log('loading');
 		loading.setAttribute('style', 'display: block;');
 	});
 
@@ -49,8 +48,6 @@ audioState.create = function () {
 };
 
 audioState.update = function () {
-
-	logger.log(audioState.assets.pubsub);
 
 	audioState.fingers.justTouched(1, function () {
 		audioState.motor.play();

@@ -2,6 +2,26 @@ var entitiesState = new noname.state('entitiesState');
 
 entitiesState.preload = function () {
 	entitiesState.assets.queueImage('stone', 'example/assets/images/stone.png');
+
+	var loading = document.querySelector('.loading');
+	var asset = document.querySelector('.loading-asset');
+	var progress = document.querySelector('.loading-progress');
+
+	audioState.assets.pubsub.subscribe('loading', function () {
+		loading.setAttribute('style', 'display: block;');
+	});
+
+	audioState.assets.pubsub.subscribe('onload', function (_data) {
+		asset.innerText = 'loading: ' + _data.name;
+		progress.setAttribute('style', 'width: ' + audioState.assets.progress() + '%;');
+	});
+
+	audioState.assets.pubsub.subscribe('done', function () {
+		asset.innerText = 'loading: DONE';
+		setTimeout(function () {
+			loading.setAttribute('style', 'display: none;');
+		}, 1000);
+	});
 };
 
 entitiesState.create = function () {
