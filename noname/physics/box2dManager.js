@@ -39,6 +39,16 @@ var Box2dManager = function (_game) {
 		}, true);
 	};
 
+	self.queryPoint = function (_x, _y, _function) {
+		self.world.QueryPoint(function(fixture) {
+			_function(fixture);
+		}, {x: _x / self.scale, y: _y / self.scale});
+	};
+
+	self.setGravity = function (_x, _y) {
+		self.world.SetGravity(new b2Vec2(_x, _y));
+	};
+
 	/* create a body */
 
 	self.addBody = function (_x, _y, _type) {

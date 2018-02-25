@@ -40,7 +40,7 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
-			logger.log(self.mouse);
+			// logger.log(self.box2d);
 
 			self.state.actualSwitch();
 
