@@ -35,11 +35,12 @@ var Game = function (_settings) {
 		self.box2d = new noname.box2dManager(self);
 		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
+		self.mouse = new noname.mouse(self);
 		self.audio = new noname.audioManager(self);
 
 		self.loop.start(function () {
 
-			logger.log(self.assets);
+			logger.log(self.mouse);
 
 			self.state.actualSwitch();
 

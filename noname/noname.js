@@ -18,6 +18,7 @@ var noname = {
 	clock: Clock,
 	keys: Keys,
 	fingers: Fingers,
+	mouse: Mouse,
 	transformComponent: TransformComponent,
 	imageComponent: ImageComponent,
 	spriteComponent: SpriteComponent,

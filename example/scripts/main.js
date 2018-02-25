@@ -8,11 +8,12 @@ var game = new noname.game({
 	states: [
 		timeState,
 		fingersState,
+		mouseState,
 		physicsState,
 		keysState,
 		audioState,
 		entitiesState
 	],
-	initialState: 'audioState',
+	initialState: 'mouseState',
 	box2dDebug: false
 });

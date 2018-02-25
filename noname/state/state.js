@@ -13,6 +13,7 @@ var State = function (_name) {
 		self.math = _game.math;
 		self.keys = _game.keys;
 		self.fingers = _game.fingers;
+		self.mouse = _game.mouse;
 		self.time = _game.time;
 		self.entities = _game.entities;
 		self.render = _game.render;
