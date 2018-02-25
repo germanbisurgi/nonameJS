@@ -15,7 +15,7 @@ eventsState.create = function () {
 		console.log(_data)
 	});
 
-	pubsub.public('mySignal', {data: 'banana'});
+	pubsub.publish('mySignal', {data: 'banana'});
 
 	pubsub.unsubscribe(subscription);
 
@@ -23,7 +23,7 @@ eventsState.create = function () {
 
 eventsState.update = function () {
 
-	logger.log(pubsub)
+	logger.log(pubsub);
 
 	eventsState.keys.justPressed('b', function () {
 		eventsState.state.switchPrevious();
