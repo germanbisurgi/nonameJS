@@ -54,7 +54,6 @@ var Fingers = function (_game) {
 			finger.offsetX = Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft - finger.startX);
 			finger.offsetY = Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop - finger.startY);
 		}
-
 	}, false);
 
 	_game.render.canvas.addEventListener('touchend', function (event) {

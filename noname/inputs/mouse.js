@@ -12,6 +12,12 @@ var Mouse = function (_game) {
 		self.updateXY(_event);
 		var button = {
 			number: _event.button,
+			startX: self.x,
+			startY: self.y,
+			currentX: self.x,
+			currentY: self.y,
+			offsetX: 0,
+			offsetY: 0,
 			x: self.x,
 			y: self.y,
 			milliseconds: 0,
@@ -24,6 +30,12 @@ var Mouse = function (_game) {
 	_game.render.canvas.addEventListener('mousemove', function (_event) {
 		_event.preventDefault();
 		self.updateXY(_event);
+		self.tracked.forEach(function (_button) {
+			_button.currentX = Math.floor(self.x - _game.render.screen.offsetLeft);
+			_button.currentY = Math.floor(self.y - _game.render.screen.offsetTop);
+			_button.offsetX = Math.floor(self.x - _game.render.screen.offsetLeft - _button.startX);
+			_button.offsetY = Math.floor(self.y - _game.render.screen.offsetTop - _button.startY);
+		});
 	}, false);
 
 	_game.render.canvas.addEventListener('mouseup', function (_event) {
