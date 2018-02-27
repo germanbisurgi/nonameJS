@@ -7,7 +7,7 @@ physicsState.preload = function () {
 
 physicsState.create = function () {
 
-	physicsState.box2d.setGravity(0, 50);
+	physicsState.box2d.setGravity(0, 10);
 
 	physicsState.myLimits = physicsState.box2d.addBody(10, 300, 'static');
 	physicsState.myLimits.addEdge(0, 0, 600, 0);
@@ -39,38 +39,11 @@ physicsState.create = function () {
 physicsState.update = function () {
 	//physicsState.mySimpleBody.ApplyTorque(100);
 
-	physicsState.mouse.justPressed(0, function (button) {
+	physicsState.mouse.pressing(0, function (button) {
 		physicsState.box2d.queryPoint(button.currentX, button.currentY, function (_fixture) {
 			var body = _fixture.GetBody();
-			var point = {
-				x: 1,
-				y: 1
-			};
-
-			console.log(
-				{
-					x: button.currentX,
-					y: button.currentY
-				},
-				{
-					x: body.GetWorldCenter().x * 30,
-					y: body.GetWorldCenter().y * 30
-				},
-				{
-					x: body.GetWorldPoint(point).x * 30,
-					y: body.GetWorldCenter(point).y * 30
-				}
-			);
-			body.ApplyImpulse(
-				{
-					x: 0,
-					y: 0
-				},
-				body.GetWorldPoint({
-					x: 0,
-					y: 0
-				})
-			);
+			var point = {x: 0 / 30, y: 0 / 30};
+			body.ApplyForce({x: 0, y: -100}, body.GetWorldPoint(point));
 		});
 	});
 

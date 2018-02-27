@@ -66,34 +66,5 @@
         <script src="example/scripts/entities/spaceship.js"></script>
 
         <script src="example/scripts/main.js"></script>
-        <script>
-            var loggerElement = document.querySelector('.logger');
-            var loggerDeeper = document.querySelector('.logger-deeper');
-            var loggerShallower = document.querySelector('.logger-shallower');
-            var loggerRange = document.querySelector('.logger-range');
-            loggerDeeper.onmousedown = function (_event) {
-            _event.preventDefault();
-            logger.goDeeper();
-            logger.refresh();
-            };
-            loggerShallower.onmousedown = function (_event) {
-            _event.preventDefault();
-            logger.goShallower();
-            logger.refresh();
-            };
-            loggerDeeper.ontouchstart = function (_event) {
-            _event.preventDefault();
-            logger.goDeeper();
-            logger.refresh();
-            };
-            loggerShallower.ontouchstart = function (_event) {
-            _event.preventDefault();
-            logger.goShallower();
-            logger.refresh();
-            };
-            loggerRange.oninput = function (_event) {
-            loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
-            };
-        </script>
     </body>
 </html>

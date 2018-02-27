@@ -1,8 +1,7 @@
 .logger {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     color: magenta;
     font-family: monospace;
-    font-size: 11px;
     overflow: hidden;
     padding: 30px;
     pointer-events: none;
@@ -40,39 +39,10 @@
 .logger-control:active {
     background: rgba(255, 255, 255, 1);
 }
-
-.logger-entry {
-    margin: 5px 0;
+.logger-key {
+    color: magenta;
 }
 
-.logger-boolean {
-    color: rgb(188, 163, 202);
-}
-
-.logger-undefined {
-    color: grey;
-}
-
-.logger-null {
-    color: grey;
-}
-
-.logger-object {
-    color: #F1E293;
-}
-
-.logger-number {
-    color: rgb(156, 180, 219);
-}
-
-.logger-string {
-    color: rgb(227, 151, 154);
-}
-
-.logger-function {
-    color: rgb(0, 255, 204);
-}
-
-.logger-array {
+.logger-value {
     color: cyan;
 }

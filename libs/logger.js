@@ -1,311 +1,257 @@
-var Logger = function (_container) {
+var Logger = function (_outputContainer) {
 	'use strict';
 	var self = this;
-	self.container = _container;
-	self.output = '';
+
 	self.depth = 1;
-	self.maxDepth = 1;
-	self.path = '';
-	self.arguments = null;
+	self.maxDepth = 5;
+	self.path = [];
+	self.output = '';
+	self.outputContainer = _outputContainer;
+	self.paths = [];
+	self.circularPaths= [];
+	self.seen = [];
 
-	self.log = function () {
-		self.arguments = arguments;
-		self.exec();
+	self.init = function () {
+		self.walk(function (_key, _value, _path) {
+			self.paths.push(_path.join('.'));
+		});
 	};
 
-	self.refresh = function () {
-		self.exec();
-	};
-
-	self.exec = function () {
-		self.container.innerHTML = '';
-		self.output = '';
-		for (var i = 0; i < self.arguments.length; i++) {
-			var value = self.arguments[i];
-			self.recursiveFunction(value, true);
-		}
-		self.container.innerHTML += self.output;
-	};
-
-	self.recursiveFunction = function (_value, _print) {
-
-		if (self.isNull(_value)) {
-			var printedNull = self.printNull(_value);
-			if (_print) {
-				self.output += printedNull;
-			}
-			return printedNull;
-		}
-
-		if (self.isUndefined(_value)) {
-			var printedUndefined = self.printUndefined(_value);
-			if (_print) {
-				self.output += printedUndefined;
-			}
-			return printedUndefined;
-		}
-
-		if (self.isBoolean(_value)) {
-			var printedBoolean = self.printBoolean(_value);
-			if (_print) {
-				self.output += printedBoolean;
-			}
-			return printedBoolean;
-		}
-
-		if (self.isNumber(_value)) {
-			var printedNumber = self.printNumber(_value);
-			if (_print) {
-				self.output += printedNumber;
-			}
-			return printedNumber;
-		}
-
-		if (self.isString(_value)) {
-			var printedString = self.printString(_value);
-			if (_print) {
-				self.output += printedString;
-			}
-			return printedString;
-		}
-
-		if (self.isFunction(_value)) {
-			var printedFunction = self.printFunction(_value);
-			if (_print) {
-				self.output += printedFunction;
-			}
-			return printedFunction;
-		}
-
-		if (self.isArray(_value)) {
-			var printedArray = self.printArray(_value);
-			if (_print) {
-				self.output += printedArray;
-			}
-			return printedArray;
-		}
-
-		if (self.isObject(_value)) {
-			var printedObject = self.printObject(_value);
-			if (_print) {
-				self.output += printedObject;
-			}
-			return printedObject;
-		}
-
-	};
-
-	self.goDeeper = function (_value) {
+	self.goDeeper = function () {
 		self.maxDepth++;
 	};
 
-	self.goShallower = function (_value) {
+	self.goShallower = function () {
 		self.maxDepth--;
 		if (self.maxDepth < 1) {
 			self.maxDepth = 1;
 		}
 	};
 
-	self.recursive = function (_object, _function) {
+	// executes a function for every node. Function (key, value, path, depth) {}
+	self.walk = function (_object, _function) {
+		self.seen = [];
+		self.recursive(_object, _function);
+	};
+
+	self.recursive = function (_object, _function, _circular) {
+
+		if (typeof _circular === 'undefined') {
+			_circular = false;
+		}
+
 		for (var _property in _object) {
 			if (_object.hasOwnProperty(_property)) {
 
-				if (self.depth === 1) {
-					self.path = '';
-					self.path += _property;
-				} else if (self.depth > 1) {
-					self.path += '.' + _property;
+				// build path
+				var diff = self.path.length - self.depth;
+				for (var i = 0; i < diff; i++) {
+					self.path.pop();
 				}
+				self.path[self.depth - 1] = _property;
 
-				_function(_property, _object[_property], self.path, self.depth);
-				if (self.isObject(_object[_property]) && self.depth < self.maxDepth) {
-					self.depth++;
-					self.recursive(_object[_property], _function, self.depth);
-					self.depth--;
+				// exec function
+				_function(_property, _object[_property], self.path, self.depth, _circular);
+
+				// go deeper if allowed
+				if (self.depth < self.maxDepth && self.isIterable(_object[_property]) && !_circular) {
+
+					var alreadySeen = self.alreadySeen(_object[_property]);
+
+					if (!alreadySeen) {
+						self.seen.push({
+							value: _object[_property],
+							depth: self.depth
+						});
+					}
+
+					// if parent path is === to child
+					if (alreadySeen.depth === self.depth - 1) {
+						// is circular
+						alreadySeen.depth = self.depth;
+						self.circularPaths.push(self.path.join('.'));
+						self.depth++;
+						self.recursive(_object[_property], _function, true);
+						self.depth--;
+					} else {
+						// is not circular
+						self.depth++;
+						self.recursive(_object[_property], _function, false);
+						self.depth--;
+					}
 				}
 			}
 		}
 	};
 
-	self.isNull = function (_value) {
-		return _value === null;
+	// get the value of a node
+	self.get = function (_object, _wantedPath) {
+		var output = 'NOTHING';
+		self.walk(_object, function (_key, _value, _path) {
+			if (_path.join('.') === _wantedPath) {
+				output = _value;
+			}
+		});
+		return output;
 	};
 
-	self.isBoolean = function (_value) {
-		return typeof _value === 'boolean';
+	// set the value of a node. Will create intermediate object/arrays
+	self.set = function (_object, _path, _value) {
+		// a reference is needed to not override original object.
+		var object = _object;
+		_path = _path.split('.');
+		var pathLength = _path.length;
+		_path.forEach(function (_key, _i) {
+			// are we at the end of the path?
+			if (_i === (pathLength - 1)) {
+				object[_key] = _value;
+			} else if (object.hasOwnProperty(_key)) {
+				object = object[_key];
+			} else {
+				// else create object or and array.
+				object[_key] = (/^\d+$/).test(_path[_i + 1]) ? [] : {};
+				// enter it.
+				object = object[_key];
+			}
+		});
 	};
 
-	self.isUndefined = function (_value) {
-		return typeof _value === 'undefined';
+	self.print = function (_object) {
+
+		self.output = '';
+		var lastDepth = 1;
+		var lastIterable = null;
+
+		self.output += '<span class="logger-value">';
+		self.output += self.isArray(_object) ? ' [' : ' {';
+		self.output += '</span>';
+
+		self.walk(_object, function (_key, _value, _path, _depth, _circular) {
+
+			if (lastDepth > _depth) {
+				self.output += '<p class="logger-value" style="padding-left: ' + _depth * 30 + 'px;">';
+				self.output += self.isArray(lastIterable) ? ']' : '}';
+				self.output += '</p>';
+			}
+
+			self.output += '<p style="padding-left: ' + _depth * 30 + 'px;">';
+
+			if (self.isIterable(_value)) {
+				self.output += '<span class="logger-key">' + _key + ': ' + '</span>';
+				self.output += '<span class="logger-value">';
+				self.output += self.printIterables(_value, _circular);
+				if (!_circular) {
+					self.output += self.isArray(_value) ? ' [' : ' {';
+				}
+				if (_depth === self.maxDepth) {
+					self.output += self.isArray(_value) ? ']' : '}';
+				}
+				self.output += '</span>';
+				lastIterable = _value;
+			} else {
+				self.output += '<span class="logger-key">' + _key + ': ' + '</span>';
+				self.output += '<span class="logger-value">' + self.printNonIterables(_value) + '</span>';
+			}
+
+			self.output += '</p>';
+
+			if (_path.join('.') === self.paths[self.paths.length - 1]) {
+				self.output += '<p class="logger-value" style="padding-left: 30px;">';
+				self.output += self.isArray(_value) ? ']' : '}';
+				self.output += '</p>';
+			}
+
+			lastDepth = _depth;
+		});
+
+		self.output += '<span class="logger-value">';
+		self.output += self.isArray(_object) ? ']' : '}';
+		self.output += '</span>';
+
+		self.outputContainer.innerHTML = self.output;
 	};
 
-	self.isNumber = function (_value) {
-		return typeof _value === 'number' && !isNaN(_value);
+	self.printIterables = function (_value, _circular) {
+		if (_circular) {
+			return '[' + _value.constructor.name + ']';
+		} else {
+			return _value.constructor.name;
+
+		}
 	};
 
-	self.isString = function (_value) {
-		return typeof _value === 'string';
+	self.printNonIterables = function (_value) {
+
+		if (_value === null) {
+			return 'null';
+		}
+
+		if (typeof _value === 'undefined') {
+			return _value;
+		}
+
+		if (typeof _value === 'boolean') {
+			return _value;
+		}
+
+		if (typeof _value === 'string') {
+			return '"' + _value + '"';
+		}
+
+		if (typeof _value === 'number' && !isNaN(_value)) {
+			return _value;
+		}
+
+		if (self.isObject(_value) && _value.constructor.name === 'RegExp') {
+			return 'RegExp';
+		}
+
+		if (self.isObject(_value) && _value.constructor.name === 'Date') {
+			return _value;
+		}
+
+		if (self.isObject(_value) && _value.constructor.name === 'Promise') {
+			return 'Promise';
+		}
+
+		if (typeof _value === 'function') {
+			return 'function ()';
+		} else {
+			return _value;
+		}
+
 	};
 
-	self.isFunction = function (value) {
-		return typeof value === 'function';
+	self.isIterable = function (_value) {
+		return typeof _value === 'object' &&
+			_value !== null &&
+			_value.constructor.name !== 'Date' &&
+			_value.constructor.name !== 'RegExp' &&
+			_value.constructor.name !== 'Promise';
+	};
+
+	self.isObject = function (_value) {
+		return typeof _value === 'object' && _value !== null;
 	};
 
 	self.isArray = function (_value) {
 		return {}.toString.call(_value) === '[object Array]';
 	};
 
-	self.isObject = function (_value) {
-		return typeof _value === 'object' && !Array.isArray(_value) && _value !== null;
+	self.inArray = function (_value, _array) {
+		return _array.indexOf(_value) !== -1;
 	};
 
-	self.classOf = function (_value) {
-		return _value.constructor.name;
-	};
-
-	self.printNull = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-null">';
-		output += 'null';
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printUndefined = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-undefined">';
-		output += '"undefined"';
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printBoolean = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-boolean">';
-		output += _value;
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printNumber = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-number">';
-		output += _value;
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printString = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-string">';
-		output += '"' + _value + '"';
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printFunction = function (_value) {
-		var output = '<span style="display: inline-block" class="logger-function">';
-		output += 'function';
-		output += '</span style="display: inline-block">';
-		output += '<br />';
-		return output;
-	};
-
-	self.printArray = function (_value) {
-		var output = '<pre style="display: inline.block;" class="logger-array">';
-		output += self.stringify(_value, null, 8);
-		output += '</pre>';
-		output += '<br />';
-		return output;
-	};
-
-	self.printObject = function (_value) {
-		var output = '';
-		self.recursive(_value, function (_key, _value, _path, _depth) {
-			if (_depth > 1) {
-				output += '<li style="padding-left: ' + _depth * 20 + 'px;">';
-			} else {
-				output += '<li>';
+	self.alreadySeen= function (_value) {
+		var output = false;
+		self.seen.forEach(function (_seen) {
+			if (_seen.value === _value) {
+				output = _seen;
 			}
-			output += _key;
-			output += ': ';
-
-			if (self.isObject(_value)) {
-				output += '<span style="display: inline-block;" class="logger-object">';
-				output += self.classOf(_value);
-				if (self.classOf(_value) !== 'Object') {
-					// output += ' => ' + self.stringify(_value, null, 4);
-					output += ' {} ';
-				}
-				output += '</span>';
-			} else {
-				output += self.recursiveFunction(_value, false);
-			}
-
-			output += '</li>';
 		});
 		return output;
 	};
 
-	self.stringify = function (obj, replacer, indent) {
-		var printedObjects = [];
-		var printedObjectKeys = [];
-
-		function printOnceReplacer (key, value) {
-			// browsers will not print more than 20K, I don't see the point to
-			// allow 2K.. algorithm will not be fast anyway if we have too many objects
-			if (printedObjects.length > 2000) {
-				return 'object too long';
-			}
-
-			var printedObjIndex = false;
-
-			printedObjects.forEach(function (obj, index) {
-
-				if (obj === value) {
-					printedObjIndex = index;
-				}
-
-			});
-
-			// root element
-			if (key === '') {
-
-				printedObjects.push(obj);
-				printedObjectKeys.push('root');
-				return value;
-
-			} else if (printedObjIndex + '' !== 'false' && typeof (value) === 'object') {
-
-				if (printedObjectKeys[printedObjIndex] === 'root') {
-
-					return '(pointer to root)';
-
-				} else {
-
-					return '(see ' + ((!!value && !!value.constructor) ? value.constructor.name.toLowerCase()  : typeof (value)) + ' with key ' + printedObjectKeys[printedObjIndex] + ')';
-
-				}
-
-			} else {
-
-				var qualifiedKey = key || '(empty key)';
-				printedObjects.push(value);
-				printedObjectKeys.push(qualifiedKey);
-
-				if (replacer) {
-
-					return replacer(key, value);
-
-				} else {
-
-					return value;
-
-				}
-
-			}
-		}
-		return JSON.stringify(obj, printOnceReplacer, indent);
-	};
+	self.init();
 
 };
