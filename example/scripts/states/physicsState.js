@@ -39,17 +39,17 @@ physicsState.create = function () {
 
 physicsState.update = function () {
 
-	physicsState.mouse.justPressed(0, function (button) {
-		console.log('just');
+	physicsState.fingers.justTouched(1, function (finger) {
+		console.log(finger);
 		physicsState.box2d.queryPoint(
-			{x: button.currentX, y: button.currentY},
+			{x: finger.currentX, y: finger.currentY},
 			function (_fixture) {
 				physicsState.mouseJointObject = _fixture.GetBody();
 			}
 		);
 	});
 
-	physicsState.mouse.moved(function (_point) {
+	physicsState.fingers.touching(1, function (finger) {
 		console.log('moved');
 
 		if (!physicsState.mouseJointObject) {
@@ -57,18 +57,18 @@ physicsState.update = function () {
 		}
 		if (!physicsState.mouseJoint) {
 			physicsState.mouseJoint = physicsState.box2d.createMouseJoint(
-				_point,
+				{x: finger.currentX, y: finger.currentY},
 				physicsState.mouseJointObject
 			)
 		}
 		physicsState.mouseJoint.SetTarget(
 			physicsState.box2d.calculateWorldPosition(
-				_point
+				{x: finger.currentX, y: finger.currentY}
 			)
 		);
 	});
 
-	physicsState.mouse.released(0, function () {
+	physicsState.fingers.released(1, function () {
 		console.log('just');
 
 		if (physicsState.mouseJointObject) {
@@ -88,7 +88,7 @@ physicsState.update = function () {
 		bodyB.colliding = true;
 	};
 
-	myLogger.print(physicsState.mouse);
+	myLogger.print(physicsState.fingers);
 
 	physicsState.keys.justPressed('b', function () {
 		physicsState.state.switchPrevious();
