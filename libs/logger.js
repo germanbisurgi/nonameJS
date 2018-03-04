@@ -3,13 +3,13 @@ var Logger = function (_outputContainer) {
 	var self = this;
 
 	self.depth = 1;
-	self.maxDepth = 5;
+	self.maxDepth = 1;
 	self.path = [];
 	self.output = '';
 	self.outputContainer = _outputContainer;
 	self.paths = [];
-	self.circularPaths= [];
 	self.seen = [];
+	self.circular = false;
 
 	self.init = function () {
 		self.walk(function (_key, _value, _path) {
@@ -34,11 +34,7 @@ var Logger = function (_outputContainer) {
 		self.recursive(_object, _function);
 	};
 
-	self.recursive = function (_object, _function, _circular) {
-
-		if (typeof _circular === 'undefined') {
-			_circular = false;
-		}
+	self.recursive = function (_object, _function) {
 
 		for (var _property in _object) {
 			if (_object.hasOwnProperty(_property)) {
@@ -50,11 +46,9 @@ var Logger = function (_outputContainer) {
 				}
 				self.path[self.depth - 1] = _property;
 
-				// exec function
-				_function(_property, _object[_property], self.path, self.depth, _circular);
+				self.circular = false;
 
-				// go deeper if allowed
-				if (self.depth < self.maxDepth && self.isIterable(_object[_property]) && !_circular) {
+				if (self.isIterable(_object[_property]) && !self.isEmpty(_object[_property])) {
 
 					var alreadySeen = self.alreadySeen(_object[_property]);
 
@@ -65,21 +59,23 @@ var Logger = function (_outputContainer) {
 						});
 					}
 
-					// if parent path is === to child
-					if (alreadySeen.depth === self.depth - 1) {
-						// is circular
-						alreadySeen.depth = self.depth;
-						self.circularPaths.push(self.path.join('.'));
-						self.depth++;
-						self.recursive(_object[_property], _function, true);
-						self.depth--;
-					} else {
-						// is not circular
-						self.depth++;
-						self.recursive(_object[_property], _function, false);
-						self.depth--;
+					if (alreadySeen.depth < self.depth) {
+						self.circular = true;
+						if (self.seen.indexOf(alreadySeen) > -1) {
+							self.seen.splice(self.seen.indexOf(alreadySeen), 1);
+						}
 					}
+
 				}
+
+				_function(_property, _object[_property], self.path, self.depth, self.circular);
+
+				if (self.depth < self.maxDepth && self.isIterable(_object[_property]) && !self.circular && !self.isEmpty(_object[_property])) {
+					self.depth++;
+					self.recursive(_object[_property], _function);
+					self.depth--;
+				}
+
 			}
 		}
 	};
@@ -122,17 +118,31 @@ var Logger = function (_outputContainer) {
 		var lastDepth = 1;
 		var lastIterable = null;
 
-		self.output += '<span class="logger-value">';
+		self.output += '<p class="logger-value">';
 		self.output += self.isArray(_object) ? ' [' : ' {';
-		self.output += '</span>';
+		self.output += '</p>';
 
 		self.walk(_object, function (_key, _value, _path, _depth, _circular) {
 
+			// TODO check this
+			// if going shallower
 			if (lastDepth > _depth) {
 				self.output += '<p class="logger-value" style="padding-left: ' + _depth * 30 + 'px;">';
 				self.output += self.isArray(lastIterable) ? ']' : '}';
 				self.output += '</p>';
 			}
+
+			/* if (lastDepth - _depth === 1) {
+			   self.output += '<p class="logger-value" style="padding-left: ' + _depth * 30 + 'px;">';
+			   self.output += self.isArray(lastIterable) ? ']' : '}';
+			   self.output += '</p>';
+			} else {
+			   for (var i = lastDepth - _depth; i > 0; i--) {
+				  self.output += '<p class="logger-value" style="padding-left: ' + i * 30 + 'px;">';
+				  self.output += self.isArray(lastIterable) ? ']' : '}';
+				  self.output += '</p>';
+			   }
+			} */
 
 			self.output += '<p style="padding-left: ' + _depth * 30 + 'px;">';
 
@@ -143,7 +153,7 @@ var Logger = function (_outputContainer) {
 				if (!_circular) {
 					self.output += self.isArray(_value) ? ' [' : ' {';
 				}
-				if (_depth === self.maxDepth) {
+				if (_depth === self.maxDepth || self.isEmpty(_value)) {
 					self.output += self.isArray(_value) ? ']' : '}';
 				}
 				self.output += '</span>';
@@ -155,6 +165,7 @@ var Logger = function (_outputContainer) {
 
 			self.output += '</p>';
 
+			// closing literal of the root object
 			if (_path.join('.') === self.paths[self.paths.length - 1]) {
 				self.output += '<p class="logger-value" style="padding-left: 30px;">';
 				self.output += self.isArray(_value) ? ']' : '}';
@@ -164,9 +175,9 @@ var Logger = function (_outputContainer) {
 			lastDepth = _depth;
 		});
 
-		self.output += '<span class="logger-value">';
+		self.output += '<p class="logger-value">';
 		self.output += self.isArray(_object) ? ']' : '}';
-		self.output += '</span>';
+		self.output += '</p>';
 
 		self.outputContainer.innerHTML = self.output;
 	};
@@ -176,7 +187,6 @@ var Logger = function (_outputContainer) {
 			return '[' + _value.constructor.name + ']';
 		} else {
 			return _value.constructor.name;
-
 		}
 	};
 
@@ -242,7 +252,7 @@ var Logger = function (_outputContainer) {
 		return _array.indexOf(_value) !== -1;
 	};
 
-	self.alreadySeen= function (_value) {
+	self.alreadySeen = function (_value) {
 		var output = false;
 		self.seen.forEach(function (_seen) {
 			if (_seen.value === _value) {
@@ -250,6 +260,15 @@ var Logger = function (_outputContainer) {
 			}
 		});
 		return output;
+	};
+
+	self.isEmpty = function (_value) {
+		for (var _key in _value) {
+			if (_value.hasOwnProperty(_key)) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	self.init();

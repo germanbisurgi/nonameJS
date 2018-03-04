@@ -10,6 +10,7 @@ var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
+var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 
 var Box2dManager = function (_game) {
 	'use strict';
@@ -22,6 +23,7 @@ var Box2dManager = function (_game) {
 	self.canvas = null;
 	self.context = null;
 	self.screen = _game.settings.screen;
+	self.contacts = null;
 
 	self.init = function () {
 		self.canvas = document.createElement('canvas');
@@ -37,12 +39,32 @@ var Box2dManager = function (_game) {
 		window.addEventListener('resize', function () {
 			self.resize();
 		}, true);
+
+		self.contacts = new b2ContactListener();
+		self.world.SetContactListener(self.contacts);
 	};
 
-	self.queryPoint = function (_x, _y, _function) {
-		self.world.QueryPoint(function(fixture) {
+	function calculateWorldPosition(_point) {
+		return {
+			x: _point.x / self.scale,
+			y: _point.y / self.scale
+		};
+	}
+
+	self.createMouseJoint = function (_point, _body) {
+		var jointDefinition = new Box2D.Dynamics.Joints.b2MouseJointDef();
+		jointDefinition.bodyA = self.world.GetGroundBody();
+		jointDefinition.bodyB = _body;
+		jointDefinition.target.Set(calculateWorldPosition(_point));
+		jointDefinition.maxForce = 100000;
+		jointDefinition.timeStep = 1 / self.fps;
+		return self.world.CreateJoint(jointDefinition);
+	};
+
+	self.queryPoint = function (_point, _function) {
+		self.world.QueryPoint(function (fixture) {
 			_function(fixture);
-		}, {x: _x / self.scale, y: _y / self.scale});
+		}, calculateWorldPosition(_point));
 	};
 
 	self.setGravity = function (_x, _y) {
@@ -163,12 +185,6 @@ var Box2dManager = function (_game) {
 		_y2 /= self.scale;
 		fixDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
 		return fixDef;
-	};
-
-	self.contactListener = function () {
-		var listener = new b2ContactListener();
-		self.world.SetContactListener(listener);
-		return listener;
 	};
 
 	self.update = function () {

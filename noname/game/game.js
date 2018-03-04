@@ -40,7 +40,7 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
-			myLogger.print(game.fingers);
+			// myLogger.print(game.loop);
 
 			self.state.actualSwitch();
 
