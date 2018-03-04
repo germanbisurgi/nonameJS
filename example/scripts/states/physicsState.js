@@ -40,7 +40,6 @@ physicsState.create = function () {
 physicsState.update = function () {
 
 	physicsState.fingers.justTouched(1, function (finger) {
-		console.log(finger);
 		physicsState.box2d.queryPoint(
 			{x: finger.currentX, y: finger.currentY},
 			function (_fixture) {
@@ -50,8 +49,6 @@ physicsState.update = function () {
 	});
 
 	physicsState.fingers.touching(1, function (finger) {
-		console.log('moved');
-
 		if (!physicsState.mouseJointObject) {
 			return;
 		}
@@ -69,12 +66,9 @@ physicsState.update = function () {
 	});
 
 	physicsState.fingers.released(1, function () {
-		console.log('just');
-
 		if (physicsState.mouseJointObject) {
 			physicsState.mouseJointObject = null;
 		}
-
 		if (physicsState.mouseJoint) {
 			physicsState.box2d.destroyJoint(physicsState.mouseJoint);
 			physicsState.mouseJoint = null;
