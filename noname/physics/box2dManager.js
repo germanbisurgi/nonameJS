@@ -44,27 +44,32 @@ var Box2dManager = function (_game) {
 		self.world.SetContactListener(self.contacts);
 	};
 
-	function calculateWorldPosition(_point) {
+	 self.calculateWorldPosition = function (_point) {
 		return {
 			x: _point.x / self.scale,
 			y: _point.y / self.scale
 		};
-	}
+	};
 
 	self.createMouseJoint = function (_point, _body) {
+		var point = self.calculateWorldPosition(_point);
 		var jointDefinition = new Box2D.Dynamics.Joints.b2MouseJointDef();
 		jointDefinition.bodyA = self.world.GetGroundBody();
 		jointDefinition.bodyB = _body;
-		jointDefinition.target.Set(calculateWorldPosition(_point));
+		jointDefinition.target.Set(point.x, point.y);
 		jointDefinition.maxForce = 100000;
 		jointDefinition.timeStep = 1 / self.fps;
 		return self.world.CreateJoint(jointDefinition);
 	};
 
+	self.destroyJoint = function (_joint) {
+		self.world.DestroyJoint(_joint);
+	};
+
 	self.queryPoint = function (_point, _function) {
 		self.world.QueryPoint(function (fixture) {
 			_function(fixture);
-		}, calculateWorldPosition(_point));
+		}, self.calculateWorldPosition(_point));
 	};
 
 	self.setGravity = function (_x, _y) {

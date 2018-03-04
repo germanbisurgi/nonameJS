@@ -12,58 +12,83 @@ physicsState.create = function () {
 	physicsState.myLimits = physicsState.box2d.addBody(10, 300, 'static');
 	physicsState.myLimits.addEdge(0, 0, 600, 0);
 
-	physicsState.mySimpleBody = physicsState.box2d.addBody(250, 100, 'dynamic');
-	physicsState.mySimpleBody.addRectangle(50, 50, 0, 0);
-	physicsState.mySimpleBody.SetUserData({
+	physicsState.simpleBody = physicsState.box2d.addBody(100, 100, 'dynamic');
+	physicsState.simpleBody.addRectangle(50, 50, 0, 0);
+	physicsState.simpleBody.SetUserData({
 		id: 'simple-body',
 		colliding: false,
-		body: physicsState.mySimpleBody
+		body: physicsState.simpleBody
 	});
 
 	/* body */
-	/* physicsState.myBody = physicsState.box2d.addBody(300, 100, 'dynamic');
-	physicsState.myBody.addCircle(5, 0, -5);
-	physicsState.myBody.addRectangle(50, 50, -50, 25);
-	physicsState.myBody.addPolygon([
+	physicsState.complexBody = physicsState.box2d.addBody(300, 100, 'dynamic');
+	physicsState.complexBody.addCircle(5, 0, -5);
+	physicsState.complexBody.addRectangle(50, 50, -50, 25);
+	physicsState.complexBody.addPolygon([
 		{x: 0, y: 0},
 		{x: 50, y: 0},
 		{x: 100, y: 25},
 		{x: 50, y: 50},
 		{x: 0, y: 50}
 	], -10, 10);
-	physicsState.myBody.addEdge(0, 0, 50, 0);
-	physicsState.myBody.addEdge(50, 0, 50, -50);
-	physicsState.myBody.addEdge(50, -50, 0, -50);
-	physicsState.myBody.addEdge(0, -50, 0, -0); */
+
+	physicsState.mouseJoint = null;
+	physicsState.mouseJointObject = null;
 
 };
 
 physicsState.update = function () {
-	//physicsState.mySimpleBody.ApplyTorque(100);
 
 	physicsState.mouse.justPressed(0, function (button) {
+		console.log('just');
 		physicsState.box2d.queryPoint(
 			{x: button.currentX, y: button.currentY},
 			function (_fixture) {
-				var body = _fixture.GetBody();
-				var mouseJoint = physicsState.box2d.createMouseJoint(
-					 {x: button.currentX, y: button.currentY},
-					 body
-				 );
-				console.log(mouseJoint)
-				// body.ApplyForce({x: 0, y: -1}, body.GetWorldCenter());
+				physicsState.mouseJointObject = _fixture.GetBody();
 			}
 		);
 	});
 
-	physicsState.box2d.contacts.BeginContact = function (contact, impulse) {
+	physicsState.mouse.moved(function (_point) {
+		console.log('moved');
+
+		if (!physicsState.mouseJointObject) {
+			return;
+		}
+		if (!physicsState.mouseJoint) {
+			physicsState.mouseJoint = physicsState.box2d.createMouseJoint(
+				_point,
+				physicsState.mouseJointObject
+			)
+		}
+		physicsState.mouseJoint.SetTarget(
+			physicsState.box2d.calculateWorldPosition(
+				_point
+			)
+		);
+	});
+
+	physicsState.mouse.released(0, function () {
+		console.log('just');
+
+		if (physicsState.mouseJointObject) {
+			physicsState.mouseJointObject = null;
+		}
+
+		if (physicsState.mouseJoint) {
+			physicsState.box2d.destroyJoint(physicsState.mouseJoint);
+			physicsState.mouseJoint = null;
+		}
+	});
+
+	physicsState.box2d.contacts.BeginContact = function (contact) {
 		var bodyA = contact.GetFixtureA().GetBody().GetUserData();
 		var bodyB = contact.GetFixtureB().GetBody().GetUserData();
 		bodyA.colliding = true;
 		bodyB.colliding = true;
 	};
 
-	myLogger.print(physicsState.mySimpleBody.GetUserData());
+	myLogger.print(physicsState.mouse);
 
 	physicsState.keys.justPressed('b', function () {
 		physicsState.state.switchPrevious();

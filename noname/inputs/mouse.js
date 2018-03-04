@@ -3,6 +3,8 @@ var Mouse = function (_game) {
 	var self = this;
 	self.x = 0;
 	self.y = 0;
+	self.moving = false;
+	self.moveFrame = null;
 	self.tracked = [];
 	self.justPressing = [];
 	self.releasing = [];
@@ -29,6 +31,8 @@ var Mouse = function (_game) {
 
 	_game.render.canvas.addEventListener('mousemove', function (_event) {
 		_event.preventDefault();
+		self.moving = true;
+		self.moveFrame = _game.loop.frames;
 		self.updateXY(_event);
 		self.tracked.forEach(function (_button) {
 			_button.currentX = Math.floor(self.x - _game.render.screen.offsetLeft);
@@ -97,6 +101,19 @@ var Mouse = function (_game) {
 			});
 		}
 
+		if (self.moveFrame < _game.loop.frames - 1) {
+			self.moving = false;
+		}
+
+	};
+
+	self.moved = function (_callback) {
+		if (self.moving) {
+			_callback({
+				x: self.x,
+				y: self.y
+			});
+		}
 	};
 
 	self.pressing = function (_number, _callback) {
