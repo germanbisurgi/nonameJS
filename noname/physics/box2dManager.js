@@ -153,7 +153,7 @@ var Box2dManager = function (_game) {
 		fixDef.density = 1;
 		fixDef.friction = 0.5;
 		fixDef.isSensor = false;
-		fixDef.restitution = 1.0;
+		fixDef.restitution = 0.1;
 		return fixDef;
 	};
 

@@ -1,11 +1,41 @@
 var physicsState = new noname.state('physicsState');
 
 physicsState.preload = function () {
-	physicsState.assets.queueImage('stone', 'example/assets/images/stone.png');
-	physicsState.assets.queueImage('player', 'example/assets/images/player.png');
+	var loading = document.querySelector('.loading');
+	var asset = document.querySelector('.loading-asset');
+	var progress = document.querySelector('.loading-progress');
+
+	physicsState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
+	physicsState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
+
+	physicsState.assets.pubsub.subscribe('loading', function () {
+		loading.setAttribute('style', 'display: block;');
+	});
+
+	physicsState.assets.pubsub.subscribe('onload', function (_data) {
+		asset.innerText = 'loading: ' + _data.name;
+		progress.setAttribute('style', 'width: ' + physicsState.assets.progress() + '%;');
+	});
+
+	physicsState.assets.pubsub.subscribe('done', function () {
+		asset.innerText = 'loading: DONE';
+		setTimeout(function () {
+			loading.setAttribute('style', 'display: none;');
+		}, 1000);
+	});
 };
 
 physicsState.create = function () {
+
+	physicsState.kick = physicsState.audio.createTrack({
+		audioBuffer: physicsState.assets.get('kick'),
+		volume: 1.0
+	});
+
+	physicsState.tic = physicsState.audio.createTrack({
+		audioBuffer: physicsState.assets.get('tic'),
+		volume: 0.5
+	});
 
 	physicsState.box2d.setGravity(0, 10);
 
@@ -81,11 +111,10 @@ physicsState.update = function () {
 	physicsState.box2d.contacts.BeginContact = function (contact) {
 		var bodyA = contact.GetFixtureA().GetBody().GetUserData();
 		var bodyB = contact.GetFixtureB().GetBody().GetUserData();
-		bodyA.colliding = true;
-		bodyB.colliding = true;
+		physicsState.kick.play();
 	};
 
-	myLogger.print(physicsState.simpleBody);
+	myLogger.print(physicsState.box2d.world.GetContactList());
 
 	physicsState.keys.justPressed('b', function () {
 		physicsState.state.switchPrevious();
