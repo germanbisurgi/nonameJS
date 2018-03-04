@@ -9,8 +9,11 @@ physicsState.create = function () {
 
 	physicsState.box2d.setGravity(0, 10);
 
-	physicsState.myLimits = physicsState.box2d.addBody(10, 300, 'static');
-	physicsState.myLimits.addEdge(0, 0, 600, 0);
+	physicsState.myLimits = physicsState.box2d.addBody(10, 10, 'static');
+	physicsState.myLimits.addEdge(0, 0, window.innerWidth - 20, 0);
+	physicsState.myLimits.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
+	physicsState.myLimits.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
+	physicsState.myLimits.addEdge(0, window.innerHeight - 20, 0, 0);
 
 	physicsState.simpleBody = physicsState.box2d.addBody(100, 100, 'dynamic');
 	physicsState.simpleBody.addRectangle(50, 50, 0, 0);
@@ -82,7 +85,7 @@ physicsState.update = function () {
 		bodyB.colliding = true;
 	};
 
-	myLogger.print(physicsState.fingers);
+	myLogger.print(physicsState.simpleBody);
 
 	physicsState.keys.justPressed('b', function () {
 		physicsState.state.switchPrevious();
