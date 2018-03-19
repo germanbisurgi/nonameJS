@@ -27,24 +27,29 @@ physicsState.preload = function () {
 
 physicsState.create = function () {
 
+	// kick sound
 	physicsState.kick = physicsState.audio.createTrack({
 		audioBuffer: physicsState.assets.get('kick'),
 		volume: 1.0
 	});
 
+	// tic sound
 	physicsState.tic = physicsState.audio.createTrack({
 		audioBuffer: physicsState.assets.get('tic'),
 		volume: 0.5
 	});
 
-	physicsState.box2d.setGravity(0, 10);
+	// physycs gravity
+	physicsState.box2d.setGravity(0, 0);
 
+	// static edges (bench)
 	physicsState.myLimits = physicsState.box2d.addBody(10, 10, 'static');
 	physicsState.myLimits.addEdge(0, 0, window.innerWidth - 20, 0);
 	physicsState.myLimits.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
 	physicsState.myLimits.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
 	physicsState.myLimits.addEdge(0, window.innerHeight - 20, 0, 0);
 
+	// body with single fixture
 	physicsState.simpleBody = physicsState.box2d.addBody(100, 100, 'dynamic');
 	physicsState.simpleBody.addRectangle(50, 50, 0, 0);
 	physicsState.simpleBody.SetUserData({
@@ -53,7 +58,7 @@ physicsState.create = function () {
 		body: physicsState.simpleBody
 	});
 
-	/* body */
+	// body with multiple fixtures
 	physicsState.complexBody = physicsState.box2d.addBody(300, 100, 'dynamic');
 	physicsState.complexBody.addCircle(5, 0, -5);
 	physicsState.complexBody.addRectangle(50, 50, -50, 25);
@@ -65,6 +70,7 @@ physicsState.create = function () {
 		{x: 0, y: 50}
 	], -10, 10);
 
+	// mouse joint variables
 	physicsState.mouseJoint = null;
 	physicsState.mouseJointObject = null;
 
@@ -72,6 +78,7 @@ physicsState.create = function () {
 
 physicsState.update = function () {
 
+	// when a touch starts query the world to get the touched fixture.
 	physicsState.fingers.justTouched(1, function (finger) {
 		physicsState.box2d.queryPoint(
 			{x: finger.currentX, y: finger.currentY},
@@ -81,6 +88,7 @@ physicsState.update = function () {
 		);
 	});
 
+	// if still touching then create a mouse joint at the touch coordinates with that fixture.
 	physicsState.fingers.touching(1, function (finger) {
 		if (!physicsState.mouseJointObject) {
 			return;
@@ -98,6 +106,7 @@ physicsState.update = function () {
 		);
 	});
 
+	// if no touching destroy the mouse joint and reset mouse joint variable.
 	physicsState.fingers.released(1, function () {
 		if (physicsState.mouseJointObject) {
 			physicsState.mouseJointObject = null;
@@ -108,18 +117,22 @@ physicsState.update = function () {
 		}
 	});
 
-	physicsState.box2d.contacts.BeginContact = function (contact) {
-		var bodyA = contact.GetFixtureA().GetBody().GetUserData();
-		var bodyB = contact.GetFixtureB().GetBody().GetUserData();
+	// overwrite the begin contact callback function. Plays kick sound.
+	physicsState.box2d.contacts.BeginContact = function (/* contact */) {
+		// var bodyA = contact.GetFixtureA().GetBody().GetUserData();
+		// var bodyB = contact.GetFixtureB().GetBody().GetUserData();
 		physicsState.kick.play();
 	};
 
+	// debugging with logger.
 	myLogger.print(physicsState.box2d.world.GetContactList());
 
+	// if 'b' is pressed switch to the previous state.
 	physicsState.keys.justPressed('b', function () {
 		physicsState.state.switchPrevious();
 	});
 
+	// if 'n' is pressed switch to the next state.
 	physicsState.keys.justPressed('n', function () {
 		physicsState.state.switchNext();
 	});
