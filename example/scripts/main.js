@@ -11,8 +11,8 @@ var game = new noname.game({
 		audioState,
 		entitiesState
 	],
-	initialState: 'physicsState',
-	box2dDebug: true
+	initialState: 'timeState',
+	physicsDebug: true
 });
 
 var myLogger = new Logger(document.querySelector('.logger'));

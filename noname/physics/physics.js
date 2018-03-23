@@ -12,7 +12,7 @@ var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 
-var Box2dManager = function (_game) {
+var Physics = function (_game) {
 	'use strict';
 	var self = this;
 	self.scale = 30;

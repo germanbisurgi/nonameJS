@@ -25,22 +25,20 @@ var Game = function (_settings) {
 			return;
 		}
 
-		self.loop = new noname.loopManager(self);
+		self.loop = new noname.loop(self);
 		self.state = new noname.stateManager(self);
-		self.math = new noname.mathManager();
-		self.assets = new noname.assetManager();
-		self.time = new noname.timeManager(self);
+		self.mathematics = new noname.mathematics();
+		self.loader = new noname.loader();
+		self.time = new noname.time(self);
 		self.entities = new noname.entityManager(self);
-		self.render = new noname.renderManager(self);
-		self.box2d = new noname.box2dManager(self);
+		self.render = new noname.render(self);
+		self.physics = new noname.physics(self);
 		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
 		self.mouse = new noname.mouse(self);
-		self.audio = new noname.audioManager(self);
+		self.audio = new noname.audio(self);
 
 		self.loop.start(function () {
-
-			// myLogger.print(game.loop);
 
 			self.state.actualSwitch();
 
@@ -50,17 +48,17 @@ var Game = function (_settings) {
 
 			if (!self.state.current.preloaded) {
 				self.state.current.preloaded = true;
-				self.state.current.preload();
-				self.state.current.assets.loadAll();
+				self.state.current.preload(self);
+				self.loader.loadAll();
 			}
 
-			if (self.state.current.assets.loading) {
+			if (self.loader.loading) {
 				self.state.current.loading();
 			}
 
-			if (!self.state.current.created && self.state.current.preloaded && !self.state.current.assets.loading) {
+			if (!self.state.current.created && self.state.current.preloaded && !self.loader.loading) {
 				self.state.current.created = true;
-				self.state.current.create();
+				self.state.current.create(self);
 			}
 
 			if (self.state.current.created) {
@@ -75,20 +73,20 @@ var Game = function (_settings) {
 				self.keys.update();
 				self.fingers.update();
 				self.mouse.update();
-				self.box2d.update(); // TODO physics condition.
-				self.state.current.update();
+				self.physics.update(); // TODO physics condition.
+				self.state.current.update(self);
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
 
 					self.render.clear();
 					self.render.draw(self.entities.active);
 
-					if (_settings.box2dDebug) {
-						self.box2d.clear();
-						self.box2d.draw();
+					if (_settings.physicsDebug) {
+						self.physics.clear();
+						self.physics.draw();
 					}
 
-					self.state.current.afterRender();
+					self.state.current.afterRender(self);
 
 				}
 			}

@@ -1,4 +1,4 @@
-var LoopManager = function (_game) {
+var Loop = function (_game) {
 	'use strict';
 	var self = this;
 	self.fps = null;

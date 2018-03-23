@@ -1,25 +1,25 @@
 var audioState = new noname.state('audioState');
 
-audioState.preload = function () {
+audioState.preload = function (game) {
 
 	var loading = document.querySelector('.loading');
 	var asset = document.querySelector('.loading-asset');
 	var progress = document.querySelector('.loading-progress');
 
-	audioState.assets.queueAudio('motor', 'example/assets/audio/motor.mp3');
-	audioState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
-	audioState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
+	game.loader.queueAudio('motor', 'example/assets/audio/motor.mp3');
+	game.loader.queueAudio('kick', 'example/assets/audio/kick.wav');
+	game.loader.queueAudio('tic', 'example/assets/audio/tic.mp3');
 
-	audioState.assets.pubsub.subscribe('loading', function () {
+	game.loader.pubsub.subscribe('loading', function () {
 		loading.setAttribute('style', 'display: block;');
 	});
 
-	audioState.assets.pubsub.subscribe('onload', function (_data) {
+	game.loader.pubsub.subscribe('onload', function (_data) {
 		asset.innerText = 'loading: ' + _data.name;
-		progress.setAttribute('style', 'width: ' + audioState.assets.progress() + '%;');
+		progress.setAttribute('style', 'width: ' + game.loader.progress() + '%;');
 	});
 
-	audioState.assets.pubsub.subscribe('done', function () {
+	game.loader.pubsub.subscribe('done', function () {
 		asset.innerText = 'loading: DONE';
 		setTimeout(function () {
 			loading.setAttribute('style', 'display: none;');
@@ -28,45 +28,45 @@ audioState.preload = function () {
 
 };
 
-audioState.create = function () {
+audioState.create = function (game) {
 
-	audioState.kick = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('kick'),
+	audioState.kick = game.audio.createTrack({
+		audioBuffer: game.loader.get('kick'),
 		volume: 1.0
 	});
 
-	audioState.motor = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('motor'),
+	audioState.motor = game.audio.createTrack({
+		audioBuffer: game.loader.get('motor'),
 		volume: 1.0
 	});
 
-	audioState.tic = audioState.audio.createTrack({
-		audioBuffer: audioState.assets.get('tic'),
+	audioState.tic = game.audio.createTrack({
+		audioBuffer: game.loader.get('tic'),
 		volume: 0.5
 	});
 
 };
 
-audioState.update = function () {
+audioState.update = function (game) {
 
-	audioState.fingers.justTouched(1, function () {
+	game.fingers.justTouched(1, function () {
 		audioState.motor.play();
 	});
 
-	audioState.fingers.justTouched(2, function () {
+	game.fingers.justTouched(2, function () {
 		audioState.tic.play();
 	});
 
-	audioState.keys.justPressed('t', function () {
+	game.keys.justPressed('t', function () {
 		audioState.kick.play();
 	});
 
-	audioState.keys.justPressed('b', function () {
-		audioState.state.switchPrevious();
+	game.keys.justPressed('b', function () {
+		game.state.switchPrevious();
 	});
 
-	audioState.keys.justPressed('n', function () {
-		audioState.state.switchNext();
+	game.keys.justPressed('n', function () {
+		game.state.switchNext();
 	});
 
 };

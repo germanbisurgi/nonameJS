@@ -1,59 +1,59 @@
 var fingersState = new noname.state('fingersState');
 
-fingersState.preload = function () {};
+fingersState.preload = function (game) {};
 
-fingersState.create = function () {};
+fingersState.create = function (game) {};
 
-fingersState.update = function () {
+fingersState.update = function (game) {
 
-	fingersState.fingers.justTouched(1, function (_finger) {
+	game.fingers.justTouched(1, function (_finger) {
 		console.log('just touched');
 	});
 
-	fingersState.fingers.touching(1, function (_finger) {
+	game.fingers.touching(1, function (_finger) {
 		console.log('touching');
 	});
 
-	fingersState.fingers.released(1, function (_finger) {
+	game.fingers.released(1, function (_finger) {
 		console.log('released');
 	});
 
-	fingersState.keys.justPressed('b', function () {
-		fingersState.state.switchPrevious();
+	game.keys.justPressed('b', function () {
+		game.state.switchPrevious();
 	});
 
-	fingersState.keys.justPressed('n', function () {
-		fingersState.state.switchNext();
+	game.keys.justPressed('n', function () {
+		game.state.switchNext();
 	});
 
 };
 
-fingersState.afterRender = function () {
-	fingersState.fingers.tracked.forEach(function (_finger) {
-		fingersState.render.context.strokeStyle = 'cyan';
-		fingersState.render.context.lineWidth = '6';
-		fingersState.render.context.beginPath();
-		fingersState.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
-		fingersState.render.context.stroke();
-		fingersState.render.context.beginPath();
-		fingersState.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
-		fingersState.render.context.stroke();
-		fingersState.render.context.fillText(
+fingersState.afterRender = function (game) {
+	game.fingers.tracked.forEach(function (_finger) {
+		game.render.context.strokeStyle = 'cyan';
+		game.render.context.lineWidth = '6';
+		game.render.context.beginPath();
+		game.render.context.arc(_finger.startX, _finger.startY, 60, 0, Math.PI * 2, true);
+		game.render.context.stroke();
+		game.render.context.beginPath();
+		game.render.context.arc(_finger.currentX, _finger.currentY, 30, 0, Math.PI * 2, true);
+		game.render.context.stroke();
+		game.render.context.fillText(
 			'number: ' + _finger.number,
 			_finger.startX - 30,
 			_finger.startY - 100
 		);
-		fingersState.render.context.fillText(
+		game.render.context.fillText(
 			'startX: ' + _finger.startX + ', startY: ' + _finger.startY,
 			_finger.startX - 30,
 			_finger.startY - 90
 		);
-		fingersState.render.context.fillText(
+		game.render.context.fillText(
 			'currentX: ' + _finger.currentX + ', currentY: ' + _finger.currentY,
 			_finger.startX - 30,
 			_finger.startY - 80
 		);
-		fingersState.render.context.fillText(
+		game.render.context.fillText(
 			'offsetX: ' + _finger.offsetX + ', offsetY: ' + _finger.offsetY,
 			_finger.startX - 30,
 			_finger.startY - 70

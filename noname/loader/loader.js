@@ -1,8 +1,8 @@
 /**
 * Loads and cache game assets like images and audio.
-* @class AssetManager
+* @class Loader
 */
-var AssetManager = function () {
+var Loader = function () {
 	'use strict';
 	var self = this;
 

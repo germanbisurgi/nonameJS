@@ -1,29 +1,27 @@
 var keysState = new noname.state('keysState');
 
-keysState.create = function () {
+keysState.create = function (game) {};
 
-};
+keysState.update = function (game) {
 
-keysState.update = function () {
-
-	keysState.keys.justPressed('k', function (_key) {
+	game.keys.justPressed('k', function (_key) {
 		console.log('just pressed');
 	});
 
-	keysState.keys.pressing('k', function (_key) {
+	game.keys.pressing('k', function (_key) {
 		console.log('pressing since', _key.milliseconds);
 	});
 
-	keysState.keys.released('k', function (_key) {
+	game.keys.released('k', function (_key) {
 		console.log('released');
 	});
 
-	keysState.keys.justPressed('b', function () {
-		keysState.state.switchPrevious();
+	game.keys.justPressed('b', function () {
+		game.state.switchPrevious();
 	});
 
-	keysState.keys.justPressed('n', function () {
-		keysState.state.switchNext();
+	game.keys.justPressed('n', function () {
+		game.state.switchNext();
 	});
 
 };
