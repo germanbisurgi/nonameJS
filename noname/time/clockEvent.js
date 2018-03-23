@@ -1,9 +1,9 @@
 /**
  * A TimeEvent hooks into a Clock and is an object that is generated when you
  * are wanting to executed a callback at a specific point in time.
- * @class TimeEvent
+ * @class ClockEvent
  */
-var TimeEvent = function (_function, _milliseconds, _context, _once) {
+var ClockEvent = function (_function, _milliseconds, _context, _once) {
 	'use strict';
 	var self = this;
 

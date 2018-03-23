@@ -1,40 +1,52 @@
 var physicsState = new noname.state('physicsState');
 
-physicsState.preload = function () {
-	physicsState.assets.queueImage('stone', 'example/assets/images/stone.png');
-	physicsState.assets.queueImage('player', 'example/assets/images/player.png');
-};
+physicsState.preload = function (game) {
 
-physicsState.create = function () {
+	var loading = document.querySelector('.loading');
+	var asset = document.querySelector('.loading-asset');
+	var progress = document.querySelector('.loading-progress');
 
-	/* body */
-	physicsState.myBody = physicsState.box2d.addBody(100, 100, 'dynamic');
-	physicsState.myBody.addCircle(5, 0, -5);
-	physicsState.myBody.addRectangle(50, 50, -50, 25);
-	physicsState.myBody.addPolygon([
-		{x: 0, y: 0},
-		{x: 50, y: 0},
-		{x: 100, y: 25},
-		{x: 50, y: 50},
-		{x: 0, y: 50}
-	], -10, 10);
-	physicsState.myBody.addEdge(0, 0, 50, 0);
-	physicsState.myBody.addEdge(50, 0, 50, -50);
-	physicsState.myBody.addEdge(50, -50, 0, -50);
-	physicsState.myBody.addEdge(0, -50, 0, -0);
+	game.loader.queueAudio('kick', 'example/assets/audio/kick.wav');
+	game.loader.queueAudio('tic', 'example/assets/audio/tic.mp3');
 
-};
-
-physicsState.update = function () {
-	physicsState.myBody.ApplyTorque(50 / 30);
-	// physicsState.box2d.followBody(physicsState.myEntity.transform, physicsState.myEntity.box2d.body);
-
-	physicsState.keys.justPressed('b', function () {
-		physicsState.state.switchPrevious();
+	game.loader.pubsub.subscribe('loading', function () {
+		loading.setAttribute('style', 'display: block;');
 	});
 
-	physicsState.keys.justPressed('n', function () {
-		physicsState.state.switchNext();
+	game.loader.pubsub.subscribe('onload', function (_data) {
+		asset.innerText = 'loading: ' + _data.name;
+		progress.setAttribute('style', 'width: ' + game.loader.progress() + '%;');
 	});
 
+	game.loader.pubsub.subscribe('done', function () {
+		asset.innerText = 'loading: DONE';
+		setTimeout(function () {
+			loading.setAttribute('style', 'display: none;');
+		}, 1000);
+	});
+};
+
+physicsState.create = function (game) {
+
+	// gravity
+	game.physics.setGravity(0, 0);
+
+	// static edges (bench)
+	physicsState.myLimits = game.physics.addBody(10, 10, 'static');
+	physicsState.myLimits.addEdge(0, 0, window.innerWidth - 20, 0);
+	physicsState.myLimits.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
+	physicsState.myLimits.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
+	physicsState.myLimits.addEdge(0, window.innerHeight - 20, 0, 0);
+
+};
+
+physicsState.update = function (game) {
+
+	game.keys.justPressed('b', function () {
+		game.state.switchPrevious();
+	});
+
+	game.keys.justPressed('n', function () {
+		game.state.switchNext();
+	});
 };

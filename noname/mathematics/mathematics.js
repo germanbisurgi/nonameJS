@@ -1,8 +1,8 @@
 /**
  * This class have a cosy set of Math methods and helpers.
- * @class MathManager
+ * @class Mathematics
  */
-var MathManager = function () {
+var Mathematics = function () {
 	'use strict';
 	var self = this;
 

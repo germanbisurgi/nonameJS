@@ -2,9 +2,9 @@
  * Is an abstraction of the web audio api and eases the creations and utilization
  * of sounds.
  * @param  {object} _game a reference to the game.
- * @class AudioManager
+ * @class Audio
  */
-var AudioManager = function (_game) {
+var Audio = function (_game) {
 	'use strict';
 	var self = this;
 

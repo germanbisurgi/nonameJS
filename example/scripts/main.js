@@ -1,6 +1,3 @@
-var loggerContainer = document.querySelector('.logger');
-var logger = new Logger(loggerContainer);
-
 var game = new noname.game({
 	screen: document.querySelector('.screen'),
 	fps: 60,
@@ -14,6 +11,31 @@ var game = new noname.game({
 		audioState,
 		entitiesState
 	],
-	initialState: 'mouseState',
-	box2dDebug: false
+	initialState: 'timeState',
+	physicsDebug: true
 });
+
+var myLogger = new Logger(document.querySelector('.logger'));
+var loggerElement = document.querySelector('.logger');
+var loggerDeeper = document.querySelector('.logger-deeper');
+var loggerShallower = document.querySelector('.logger-shallower');
+var loggerRange = document.querySelector('.logger-range');
+loggerDeeper.onmousedown = function (_event) {
+	_event.preventDefault();
+	myLogger.goDeeper();
+};
+loggerShallower.onmousedown = function (_event) {
+	_event.preventDefault();
+	myLogger.goShallower();
+};
+loggerDeeper.ontouchstart = function (_event) {
+	_event.preventDefault();
+	myLogger.goDeeper();
+};
+loggerShallower.ontouchstart = function (_event) {
+	_event.preventDefault();
+	myLogger.goShallower();
+};
+loggerRange.oninput = function (_event) {
+	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
+};

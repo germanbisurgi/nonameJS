@@ -1,16 +1,16 @@
 var noname = {
 	stateManager: StateManager,
-	assetManager: AssetManager,
-	loopManager: LoopManager,
-	mathManager: MathManager,
-	timeManager: TimeManager,
+	loader: Loader,
+	loop: Loop,
+	mathematics: Mathematics,
+	time: Time,
 	entityManager: EntityManager,
-	renderManager: RenderManager,
-	box2dManager: Box2dManager,
-	audioManager: AudioManager,
+	render: Render,
+	physics: Physics,
+	audio: Audio,
 	pubsub: PubSub,
 	camera: Camera,
-	timeEvent: TimeEvent,
+	clockEvent: ClockEvent,
 	track: Track,
 	game: Game,
 	state: State,
@@ -23,5 +23,5 @@ var noname = {
 	imageComponent: ImageComponent,
 	spriteComponent: SpriteComponent,
 	tileSpriteComponent: TileSpriteComponent,
-	box2dComponent: Box2dComponent
+	bodyComponent: BodyComponent
 };

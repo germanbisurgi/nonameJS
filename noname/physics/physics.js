@@ -10,8 +10,9 @@ var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
+var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 
-var Box2dManager = function (_game) {
+var Physics = function (_game) {
 	'use strict';
 	var self = this;
 	self.scale = 30;
@@ -22,6 +23,7 @@ var Box2dManager = function (_game) {
 	self.canvas = null;
 	self.context = null;
 	self.screen = _game.settings.screen;
+	self.contacts = null;
 
 	self.init = function () {
 		self.canvas = document.createElement('canvas');
@@ -37,6 +39,41 @@ var Box2dManager = function (_game) {
 		window.addEventListener('resize', function () {
 			self.resize();
 		}, true);
+
+		self.contacts = new b2ContactListener();
+		self.world.SetContactListener(self.contacts);
+	};
+
+	 self.calculateWorldPosition = function (_point) {
+		return {
+			x: _point.x / self.scale,
+			y: _point.y / self.scale
+		};
+	};
+
+	self.createMouseJoint = function (_point, _body) {
+		var point = self.calculateWorldPosition(_point);
+		var jointDefinition = new Box2D.Dynamics.Joints.b2MouseJointDef();
+		jointDefinition.bodyA = self.world.GetGroundBody();
+		jointDefinition.bodyB = _body;
+		jointDefinition.target.Set(point.x, point.y);
+		jointDefinition.maxForce = 100000;
+		jointDefinition.timeStep = 1 / self.fps;
+		return self.world.CreateJoint(jointDefinition);
+	};
+
+	self.destroyJoint = function (_joint) {
+		self.world.DestroyJoint(_joint);
+	};
+
+	self.queryPoint = function (_point, _function) {
+		self.world.QueryPoint(function (fixture) {
+			_function(fixture);
+		}, self.calculateWorldPosition(_point));
+	};
+
+	self.setGravity = function (_x, _y) {
+		self.world.SetGravity(new b2Vec2(_x, _y));
 	};
 
 	/* create a body */
@@ -116,7 +153,7 @@ var Box2dManager = function (_game) {
 		fixDef.density = 1;
 		fixDef.friction = 0.5;
 		fixDef.isSensor = false;
-		fixDef.restitution = 0.0;
+		fixDef.restitution = 0.1;
 		return fixDef;
 	};
 
@@ -153,12 +190,6 @@ var Box2dManager = function (_game) {
 		_y2 /= self.scale;
 		fixDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
 		return fixDef;
-	};
-
-	self.contactListener = function () {
-		var listener = new b2ContactListener();
-		self.world.SetContactListener(listener);
-		return listener;
 	};
 
 	self.update = function () {

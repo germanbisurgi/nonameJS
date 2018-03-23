@@ -9,9 +9,9 @@
  * New clocks should always be created with the clock manager create method
  * otherwise it will be not updated.
  * @param  {object} _game a reference to the game.
- * @class TimeManager
+ * @class Time
  */
-var TimeManager = function (_game) {
+var Time = function (_game) {
 	'use strict';
 	var self = this;
 

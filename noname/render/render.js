@@ -1,4 +1,4 @@
-var RenderManager = function (_game) {
+var Render = function (_game) {
 	'use strict';
 	var self = this;
 	self.canvas = null;
