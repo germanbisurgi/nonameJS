@@ -14,7 +14,7 @@ timeState.create = function (game) {
 	timeState.fastBlock.addComponent('clock', game.time.masterClock);
 	timeState.fastBlock.clock.motion = 1;
 	timeState.fastBlock.addComponent('renderable', new noname.imageComponent(game.loader.get('stone')));
-	game.entities.add(timeState.fastBlock);
+	game.stage.add(timeState.fastBlock);
 
 	/* slow block */
 	timeState.slowBlock = new noname.entity();
@@ -22,7 +22,7 @@ timeState.create = function (game) {
 	timeState.slowBlock.addComponent('clock', game.time.create());
 	timeState.slowBlock.clock.motion = 0.5;
 	timeState.slowBlock.addComponent('renderable', new noname.imageComponent(game.loader.get('stone')));
-	game.entities.add(timeState.slowBlock);
+	game.stage.add(timeState.slowBlock);
 
 };
 

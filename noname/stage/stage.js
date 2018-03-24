@@ -1,4 +1,4 @@
-var EntityManager = function (_game) {
+var Stage = function (_game) {
 	'use strict';
 	var self = this;
 	self.game = _game;
@@ -23,7 +23,7 @@ var EntityManager = function (_game) {
 	self.addImage = function (_image, _x, _y, _width, _height) {
 		var entity = self.create();
 		entity.addComponent(new noname.transformComponent(_x, _y, _width, _height));
-		entity.addComponent(new noname.imageComponent(self.game.assets.get(_image)));
+		entity.addComponent(new noname.imageComponent(self.game.loader.get(_image)));
 		self.pool.push(entity);
 		return entity;
 	};
@@ -31,7 +31,7 @@ var EntityManager = function (_game) {
 	self.addSprite = function (_image, _x, _y, _width, _height, _tileWidth, _tileHeight) {
 		var entity = self.create();
 		entity.addComponent(new noname.transformComponent(_x, _y, _width, _height));
-		entity.addComponent(new noname.spriteComponent(self.game.assets.get(_image), _tileWidth, _tileHeight));
+		entity.addComponent(new noname.spriteComponent(self.game.loader.get(_image), _tileWidth, _tileHeight));
 		self.pool.push(entity);
 		return entity;
 	};
@@ -39,9 +39,15 @@ var EntityManager = function (_game) {
 	self.addTileSprite = function (_image, _x, _y, _width, _height) {
 		var entity = self.create();
 		entity.addComponent(new noname.transformComponent(_x, _y, _width, _height));
-		entity.addComponent(new noname.tileSpriteComponent(self.game.assets.get(_image)));
+		entity.addComponent(new noname.tileSpriteComponent(self.game.loader.get(_image)));
 		self.pool.push(entity);
 		return entity;
+	};
+
+	self.addActor = function (_x, _y, _type) {
+		var actor = new noname.actor();
+		actor.body = self.game.world.addBody(_x, _y, _type);
+		return actor;
 	};
 
 };

@@ -11,7 +11,7 @@ var game = new noname.game({
 		audioState,
 		entitiesState
 	],
-	initialState: 'timeState',
+	initialState: 'entitiesState',
 	physicsDebug: true
 });
 

@@ -29,10 +29,10 @@ physicsState.preload = function (game) {
 physicsState.create = function (game) {
 
 	// gravity
-	game.physics.setGravity(0, 0);
+	game.world.setGravity(0, 0);
 
 	// static edges (bench)
-	physicsState.myLimits = game.physics.addBody(10, 10, 'static');
+	physicsState.myLimits = game.world.addBody(10, 10, 'static');
 	physicsState.myLimits.addEdge(0, 0, window.innerWidth - 20, 0);
 	physicsState.myLimits.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
 	physicsState.myLimits.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);

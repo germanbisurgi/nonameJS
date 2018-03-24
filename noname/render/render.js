@@ -83,7 +83,7 @@ var Render = function (_game) {
 		self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	};
 
-	self.draw = function (_entities) {
+	self.draw = function (bodies) {
 		self.context.save();
 		// camera rotation
 		self.context.translate((self.camera.width * self.camera.anchorX), (self.camera.height * self.camera.anchorY));
@@ -94,30 +94,32 @@ var Render = function (_game) {
 		// camera zoom.
 		self.context.scale(self.camera.zoom, self.camera.zoom);
 
-		if (_entities.length > 0) {
-			_entities.forEach(function (e) {
-				if (e.renderable.image) {
-					if (self.inCamera(e)) { // TODO culling
-						self.context.save();
-						self.context.translate(
-							e.transform.x + (e.transform.width * e.transform.anchorX),
-							e.transform.y + (e.transform.height * e.transform.anchorY)
-						);
-						self.context.rotate(self.toRadians(e.transform.angle));
-						self.context.globalAlpha = e.opacity;
-						self.context.drawImage(
-							e.renderable.image,
-							e.renderable.sourceX,
-							e.renderable.sourceY,
-							e.renderable.sourceWidth,
-							e.renderable.sourceHeight,
-							e.transform.width * -e.transform.anchorX,
-							e.transform.height * -e.transform.anchorY,
-							e.transform.width,
-							e.transform.height
-						);
-						self.context.restore();
-					}
+		if (bodies.length > 0) {
+			bodies.forEach(function (body) {
+				if (body.images) {
+					body.images.forEach(function (image) {
+						if (self.inCamera(body)) { // TODO culling
+							self.context.save();
+							self.context.translate(
+								body.GetPosition().x * 30,
+								body.GetPosition().y * 30
+							);
+							self.context.rotate(body.GetAngle());
+							self.context.globalAlpha = body.opacity;
+							self.context.drawImage(
+								image.image,
+								image.sourceX,
+								image.sourceY,
+								image.sourceWidth,
+								image.sourceHeight,
+								image.destinationX + image.destinationWidth * -0.5,
+								image.destinationY + image.destinationHeight * -0.5,
+								image.destinationWidth,
+								image.destinationHeight
+							);
+							self.context.restore();
+						}
+					})
 				}
 			});
 		}

@@ -30,9 +30,9 @@ var Game = function (_settings) {
 		self.mathematics = new noname.mathematics();
 		self.loader = new noname.loader();
 		self.time = new noname.time(self);
-		self.entities = new noname.entityManager(self);
+		self.stage = new noname.stage(self);
 		self.render = new noname.render(self);
-		self.physics = new noname.physics(self);
+		self.world = new noname.world(self);
 		self.keys = new noname.keys(self);
 		self.fingers = new noname.fingers(self);
 		self.mouse = new noname.mouse(self);
@@ -65,7 +65,7 @@ var Game = function (_settings) {
 
 				if (self.state.current.justEntered) {
 					self.state.current.justEntered = false;
-					self.entities.prepare();
+					self.stage.prepare();
 				}
 
 				// todo systems pattern?
@@ -73,17 +73,19 @@ var Game = function (_settings) {
 				self.keys.update();
 				self.fingers.update();
 				self.mouse.update();
-				self.physics.update(); // TODO physics condition.
+				self.world.update();
 				self.state.current.update(self);
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
 
+					// todo use same canvas for render and world debug
 					self.render.clear();
-					self.render.draw(self.entities.active);
+					// self.render.draw(self.stage.active);
+					self.render.draw(self.world.bodies);
 
 					if (_settings.physicsDebug) {
-						self.physics.clear();
-						self.physics.draw();
+						self.world.clear();
+						self.world.draw();
 					}
 
 					self.state.current.afterRender(self);

@@ -12,7 +12,7 @@ var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 
-var Physics = function (_game) {
+var World = function (_game) {
 	'use strict';
 	var self = this;
 	self.scale = 30;
@@ -44,7 +44,7 @@ var Physics = function (_game) {
 		self.world.SetContactListener(self.contacts);
 	};
 
-	 self.calculateWorldPosition = function (_point) {
+	self.calculateWorldPosition = function (_point) {
 		return {
 			x: _point.x / self.scale,
 			y: _point.y / self.scale
@@ -104,6 +104,13 @@ var Physics = function (_game) {
 		}
 		var body = self.world.CreateBody(bodyDef);
 
+		// state
+		body.state = _game.state.current.name;
+
+		body.fixtures = [];
+
+		body.images = [];
+
 		// addCircle
 		body.addCircle = function (_radius, _offsetX, _offsetY) {
 			var fixtureDef = self.getCircleFixture(_radius);
@@ -111,7 +118,7 @@ var Physics = function (_game) {
 				x: _offsetX / self.scale || 0,
 				y: _offsetY / self.scale || 0
 			};
-			this.CreateFixture(fixtureDef);
+			body.CreateFixture(fixtureDef);
 		};
 
 		// addRectangle
@@ -123,7 +130,7 @@ var Physics = function (_game) {
 			});
 			fixtureDef.shape.m_centroid.x += _offsetX / self.scale || 0;
 			fixtureDef.shape.m_centroid.y += _offsetY / self.scale || 0;
-			this.CreateFixture(fixtureDef);
+			body.CreateFixture(fixtureDef);
 		};
 
 		// addPolygon
@@ -133,13 +140,33 @@ var Physics = function (_game) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
 			});
-			return this.CreateFixture(fixtureDef);
+			return body.CreateFixture(fixtureDef);
 		};
 
 		// addEdge
 		body.addEdge = function (_x1, _y1, _x2, _y2) {
 			var fixtureDef = self.getEdgeFixture(_x1, _y1, _x2, _y2);
-			return this.CreateFixture(fixtureDef);
+			return body.CreateFixture(fixtureDef);
+		};
+
+		// setVelocity
+		body.setVelocity = function (_x, _y) {
+			body.SetAwake(true);
+			body.SetLinearVelocity({
+				x: _x / self.scale,
+				y: _y / self.scale
+			});
+		};
+
+		// addImage
+		body.addImage = function (_image, _width, _height, offsetX, offsetY) {
+			body.images.push(new noname.imageComponent(
+				_image,
+				_width,
+				_height,
+				offsetX,
+				offsetY
+			));
 		};
 
 		self.bodies.push(body);
@@ -166,7 +193,10 @@ var Physics = function (_game) {
 	self.getRectangleFixture = function (_width, _height) {
 		var fixDef = self.getFixtureDef();
 		fixDef.shape = new b2PolygonShape();
-		fixDef.shape.SetAsBox(_width * 0.5 / self.scale, _height * 0.5 / self.scale);
+		fixDef.shape.SetAsBox(
+			_width * 0.5 / self.scale,
+			_height * 0.5 / self.scale
+		);
 		return fixDef;
 	};
 

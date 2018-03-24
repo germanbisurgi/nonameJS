@@ -25,17 +25,28 @@ entitiesState.preload = function (game) {
 };
 
 entitiesState.create = function (game) {
+	var self = entitiesState;
 
-	/* entity */
-	entitiesState.myEntity = new noname.entity();
-	entitiesState.myEntity.addComponent('transform', new noname.transformComponent(50, 50, 50, 50));
-	entitiesState.myEntity.addComponent('clock', game.time.masterClock);
-	entitiesState.myEntity.addComponent('renderable', new noname.imageComponent(game.loader.get('stone')));
-	game.entities.add(entitiesState.myEntity);
+	self.body = game.world.addBody(100, 100, 'dynamic');
+	self.body.addRectangle(50, 50);
+	self.body.addRectangle(50, 50, 100, 50);
+	self.body.addImage(game.loader.get('stone'), 50, 50, 100, 50);
+	self.body.addImage(game.loader.get('stone'), 50, 50, 0, 0);
+
+	console.log(self.body)
 
 };
 
 entitiesState.update = function (game) {
+	var self = entitiesState;
+
+	self.body.setVelocity(0,0);
+	self.body.SetAngularVelocity(1);
+
+	game.keys.pressing('ArrowRight', function () {
+		self.body.setVelocity(100,0);
+	});
+
 	game.keys.justPressed('b', function () {
 		game.state.switchPrevious();
 	});
