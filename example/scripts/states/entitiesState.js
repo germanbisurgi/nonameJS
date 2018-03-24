@@ -40,7 +40,7 @@ entitiesState.create = function (game) {
 	self.body.addImage(game.loader.get('stone'), 50, 50, 100, 0);
 	self.body.addImage(game.loader.get('stone'), 100, 50, 50, 50);
 
-	console.log(self.body)
+	//console.log(game.world.world.m_debugDraw.m_sprite)
 
 };
 

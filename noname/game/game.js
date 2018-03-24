@@ -82,7 +82,6 @@ var Game = function (_settings) {
 					self.render.draw(self.world.bodies);
 
 					if (_settings.physicsDebug) {
-						self.world.clear();
 						self.world.draw();
 					}
 

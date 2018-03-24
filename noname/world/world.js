@@ -20,25 +20,20 @@ var World = function (_game) {
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
 	self.debugDraw = null;
-	self.canvas = null;
-	self.context = null;
-	self.screen = _game.settings.screen;
+	self.context = _game.render.context;
 	self.contacts = null;
 
 	self.init = function () {
-		self.canvas = document.createElement('canvas');
-		self.canvas.setAttribute('style', 'position: absolute; opacity: 0.6; pointer-events: none;');
-		self.context = self.canvas.getContext('2d');
-		self.screen.appendChild(self.canvas);
 		self.debugDraw = new b2DebugDraw();
 		self.debugDraw.SetSprite(self.context);
 		self.debugDraw.SetDrawScale(self.scale);
+		self.debugDraw.SetFillAlpha(0.5);
+		self.debugDraw.SetFillAlpha(0.5);
 		self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit || b2DebugDraw.e_jointBit);
 		self.world.SetDebugDraw(self.debugDraw);
-		self.resize();
-		window.addEventListener('resize', function () {
-			self.resize();
-		}, true);
+		self.world.m_debugDraw.m_sprite.graphics.clear= function () {
+			return false;
+		};
 
 		self.contacts = new b2ContactListener();
 		self.world.SetContactListener(self.contacts);
@@ -225,19 +220,6 @@ var World = function (_game) {
 		self.world.ClearForces();
 	};
 
-	self.followBody = function (_entity, _body) {
-		_entity.x = _body.GetPosition().x * self.scale - _entity.width / 2;
-		_entity.y = _body.GetPosition().y * self.scale - _entity.height / 2;
-		_entity.angle = _body.GetAngle() * 57.295779513082320876;
-	};
-
-	self.followFixture = function (_entity, _fixture) {
-		var body = _fixture.GetBody();
-		_entity.x = (_fixture.GetAABB().GetCenter().x * self.scale - _entity.width / 2);
-		_entity.y = (_fixture.GetAABB().GetCenter().y * self.scale - _entity.height / 2);
-		_entity.angle = body.GetAngle() * 57.295779513082320876;
-	};
-
 	self.draw = function () {
 		if (self.debugDraw) {
 			self.context.save();
@@ -254,17 +236,8 @@ var World = function (_game) {
 		}
 	};
 
-	self.resize = function () {
-		self.canvas.width = _game.settings.screen.clientWidth;
-		self.canvas.height = _game.settings.screen.clientHeight;
-	};
-
 	self.toRadians = function (_degrees) {
 		return _degrees * 0.0174532925199432957;
-	};
-
-	self.clear = function () {
-		self.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	};
 
 	self.init();
