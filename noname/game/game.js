@@ -41,18 +41,10 @@ var Game = function (_settings) {
 
 			self.state.actualSwitch();
 
-			if (!self.state.current.initialized) {
-				self.state.current.initialize(self);
-			}
-
 			if (!self.state.current.preloaded) {
 				self.state.current.preloaded = true;
 				self.state.current.preload(self);
 				self.loader.loadAll();
-			}
-
-			if (self.loader.loading) {
-				self.state.current.loading();
 			}
 
 			if (!self.state.current.created && self.state.current.preloaded && !self.loader.loading) {
@@ -62,12 +54,6 @@ var Game = function (_settings) {
 
 			if (self.state.current.created) {
 
-				if (self.state.current.justEntered) {
-					self.state.current.justEntered = false;
-					// self.stage.prepare();
-				}
-
-				// todo systems pattern?
 				self.time.update(self.loop.delta);
 				self.keys.update();
 				self.fingers.update();
@@ -76,22 +62,15 @@ var Game = function (_settings) {
 				self.state.current.update(self);
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
-
-					// todo use same canvas for render and world debug
 					self.render.clear();
 					self.render.draw(self.world.bodies);
-
 					if (_settings.physicsDebug) {
 						self.world.draw();
 					}
-
 					self.state.current.afterRender(self);
-
 				}
 			}
-
 		});
-
 	};
 
 	self.init();

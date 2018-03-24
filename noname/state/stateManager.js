@@ -69,7 +69,7 @@ var StateManager = function (_game) {
 			self.pool.forEach(function (_state) {
 				if (_state.name === self.scheduled) {
 					self.current = _state;
-					self.current.justEntered = true;
+					self.current.created = false;
 				}
 			});
 			self.scheduled = null;

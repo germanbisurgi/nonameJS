@@ -29,7 +29,11 @@ var World = function (_game) {
 		self.debugDraw.SetDrawScale(self.scale);
 		self.debugDraw.SetFillAlpha(0.5);
 		self.debugDraw.SetFillAlpha(0.5);
-		self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit || b2DebugDraw.e_jointBit);
+
+		self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
+		// self.debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
+		self.debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
+
 		self.world.SetDebugDraw(self.debugDraw);
 		self.world.m_debugDraw.m_sprite.graphics.clear= function () {
 			return false;
@@ -37,6 +41,13 @@ var World = function (_game) {
 
 		self.contacts = new b2ContactListener();
 		self.world.SetContactListener(self.contacts);
+	};
+
+	self.clear = function () {
+		self.bodies.forEach(function (body) {
+			body.GetWorld().DestroyBody(body);
+		});
+		self.bodies = [];
 	};
 
 	self.calculateWorldPosition = function (_point) {

@@ -74,9 +74,11 @@ entitiesState.update = function (game) {
 
 	// change state
 	game.keys.justPressed('b', function () {
+		game.world.clear();
 		game.state.switchPrevious();
 	});
 	game.keys.justPressed('n', function () {
+		game.world.clear();
 		game.state.switchNext();
 	});
 };
