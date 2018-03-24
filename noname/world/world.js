@@ -107,8 +107,6 @@ var World = function (_game) {
 		// state
 		body.state = _game.state.current.name;
 
-		body.fixtures = [];
-
 		body.images = [];
 
 		// addCircle

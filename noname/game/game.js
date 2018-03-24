@@ -30,7 +30,6 @@ var Game = function (_settings) {
 		self.mathematics = new noname.mathematics();
 		self.loader = new noname.loader();
 		self.time = new noname.time(self);
-		self.stage = new noname.stage(self);
 		self.render = new noname.render(self);
 		self.world = new noname.world(self);
 		self.keys = new noname.keys(self);
@@ -65,7 +64,7 @@ var Game = function (_settings) {
 
 				if (self.state.current.justEntered) {
 					self.state.current.justEntered = false;
-					self.stage.prepare();
+					// self.stage.prepare();
 				}
 
 				// todo systems pattern?
@@ -80,7 +79,6 @@ var Game = function (_settings) {
 
 					// todo use same canvas for render and world debug
 					self.render.clear();
-					// self.render.draw(self.stage.active);
 					self.render.draw(self.world.bodies);
 
 					if (_settings.physicsDebug) {
