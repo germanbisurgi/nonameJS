@@ -1,16 +1,22 @@
-var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
+var SpriteComponent = function (_image, _x, _y, _width, _height, _sourceWidth, _sourceHeight) {
 	'use strict';
 	var self = this;
 	self.image = _image;
+	self.destinationX = _x;
+	self.destinationY = _y;
+	self.destinationWidth = _width;
+	self.destinationHeight = _height;
 	self.sourceX = 0;
 	self.sourceY = 0;
 	self.sourceWidth = _sourceWidth;
 	self.sourceHeight = _sourceHeight;
 	self.opacity = 1.0;
+
 	self.delay = 0;
 	self.counter = 0;
 	self.animations = [];
 	self.lastAnimation = null;
+
 	self.addAnimation = function (_name, _sequence) {
 		if (!self.getAnimation(_name)) {
 			self.animations.push({
@@ -19,6 +25,7 @@ var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
 			});
 		}
 	};
+
 	self.getAnimation = function (_animationName) {
 		var output = false;
 		self.animations.forEach(function (animation) {
@@ -28,6 +35,7 @@ var SpriteComponent = function (_image, _sourceWidth, _sourceHeight) {
 		});
 		return output;
 	};
+
 	self.play = function (_animationName, _delay) {
 		if (!self.owner.clock.paused) {
 			var animation = self.getAnimation(_animationName);

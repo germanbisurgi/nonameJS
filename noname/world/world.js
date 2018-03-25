@@ -15,7 +15,7 @@ var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 var World = function (_game) {
 	'use strict';
 	var self = this;
-	self.scale = 30;
+	self.scale = 90;
 	self.fps = _game.settings.fps;
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
@@ -104,18 +104,20 @@ var World = function (_game) {
 		body.fixtures = [];
 
 		// addCircle
-		body.addCircle = function (_radius, _offsetX, _offsetY, _fixtureDefinition) {
+		body.addCircle = function (_offsetX, _offsetY, _radius, _fixtureDefinition) {
 			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2CircleShape(_radius / self.scale);
 			fixtureDef.shape.m_p = {
 				x: _offsetX / self.scale || 0,
 				y: _offsetY / self.scale || 0
 			};
-			body.fixtures.push(body.CreateFixture(fixtureDef));
+			var fixture = body.CreateFixture(fixtureDef);
+			body.fixtures.push(fixture);
+			return fixture;
 		};
 
 		// addRectangle
-		body.addRectangle = function (_width, _height, _offsetX, _offsetY, _fixtureDefinition) {
+		body.addRectangle = function (_offsetX, _offsetY, _width, _height, _fixtureDefinition) {
 			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			fixtureDef.shape.SetAsBox(
@@ -128,11 +130,13 @@ var World = function (_game) {
 			});
 			fixtureDef.shape.m_centroid.x += _offsetX / self.scale || 0;
 			fixtureDef.shape.m_centroid.y += _offsetY / self.scale || 0;
-			body.fixtures.push(body.CreateFixture(fixtureDef));
+			var fixture = body.CreateFixture(fixtureDef);
+			body.fixtures.push(fixture);
+			return fixture;
 		};
 
 		// addPolygon
-		body.addPolygon = function (_points, _offsetX, _offsetY, _fixtureDefinition) {
+		body.addPolygon = function (_offsetX, _offsetY, _points, _fixtureDefinition) {
 			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			_points.forEach(function (_point) {
@@ -144,11 +148,13 @@ var World = function (_game) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
 			});
-			body.fixtures.push(body.CreateFixture(fixtureDef));
+			var fixture = body.CreateFixture(fixtureDef);
+			body.fixtures.push(fixture);
+			return fixture;
 		};
 
 		// addEdge
-		body.addEdge = function (_x1, _y1, _x2, _y2) {
+		body.addEdge = function (_x1, _y1, _x2, _y2, _fixtureDefinition) {
 			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			_x1 /= self.scale;
@@ -156,7 +162,9 @@ var World = function (_game) {
 			_x2 /= self.scale;
 			_y2 /= self.scale;
 			fixtureDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
-			body.fixtures.push(body.CreateFixture(fixtureDef));
+			var fixture = body.CreateFixture(fixtureDef);
+			body.fixtures.push(fixture);
+			return fixture;
 		};
 
 		// setVelocity
@@ -169,14 +177,13 @@ var World = function (_game) {
 		};
 
 		// addImage
-		body.addImage = function (_image, _width, _height, offsetX, offsetY) {
-			body.images.push(new noname.imageComponent(
-				_image,
-				_width,
-				_height,
-				offsetX,
-				offsetY
-			));
+		body.addImage = function (_image, offsetX, offsetY, _width, _height) {
+			body.images.push(new noname.imageComponent(_image, offsetX, offsetY, _width, _height));
+		};
+
+		// addSprite
+		body.addSprite = function (_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight) {
+			body.images.push(new noname.spriteComponent(_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight));
 		};
 
 		self.bodies.push(body);
@@ -186,10 +193,10 @@ var World = function (_game) {
 	self.getFixtureDef = function (_fixtureDefinition) {
 		_fixtureDefinition = _fixtureDefinition || {};
 		var fixDef = new b2FixtureDef();
-		fixDef.density = _fixtureDefinition.density || 1;
-		fixDef.friction = _fixtureDefinition.friction || 0.5;
-		fixDef.isSensor = _fixtureDefinition.isSensor || false;
-		fixDef.restitution = _fixtureDefinition.restitution || 0.1;
+		fixDef.density = _fixtureDefinition.density || _fixtureDefinition.density === 0 ? _fixtureDefinition.density : 1;
+		fixDef.friction = _fixtureDefinition.friction || _fixtureDefinition.friction === 0 ? _fixtureDefinition.friction : 0.5;
+		fixDef.restitution = _fixtureDefinition.restitution || _fixtureDefinition.restitution === 0 ? _fixtureDefinition.restitution : 0.3;
+		fixDef.isSensor = _fixtureDefinition.isSensor ? _fixtureDefinition.isSensor : false;
 		return fixDef;
 	};
 

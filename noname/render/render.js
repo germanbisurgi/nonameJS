@@ -101,8 +101,8 @@ var Render = function (_game) {
 						if (self.inCamera(body)) { // TODO culling
 							self.context.save();
 							self.context.translate(
-								body.GetPosition().x * 30,
-								body.GetPosition().y * 30
+								body.GetPosition().x * _game.world.scale,
+								body.GetPosition().y * _game.world.scale
 							);
 							self.context.rotate(body.GetAngle());
 							self.context.globalAlpha = body.opacity;
