@@ -113,6 +113,8 @@ var ObjectDebugger = function (_outputContainer) {
 
 	self.print = function (_object, maxDepth) {
 
+		self.outputContainer.classList.add('active');
+
 		self.maxDepth = maxDepth || 1;
 
 		self.output = '';
