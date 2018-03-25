@@ -26,8 +26,7 @@ entitiesState.preload = function (game) {
 
 entitiesState.create = function (game) {
 	var self = entitiesState;
-
-	self.body = game.world.addBody(100, 100, 'dynamic');
+	self.body = game.world.addBody(350, 100, 'dynamic');
 	self.body.addRectangle(50, 50, 0, 0);
 	self.body.addCircle(25, 100, 0);
 	self.body.addPolygon([
@@ -39,13 +38,12 @@ entitiesState.create = function (game) {
 	self.body.addImage(game.loader.get('stone'), 50, 50, 0, 0);
 	self.body.addImage(game.loader.get('stone'), 50, 50, 100, 0);
 	self.body.addImage(game.loader.get('stone'), 100, 50, 50, 50);
-
-	//console.log(game.world.world.m_debugDraw.m_sprite)
-
 };
 
 entitiesState.update = function (game) {
 	var self = entitiesState;
+
+	game.debugger.print(game.world, 1);
 
 	self.body.SetAngularVelocity(1);
 

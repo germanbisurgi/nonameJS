@@ -36,6 +36,7 @@ var Game = function (_settings) {
 		self.fingers = new noname.fingers(self);
 		self.mouse = new noname.mouse(self);
 		self.audio = new noname.audio(self);
+		self.debugger = new ObjectDebugger(document.querySelector('.output'));
 
 		self.loop.start(function () {
 

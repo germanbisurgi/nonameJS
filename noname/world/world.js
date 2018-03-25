@@ -19,26 +19,21 @@ var World = function (_game) {
 	self.fps = _game.settings.fps;
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
-	self.debugDraw = null;
-	self.context = _game.render.context;
 	self.contacts = null;
 
 	self.init = function () {
-		self.debugDraw = new b2DebugDraw();
-		self.debugDraw.SetSprite(self.context);
-		self.debugDraw.SetDrawScale(self.scale);
-		self.debugDraw.SetFillAlpha(0.5);
-		self.debugDraw.SetFillAlpha(0.5);
-
-		self.debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
-		// self.debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
-		self.debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
-
-		self.world.SetDebugDraw(self.debugDraw);
-		self.world.m_debugDraw.m_sprite.graphics.clear= function () {
+		var debugDraw = new b2DebugDraw();
+		debugDraw.SetSprite(_game.render.context);
+		debugDraw.SetDrawScale(self.scale);
+		debugDraw.SetFillAlpha(0.5);
+		debugDraw.SetFillAlpha(0.5);
+		debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
+		// debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
+		debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
+		self.world.SetDebugDraw(debugDraw);
+		self.world.m_debugDraw.m_sprite.graphics.clear = function () {
 			return false;
 		};
-
 		self.contacts = new b2ContactListener();
 		self.world.SetContactListener(self.contacts);
 	};
@@ -108,6 +103,7 @@ var World = function (_game) {
 		if (_type === 'kinematic') {
 			bodyDef.type = b2Body.b2_kinematicBody;
 		}
+
 		var body = self.world.CreateBody(bodyDef);
 
 		// state
@@ -117,7 +113,8 @@ var World = function (_game) {
 
 		// addCircle
 		body.addCircle = function (_radius, _offsetX, _offsetY) {
-			var fixtureDef = self.getCircleFixture(_radius);
+			var fixtureDef = self.getFixtureDef();
+			fixtureDef.shape = new b2CircleShape(_radius / self.scale);
 			fixtureDef.shape.m_p = {
 				x: _offsetX / self.scale || 0,
 				y: _offsetY / self.scale || 0
@@ -127,7 +124,12 @@ var World = function (_game) {
 
 		// addRectangle
 		body.addRectangle = function (_width, _height, _offsetX, _offsetY) {
-			var fixtureDef = self.getRectangleFixture(_width, _height);
+			var fixtureDef = self.getFixtureDef();
+			fixtureDef.shape = new b2PolygonShape();
+			fixtureDef.shape.SetAsBox(
+				_width * 0.5 / self.scale,
+				_height * 0.5 / self.scale
+			);
 			fixtureDef.shape.m_vertices.forEach(function (_vert) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
@@ -139,7 +141,13 @@ var World = function (_game) {
 
 		// addPolygon
 		body.addPolygon = function (_points, _offsetX, _offsetY) {
-			var fixtureDef = self.getPolygonFixture(_points);
+			var fixtureDef = self.getFixtureDef();
+			fixtureDef.shape = new b2PolygonShape();
+			_points.forEach(function (_point) {
+				_point.x /= self.scale;
+				_point.y /= self.scale;
+			});
+			fixtureDef.shape.SetAsArray(_points, _points.length);
 			fixtureDef.shape.m_vertices.forEach(function (_vert) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
@@ -149,7 +157,13 @@ var World = function (_game) {
 
 		// addEdge
 		body.addEdge = function (_x1, _y1, _x2, _y2) {
-			var fixtureDef = self.getEdgeFixture(_x1, _y1, _x2, _y2);
+			var fixtureDef = self.getFixtureDef();
+			fixtureDef.shape = new b2PolygonShape();
+			_x1 /= self.scale;
+			_y1 /= self.scale;
+			_x2 /= self.scale;
+			_y2 /= self.scale;
+			fixtureDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
 			return body.CreateFixture(fixtureDef);
 		};
 
@@ -188,67 +202,23 @@ var World = function (_game) {
 		return fixDef;
 	};
 
-	self.getCircleFixture = function (_radius) {
-		var fixDef = self.getFixtureDef();
-		fixDef.shape = new b2CircleShape(_radius / self.scale);
-		return fixDef;
-	};
-
-	self.getRectangleFixture = function (_width, _height) {
-		var fixDef = self.getFixtureDef();
-		fixDef.shape = new b2PolygonShape();
-		fixDef.shape.SetAsBox(
-			_width * 0.5 / self.scale,
-			_height * 0.5 / self.scale
-		);
-		return fixDef;
-	};
-
-	self.getPolygonFixture = function (_points) {
-		var fixDef = self.getFixtureDef();
-		fixDef.shape = new b2PolygonShape();
-		_points.forEach(function (_point) {
-			_point.x /= self.scale;
-			_point.y /= self.scale;
-		});
-		fixDef.shape.SetAsArray(_points, _points.length);
-		return fixDef;
-	};
-
-	self.getEdgeFixture = function (_x1, _y1, _x2, _y2) {
-		var fixDef = self.getFixtureDef();
-		fixDef.shape = new b2PolygonShape();
-		_x1 /= self.scale;
-		_y1 /= self.scale;
-		_x2 /= self.scale;
-		_y2 /= self.scale;
-		fixDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
-		return fixDef;
-	};
-
 	self.update = function () {
 		self.world.Step(1 / self.fps, 8, 3);
 		self.world.ClearForces();
 	};
 
 	self.draw = function () {
-		if (self.debugDraw) {
-			self.context.save();
-			// camera rotation
-			self.context.translate((_game.render.camera.width * _game.render.camera.anchorX), (_game.render.camera.height * _game.render.camera.anchorY));
-			self.context.rotate(self.toRadians(-_game.render.camera.angle));
-			self.context.translate(-(_game.render.camera.width * _game.render.camera.anchorX), -(_game.render.camera.height * _game.render.camera.anchorY));
-			// camera position
-			self.context.translate(-_game.render.camera.x, -_game.render.camera.y);
-			// camera zoom.
-			self.context.scale(_game.render.camera.zoom, _game.render.camera.zoom);
-			self.world.DrawDebugData();
-			self.context.restore();
-		}
-	};
-
-	self.toRadians = function (_degrees) {
-		return _degrees * 0.0174532925199432957;
+		_game.render.context.save();
+		// camera rotation
+		_game.render.context.translate((_game.render.camera.width * _game.render.camera.anchorX), (_game.render.camera.height * _game.render.camera.anchorY));
+		_game.render.context.rotate(-_game.render.camera.angle * 0.0174532925199432957);
+		_game.render.context.translate(-(_game.render.camera.width * _game.render.camera.anchorX), -(_game.render.camera.height * _game.render.camera.anchorY));
+		// camera position
+		_game.render.context.translate(-_game.render.camera.x, -_game.render.camera.y);
+		// camera zoom.
+		_game.render.context.scale(_game.render.camera.zoom, _game.render.camera.zoom);
+		self.world.DrawDebugData();
+		_game.render.context.restore();
 	};
 
 	self.init();
