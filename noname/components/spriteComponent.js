@@ -16,6 +16,7 @@ var SpriteComponent = function (_image, _x, _y, _width, _height, _sourceWidth, _
 	self.counter = 0;
 	self.animations = [];
 	self.lastAnimation = null;
+	self.clock = null;
 
 	self.addAnimation = function (_name, _sequence) {
 		if (!self.getAnimation(_name)) {
@@ -37,12 +38,12 @@ var SpriteComponent = function (_image, _x, _y, _width, _height, _sourceWidth, _
 	};
 
 	self.play = function (_animationName, _delay) {
-		if (!self.owner.clock.paused) {
+		if (!self.clock.paused) {
 			var animation = self.getAnimation(_animationName);
 			if (animation) {
 				self.lastAnimation = _animationName;
 				var columns = self.image.width / self.sourceWidth;
-				self.delay += self.owner.clock.delta * self.owner.clock.motion;
+				self.delay += self.clock.delta * self.clock.motion;
 				if (self.delay >= _delay) {
 					self.counter = (self.counter + 1) % animation.sequence.length;
 					self.delay = 0;

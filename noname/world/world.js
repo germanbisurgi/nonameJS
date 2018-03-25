@@ -69,21 +69,22 @@ var World = function (_game) {
 
 	/* create a body */
 
-	self.addBody = function (_x, _y, _type) {
+	self.addBody = function (_x, _y, _type, _bodyDefinition) {
+		_bodyDefinition = _bodyDefinition || {};
 		var bodyDef = new b2BodyDef();
 		bodyDef.position.x = _x / self.scale;
 		bodyDef.position.y = _y / self.scale;
-		bodyDef.active = true;
-		bodyDef.allowSleep = true;
-		bodyDef.angle = 0;
-		bodyDef.angularDamping = 0;
-		bodyDef.angularVelocity = 0;
-		bodyDef.awake = true;
-		bodyDef.bullet = false;
-		bodyDef.fixedRotation = false;
-		bodyDef.linearDamping = 0;
-		bodyDef.linearVelocity = {x: 0, y: 0};
-		bodyDef.userData = '';
+		bodyDef.active = _bodyDefinition.active ? _bodyDefinition.active : true;
+		bodyDef.allowSleep = _bodyDefinition.allowSleep ? _bodyDefinition.allowSleep : true;
+		bodyDef.awake = _bodyDefinition.awake ? _bodyDefinition.awake : true;
+		bodyDef.bullet = _bodyDefinition.bullet ? _bodyDefinition.bullet : false;
+		bodyDef.fixedRotation = _bodyDefinition.fixedRotation ? _bodyDefinition.fixedRotation : false;
+		bodyDef.angle = _bodyDefinition.angle || _bodyDefinition.angle === 0 ? _bodyDefinition.angle : 0;
+		bodyDef.angularDamping = _bodyDefinition.angularDamping || _bodyDefinition.angularDamping === 0 ? _bodyDefinition.angularDamping : 0;
+		bodyDef.angularVelocity = _bodyDefinition.angularVelocity || _bodyDefinition.angularVelocity === 0 ? _bodyDefinition.angularVelocity : 0;
+		bodyDef.linearDamping = _bodyDefinition.linearDamping || _bodyDefinition.linearDamping === 0 ? _bodyDefinition.linearDamping : 0;
+		bodyDef.linearVelocity = _bodyDefinition.linearVelocity ? _bodyDefinition.linearVelocity : {x: 0, y: 0};
+		bodyDef.userData = _bodyDefinition.userData ? _bodyDefinition.userData : '';
 		if (_type === 'static') {
 			bodyDef.type = b2Body.b2_staticBody;
 		}
@@ -178,12 +179,17 @@ var World = function (_game) {
 
 		// addImage
 		body.addImage = function (_image, offsetX, offsetY, _width, _height) {
-			body.images.push(new noname.imageComponent(_image, offsetX, offsetY, _width, _height));
+			var image = new noname.imageComponent(_image, offsetX, offsetY, _width, _height);
+			body.images.push(image);
+			return image;
 		};
 
 		// addSprite
 		body.addSprite = function (_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight) {
-			body.images.push(new noname.spriteComponent(_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight));
+			var sprite = new noname.spriteComponent(_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight);
+			sprite.clock = _game.time.masterClock;
+			body.images.push(sprite);
+			return sprite;
 		};
 
 		self.bodies.push(body);

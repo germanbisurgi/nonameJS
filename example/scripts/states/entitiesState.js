@@ -36,18 +36,22 @@ entitiesState.create = function (game) {
 	// gravity
 	// game.world.setGravity(0, 9.8);
 
+	// block factory
+	var addBlock = function (x, y) {
+		var block = game.world.addBody(x, y, 'dynamic');
+		block.addRectangle(0, 0, 50, 50);
+		block.addImage(game.loader.get('block'), 0, 0, 50, 50);
+	};
+
 	// blocks
-	self.block = game.world.addBody(180, 100, 'dynamic');
-	self.block.addRectangle(0, 0, 50, 50);
-	self.block.addImage(game.loader.get('block'), 0, 0, 50, 50);
-
-	self.block = game.world.addBody(100, 200, 'dynamic');
-	self.block.addRectangle(0, 0, 50, 50);
-	self.block.addImage(game.loader.get('block'), 0, 0, 50, 50);
-
-	self.block = game.world.addBody(440, 100, 'dynamic');
-	self.block.addRectangle(0, 0, 50, 50);
-	self.block.addImage(game.loader.get('block'), 0, 0, 50, 50);
+	addBlock(180, 100);
+	addBlock(100, 200);
+	addBlock(200, 400);
+	addBlock(400, 300);
+	addBlock(500, 300);
+	addBlock(440, 100);
+	addBlock(500, 500);
+	addBlock(600, 200);
 
 	// static edges (bench)
 	self.edges = game.world.addBody(10, 10, 'static');
@@ -56,15 +60,16 @@ entitiesState.create = function (game) {
 	self.edges.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
 	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
 
-	// a body with multiple fixtures
-	self.body = game.world.addBody(250, 100, 'dynamic');
-	self.humstarCircle = self.body.addCircle(0, 0, 25);
-	self.sensorL = self.body.addCircle(-25, 0, 10, {isSensor: true, density: 0});
-	self.sensorR = self.body.addCircle(25, 0, 10, {isSensor: true, density: 0});
-	self.sensorT = self.body.addRectangle(0, -25, 20, 20, {isSensor: true, density: 0});
-	self.sensorB = self.body.addRectangle(0, 25, 20, 20, {isSensor: true, density: 0});
+	// humstar
+	self.humstar = game.world.addBody(250, 100, 'dynamic', {});
+	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
+	self.sensorL = self.humstar.addCircle(-25, 0, 10, {isSensor: true, density: 0});
+	self.sensorR = self.humstar.addCircle(25, 0, 10, {isSensor: true, density: 0});
+	self.sensorT = self.humstar.addRectangle(0, -25, 20, 20, {isSensor: true, density: 0});
+	self.sensorB = self.humstar.addRectangle(0, 25, 20, 20, {isSensor: true, density: 0});
 
-	self.body.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
+	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
+	self.humstarSprite.addAnimation('fly', [0, 1, 2, 3, 4]);
 
 	self.data = {};
 
@@ -84,27 +89,27 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	game.debugger.print(self.data);
+	// game.debugger.print(self.humstarSprite, 1);
 
-	// self.body.ApplyForce({x: 0, y: -9.8 * self.body.GetMass()}, self.body.GetWorldCenter());
-	// self.body.ApplyTorque(1 / 30);
+	// play humstar animation
+	self.humstarSprite.play('fly', 100);
 
 	// controls
 	game.keys.pressing('ArrowRight', function () {
-		// self.body.setVelocity(100, 0);
-		self.body.ApplyForce({x: 1, y: 0}, self.body.GetWorldCenter());
+		// self.humstar.setVelocity(100, 0);
+		self.humstar.ApplyForce({x: 2, y: 0}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowLeft', function () {
-		// self.body.setVelocity(-100, 0);
-		self.body.ApplyForce({x: -1, y: 0}, self.body.GetWorldCenter());
+		// self.humstar.setVelocity(-100, 0);
+		self.humstar.ApplyForce({x: -2, y: 0}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowUp', function () {
-		// self.body.setVelocity(0 ,-100);
-		self.body.ApplyForce({x: 0, y: -1}, self.body.GetWorldCenter());
+		// self.humstar.setVelocity(0 ,-100);
+		self.humstar.ApplyForce({x: 0, y: -2}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowDown', function () {
-		// self.body.setVelocity(0 ,100);
-		self.body.ApplyForce({x: 0, y: 1}, self.body.GetWorldCenter());
+		// self.humstar.setVelocity(0 ,100);
+		self.humstar.ApplyForce({x: 0, y: 2}, self.humstar.GetWorldCenter());
 	});
 
 	// camera
