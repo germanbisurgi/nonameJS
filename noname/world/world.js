@@ -38,22 +38,11 @@ var World = function (_game) {
 		self.world.SetContactListener(self.contacts);
 	};
 
-	self.clear = function () {
-		self.bodies.forEach(function (body) {
-			body.GetWorld().DestroyBody(body);
-		});
-		self.bodies = [];
-	};
-
-	self.calculateWorldPosition = function (_point) {
-		return {
+	self.createMouseJoint = function (_point, _body) {
+		var point = {
 			x: _point.x / self.scale,
 			y: _point.y / self.scale
 		};
-	};
-
-	self.createMouseJoint = function (_point, _body) {
-		var point = self.calculateWorldPosition(_point);
 		var jointDefinition = new Box2D.Dynamics.Joints.b2MouseJointDef();
 		jointDefinition.bodyA = self.world.GetGroundBody();
 		jointDefinition.bodyB = _body;
@@ -70,7 +59,8 @@ var World = function (_game) {
 	self.queryPoint = function (_point, _function) {
 		self.world.QueryPoint(function (fixture) {
 			_function(fixture);
-		}, self.calculateWorldPosition(_point));
+		},
+		{x: _point.x / self.scale, y: _point.y / self.scale});
 	};
 
 	self.setGravity = function (_x, _y) {
@@ -111,20 +101,22 @@ var World = function (_game) {
 
 		body.images = [];
 
+		body.fixtures = [];
+
 		// addCircle
-		body.addCircle = function (_radius, _offsetX, _offsetY) {
-			var fixtureDef = self.getFixtureDef();
+		body.addCircle = function (_radius, _offsetX, _offsetY, _fixtureDefinition) {
+			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2CircleShape(_radius / self.scale);
 			fixtureDef.shape.m_p = {
 				x: _offsetX / self.scale || 0,
 				y: _offsetY / self.scale || 0
 			};
-			body.CreateFixture(fixtureDef);
+			body.fixtures.push(body.CreateFixture(fixtureDef));
 		};
 
 		// addRectangle
-		body.addRectangle = function (_width, _height, _offsetX, _offsetY) {
-			var fixtureDef = self.getFixtureDef();
+		body.addRectangle = function (_width, _height, _offsetX, _offsetY, _fixtureDefinition) {
+			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			fixtureDef.shape.SetAsBox(
 				_width * 0.5 / self.scale,
@@ -136,12 +128,12 @@ var World = function (_game) {
 			});
 			fixtureDef.shape.m_centroid.x += _offsetX / self.scale || 0;
 			fixtureDef.shape.m_centroid.y += _offsetY / self.scale || 0;
-			body.CreateFixture(fixtureDef);
+			body.fixtures.push(body.CreateFixture(fixtureDef));
 		};
 
 		// addPolygon
-		body.addPolygon = function (_points, _offsetX, _offsetY) {
-			var fixtureDef = self.getFixtureDef();
+		body.addPolygon = function (_points, _offsetX, _offsetY, _fixtureDefinition) {
+			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			_points.forEach(function (_point) {
 				_point.x /= self.scale;
@@ -152,19 +144,19 @@ var World = function (_game) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
 			});
-			return body.CreateFixture(fixtureDef);
+			body.fixtures.push(body.CreateFixture(fixtureDef));
 		};
 
 		// addEdge
 		body.addEdge = function (_x1, _y1, _x2, _y2) {
-			var fixtureDef = self.getFixtureDef();
+			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
 			_x1 /= self.scale;
 			_y1 /= self.scale;
 			_x2 /= self.scale;
 			_y2 /= self.scale;
 			fixtureDef.shape.SetAsEdge({x: _x1, y: _y1}, {x: _x2, y: _y2});
-			return body.CreateFixture(fixtureDef);
+			body.fixtures.push(body.CreateFixture(fixtureDef));
 		};
 
 		// setVelocity
@@ -191,14 +183,13 @@ var World = function (_game) {
 		return body;
 	};
 
-	/* fixtures */
-
-	self.getFixtureDef = function () {
+	self.getFixtureDef = function (_fixtureDefinition) {
+		_fixtureDefinition = _fixtureDefinition || {};
 		var fixDef = new b2FixtureDef();
-		fixDef.density = 1;
-		fixDef.friction = 0.5;
-		fixDef.isSensor = false;
-		fixDef.restitution = 0.1;
+		fixDef.density = _fixtureDefinition.density || 1;
+		fixDef.friction = _fixtureDefinition.friction || 0.5;
+		fixDef.isSensor = _fixtureDefinition.isSensor || false;
+		fixDef.restitution = _fixtureDefinition.restitution || 0.1;
 		return fixDef;
 	};
 
@@ -207,7 +198,7 @@ var World = function (_game) {
 		self.world.ClearForces();
 	};
 
-	self.draw = function () {
+	self.drawDebugData = function () {
 		_game.render.context.save();
 		// camera rotation
 		_game.render.context.translate((_game.render.camera.width * _game.render.camera.anchorX), (_game.render.camera.height * _game.render.camera.anchorY));
@@ -219,6 +210,13 @@ var World = function (_game) {
 		_game.render.context.scale(_game.render.camera.zoom, _game.render.camera.zoom);
 		self.world.DrawDebugData();
 		_game.render.context.restore();
+	};
+
+	self.clear = function () {
+		self.bodies.forEach(function (body) {
+			body.GetWorld().DestroyBody(body);
+		});
+		self.bodies = [];
 	};
 
 	self.init();

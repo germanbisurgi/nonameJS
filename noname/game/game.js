@@ -66,7 +66,7 @@ var Game = function (_settings) {
 					self.render.clear();
 					self.render.draw(self.world.bodies);
 					if (_settings.physicsDebug) {
-						self.world.draw();
+						self.world.drawDebugData();
 					}
 					self.state.current.afterRender(self);
 				}

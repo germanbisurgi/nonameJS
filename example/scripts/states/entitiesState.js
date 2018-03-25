@@ -27,7 +27,9 @@ entitiesState.preload = function (game) {
 entitiesState.create = function (game) {
 	var self = entitiesState;
 	self.body = game.world.addBody(350, 100, 'dynamic');
-	self.body.addRectangle(50, 50, 0, 0);
+	self.body.addRectangle(50, 50, 0, 0, {
+		isSensor: true
+	});
 	self.body.addCircle(25, 100, 0);
 	self.body.addPolygon([
 		{x: 0, y: 0},
@@ -43,7 +45,7 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	game.debugger.print(game.world, 1);
+	game.debugger.print(self.body.fixtures, 2);
 
 	self.body.SetAngularVelocity(1);
 
