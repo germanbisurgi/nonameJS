@@ -123,6 +123,16 @@ entitiesState.update = function (game) {
 		game.world.dragEnd(pointer);
 	});
 
+	game.fingers.justTouched(2, function (pointer) {
+		game.world.dragStart(pointer);
+	});
+	game.fingers.touching(2, function (pointer) {
+		game.world.dragMove(pointer);
+	});
+	game.fingers.released(2, function (pointer) {
+		game.world.dragEnd(pointer);
+	});
+
 	// camera
 	game.keys.pressing('a', function () {
 		game.render.camera.angle += 1;
