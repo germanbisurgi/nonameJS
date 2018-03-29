@@ -20,8 +20,7 @@ var World = function (_game) {
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
 	self.contacts = null;
-	self.mouseJointObject = null;
-	self.mouseJoint = null;
+	self.mouseJoints = [];
 
 	self.init = function () {
 		var debugDraw = new b2DebugDraw();
@@ -235,43 +234,53 @@ var World = function (_game) {
 	};
 
 
-	self.dragStart = function (_point) {
-		// query the world given a point to get the pointed fixture.
+	self.dragStart = function (_pointer) {
 		self.queryPoint(
-			{x: _point.x, y: _point.y},
+			{x: _pointer.currentX, y: _pointer.currentY},
 			function (_fixture) {
-				self.mouseJointObject = _fixture.GetBody();
+				self.mouseJoints.push(
+					{
+						number: _pointer.number,
+						body:  _fixture.GetBody(),
+						joint: null
+					}
+				);
 			}
 		);
 	};
 
-	self.dragMove = function (_point) {
-		// if still pointing then create a mouse joint at the point coordinates with that fixture.
-		if (!self.mouseJointObject) {
-			return;
-		}
-		if (!self.mouseJoint) {
-			self.mouseJoint = self.createMouseJoint(
-				{x: _point.x, y: _point.y},
-				self.mouseJointObject
-			)
-		}
-		self.mouseJoint.SetTarget(
-			{x: _point.x / self.scale, y: _point.y / self.scale}
-		);
+	self.dragMove = function (_pointer) {
+		self.mouseJoints.forEach(function (_mouseJoint) {
+			if (_mouseJoint.number === _pointer.number) {
+				if (!_mouseJoint.body) {
+					return;
+				}
+				if (!_mouseJoint.joint) {
+					_mouseJoint.joint = self.createMouseJoint(
+						{x: _pointer.currentX, y: _pointer.currentY},
+						_mouseJoint.body
+					)
+				}
+				_mouseJoint.joint.SetTarget(
+					{x: _pointer.currentX / self.scale, y: _pointer.currentY / self.scale}
+				);
+			}
+		});
 	};
 
-	self.dragEnd = function () {
-		// if no pointing destroy the mouse joint and reset mouse joint variable.
-		if (self.mouseJointObject) {
-			self.mouseJointObject = null;
-		}
-		if (self.mouseJoint) {
-			self.destroyJoint(self.mouseJoint);
-			self.mouseJoint = null;
-		}
+	self.dragEnd = function (_pointer) {
+		self.mouseJoints.forEach(function (_mouseJoint) {
+			if (_mouseJoint.number === _pointer.number) {
+				_mouseJoint.body = null;
+				self.destroyJoint(_mouseJoint.joint);
+				_mouseJoint.joint = null;
+				var index = self.mouseJoints.indexOf(_mouseJoint);
+				if (index > -1) {
+					self.mouseJoints.splice(index, 1);
+				}
+			}
+		});
 	};
-
 
 	self.init();
 

@@ -5,6 +5,7 @@
     font-size: 14px;
     overflow: auto;
     padding: 30px;
+    pointer-events: none;
     position: fixed;
     top: 0;
     right: 0;
