@@ -89,7 +89,11 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
+<<<<<<< HEAD
 	game.debugger.print(game.world.mouseJoints, 2);
+=======
+	game.debugger.print(game.pointers, 3);
+>>>>>>> pointer
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
@@ -112,26 +116,24 @@ entitiesState.update = function (game) {
 		self.humstar.ApplyForce({x: 0, y: 2}, self.humstar.GetWorldCenter());
 	});
 
-	// touch drag
-	game.fingers.justTouched(1, function (pointer) {
-		game.world.dragStart(pointer);
-	});
-	game.fingers.touching(1, function (pointer) {
-		game.world.dragMove(pointer);
-	});
-	game.fingers.released(1, function (pointer) {
-		game.world.dragEnd(pointer);
-	});
-
-	game.fingers.justTouched(2, function (pointer) {
-		game.world.dragStart(pointer);
-	});
-	game.fingers.touching(2, function (pointer) {
-		game.world.dragMove(pointer);
-	});
-	game.fingers.released(2, function (pointer) {
-		game.world.dragEnd(pointer);
-	});
+	game.pointers.onStart(function (pointers) {
+		pointers.forEach(function (pointer) {
+			// game.world.dragStart(pointer);
+			console.log(pointer);
+		})
+	})
+	game.pointers.onContinued(function (pointers) {
+		pointers.forEach(function (pointer) {
+			// game.world.dragMove(pointer);
+			console.log(pointer);
+		})
+	})
+	game.pointers.onEnd(function (pointers) {
+		pointers.forEach(function (pointer) {
+			// game.world.dragEnd(pointer);
+			console.log(pointer);
+		})
+	})
 
 	// camera
 	game.keys.pressing('a', function () {
