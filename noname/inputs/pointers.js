@@ -17,8 +17,6 @@ var Pointers = function (_game) {
 				startY: Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
 				currentX: Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
 				currentY: Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
-				offsetX: 0,
-				offsetY: 0,
 				milliseconds: 0,
 				identifier: touch.identifier,
 				startFrame: _game.loop.frames
@@ -37,8 +35,6 @@ var Pointers = function (_game) {
 				startY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
 				currentX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
 				currentY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
-				offsetX: 0,
-				offsetY: 0,
 				milliseconds: 0,
 				startFrame: _game.loop.frames
 			};
@@ -53,18 +49,14 @@ var Pointers = function (_game) {
 			var pointer = self.getByIdentifier(touch.identifier, self.continued);
 			pointer.currentX = Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft);
 			pointer.currentY = Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop);
-			pointer.offsetX = Math.floor(pointer.currentX - pointer.startX);
-			pointer.offsetY = Math.floor(pointer.currentY - pointer.startY);
 		}
 	}, false);
 
 	_game.render.canvas.addEventListener('mousemove', function (_event) {
 		_event.preventDefault();
 		self.continued.forEach(function (pointer) {
-			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft),
-			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft),
-			pointer.offsetX = Math.floor(pointer.currentX - pointer.startX);
-			pointer.offsetY = Math.floor(pointer.currentY - pointer.startY);
+			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
+			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
 		});
 	}, false);
 
