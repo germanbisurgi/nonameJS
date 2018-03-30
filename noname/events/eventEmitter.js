@@ -2,10 +2,10 @@ var EventEmitter = function () {
 	'use strict';
 	var self = this;
 
-	self.topics = [];
+	self.events = [];
 
 	self.subscribe = function (_topicName, _function) {
-		var topic = self.openTopic(_topicName);
+		var topic = self.subscribeEvent(_topicName);
 		var subscription = {
 			topic: topic.name,
 			function: _function
@@ -15,7 +15,7 @@ var EventEmitter = function () {
 	};
 
 	self.unsubscribe = function (_subscription) {
-		var topic = self.searchTopic(_subscription.topic);
+		var topic = self.getEvent(_subscription.topic);
 		if (!topic) {
 			return false;
 		}
@@ -26,15 +26,15 @@ var EventEmitter = function () {
 	};
 
 	self.publish = function (_topicName, _data) {
-		var topic = self.openTopic(_topicName);
+		var topic = self.subscribeEvent(_topicName);
 		topic.subscriptions.forEach(function (_listener) {
 			_listener.function(_data);
 		});
 	};
 
-	self.openTopic = function (_topicName) {
+	self.subscribeEvent = function (_topicName) {
 		var output = false;
-		self.topics.forEach(function (_topic) {
+		self.events.forEach(function (_topic) {
 			if (_topic.name === _topicName) {
 				output = _topic;
 			}
@@ -44,15 +44,15 @@ var EventEmitter = function () {
 				name: _topicName,
 				subscriptions: []
 			};
-			self.topics.push(topic);
+			self.events.push(topic);
 			output = topic;
 		}
 		return output;
 	};
 
-	self.searchTopic = function (_topicName) {
+	self.getEvent = function (_topicName) {
 		var output = false;
-		self.topics.forEach(function (_topic) {
+		self.events.forEach(function (_topic) {
 			if (_topic.name === _topicName) {
 				output = _topic;
 			}
