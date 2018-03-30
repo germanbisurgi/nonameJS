@@ -1,28 +1,8 @@
 var physicsState = new noname.state('physicsState');
 
 physicsState.preload = function () {
-	var loading = document.querySelector('.loading');
-	var asset = document.querySelector('.loading-asset');
-	var progress = document.querySelector('.loading-progress');
-
 	physicsState.assets.queueAudio('kick', 'example/assets/audio/kick.wav');
 	physicsState.assets.queueAudio('tic', 'example/assets/audio/tic.mp3');
-
-	physicsState.assets.pubsub.subscribe('loading', function () {
-		loading.setAttribute('style', 'display: block;');
-	});
-
-	physicsState.assets.pubsub.subscribe('onload', function (_data) {
-		asset.innerText = 'loading: ' + _data.name;
-		progress.setAttribute('style', 'width: ' + physicsState.assets.progress() + '%;');
-	});
-
-	physicsState.assets.pubsub.subscribe('done', function () {
-		asset.innerText = 'loading: DONE';
-		setTimeout(function () {
-			loading.setAttribute('style', 'display: none;');
-		}, 1000);
-	});
 };
 
 physicsState.create = function () {

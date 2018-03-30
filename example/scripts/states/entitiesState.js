@@ -5,24 +5,6 @@ entitiesState.preload = function (game) {
 	game.loader.queueImage('humstar', 'example/assets/images/humstar.png');
 	game.loader.queueImage('block', 'example/assets/images/block.png');
 	game.loader.queueAudio('kick', 'example/assets/audio/kick.wav');
-
-	var loading = document.querySelector('.loading');
-	var asset = document.querySelector('.loading-asset');
-	var progress = document.querySelector('.loading-progress');
-
-	game.loader.pubsub.subscribe('loading', function () {
-		loading.setAttribute('style', 'display: block;');
-	});
-
-	game.loader.pubsub.subscribe('onload', function (_data) {
-		asset.innerText = 'loading: ' + _data.name;
-		progress.setAttribute('style', 'width: ' + game.loader.progress() + '%;');
-	});
-
-	game.loader.pubsub.subscribe('done', function () {
-		asset.innerText = 'loading: DONE';
-		loading.setAttribute('style', 'display: none;');
-	});
 };
 
 entitiesState.create = function (game) {

@@ -1,29 +1,8 @@
 var physicsState = new noname.state('physicsState');
 
 physicsState.preload = function (game) {
-
-	var loading = document.querySelector('.loading');
-	var asset = document.querySelector('.loading-asset');
-	var progress = document.querySelector('.loading-progress');
-
 	game.loader.queueAudio('kick', 'example/assets/audio/kick.wav');
 	game.loader.queueAudio('tic', 'example/assets/audio/tic.mp3');
-
-	game.loader.pubsub.subscribe('loading', function () {
-		loading.setAttribute('style', 'display: block;');
-	});
-
-	game.loader.pubsub.subscribe('onload', function (_data) {
-		asset.innerText = 'loading: ' + _data.name;
-		progress.setAttribute('style', 'width: ' + game.loader.progress() + '%;');
-	});
-
-	game.loader.pubsub.subscribe('done', function () {
-		asset.innerText = 'loading: DONE';
-		setTimeout(function () {
-			loading.setAttribute('style', 'display: none;');
-		}, 1000);
-	});
 };
 
 physicsState.create = function (game) {
