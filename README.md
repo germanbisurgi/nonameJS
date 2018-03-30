@@ -98,33 +98,3 @@ var game = new noname.game({
     </tbody>
 </table>
 
-## The Managers
-
-nonameJS give to you a bunch of tools or "Managers" that allow you to create and manage what, when, and how things happen in your game. You can access this managers from every state you create. The following are raw explanations of the nonameJS managers. A most detailed documentations will come soon
-
-### loop
-This manager is the heart of your game. Like its name says, it´s a loop where your code goes in. It will execute as often as you configure it int the fps setting. He´s job is to repeat your states objects logic code several times per second You really don´t need this manager. Instead use the time manager for timing bussiness.
-
-## assets
-Loads and cache game assets like images and audio.
-
-### state
-This manager allows you to add and switch your states. To change from game state to main menu state or map A to map B are the daily bread of this manager.
-
-### inputs
-This manager give you handy inputs abstractions like keyboard keys, touch, mouse, etc.
-
-### clock
-This manager makes ease to manage clocks and time in your game. like how fast things happen, when an event will be trigger, slow motion, etc. All the entities are sync to the game master clock but you can create extra clock to create more time based complexity.
-
-### entities
-This manager manage all your entities (game objects). It´s most important job is to add and remove entities from your states, but it´s have a bunch of helper methods that make ease to create pre-composed entities like sprites, images, tile sprites, etc.
-
-### render
-This manager´s job is to draw everything that is visible on the canvas.
-
-### box2d
-Is a wrapper of the Erin box2dweb library that manage the physics of your game.
-
-## TODO
-* collision listeners.
