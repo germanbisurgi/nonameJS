@@ -16,7 +16,7 @@ entitiesState.create = function (game) {
 	});
 
 	// gravity
-	// game.world.setGravity(0, 9.8);
+	game.world.setGravity(0, 9.8);
 
 	// block factory
 	var addBlock = function (x, y) {
@@ -45,10 +45,10 @@ entitiesState.create = function (game) {
 	// humstar
 	self.humstar = game.world.addBody(250, 100, 'dynamic', {});
 	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
-	self.sensorL = self.humstar.addCircle(-25, 0, 10, {isSensor: true, density: 0});
-	self.sensorR = self.humstar.addCircle(25, 0, 10, {isSensor: true, density: 0});
-	self.sensorT = self.humstar.addRectangle(0, -25, 20, 20, {isSensor: true, density: 0});
-	self.sensorB = self.humstar.addRectangle(0, 25, 20, 20, {isSensor: true, density: 0});
+	// self.sensorL = self.humstar.addCircle(-25, 0, 10, {isSensor: true, density: 0});
+	// self.sensorR = self.humstar.addCircle(25, 0, 10, {isSensor: true, density: 0});
+	// self.sensorT = self.humstar.addRectangle(0, -25, 20, 20, {isSensor: true, density: 0});
+	// self.sensorB = self.humstar.addRectangle(0, 25, 20, 20, {isSensor: true, density: 0});
 
 	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
 	self.humstarSprite.addAnimation('fly', [0, 1, 2, 3, 4]);
@@ -76,18 +76,20 @@ entitiesState.update = function (game) {
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
 
+	self.humstar.ApplyForce({x: 0, y: -1}, self.humstar.GetWorldCenter());
+
 	// controls
 	game.keys.pressing('ArrowRight', function () {
 		// self.humstar.setVelocity(100, 0);
-		self.humstar.ApplyForce({x: 2, y: 0}, self.humstar.GetWorldCenter());
+		self.humstar.ApplyForce({x: 3, y: 0}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowLeft', function () {
 		// self.humstar.setVelocity(-100, 0);
-		self.humstar.ApplyForce({x: -2, y: 0}, self.humstar.GetWorldCenter());
+		self.humstar.ApplyForce({x: -3, y: 0}, self.humstar.GetWorldCenter());
 	});
-	game.keys.pressing('ArrowUp', function () {
+	game.keys.justPressed('ArrowUp', function () {
 		// self.humstar.setVelocity(0 ,-100);
-		self.humstar.ApplyForce({x: 0, y: -2}, self.humstar.GetWorldCenter());
+		self.humstar.ApplyImpulse({x: 0, y: -3}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowDown', function () {
 		// self.humstar.setVelocity(0 ,100);

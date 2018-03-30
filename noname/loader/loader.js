@@ -43,10 +43,10 @@ var Loader = function (_game) {
 
 	/**
 	* The array holding all the assets of the game.
-	* @property pool
+	* @property cache
 	* @type {Array}
 	*/
-	self.pool = [];
+	self.cache = [];
 
 	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -92,7 +92,7 @@ var Loader = function (_game) {
 	 */
 	self.get = function (_name) {
 		var output = false;
-		self.pool.forEach(function (_asset) {
+		self.cache.forEach(function (_asset) {
 			if (_asset.name === _name) {
 				output = _asset;
 			}
@@ -148,7 +148,7 @@ var Loader = function (_game) {
 		};
 		img.src = _asset.path;
 		img.name = _asset.name;
-		self.pool.push(img);
+		self.cache.push(img);
 	};
 
 	self.loadAudio = function (_asset) {
@@ -161,7 +161,7 @@ var Loader = function (_game) {
 				audio = buffer;
 				audio.name = _asset.name;
 				self.lastLoaded = _asset.name;
-				self.pool.push(audio);
+				self.cache.push(audio);
 				self.success++;
 				_game.signals.emit('onload', audio);
 				if (self.loadComplete()) {
