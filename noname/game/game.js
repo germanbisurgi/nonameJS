@@ -33,8 +33,9 @@ var Game = function (_settings) {
 		self.render = new noname.render(self);
 		self.world = new noname.world(self);
 		self.keys = new noname.keys(self);
-		self.fingers = new noname.fingers(self);
-		self.mouse = new noname.mouse(self);
+		// self.fingers = new noname.fingers(self);
+		// self.mouse = new noname.mouse(self);
+		self.pointers = new noname.pointers(self);
 		self.audio = new noname.audio(self);
 		self.debugger = new ObjectDebugger(document.querySelector('.output'));
 
@@ -57,8 +58,9 @@ var Game = function (_settings) {
 
 				self.time.update(self.loop.delta);
 				self.keys.update();
-				self.fingers.update();
-				self.mouse.update();
+				self.pointers.update();
+				// self.fingers.update();
+				// self.mouse.update();
 				self.world.update();
 				self.state.current.update(self);
 

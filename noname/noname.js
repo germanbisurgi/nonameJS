@@ -17,6 +17,7 @@ var noname = {
 	keys: Keys,
 	fingers: Fingers,
 	mouse: Mouse,
+	pointers: Pointers,
 	transformComponent: TransformComponent,
 	imageComponent: ImageComponent,
 	spriteComponent: SpriteComponent,

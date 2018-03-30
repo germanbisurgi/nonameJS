@@ -89,7 +89,7 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	// game.debugger.print(game.world, 1);
+	game.debugger.print(game.pointers, 3);
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
@@ -112,8 +112,20 @@ entitiesState.update = function (game) {
 		self.humstar.ApplyForce({x: 0, y: 2}, self.humstar.GetWorldCenter());
 	});
 
+	game.pointers.onStart(function (pointers) {
+		pointers.forEach(function (pointer) {
+			console.log(pointer);
+		})
+	})
+	game.pointers.onContinued(function (pointers) {
+
+	})
+	game.pointers.onEnd(function (pointers) {
+
+	})
+
 	// touch drag
-	game.fingers.justTouched(1, function (finger) {
+	/*game.fingers.justTouched(1, function (finger) {
 		game.world.dragStart({x: finger.currentX, y: finger.currentY});
 	});
 	game.fingers.touching(1, function (finger) {
@@ -121,7 +133,7 @@ entitiesState.update = function (game) {
 	});
 	game.fingers.released(1, function () {
 		game.world.dragEnd();
-	});
+	});*/
 
 	// camera
 	game.keys.pressing('a', function () {
