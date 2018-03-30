@@ -40,7 +40,7 @@ var Game = function (_settings) {
 			return out;
 		};
 
-		self.events = new noname.pubsub();
+		self.events = new noname.eventEmitter();
 		var eventsMethods = {
 			subscribe: self.events.subscribe,
 			publish: self.events.publish

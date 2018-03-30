@@ -48,7 +48,7 @@ var Loader = function () {
 	*/
 	self.pool = [];
 
-	self.pubsub = new noname.pubsub();
+	self.eventEmitter = new noname.eventEmitter();
 
 	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -111,10 +111,10 @@ var Loader = function () {
 					if (self.loadComplete()) {
 						self.loading = false;
 						self.reset();
-						self.pubsub.publish('done');
+						self.eventEmitter.publish('done');
 					}
 				} else {
-					self.pubsub.publish('loading');
+					self.eventEmitter.publish('loading');
 					self.loading = true;
 					if (_asset.type === 'image') {
 						self.loadImage(_asset);
@@ -132,20 +132,20 @@ var Loader = function () {
 		img.onload = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
-			self.pubsub.publish('onload', img);
+			self.eventEmitter.publish('onload', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				self.pubsub.publish('done');
+				self.eventEmitter.publish('done');
 			}
 		};
 		img.onerror = function () {
 			self.errors++;
-			self.pubsub.publish('onerror', img);
+			self.eventEmitter.publish('onerror', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				self.pubsub.publish('done');
+				self.eventEmitter.publish('done');
 			}
 		};
 		img.src = _asset.path;
@@ -165,19 +165,19 @@ var Loader = function () {
 				self.lastLoaded = _asset.name;
 				self.pool.push(audio);
 				self.success++;
-				self.pubsub.publish('onload', audio);
+				self.eventEmitter.publish('onload', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					self.pubsub.publish('done');
+					self.eventEmitter.publish('done');
 				}
 			}, function () {
 				self.errors++;
-				self.pubsub.publish('onerror', audio);
+				self.eventEmitter.publish('onerror', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					self.pubsub.publish('done', audio);
+					self.eventEmitter.publish('done', audio);
 				}
 			});
 		};

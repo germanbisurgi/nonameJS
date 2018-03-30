@@ -1,4 +1,4 @@
-var PubSub = function () {
+var EventEmitter = function () {
 	'use strict';
 	var self = this;
 
