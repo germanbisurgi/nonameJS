@@ -22,24 +22,16 @@ To make a nonameJS game you need at least two things:
 ```javascript
 var myState = new noname.state('myState');
 
-myState.preload = function () {
-    // this code will allow you can put load your assets (images, audio, ecc)
-    this.assets.queueImage('stone', 'assets/path/stone.png');
+myState.preload = function (game) {
+    // load assets
 };
 
-myState.loading = function () {
-    // this code will be running while the game is loading assets
-    console.log(this.assets.progress)
-};
-
-myState.create = function () {
-    // this code allows you to create your entities (game objects)
-    this.myEntitty = this.entities.addImage('stone', 0, 0, 0, 0);
+myState.create = function (game) {
+    // game objects creation
 }
 
-myState.update = function () {
-    // this code will execute the logic behin your game
-    this.myEntitty.move(50, 0);
+myState.update = function (game) {
+    // game logic
 };
 ```
 
