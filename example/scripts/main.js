@@ -3,14 +3,13 @@ var game = new noname.game({
 	fps: 60,
 	dps: 60,
 	states: [
-		timeState,
-		fingersState,
-		mouseState,
+		// timeState,
+		pointersState,
 		physicsState,
 		keysState,
 		audioState,
 		entitiesState
 	],
-	initialState: 'entitiesState',
+	initialState: 'pointersState',
 	physicsDebug: true
 });

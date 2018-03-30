@@ -6,8 +6,6 @@ timeState.preload = function (game) {
 
 timeState.create = function (game) {
 
-	console.log('timeState');
-
 	/* fast block */
 	timeState.fastBlock = new noname.entity();
 	timeState.fastBlock.addComponent('transform', new noname.transformComponent(50, 50, 50, 50));

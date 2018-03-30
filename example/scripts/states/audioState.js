@@ -49,12 +49,20 @@ audioState.create = function (game) {
 
 audioState.update = function (game) {
 
-	game.fingers.justTouched(1, function () {
-		audioState.motor.play();
+	game.pointers.onStart(function (pointers) {
+		pointers.forEach(function (pointer) {
+			if (pointer.number === 0) {
+				audioState.kick.play();
+			}
+		})
 	});
 
-	game.fingers.justTouched(2, function () {
-		audioState.tic.play();
+	game.pointers.onStart(function (pointers) {
+		pointers.forEach(function (pointer) {
+			if (pointer.number === 2) {
+				audioState.tic.play();
+			}
+		})
 	});
 
 	game.keys.justPressed('t', function () {
