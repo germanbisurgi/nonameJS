@@ -2,7 +2,7 @@
 * Loads and cache game assets like images and audio.
 * @class Loader
 */
-var Loader = function () {
+var Loader = function (_game) {
 	'use strict';
 	var self = this;
 
@@ -47,8 +47,6 @@ var Loader = function () {
 	* @type {Array}
 	*/
 	self.pool = [];
-
-	self.eventEmitter = new noname.eventEmitter();
 
 	self.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -111,10 +109,10 @@ var Loader = function () {
 					if (self.loadComplete()) {
 						self.loading = false;
 						self.reset();
-						self.eventEmitter.publish('done');
+						_game.signals.emit('done');
 					}
 				} else {
-					self.eventEmitter.publish('loading');
+					_game.signals.emit('loading');
 					self.loading = true;
 					if (_asset.type === 'image') {
 						self.loadImage(_asset);
@@ -132,20 +130,20 @@ var Loader = function () {
 		img.onload = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
-			self.eventEmitter.publish('onload', img);
+			_game.signals.emit('onload', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				self.eventEmitter.publish('done');
+				_game.signals.emit('done');
 			}
 		};
 		img.onerror = function () {
 			self.errors++;
-			self.eventEmitter.publish('onerror', img);
+			_game.signals.emit('onerror', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				self.eventEmitter.publish('done');
+				_game.signals.emit('done');
 			}
 		};
 		img.src = _asset.path;
@@ -165,19 +163,19 @@ var Loader = function () {
 				self.lastLoaded = _asset.name;
 				self.pool.push(audio);
 				self.success++;
-				self.eventEmitter.publish('onload', audio);
+				_game.signals.emit('onload', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					self.eventEmitter.publish('done');
+					_game.signals.emit('done');
 				}
 			}, function () {
 				self.errors++;
-				self.eventEmitter.publish('onerror', audio);
+				_game.signals.emit('onerror', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					self.eventEmitter.publish('done', audio);
+					_game.signals.emit('done', audio);
 				}
 			});
 		};

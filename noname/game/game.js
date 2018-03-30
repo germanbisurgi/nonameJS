@@ -40,26 +40,11 @@ var Game = function (_settings) {
 			return out;
 		};
 
-		self.events = new noname.eventEmitter();
-		var eventsMethods = {
-			subscribe: self.events.subscribe,
-			publish: self.events.publish
-		}
-
-		var test = extend({}, eventsMethods);
-
-		console.log(test)
-
-		test.subscribe('topic', function () {
-			console.log('lalalalal');
-		})
-
-		self.events.publish('topic');
-
+		self.signals = new noname.signals();
 		self.loop = new noname.loop(self);
 		self.state = new noname.stateManager(self);
 		self.mathematics = new noname.mathematics();
-		self.loader = new noname.loader();
+		self.loader = new noname.loader(self);
 		self.time = new noname.time(self);
 		self.render = new noname.render(self);
 		self.world = new noname.world(self);
@@ -67,8 +52,6 @@ var Game = function (_settings) {
 		self.pointers = new noname.pointers(self);
 		self.audio = new noname.audio(self);
 		self.debugger = new ObjectDebugger(document.querySelector('.output'));
-
-		
 
 		self.loop.start(function () {
 

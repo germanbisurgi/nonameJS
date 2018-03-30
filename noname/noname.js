@@ -7,7 +7,7 @@ var noname = {
 	render: Render,
 	world: World,
 	audio: Audio,
-	eventEmitter: EventEmitter,
+	signals: Signals,
 	camera: Camera,
 	clockEvent: ClockEvent,
 	track: Track,
