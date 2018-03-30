@@ -25,6 +25,37 @@ var Game = function (_settings) {
 			return;
 		}
 
+		var extend = function(out) {
+			out = out || {};
+			for (var i = 1; i < arguments.length; i++) {
+				if (!arguments[i]) {
+					continue;
+				}
+				for (var key in arguments[i]) {
+					if (arguments[i].hasOwnProperty(key)) {
+						out[key] = arguments[i][key];
+					}
+				}
+			}
+			return out;
+		};
+
+		self.events = new noname.pubsub();
+		var eventsMethods = {
+			subscribe: self.events.subscribe,
+			publish: self.events.publish
+		}
+
+		var test = extend({}, eventsMethods);
+
+		console.log(test)
+
+		test.subscribe('topic', function () {
+			console.log('lalalalal');
+		})
+
+		self.events.publish('topic');
+
 		self.loop = new noname.loop(self);
 		self.state = new noname.stateManager(self);
 		self.mathematics = new noname.mathematics();
@@ -36,6 +67,8 @@ var Game = function (_settings) {
 		self.pointers = new noname.pointers(self);
 		self.audio = new noname.audio(self);
 		self.debugger = new ObjectDebugger(document.querySelector('.output'));
+
+		
 
 		self.loop.start(function () {
 
