@@ -89,7 +89,7 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	game.debugger.print(game.world.mouseJoints, 2);
+	// game.debugger.print(game.world.mouseJoints, 2);
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
