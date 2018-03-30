@@ -6,28 +6,28 @@ var Signals = function () {
 
 	self.on = function (_signalName, _function) {
 		var signal = self.prepareSignal(_signalName);
-		var subscription = {
+		var receiver = {
 			signal: signal.name,
 			function: _function
 		};
-		signal.subscriptions.push(subscription);
-		return subscription;
+		signal.receivers.push(receiver);
+		return receiver;
 	};
 
-	self.off = function (_subscription) {
-		var signal = self.getSignal(_subscription.signal);
+	self.off = function (_receiver) {
+		var signal = self.getSignal(_receiver.signal);
 		if (!signal) {
 			return false;
 		}
-		var index = signal.subscriptions.indexOf(_subscription);
+		var index = signal.receivers.indexOf(_receiver);
 		if (index > -1) {
-			signal.subscriptions.splice(index, 1);
+			signal.receivers.splice(index, 1);
 		}
 	};
 
 	self.emit = function (_signalName, _data) {
 		var signal = self.prepareSignal(_signalName);
-		signal.subscriptions.forEach(function (_listener) {
+		signal.receivers.forEach(function (_listener) {
 			_listener.function(_data);
 		});
 	};
@@ -42,7 +42,7 @@ var Signals = function () {
 		if (!output) {
 			var signal = {
 				name: _signalName,
-				subscriptions: []
+				receivers: []
 			};
 			self.signals.push(signal);
 			output = signal;
