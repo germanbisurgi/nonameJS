@@ -114,20 +114,20 @@ entitiesState.update = function (game) {
 
 	game.pointers.onStart(function (pointers) {
 		pointers.forEach(function (pointer) {
-			// game.world.dragStart(pointer);
-			console.log(pointer);
+			game.world.dragStart(pointer);
+			// console.log(pointer);
 		})
 	})
 	game.pointers.onContinued(function (pointers) {
 		pointers.forEach(function (pointer) {
-			// game.world.dragMove(pointer);
-			console.log(pointer);
+			game.world.dragMove(pointer);
+			// console.log(pointer);
 		})
 	})
 	game.pointers.onEnd(function (pointers) {
 		pointers.forEach(function (pointer) {
-			// game.world.dragEnd(pointer);
-			console.log(pointer);
+			game.world.dragEnd(pointer);
+			// console.log(pointer);
 		})
 	})
 
