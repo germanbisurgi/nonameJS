@@ -19,24 +19,23 @@ entitiesState.create = function (game) {
 	game.world.setGravity(0, 9.8);
 
 	// block factory
-	var addBlock = function (x, y, type) {
+	var addBlock = function (x, y, w, h, type) {
 		var block = game.world.addBody(x, y, type);
-		block.addRectangle(0, 0, 50, 50);
-		block.addImage(game.loader.get('block'), 0, 0, 50, 50);
+		block.addRectangle(0, 0, w, h);
+		block.addImage(game.loader.get('block'), 0, 0, w, h);
 		return block;
 	};
 
-	// blocks
-	addBlock(200, 400, 'dynamic');
-	addBlock(400, 300, 'dynamic');
-	addBlock(500, 300, 'dynamic');
-	addBlock(440, 100, 'dynamic');
-	addBlock(500, 500, 'dynamic');
-	addBlock(600, 200, 'dynamic');
+	// ball factory
+	var addBall = function (x, y, r, type) {
+		var ball = game.world.addBody(x, y, type);
+		ball.addCircle(0, 0, r);
+		return ball;
+	};
 
 	self.distanceJoint = game.world.createDistanceJoint({
-		bodyA: addBlock(100, 100, 'static'),
-		bodyB: addBlock(100, 200, 'dynamic'),
+		bodyA: addBlock(100, 100, 50, 50, 'static'),
+		bodyB: addBlock(100, 200, 50, 50, 'dynamic'),
 		length: 75,
 		ax: 0,
 		ay: 0,
@@ -47,20 +46,29 @@ entitiesState.create = function (game) {
 		collideConnected: false
 	});
 
+	var chasis = addBlock(300, 250, 150, 50, 'dynamic');
+	
 	self.revoluteJoint = game.world.createRevoluteJoint({
-		bodyA: addBlock(200, 100, 'static'),
-		bodyB: addBlock(200, 200, 'dynamic'),
-		ax: 0,
-		ay: 0,
+		bodyA: chasis,
+		bodyB: addBall(300, 250, 25.6, 'dynamic'),
+		ax: -50,
+		ay: 25,
 		bx: 0,
 		by: 0,
-		motorSpeed: 100,
-		maxMotorTorque: 2,
+		motorSpeed: 90,
+		maxMotorTorque: 500,
 		enableMotor: true,
-		lowerAngle: -360,
-		upperAngle: 360,
+		lowerAngle: 0,
+		upperAngle: 0,
 		enableLimit: false,
 		collideConnected: false
+	});
+
+	self.revoluteJoint = game.world.createRevoluteJoint({
+		bodyA: chasis,
+		bodyB: addBall(300, 250, 25.6, 'dynamic'),
+		ax: 50,
+		ay: 25
 	});
 
 	// static edges
@@ -71,7 +79,7 @@ entitiesState.create = function (game) {
 	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
 
 	// humstar
-	self.humstar = game.world.addBody(300, 100, 'dynamic', {});
+	self.humstar = game.world.addBody(100, 150, 'dynamic', {});
 	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
 	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
 
