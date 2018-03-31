@@ -86,7 +86,14 @@ var World = function (_game) {
 		var by = _config.by || _config.by === 0 ? _config.by / self.scale : 0;
 		jointDefinition.localAnchorA = {x: ax, y: ay};
 		jointDefinition.localAnchorB = {x: bx, y: by};
-		//jointDefinition.motorSpeed = 100;
+		jointDefinition.motorSpeed = _config.motorSpeed || _config.motorSpeed === 0 ? _config.motorSpeed * 0.0174532925199432957 : 0;
+		jointDefinition.lowerAngle = _config.lowerAngle || _config.lowerAngle === 0 ? _config.lowerAngle * 0.0174532925199432957 : 0;
+		jointDefinition.upperAngle = _config.upperAngle || _config.upperAngle === 0 ? _config.upperAngle * 0.0174532925199432957 : 0;
+		jointDefinition.maxMotorTorque = _config.maxMotorTorque || _config.maxMotorTorque === 0 ? _config.maxMotorTorque : 0;
+		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
+		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
+		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+
 		console.log(jointDefinition)
 		return self.world.CreateJoint(jointDefinition);
 	};

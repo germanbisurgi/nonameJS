@@ -50,20 +50,20 @@ entitiesState.create = function (game) {
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: addBlock(200, 100, 'static'),
 		bodyB: addBlock(200, 200, 'dynamic'),
-		ax: 25,
-		ay: 25,
-		bx: -25,
-		by: -25,
-		motorSpeed: 0,
-		motorTorque: 0,
-		motorEnabled: false,
-		lowerLimit: 0,
-		upperLimit: 0,
-		limitEnabled: 0,
+		ax: 0,
+		ay: 0,
+		bx: 0,
+		by: 0,
+		motorSpeed: 100,
+		maxMotorTorque: 2,
+		enableMotor: true,
+		lowerAngle: -360,
+		upperAngle: 360,
+		enableLimit: false,
 		collideConnected: false
 	});
 
-	// static edges (bench)
+	// static edges
 	self.edges = game.world.addBody(10, 10, 'static');
 	self.edges.addEdge(0, 0, window.innerWidth - 20, 0);
 	self.edges.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
@@ -71,7 +71,7 @@ entitiesState.create = function (game) {
 	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
 
 	// humstar
-	self.humstar = game.world.addBody(250, 100, 'dynamic', {});
+	self.humstar = game.world.addBody(300, 100, 'dynamic', {});
 	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
 	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
 
@@ -116,19 +116,16 @@ entitiesState.update = function (game) {
 	game.pointers.onStart(function (pointers) {
 		pointers.forEach(function (pointer) {
 			game.world.dragStart(pointer);
-			// console.log(pointer);
 		})
 	})
 	game.pointers.onContinued(function (pointers) {
 		pointers.forEach(function (pointer) {
 			game.world.dragMove(pointer);
-			// console.log(pointer);
 		})
 	})
 	game.pointers.onEnd(function (pointers) {
 		pointers.forEach(function (pointer) {
 			game.world.dragEnd(pointer);
-			// console.log(pointer);
 		})
 	})
 
