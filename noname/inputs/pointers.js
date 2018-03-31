@@ -23,7 +23,6 @@ var Pointers = function (_game) {
 
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var touch = event.changedTouches[i];
 			var pointer = {
 				number: event.touches.length,
 				type: 'touch',
@@ -32,7 +31,7 @@ var Pointers = function (_game) {
 				currentX: Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
 				currentY: Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
 				milliseconds: 0,
-				identifier: touch.identifier,
+				identifier: event.changedTouches[i].identifier,
 				startFrame: _game.loop.frames
 			};
 			self.started.push(pointer);
@@ -59,8 +58,7 @@ var Pointers = function (_game) {
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var touch = event.changedTouches[i];
-			var pointer = self.getByIdentifier(touch.identifier, self.continued);
+			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
 			pointer.currentX = Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft);
 			pointer.currentY = Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop);
 		}
@@ -77,8 +75,7 @@ var Pointers = function (_game) {
 	_game.render.canvas.addEventListener('touchend', function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
-			var touch = event.changedTouches[i];
-			var pointer = self.getByIdentifier(touch.identifier, self.continued);
+			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
 			pointer.releaseFrame = _game.loop.frames;
 			self.ended.push(pointer);
 			self.remove(pointer, self.continued);
@@ -96,7 +93,6 @@ var Pointers = function (_game) {
 	}, false);
 
 	self.update = function () {
-
 		if (self.started.length > 0) {
 			self.started.forEach(function (_pointer) {
 				if (_pointer.startFrame < _game.loop.frames - 1) {
@@ -104,7 +100,6 @@ var Pointers = function (_game) {
 				}
 			});
 		}
-
 		if (self.ended.length > 0) {
 			self.ended.forEach(function (_pointer) {
 				if (_pointer.releaseFrame < _game.loop.frames - 1) {
@@ -112,7 +107,6 @@ var Pointers = function (_game) {
 				}
 			});
 		}
-
 	};
 
 	self.getByIdentifier = function (_identifier, _array) {

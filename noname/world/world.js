@@ -231,6 +231,7 @@ var World = function (_game) {
 			body.GetWorld().DestroyBody(body);
 		});
 		self.bodies = [];
+		self.mouseJoints = [];
 	};
 
 

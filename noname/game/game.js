@@ -40,7 +40,7 @@ var Game = function (_settings) {
 			return out;
 		};
 
-		self.signals = new noname.signals();
+		self.messages = new noname.messages();
 		self.loop = new noname.loop(self);
 		self.state = new noname.stateManager(self);
 		self.mathematics = new noname.mathematics();
@@ -54,6 +54,8 @@ var Game = function (_settings) {
 		self.debugger = new ObjectDebugger(document.querySelector('.output'));
 
 		self.loop.start(function () {
+
+			// self.debugger.print(self.messages, 2);
 
 			self.state.actualSwitch();
 

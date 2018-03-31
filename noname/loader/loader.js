@@ -109,10 +109,10 @@ var Loader = function (_game) {
 					if (self.loadComplete()) {
 						self.loading = false;
 						self.reset();
-						_game.signals.emit('done');
+						_game.messages.send('done');
 					}
 				} else {
-					_game.signals.emit('loading');
+					_game.messages.send('loading');
 					self.loading = true;
 					if (_asset.type === 'image') {
 						self.loadImage(_asset);
@@ -130,20 +130,20 @@ var Loader = function (_game) {
 		img.onload = function () {
 			self.lastLoaded = _asset.name;
 			self.success++;
-			_game.signals.emit('onload', img);
+			_game.messages.send('onload', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				_game.signals.emit('done');
+				_game.messages.send('done');
 			}
 		};
 		img.onerror = function () {
 			self.errors++;
-			_game.signals.emit('onerror', img);
+			_game.messages.send('onerror', img);
 			if (self.loadComplete()) {
 				self.loading = false;
 				self.reset();
-				_game.signals.emit('done');
+				_game.messages.send('done');
 			}
 		};
 		img.src = _asset.path;
@@ -163,19 +163,19 @@ var Loader = function (_game) {
 				self.lastLoaded = _asset.name;
 				self.cache.push(audio);
 				self.success++;
-				_game.signals.emit('onload', audio);
+				_game.messages.send('onload', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					_game.signals.emit('done');
+					_game.messages.send('done');
 				}
 			}, function () {
 				self.errors++;
-				_game.signals.emit('onerror', audio);
+				_game.messages.send('onerror', audio);
 				if (self.loadComplete()) {
 					self.loading = false;
 					self.reset();
-					_game.signals.emit('done', audio);
+					_game.messages.send('done', audio);
 				}
 			});
 		};
