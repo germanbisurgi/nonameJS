@@ -20,5 +20,4 @@ var noname = {
 	imageComponent: ImageComponent,
 	spriteComponent: SpriteComponent,
 	tileSpriteComponent: TileSpriteComponent,
-	bodyComponent: BodyComponent
 };

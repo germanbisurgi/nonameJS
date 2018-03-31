@@ -19,21 +19,33 @@ entitiesState.create = function (game) {
 	game.world.setGravity(0, 9.8);
 
 	// block factory
-	var addBlock = function (x, y) {
-		var block = game.world.addBody(x, y, 'dynamic');
+	var addBlock = function (x, y, type) {
+		var block = game.world.addBody(x, y, type);
 		block.addRectangle(0, 0, 50, 50);
 		block.addImage(game.loader.get('block'), 0, 0, 50, 50);
+		return block;
 	};
 
 	// blocks
-	addBlock(180, 100);
-	addBlock(100, 200);
-	addBlock(200, 400);
-	addBlock(400, 300);
-	addBlock(500, 300);
-	addBlock(440, 100);
-	addBlock(500, 500);
-	addBlock(600, 200);
+	addBlock(200, 400, 'dynamic');
+	addBlock(400, 300, 'dynamic');
+	addBlock(500, 300, 'dynamic');
+	addBlock(440, 100, 'dynamic');
+	addBlock(500, 500, 'dynamic');
+	addBlock(600, 200, 'dynamic');
+	self.distanceBlock1 = addBlock(200, 200, 'static');
+	self.distanceBlock2 = addBlock(100, 200, 'dynamic');
+	self.distanceJoint = game.world.createDistanceJoint(
+		self.distanceBlock1, 
+		self.distanceBlock2,
+		100,
+		0,
+		0,
+		0,
+		0,
+		1,
+		1
+	);
 
 	// static edges (bench)
 	self.edges = game.world.addBody(10, 10, 'static');
@@ -45,22 +57,13 @@ entitiesState.create = function (game) {
 	// humstar
 	self.humstar = game.world.addBody(250, 100, 'dynamic', {});
 	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
-	// self.sensorL = self.humstar.addCircle(-25, 0, 10, {isSensor: true, density: 0});
-	// self.sensorR = self.humstar.addCircle(25, 0, 10, {isSensor: true, density: 0});
-	// self.sensorT = self.humstar.addRectangle(0, -25, 20, 20, {isSensor: true, density: 0});
-	// self.sensorB = self.humstar.addRectangle(0, 25, 20, 20, {isSensor: true, density: 0});
+	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
 
 	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
 	self.humstarSprite.addAnimation('fly', [0, 1, 2, 3, 4]);
 
-	self.data = {};
-
 	// world contacts
 	game.world.contacts.BeginContact = function (contact) {
-		self.data.leftTouching = contact.GetFixtureA() === self.sensorL || contact.GetFixtureB() === self.sensorL;
-		self.data.topTouching = contact.GetFixtureA() === self.sensorT || contact.GetFixtureB() === self.sensorT;
-		self.data.rightTouching = contact.GetFixtureA() === self.sensorR || contact.GetFixtureB() === self.sensorR;
-		self.data.bottomTouching = contact.GetFixtureA() === self.sensorB || contact.GetFixtureB() === self.sensorB;
 		if (contact.GetFixtureA() === self.humstarCircle || contact.GetFixtureB() === self.humstarCircle) {
 			self.kick.play();
 		}
@@ -71,10 +74,10 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
+	// game.debugger.print(self.distanceBlock1, 1);
+
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
-
-	self.humstar.ApplyForce({x: 0, y: -1}, self.humstar.GetWorldCenter());
 
 	// controls
 	game.keys.pressing('ArrowRight', function () {
@@ -87,7 +90,7 @@ entitiesState.update = function (game) {
 	});
 	game.keys.justPressed('ArrowUp', function () {
 		// self.humstar.setVelocity(0 ,-100);
-		self.humstar.ApplyImpulse({x: 0, y: -3}, self.humstar.GetWorldCenter());
+		self.humstar.ApplyImpulse({x: 0, y: -2}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowDown', function () {
 		// self.humstar.setVelocity(0 ,100);
