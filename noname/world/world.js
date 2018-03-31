@@ -79,7 +79,6 @@ var World = function (_game) {
 			_config.bodyB,
 			_config.bodyA.GetWorldCenter()
 		);
-		console.log(jointDefinition)
 		var ax = _config.ax || _config.ax === 0 ? _config.ax / self.scale : 0;
 		var ay = _config.ay || _config.ay === 0 ? _config.ay / self.scale : 0;
 		var bx = _config.bx || _config.bx === 0 ? _config.bx / self.scale : 0;
@@ -93,8 +92,6 @@ var World = function (_game) {
 		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
 		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
 		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
-
-		console.log(jointDefinition)
 		return self.world.CreateJoint(jointDefinition);
 	};
 
