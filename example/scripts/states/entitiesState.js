@@ -33,20 +33,35 @@ entitiesState.create = function (game) {
 	addBlock(440, 100, 'dynamic');
 	addBlock(500, 500, 'dynamic');
 	addBlock(600, 200, 'dynamic');
-	self.distanceBlock1 = addBlock(200, 200, 'static');
-	self.distanceBlock2 = addBlock(100, 200, 'dynamic');
-	self.distanceJoint = game.world.createDistanceJoint(
-		self.distanceBlock1, 
-		self.distanceBlock2,
-		100,
-		0,
-		0,
-		0,
-		0,
-		1,
-		0.25,
-		false
-	);
+
+	self.distanceJoint = game.world.createDistanceJoint({
+		bodyA: addBlock(100, 100, 'static'),
+		bodyB: addBlock(100, 200, 'dynamic'),
+		length: 75,
+		ax: 0,
+		ay: 0,
+		bx: 0,
+		by: 0,
+		frequencyHz: 1,
+		damping: 0.25,
+		collideConnected: false
+	});
+
+	self.revoluteJoint = game.world.createRevoluteJoint({
+		bodyA: addBlock(200, 100, 'static'),
+		bodyB: addBlock(200, 200, 'dynamic'),
+		ax: 25,
+		ay: 25,
+		bx: -25,
+		by: -25,
+		motorSpeed: 0,
+		motorTorque: 0,
+		motorEnabled: false,
+		lowerLimit: 0,
+		upperLimit: 0,
+		limitEnabled: 0,
+		collideConnected: false
+	});
 
 	// static edges (bench)
 	self.edges = game.world.addBody(10, 10, 'static');

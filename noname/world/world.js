@@ -53,23 +53,41 @@ var World = function (_game) {
 		return self.world.CreateJoint(jointDefinition);
 	};
 
-	self.createDistanceJoint = function (_body1, _body2, _length, _ax, _ay, _bx, _by, _frequencyHz, _damping, _collideConnected) {
-		var ax = _ax || _ax === 0 ? _ax : 0;
-		var ay = _ay || _ay === 0 ? _ay : 0;
-		var bx = _bx || _bx === 0 ? _bx : 0;
-		var by = _by || _by === 0 ? _by : 0;
+	self.createDistanceJoint = function (_config) {
+		var ax = _config.ax || _config.ax === 0 ? _config.ax / self.scale : 0;
+		var ay = _config.ay || _config.ay === 0 ? _config.ay / self.scale : 0;
+		var bx = _config.bx || _config.bx === 0 ? _config.bx / self.scale : 0;
+		var by = _config.by || _config.by === 0 ? _config.by / self.scale : 0;
 		var jointDefinition = new Box2D.Dynamics.Joints.b2DistanceJointDef();
 		jointDefinition.Initialize(
-			_body1,
-			_body2,
-			{x: _body1.GetWorldCenter().x + (ax / self.scale), y: _body1.GetWorldCenter().y + (ay / self.scale)},
-			{x: _body2.GetWorldCenter().x + (bx / self.scale), y: _body2.GetWorldCenter().y + (by / self.scale)}
+			_config.bodyA,
+			_config.bodyB,
+			{x: _config.bodyA.GetWorldCenter().x + (ax), y: _config.bodyA.GetWorldCenter().y + (ay)},
+			{x: _config.bodyB.GetWorldCenter().x + (bx), y: _config.bodyB.GetWorldCenter().y + (by)}
+		);
+		jointDefinition.length = _config.length || _config.length === 0 ? _config.length / self.scale : jointDefinition.length;
+		jointDefinition.frequencyHz = _config.frequencyHz || _config.frequencyHz === 0 ? _config.frequencyHz : jointDefinition.frequencyHz;
+		jointDefinition.damping = _config.damping || _config.damping === 0 ? _config.damping : jointDefinition.damping;
+		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : jointDefinition.collideConnected;
+		return self.world.CreateJoint(jointDefinition);
+	};
+
+	self.createRevoluteJoint = function (_config) {
+		var jointDefinition = new Box2D.Dynamics.Joints.b2RevoluteJointDef();
+		jointDefinition.Initialize(
+			_config.bodyA,
+			_config.bodyB,
+			_config.bodyA.GetWorldCenter()
 		);
 		console.log(jointDefinition)
-		jointDefinition.length = _length || _length === 0 ? _length / self.scale : jointDefinition.length;
-		jointDefinition.frequencyHz = _frequencyHz || _frequencyHz === 0 ? _frequencyHz : jointDefinition.frequencyHz;
-		jointDefinition.damping = _damping || _damping === 0 ? _damping : jointDefinition.damping;
-		jointDefinition.collideConnected = _collideConnected  ? _collideConnected : jointDefinition.collideConnected;
+		var ax = _config.ax || _config.ax === 0 ? _config.ax / self.scale : 0;
+		var ay = _config.ay || _config.ay === 0 ? _config.ay / self.scale : 0;
+		var bx = _config.bx || _config.bx === 0 ? _config.bx / self.scale : 0;
+		var by = _config.by || _config.by === 0 ? _config.by / self.scale : 0;
+		jointDefinition.localAnchorA = {x: ax, y: ay};
+		jointDefinition.localAnchorB = {x: bx, y: by};
+		//jointDefinition.motorSpeed = 100;
+		console.log(jointDefinition)
 		return self.world.CreateJoint(jointDefinition);
 	};
 
