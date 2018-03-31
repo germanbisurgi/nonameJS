@@ -53,7 +53,7 @@ var World = function (_game) {
 		return self.world.CreateJoint(jointDefinition);
 	};
 
-	self.createDistanceJoint = function (_body1, _body2, _length, _ax, _ay, _bx, _by, _frequencyHz, _damping) {
+	self.createDistanceJoint = function (_body1, _body2, _length, _ax, _ay, _bx, _by, _frequencyHz, _damping, _collideConnected) {
 		var ax = _ax || _ax === 0 ? _ax : 0;
 		var ay = _ay || _ay === 0 ? _ay : 0;
 		var bx = _bx || _bx === 0 ? _bx : 0;
@@ -65,9 +65,11 @@ var World = function (_game) {
 			{x: _body1.GetWorldCenter().x + (ax / self.scale), y: _body1.GetWorldCenter().y + (ay / self.scale)},
 			{x: _body2.GetWorldCenter().x + (bx / self.scale), y: _body2.GetWorldCenter().y + (by / self.scale)}
 		);
+		console.log(jointDefinition)
 		jointDefinition.length = _length || _length === 0 ? _length / self.scale : jointDefinition.length;
 		jointDefinition.frequencyHz = _frequencyHz || _frequencyHz === 0 ? _frequencyHz : jointDefinition.frequencyHz;
 		jointDefinition.damping = _damping || _damping === 0 ? _damping : jointDefinition.damping;
+		jointDefinition.collideConnected = _collideConnected  ? _collideConnected : jointDefinition.collideConnected;
 		return self.world.CreateJoint(jointDefinition);
 	};
 
