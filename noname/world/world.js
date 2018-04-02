@@ -105,20 +105,21 @@ self.createPrismaticJoint = function (_config) {
 			_config.bodyA.GetWorldCenter(),
 			{x: axisX, y: axisY}
 		);
-		console.log(jointDefinition)
 		var ax = _config.ax || _config.ax === 0 ? _config.ax / self.scale : 0;
 		var ay = _config.ay || _config.ay === 0 ? _config.ay / self.scale : 0;
 		var bx = _config.bx || _config.bx === 0 ? _config.bx / self.scale : 0;
 		var by = _config.by || _config.by === 0 ? _config.by / self.scale : 0;
 		jointDefinition.localAnchorA = {x: ax, y: ay};
 		jointDefinition.localAnchorB = {x: bx, y: by};
-		jointDefinition.motorSpeed = _config.motorSpeed || _config.motorSpeed === 0 ? _config.motorSpeed * 0.0174532925199432957 : 0;
-		jointDefinition.lowerTranslation = _config.lowerTranslation || _config.lowerTranslation === 0 ? _config.lowerTranslation : 0;
-		jointDefinition.upperTranslation = _config.upperTranslation || _config.upperTranslation === 0 ? _config.upperTranslation : 0;
-		jointDefinition.maxMotorTorque = _config.maxMotorTorque || _config.maxMotorTorque === 0 ? _config.maxMotorTorque : 0;
-		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
+		jointDefinition.lowerTranslation = _config.lowerTranslation || _config.lowerTranslation === 0 ? _config.lowerTranslation / self.scale : 0;
+		jointDefinition.upperTranslation = _config.upperTranslation || _config.upperTranslation === 0 ? _config.upperTranslation / self.scale : 0;
 		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
+		jointDefinition.motorSpeed = _config.motorSpeed || _config.motorSpeed === 0 ? _config.motorSpeed * 0.0174532925199432957 : 0;
+		jointDefinition.maxMotorForce = _config.maxMotorForce || _config.maxMotorForce === 0 ? _config.maxMotorForce : 0;
+		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
 		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+		console.log(jointDefinition)
+		
 		return self.world.CreateJoint(jointDefinition);
 	};
 

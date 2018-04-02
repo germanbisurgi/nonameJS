@@ -55,8 +55,8 @@ entitiesState.create = function (game) {
 		ay: 25,
 		bx: 0,
 		by: 0,
-		motorSpeed: 90,
-		maxMotorTorque: 500,
+		motorSpeed: 360*5,
+		maxMotorTorque: 50,
 		enableMotor: true,
 		lowerAngle: 0,
 		upperAngle: 0,
@@ -72,20 +72,20 @@ entitiesState.create = function (game) {
 	});
 
 	self.prismaticJoint = game.world.createPrismaticJoint({
-		bodyA: addBlock(300, 50, 50, 50, 'static'),
-		bodyB: addBlock(350, 100, 50, 50, 'dynamic'),
-		axisX: 1,
+		bodyA: addBlock(300, 150, 50, 50, 'static'),
+		bodyB: addBlock(350, 150, 50, 50, 'dynamic'),
+		axisX: 25,
 		axisY: 0,
 		ax: 0,
 		ay: 0,
 		bx: 0,
 		by: 0,
-		motorSpeed: 0,
-		maxMotorTorque: 0,
-		enableMotor: false,
-		lowerTranslation: 50,
+		lowerTranslation: -50,
 		upperTranslation: 50,
 		enableLimit: true,
+		motorSpeed: 10,
+		maxMotorForce: 1,
+		enableMotor: true,
 		collideConnected: false
 	});
 
