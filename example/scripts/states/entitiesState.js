@@ -46,11 +46,11 @@ entitiesState.create = function (game) {
 		collideConnected: false
 	});
 
-	var chasis = addBlock(300, 250, 150, 50, 'dynamic');
+	var chasis = addBlock(50, 300, 150, 50, 'dynamic');
 	
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: chasis,
-		bodyB: addBall(300, 250, 25.6, 'dynamic'),
+		bodyB: addBall(50, 300, 25.6, 'dynamic'),
 		ax: -50,
 		ay: 25,
 		bx: 0,
@@ -66,25 +66,25 @@ entitiesState.create = function (game) {
 
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: chasis,
-		bodyB: addBall(300, 250, 25.6, 'dynamic'),
+		bodyB: addBall(100, 300, 25.6, 'dynamic'),
 		ax: 50,
 		ay: 25
 	});
 
 	self.prismaticJoint = game.world.createPrismaticJoint({
-		bodyA: addBlock(300, 150, 50, 50, 'static'),
-		bodyB: addBlock(350, 150, 50, 50, 'dynamic'),
-		axisX: 25,
+		bodyA: addBlock(600, 300, 50, 50, 'static'),
+		bodyB: addBlock(450, 300, 50, 50, 'dynamic'),
+		axisX: -25,
 		axisY: 0,
 		ax: 0,
 		ay: 0,
 		bx: 0,
 		by: 0,
-		lowerTranslation: -50,
-		upperTranslation: 50,
+		lowerTranslation: 0,
+		upperTranslation: 10,
 		enableLimit: true,
-		motorSpeed: 10,
-		maxMotorForce: 1,
+		motorSpeed: 360,
+		maxMotorForce: 100,
 		enableMotor: true,
 		collideConnected: false
 	});
