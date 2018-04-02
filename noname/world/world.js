@@ -95,6 +95,33 @@ var World = function (_game) {
 		return self.world.CreateJoint(jointDefinition);
 	};
 
+self.createPrismaticJoint = function (_config) {
+		var axisX = _config.axisX || _config.axisX === 0 ? _config.axisX / self.scale : 0;
+		var axisY = _config.axisY || _config.axisY === 0 ? _config.axisY / self.scale : 0;
+		var jointDefinition = new Box2D.Dynamics.Joints.b2PrismaticJointDef();
+		jointDefinition.Initialize(
+			_config.bodyA,
+			_config.bodyB,
+			_config.bodyA.GetWorldCenter(),
+			{x: axisX, y: axisY}
+		);
+		console.log(jointDefinition)
+		var ax = _config.ax || _config.ax === 0 ? _config.ax / self.scale : 0;
+		var ay = _config.ay || _config.ay === 0 ? _config.ay / self.scale : 0;
+		var bx = _config.bx || _config.bx === 0 ? _config.bx / self.scale : 0;
+		var by = _config.by || _config.by === 0 ? _config.by / self.scale : 0;
+		jointDefinition.localAnchorA = {x: ax, y: ay};
+		jointDefinition.localAnchorB = {x: bx, y: by};
+		jointDefinition.motorSpeed = _config.motorSpeed || _config.motorSpeed === 0 ? _config.motorSpeed * 0.0174532925199432957 : 0;
+		jointDefinition.lowerTranslation = _config.lowerTranslation || _config.lowerTranslation === 0 ? _config.lowerTranslation : 0;
+		jointDefinition.upperTranslation = _config.upperTranslation || _config.upperTranslation === 0 ? _config.upperTranslation : 0;
+		jointDefinition.maxMotorTorque = _config.maxMotorTorque || _config.maxMotorTorque === 0 ? _config.maxMotorTorque : 0;
+		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
+		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
+		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+		return self.world.CreateJoint(jointDefinition);
+	};
+
 	self.destroyJoint = function (_joint) {
 		self.world.DestroyJoint(_joint);
 	};

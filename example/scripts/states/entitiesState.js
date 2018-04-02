@@ -71,6 +71,24 @@ entitiesState.create = function (game) {
 		ay: 25
 	});
 
+	self.prismaticJoint = game.world.createPrismaticJoint({
+		bodyA: addBlock(300, 50, 50, 50, 'static'),
+		bodyB: addBlock(350, 100, 50, 50, 'dynamic'),
+		axisX: 1,
+		axisY: 0,
+		ax: 0,
+		ay: 0,
+		bx: 0,
+		by: 0,
+		motorSpeed: 0,
+		maxMotorTorque: 0,
+		enableMotor: false,
+		lowerTranslation: 50,
+		upperTranslation: 50,
+		enableLimit: true,
+		collideConnected: false
+	});
+
 	// static edges
 	self.edges = game.world.addBody(10, 10, 'static');
 	self.edges.addEdge(0, 0, window.innerWidth - 20, 0);
