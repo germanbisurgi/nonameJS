@@ -84,7 +84,7 @@ entitiesState.create = function (game) {
 		upperTranslation: 10,
 		enableLimit: true,
 		motorSpeed: 360,
-		maxMotorForce: 100,
+		maxMotorForce: 200,
 		enableMotor: true,
 		collideConnected: false
 	});
@@ -111,7 +111,10 @@ entitiesState.create = function (game) {
 		}
 	}
 
-	game.world.rayCast({x: 0, y: 200}, {x: 2000, y: 200}, function (something) {
+	game.world.rayCast(
+		{x: 0, y: 200},
+		{x: 2000, y: 200},
+		function (something) {
 		console.log(something)
 	});
 
