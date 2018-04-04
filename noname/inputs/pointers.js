@@ -8,7 +8,7 @@ var Pointers = function (_game) {
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
 
-		if (!_game.audio.unlocked) {
+		/*if (!_game.audio.unlocked) {
 			var buffer = _game.audio.context.createBuffer(1, 1, 22050);
 			var source = _game.audio.context.createBufferSource();
 			source.buffer = buffer;
@@ -19,7 +19,7 @@ var Pointers = function (_game) {
 					_game.audio.unlocked = true;
 				}
 			}, 0);
-		}
+		}*/
 
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {

@@ -27,4 +27,24 @@ var Audio = function (_game) {
 		return new noname.track(self, _settings);
 	};
 
+	self.init = function () {
+		document.body.addEventListener('touchend', function () {
+			if (!self.unlocked) {
+				var buffer = self.context.createBuffer(1, 1, 22050);
+				var source = self.context.createBufferSource();
+				source.buffer = buffer;
+				source.connect(self.context.destination);
+				source.start(0);
+				setTimeout(function () {
+					if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+						self.unlocked = true;
+						alert('audio unlocked')
+					}
+				}, 0);
+			}
+		}, false);
+	}
+
+	self.init();
+
 };
