@@ -38,7 +38,6 @@ var Audio = function (_game) {
 				setTimeout(function () {
 					if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
 						self.unlocked = true;
-						alert('audio unlocked')
 					}
 				}, 0);
 			}
