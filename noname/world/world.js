@@ -118,8 +118,6 @@ self.createPrismaticJoint = function (_config) {
 		jointDefinition.maxMotorForce = _config.maxMotorForce || _config.maxMotorForce === 0 ? _config.maxMotorForce : 0;
 		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
 		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
-		console.log(jointDefinition)
-		
 		return self.world.CreateJoint(jointDefinition);
 	};
 
@@ -132,6 +130,14 @@ self.createPrismaticJoint = function (_config) {
 			_function(fixture);
 		},
 		{x: _point.x / self.scale, y: _point.y / self.scale});
+	};
+
+	self.rayCast = function (_pointA, _pointB, _callback) {
+		self.world.RayCast(
+			_callback,
+			{x: _pointA.x / self.scale, y: _pointA.y / self.scale},
+			{x: _pointB.x / self.scale, y: _pointB.y / self.scale}
+		);
 	};
 
 	self.setGravity = function (_x, _y) {

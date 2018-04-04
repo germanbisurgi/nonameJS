@@ -111,12 +111,18 @@ entitiesState.create = function (game) {
 		}
 	}
 
+	game.world.rayCast({x: 0, y: 200}, {x: 2000, y: 200}, function (something) {
+		console.log(something)
+	});
+
 };
 
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
 	// game.debugger.print(self.distanceBlock1, 1);
+
+	
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
