@@ -28,7 +28,7 @@ var Audio = function (_game) {
 	};
 
 	self.init = function () {
-		document.body.addEventListener('touchend', function () {
+		document.body.addEventListener('touchstart', function () {
 			if (!self.unlocked) {
 				var buffer = self.context.createBuffer(1, 1, 22050);
 				var source = self.context.createBufferSource();
