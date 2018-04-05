@@ -11,7 +11,7 @@ pointersState.update = function (game) {
 	});
 
 	game.pointers.onContinued('finger', 2, function (pointers) {
-		console.log(pointers);
+		game.debugger.print(pointers, 2)
 	});
 
 	game.pointers.onEnd(function (pointers) {
