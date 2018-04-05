@@ -133,22 +133,39 @@ var Pointers = function (_game) {
 		}
 	};
 
-	self.onStart = function (fn) {
-		if (self.started.length > 0) {
-			fn(self.started);
-		}
-	};
-	
-	self.onContinued = function (type, number, fn) {
-		self.continued.forEach(function (pointer) {
-			if (pointer.type === type && pointer.number ===  Number(number)) {
-				fn(pointer);
+	self.filterPointers = function (array, type, number, fn) {
+		array.forEach(function (pointer) {
+			if (type === '*' && number === '*') {
+					fn(pointer);
+			}
+			if (type !== '*' && number !== '*') {
+				if (pointer.type === type && pointer.number ===  Number(number)) {
+					fn(pointer);
+				}
+			}
+			if (type !== '*' && number === '*') {
+				if (pointer.type === type) {
+					fn(pointer);
+				}
+			}
+			if (type === '*' && number !== '*') {
+				if (pointer.number === Number(number)) {
+					fn(pointer);
+				}
 			}
 		});
 	};
 
-	self.onEnd = function (fn) {
-		fn(self.ended);
+	self.onStart = function (type, number, fn) {
+		self.filterPointers(self.started, type, number, fn);
+	};
+	
+	self.onContinued = function (type, number, fn) {
+		self.filterPointers(self.continued, type, number, fn);
+	};
+
+	self.onEnd = function (type, number, fn) {
+		self.filterPointers(self.ended, type, number, fn);
 	};
 	
 };

@@ -9,15 +9,16 @@ pointersState.update = function (game) {
 	game.debugger.print(game.pointers, 2)
 
 
-	game.pointers.onStart(function (pointers) {
-		// console.log('just touched');
+	game.pointers.onStart('*', '*', function (pointers) {
+		console.log('start');
 	});
 
-	game.pointers.onContinued('finger', '1', function (pointers) {
+	game.pointers.onContinued('*', '*', function (pointers) {
+		console.log('continued');
 	});
 
-	game.pointers.onEnd(function (pointers) {
-		// console.log('released');
+	game.pointers.onEnd('*', '*', function (pointers) {
+		console.log('end');
 	});
 
 	game.keys.justPressed('b', function () {

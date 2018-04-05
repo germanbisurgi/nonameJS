@@ -146,20 +146,14 @@ entitiesState.update = function (game) {
 		self.humstar.ApplyForce({x: 0, y: 2}, self.humstar.GetWorldCenter());
 	});
 
-	game.pointers.onStart(function (pointers) {
-		pointers.forEach(function (pointer) {
-			game.world.dragStart(pointer);
-		})
+	game.pointers.onStart('*', '*', function (pointer) {
+		game.world.dragStart(pointer);
 	})
-	game.pointers.onContinued(function (pointers) {
-		pointers.forEach(function (pointer) {
-			game.world.dragMove(pointer);
-		})
+	game.pointers.onContinued('*', '*', function (pointer) {
+		game.world.dragMove(pointer);
 	})
-	game.pointers.onEnd(function (pointers) {
-		pointers.forEach(function (pointer) {
-			game.world.dragEnd(pointer);
-		})
+	game.pointers.onEnd('*', '*', function (pointer) {
+		game.world.dragEnd(pointer);
 	})
 
 	// camera
