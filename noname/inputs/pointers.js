@@ -141,11 +141,10 @@ var Pointers = function (_game) {
 	
 	self.onContinued = function (type, number, fn) {
 		self.continued.forEach(function (pointer) {
-			if (pointer.type === type && pointer.number === number) {
+			if (pointer.type === type && pointer.number ===  Number(number)) {
 				fn(pointer);
 			}
 		});
-		
 	};
 
 	self.onEnd = function (fn) {

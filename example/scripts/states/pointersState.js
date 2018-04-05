@@ -6,12 +6,14 @@ pointersState.create = function (game) {};
 
 pointersState.update = function (game) {
 
+	game.debugger.print(game.pointers, 2)
+
+
 	game.pointers.onStart(function (pointers) {
 		// console.log('just touched');
 	});
 
-	game.pointers.onContinued('finger', 2, function (pointers) {
-		game.debugger.print(pointers, 2)
+	game.pointers.onContinued('finger', '1', function (pointers) {
 	});
 
 	game.pointers.onEnd(function (pointers) {
