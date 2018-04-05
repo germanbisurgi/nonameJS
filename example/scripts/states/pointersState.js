@@ -7,15 +7,15 @@ pointersState.create = function (game) {};
 pointersState.update = function (game) {
 
 	game.pointers.onStart(function (pointers) {
-		console.log('just touched');
+		// console.log('just touched');
 	});
 
-	game.pointers.onContinued(function (pointers) {
-		console.log('touching');
+	game.pointers.onContinued('finger', 2, function (pointers) {
+		console.log(pointers);
 	});
 
 	game.pointers.onEnd(function (pointers) {
-		console.log('released');
+		// console.log('released');
 	});
 
 	game.keys.justPressed('b', function () {
@@ -30,7 +30,7 @@ pointersState.update = function (game) {
 
 pointersState.afterRender = function (game) {
 	game.pointers.continued.forEach(function (pointer) {
-		game.render.context.strokeStyle = 'cyan';
+		game.render.context.strokeStyle = pointer.type === 'mouse' ? 'magenta' : 'cyan';
 		game.render.context.lineWidth = '6';
 		game.render.context.beginPath();
 		game.render.context.arc(pointer.startX, pointer.startY, 60, 0, Math.PI * 2, true);

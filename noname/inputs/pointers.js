@@ -12,7 +12,7 @@ var Pointers = function (_game) {
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var pointer = {
 				number: event.touches.length,
-				type: 'touch',
+				type: 'finger',
 				startX: Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
 				startY: Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),
 				currentX: Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
@@ -116,6 +116,16 @@ var Pointers = function (_game) {
 		return output;
 	};
 
+	self.getByType = function (_type, _array) {
+		var output = false;
+		_array.forEach(function (_pointer) {
+			if (_pointer.type === _type) {
+				output = _pointer;
+			}
+		});
+		return output;
+	};
+
 	self.remove = function (_item, _array) {
 		var index = _array.indexOf(_item);
 		if (index > -1) {
@@ -129,8 +139,13 @@ var Pointers = function (_game) {
 		}
 	};
 	
-	self.onContinued = function (fn) {
-		fn(self.continued);
+	self.onContinued = function (type, number, fn) {
+		self.continued.forEach(function (pointer) {
+			if (pointer.type === type && pointer.number === number) {
+				fn(pointer);
+			}
+		});
+		
 	};
 
 	self.onEnd = function (fn) {

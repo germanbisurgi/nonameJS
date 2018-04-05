@@ -83,8 +83,8 @@ entitiesState.create = function (game) {
 		lowerTranslation: 0,
 		upperTranslation: 50,
 		enableLimit: true,
-		motorSpeed: 200,
-		maxMotorForce: 40,
+		motorSpeed: 1200,
+		maxMotorForce: 1200,
 		enableMotor: true,
 		collideConnected: false
 	});
@@ -178,5 +178,40 @@ entitiesState.update = function (game) {
 	game.keys.justPressed('n', function () {
 		game.world.clear();
 		game.state.switchNext();
+	});
+};
+
+entitiesState.afterRender = function (game) {
+	game.pointers.continued.forEach(function (pointer) {
+		game.render.context.save();
+		game.render.context.strokeStyle = 'cyan';
+		game.render.context.lineWidth = '6';
+		game.render.context.beginPath();
+		game.render.context.arc(pointer.startX, pointer.startY, 60, 0, Math.PI * 2, true);
+		game.render.context.stroke();
+		game.render.context.beginPath();
+		game.render.context.arc(pointer.currentX, pointer.currentY, 30, 0, Math.PI * 2, true);
+		game.render.context.stroke();
+		game.render.context.fillText(
+			'type: ' + pointer.type + ', number: ' + pointer.number,
+			pointer.startX - 30,
+			pointer.startY - 100
+		);
+		game.render.context.fillText(
+			'startX: ' + pointer.startX + ', startY: ' + pointer.startY,
+			pointer.startX - 30,
+			pointer.startY - 90
+		);
+		game.render.context.fillText(
+			'currentX: ' + pointer.currentX + ', currentY: ' + pointer.currentY,
+			pointer.startX - 30,
+			pointer.startY - 80
+		);
+		game.render.context.fillText(
+			'offsetX: ' + (pointer.currentX - pointer.startX) + ', offsetY: ' + (pointer.currentY - pointer.startY),
+			pointer.startX - 30,
+			pointer.startY - 70
+		);
+		game.render.context.restore();
 	});
 };

@@ -10,7 +10,7 @@ var game = new noname.game({
 		audioState,
 		entitiesState
 	],
-	initialState: 'entitiesState',
+	initialState: 'pointersState',
 	physicsDebug: true
 });
 
