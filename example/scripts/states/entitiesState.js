@@ -66,7 +66,7 @@ entitiesState.create = function (game) {
 
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: chasis,
-		bodyB: addBall(100, 300, 40, 'dynamic'),
+		bodyB: addBall(100, 300, 50, 'dynamic'),
 		ax: 50,
 		ay: 25
 	});
@@ -111,13 +111,6 @@ entitiesState.create = function (game) {
 		}
 	}
 
-	/*game.world.rayCast(
-		{x: 0, y: 200},
-		{x: 2000, y: 200},
-		function (something) {
-		console.log(something)
-	});*/
-
 };
 
 entitiesState.update = function (game) {
@@ -151,6 +144,18 @@ entitiesState.update = function (game) {
 	})
 	game.pointers.onContinued('*', '*', function (pointer) {
 		game.world.dragMove(pointer);
+		/*game.world.rayCast(
+			{x: pointer.startX, y: pointer.startY},
+			{x: pointer.currentX, y: pointer.currentY},
+			function (fixture, point, normal, fraction) {
+				game.debugger.print(2, arguments);
+			}
+		);*/
+
+		game.debugger.print(2, game.world.world.RayCastAll(
+			{x: pointer.startX / game.world.scale, y: pointer.startY / game.world.scale},
+			{x: pointer.currentX / game.world.scale, y: pointer.currentY / game.world.scale}
+		));
 	})
 	game.pointers.onEnd('*', '*', function (pointer) {
 		game.world.dragEnd(pointer);
@@ -208,4 +213,14 @@ entitiesState.afterRender = function (game) {
 		);
 		game.render.context.restore();
 	});
+	game.pointers.onContinued('*', '*', function (pointer) {
+		game.render.context.save();
+		game.render.context.strokeStyle = 'red';
+		game.render.context.beginPath();
+		game.render.context.moveTo(pointer.startX, pointer.startY);
+		game.render.context.lineTo(pointer.currentX, pointer.currentY);
+		game.render.context.stroke();
+		game.render.context.restore();
+	})
+	
 };

@@ -111,7 +111,7 @@ var ObjectDebugger = function (_outputContainer) {
 		});
 	};
 
-	self.print = function (_object, maxDepth) {
+	self.print = function (maxDepth, _object) {
 
 		self.outputContainer.classList.add('active');
 
