@@ -96,8 +96,8 @@ var World = function (_game) {
 	};
 
 self.createPrismaticJoint = function (_config) {
-		var axisX = _config.axisX || _config.axisX === 0  ? _config.axisX / self.scale : 0;
-		var axisY = _config.axisY || _config.axisY === 0 ? _config.axisY / self.scale : 0;
+		var axisX = _config.axisX || _config.axisX === 0 ? _config.axisX : 0;
+		var axisY = _config.axisY || _config.axisY === 0 ? _config.axisY : 0;
 		var jointDefinition = new Box2D.Dynamics.Joints.b2PrismaticJointDef();
 		jointDefinition.Initialize(
 			_config.bodyA,

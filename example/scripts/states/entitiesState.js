@@ -46,17 +46,17 @@ entitiesState.create = function (game) {
 		collideConnected: false
 	});
 
-	var chasis = addBlock(50, 300, 150, 50, 'dynamic');
+	var chasis = addBlock(50, 300, 150, 70, 'dynamic');
 	
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: chasis,
-		bodyB: addBall(50, 300, 25.6, 'dynamic'),
+		bodyB: addBall(50, 300, 30, 'dynamic'),
 		ax: -50,
 		ay: 25,
 		bx: 0,
 		by: 0,
-		motorSpeed: 360*5,
-		maxMotorTorque: 50,
+		motorSpeed: 360*10,
+		maxMotorTorque: 200,
 		enableMotor: true,
 		lowerAngle: 0,
 		upperAngle: 0,
@@ -66,25 +66,25 @@ entitiesState.create = function (game) {
 
 	self.revoluteJoint = game.world.createRevoluteJoint({
 		bodyA: chasis,
-		bodyB: addBall(100, 300, 25.6, 'dynamic'),
+		bodyB: addBall(100, 300, 40, 'dynamic'),
 		ax: 50,
 		ay: 25
 	});
 
 	self.prismaticJoint = game.world.createPrismaticJoint({
 		bodyA: addBlock(600, 300, 50, 50, 'static'),
-		bodyB: addBlock(450, 300, 50, 50, 'dynamic'),
-		axisX: -25,
+		bodyB: addBlock(600, 300, 50, 50, 'dynamic'),
+		axisX: -1,
 		axisY: 0,
 		ax: 0,
 		ay: 0,
 		bx: 0,
 		by: 0,
 		lowerTranslation: 0,
-		upperTranslation: 10,
+		upperTranslation: 50,
 		enableLimit: true,
-		motorSpeed: 360,
-		maxMotorForce: 200,
+		motorSpeed: 200,
+		maxMotorForce: 40,
 		enableMotor: true,
 		collideConnected: false
 	});
@@ -111,12 +111,12 @@ entitiesState.create = function (game) {
 		}
 	}
 
-	game.world.rayCast(
+	/*game.world.rayCast(
 		{x: 0, y: 200},
 		{x: 2000, y: 200},
 		function (something) {
 		console.log(something)
-	});
+	});*/
 
 };
 
@@ -124,8 +124,6 @@ entitiesState.update = function (game) {
 	var self = entitiesState;
 
 	// game.debugger.print(self.distanceBlock1, 1);
-
-	
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);

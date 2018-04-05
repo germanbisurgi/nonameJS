@@ -36,7 +36,6 @@ var Pointers = function (_game) {
 				currentX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
 				currentY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
 				milliseconds: 0,
-				button: _event.button,
 				startFrame: _game.loop.frames
 			};
 			self.started.push(pointer);
