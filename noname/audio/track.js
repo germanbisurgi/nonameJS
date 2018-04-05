@@ -49,7 +49,7 @@ var Track = function (_audioMamaner, _settings) {
 	self.init = function () {
 		self.gainNode.connect(self.context.destination);
 		if (_settings.volume) {
-			self.gainNode.gain.value = _settings.volume;
+			self.gainNode.gain.setValueAtTime(_settings.volume, self.context.currentTime);
 		}
 	};
 
@@ -79,7 +79,7 @@ var Track = function (_audioMamaner, _settings) {
 	 */
 	self.volume = function (_volume) {
 		if (_volume) {
-			self.gainNode.gain.value = _volume;
+			self.gainNode.gain.setValueAtTime(_volume, self.context.currentTime);
 		}
 		self.onVolume();
 		return self.gainNode.gain.value;
