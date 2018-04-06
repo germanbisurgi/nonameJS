@@ -69,6 +69,16 @@ var Pointers = function (_game) {
 		}
 	}, false);
 
+	_game.render.canvas.addEventListener('touchcancel', function (event) {
+		event.preventDefault();
+		for (var i = 0; i < event.changedTouches.length; i++) {
+			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
+			pointer.releaseFrame = _game.loop.frames;
+			self.ended.push(pointer);
+			self.remove(pointer, self.continued);
+		}
+	}, false);
+
 	_game.render.canvas.addEventListener('mouseup', function (_event) {
 		_event.preventDefault();
 		var pointer = self.getByNumber(_event.button, self.continued);
