@@ -114,30 +114,30 @@ entitiesState.create = function (game) {
 	});
 
 	// prismatic joint
-	var bodyA = addBlock(300, 250, 50, 50, 'dynamic');
-	var bodyB = addBlock(400, 250, 50, 50, 'dynamic');
+	var bodyA = addBlock(300, 100, 50, 50, 'dynamic');
+	var bodyB = addBlock(400, 100, 50, 50, 'dynamic');
 
 	self.pulleyJoint = game.world.createPulleyJoint({
 		bodyA: bodyA,
 		bodyB: bodyB,
+		groundAnchorA: {x: 300, y: 100},
+		groundAnchorB: {x: 400, y: 100},
 		offsetA: {x: 0, y: 0},
 		offsetB: {x: 0, y: 0},
-		groundAnchorA: {x: 300, y: 50},
-		groundAnchorB: {x: 400, y: 50},
-		lengthA: 200,
-		lengthB: 200,
-		ratio: 1
+		ratio: 1,
+		lengthA: 10,
+		lengthB: 10,
 	});
 	console.log(self.pulleyJoint)
+
+
 
 };
 
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	game.debugger.print(1, {
-		devicePixelRatio: window.devicePixelRatio
-	});
+	// game.debugger.print(1, {devicePixelRatio: window.devicePixelRatio});
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);

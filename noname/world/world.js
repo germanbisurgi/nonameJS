@@ -123,6 +123,7 @@ var World = function (_game) {
 	};
 
 	self.createPulleyJoint = function (config) {
+
 		var jointDefinition = new Box2D.Dynamics.Joints.b2PulleyJointDef();
 		jointDefinition.Initialize(
 			config.bodyA,
@@ -133,12 +134,14 @@ var World = function (_game) {
 			{x: config.bodyB.GetWorldCenter().x + config.offsetB.x / self.scale, y: config.bodyB.GetWorldCenter().y + config.offsetB.y / self.scale},
 			config.ratio
 		);
-		// jointDefinition.lengthA = config.lengthA / self.scale;
-		// jointDefinition.lengthB = config.lengthB / self.scale;
-		// jointDefinition.maxLengthA = 100 / self.scale;
-		// jointDefinition.maxLengthB = 100 / self.scale;
-		console.log(jointDefinition)
-		return self.world.CreateJoint(jointDefinition);
+		jointDefinition.lengthA = config.lengthA / self.scale;
+		jointDefinition.lengthB = config.lengthB / self.scale;
+		jointDefinition.maxLengthA = (config.lengthA / self.scale + config.lengthB / self.scale) * 2;
+		jointDefinition.maxLengthB = (config.lengthA / self.scale + config.lengthB / self.scale) * 2;
+		var pulleyJoint = self.world.CreateJoint(jointDefinition)
+		pulleyJoint.m_maxLength1 = pulleyJoint.m_constant;
+		pulleyJoint.m_maxLength2 = pulleyJoint.m_constant;
+		return pulleyJoint;
 	};
 
 	self.destroyJoint = function (_joint) {
