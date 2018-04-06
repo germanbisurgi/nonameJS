@@ -15,6 +15,13 @@ entitiesState.create = function (game) {
 		volume: 1.0
 	});
 
+	// world contacts
+	game.world.contacts.BeginContact = function (contact) {
+		if (contact.GetFixtureA() === self.humstarCircle || contact.GetFixtureB() === self.humstarCircle) {
+			self.kick.play();
+		}
+	}
+
 	// gravity
 	game.world.setGravity(0, 9.8);
 
@@ -33,6 +40,21 @@ entitiesState.create = function (game) {
 		return ball;
 	};
 
+	// static edges
+	self.edges = game.world.addBody(10, 10, 'static');
+	self.edges.addEdge(0, 0, window.innerWidth - 20, 0);
+	self.edges.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
+	self.edges.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
+	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
+
+	// humstar
+	self.humstar = game.world.addBody(100, 150, 'dynamic', {});
+	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
+	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
+	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
+	self.humstarSprite.addAnimation('fly', [0, 1, 2, 3, 4]);
+
+	// distance joint
 	self.distanceJoint = game.world.createDistanceJoint({
 		bodyA: addBlock(100, 100, 50, 50, 'static'),
 		bodyB: addBlock(100, 200, 50, 50, 'dynamic'),
@@ -46,6 +68,7 @@ entitiesState.create = function (game) {
 		collideConnected: false
 	});
 
+	// revolute joint
 	var chasis = addBlock(50, 300, 150, 70, 'dynamic');
 	
 	self.revoluteJoint = game.world.createRevoluteJoint({
@@ -71,6 +94,7 @@ entitiesState.create = function (game) {
 		ay: 25
 	});
 
+	// prismatic joint
 	self.prismaticJoint = game.world.createPrismaticJoint({
 		bodyA: addBlock(600, 300, 50, 50, 'static'),
 		bodyB: addBlock(600, 300, 50, 50, 'dynamic'),
@@ -89,27 +113,22 @@ entitiesState.create = function (game) {
 		collideConnected: false
 	});
 
-	// static edges
-	self.edges = game.world.addBody(10, 10, 'static');
-	self.edges.addEdge(0, 0, window.innerWidth - 20, 0);
-	self.edges.addEdge(window.innerWidth - 20, 0, window.innerWidth - 20, window.innerHeight -20);
-	self.edges.addEdge(window.innerWidth - 20, window.innerHeight - 20, 0, window.innerHeight - 20);
-	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
+	// prismatic joint
+	var bodyA = addBlock(300, 250, 50, 50, 'dynamic');
+	var bodyB = addBlock(400, 250, 50, 50, 'dynamic');
 
-	// humstar
-	self.humstar = game.world.addBody(100, 150, 'dynamic', {});
-	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
-	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
-
-	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
-	self.humstarSprite.addAnimation('fly', [0, 1, 2, 3, 4]);
-
-	// world contacts
-	game.world.contacts.BeginContact = function (contact) {
-		if (contact.GetFixtureA() === self.humstarCircle || contact.GetFixtureB() === self.humstarCircle) {
-			self.kick.play();
-		}
-	}
+	self.pulleyJoint = game.world.createPulleyJoint({
+		bodyA: bodyA,
+		bodyB: bodyB,
+		offsetA: {x: 0, y: 0},
+		offsetB: {x: 0, y: 0},
+		groundAnchorA: {x: 300, y: 50},
+		groundAnchorB: {x: 400, y: 50},
+		lengthA: 200,
+		lengthB: 200,
+		ratio: 1
+	});
+	console.log(self.pulleyJoint)
 
 };
 
@@ -144,15 +163,14 @@ entitiesState.update = function (game) {
 	})
 	game.pointers.onContinued('*', '*', function (pointer) {
 		game.world.dragMove(pointer);
+	})
+	game.pointers.onEnd('*', '*', function (pointer) {
+		game.world.dragEnd(pointer);
 		var query = game.world.queryAABB(
 			{x: pointer.startX, y: pointer.startY},
 			{x: pointer.currentX, y: pointer.currentY}
 		);
-		self.aabb = query.aabb;
-		console.log(query.fixtures);
-	})
-	game.pointers.onEnd('*', '*', function (pointer) {
-		game.world.dragEnd(pointer);
+		//console.log(query.fixtures);
 	})
 
 	// camera

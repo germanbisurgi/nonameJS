@@ -15,7 +15,7 @@ var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 var World = function (_game) {
 	'use strict';
 	var self = this;
-	self.scale = 90;
+	self.scale = 100;
 	self.fps = _game.settings.fps;
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
@@ -28,8 +28,8 @@ var World = function (_game) {
 		debugDraw.SetDrawScale(self.scale);
 		debugDraw.SetFillAlpha(0.5);
 		debugDraw.SetFillAlpha(0.5);
-		debugDraw.SetFlags(b2DebugDraw.e_aabbBit);
-		//debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
+		//debugDraw.SetFlags(b2DebugDraw.e_aabbBit);
+		debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
 		// debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
 		debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
 		self.world.SetDebugDraw(debugDraw);
@@ -96,7 +96,7 @@ var World = function (_game) {
 		return self.world.CreateJoint(jointDefinition);
 	};
 
-self.createPrismaticJoint = function (_config) {
+	self.createPrismaticJoint = function (_config) {
 		var axisX = _config.axisX || _config.axisX === 0 ? _config.axisX : 0;
 		var axisY = _config.axisY || _config.axisY === 0 ? _config.axisY : 0;
 		var jointDefinition = new Box2D.Dynamics.Joints.b2PrismaticJointDef();
@@ -119,6 +119,25 @@ self.createPrismaticJoint = function (_config) {
 		jointDefinition.maxMotorForce = _config.maxMotorForce || _config.maxMotorForce === 0 ? _config.maxMotorForce : 0;
 		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
 		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+		return self.world.CreateJoint(jointDefinition);
+	};
+
+	self.createPulleyJoint = function (config) {
+		var jointDefinition = new Box2D.Dynamics.Joints.b2PulleyJointDef();
+		jointDefinition.Initialize(
+			config.bodyA,
+			config.bodyB,
+			{x: config.groundAnchorA.x / self.scale, y: config.groundAnchorA.y / self.scale},
+			{x: config.groundAnchorB.x / self.scale, y: config.groundAnchorB.y / self.scale},
+			{x: config.bodyA.GetWorldCenter().x + config.offsetA.x / self.scale, y: config.bodyA.GetWorldCenter().y + config.offsetA.y / self.scale},
+			{x: config.bodyB.GetWorldCenter().x + config.offsetB.x / self.scale, y: config.bodyB.GetWorldCenter().y + config.offsetB.y / self.scale},
+			config.ratio
+		);
+		// jointDefinition.lengthA = config.lengthA / self.scale;
+		// jointDefinition.lengthB = config.lengthB / self.scale;
+		// jointDefinition.maxLengthA = 100 / self.scale;
+		// jointDefinition.maxLengthB = 100 / self.scale;
+		console.log(jointDefinition)
 		return self.world.CreateJoint(jointDefinition);
 	};
 
