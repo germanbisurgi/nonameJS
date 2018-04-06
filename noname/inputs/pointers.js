@@ -82,11 +82,25 @@ var Pointers = function (_game) {
 	_game.render.canvas.addEventListener('mouseup', function (_event) {
 		_event.preventDefault();
 		var pointer = self.getByNumber(_event.button, self.continued);
-		pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
-		pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
-		pointer.releaseFrame = _game.loop.frames;
-		self.ended.push(pointer);
-		self.remove(pointer, self.continued);
+		if (pointer) {
+			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
+			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
+			pointer.releaseFrame = _game.loop.frames;
+			self.ended.push(pointer);
+			self.remove(pointer, self.continued);
+		}
+	}, false);
+
+	_game.render.canvas.addEventListener('mouseout', function (_event) {
+		_event.preventDefault();
+		var pointer = self.getByNumber(_event.button, self.continued);
+		if (pointer) {
+			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
+			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
+			pointer.releaseFrame = _game.loop.frames;
+			self.ended.push(pointer);
+			self.remove(pointer, self.continued);
+		}
 	}, false);
 
 	self.update = function () {
