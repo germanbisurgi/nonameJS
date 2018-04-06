@@ -142,13 +142,11 @@ self.createPrismaticJoint = function (_config) {
 			AABB.lowerBound = {x: start.x / self.scale, y: start.y / self.scale};
 			AABB.upperBound = {x: current.x / self.scale, y: current.y / self.scale};
 		}
-		
 		self.world.QueryAABB(function (fixture) {
 			fixtures.push(fixture);
 			return true;
 		}, AABB);
 		return {
-			aabb: AABB,
 			fixtures: fixtures
 		};
 	};

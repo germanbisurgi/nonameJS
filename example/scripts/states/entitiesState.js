@@ -220,25 +220,13 @@ entitiesState.afterRender = function (game) {
 	game.pointers.onContinued('*', '*', function (pointer) {
 		game.render.context.save();
 		game.render.context.strokeStyle = 'red';
-		/*game.render.context.rect(
+		game.render.context.rect(
 			pointer.startX,
 			pointer.startY,
 			pointer.currentX - pointer.startX,
 			pointer.currentY - pointer.startY
-		);*/
-		if (self.aabb) {
-			game.render.context.rect(
-				self.aabb.upperBound.x * game.world.scale,
-				self.aabb.upperBound.y * game.world.scale,
-				self.aabb.lowerBound.x * game.world.scale - self.aabb.upperBound.x * game.world.scale,
-				self.aabb.lowerBound.y * game.world.scale - self.aabb.upperBound.y * game.world.scale
-			);
-		}
+		);
 		game.render.context.stroke();
 		game.render.context.restore();
 	})
-
-	// game.debugger.print(2, self.aabb)
-	
-	
 };
