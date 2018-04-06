@@ -132,6 +132,20 @@ self.createPrismaticJoint = function (_config) {
 		{x: _point.x / self.scale, y: _point.y / self.scale});
 	};
 
+	self.rayCastOne = function (_pointA, _pointB) {
+		return self.world.RayCastOne(
+			{x: _pointA.x / self.scale, y: _pointA.y / self.scale},
+			{x: _pointB.x / self.scale, y: _pointB.y / self.scale}
+		);
+	};
+
+	self.rayCastAll = function (_pointA, _pointB) {
+		return self.world.RayCastOne(
+			{x: _pointA.x / self.scale, y: _pointA.y / self.scale},
+			{x: _pointB.x / self.scale, y: _pointB.y / self.scale}
+		);
+	};
+
 	self.rayCast = function (_pointA, _pointB, _callback) {
 		self.world.RayCast(
 			_callback,
