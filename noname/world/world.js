@@ -125,6 +125,25 @@ self.createPrismaticJoint = function (_config) {
 		self.world.DestroyJoint(_joint);
 	};
 
+	self.queryAABB = function (pointA, pointB) {
+		var fixtures = [];
+		var AABB = new Box2D.Collision.b2AABB();
+		if (pointA.y > pointB.y) {
+			AABB.upperBound = {x: pointA.x / self.scale, y: pointA.y / self.scale};
+			AABB.lowerBound = {x: pointB.x / self.scale, y: pointB.y / self.scale};
+		} else {
+			AABB.upperBound = {x: pointB.x / self.scale, y: pointB.y / self.scale};
+			AABB.lowerBound = {x: pointA.x / self.scale, y: pointA.y / self.scale};
+		}
+		if (pointA.y !== pointB.y) {
+			self.world.QueryAABB(function (fixture) {
+				fixtures.push(fixture);
+				return true;
+			}, AABB);
+		}
+		return fixtures;
+	};
+
 	self.queryPoint = function (_point, _function) {
 		self.world.QueryPoint(function (fixture) {
 			_function(fixture);

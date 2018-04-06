@@ -144,14 +144,9 @@ entitiesState.update = function (game) {
 	})
 	game.pointers.onContinued('*', '*', function (pointer) {
 		game.world.dragMove(pointer);
-		console.log(game.world.rayCastAll(
+		console.log(game.world.queryAABB(
 			{x: pointer.startX, y: pointer.startY},
 			{x: pointer.currentX, y: pointer.currentY}
-		));
-
-		game.debugger.print(2, game.world.world.RayCastAll(
-			{x: pointer.startX / game.world.scale, y: pointer.startY / game.world.scale},
-			{x: pointer.currentX / game.world.scale, y: pointer.currentY / game.world.scale}
 		));
 	})
 	game.pointers.onEnd('*', '*', function (pointer) {
