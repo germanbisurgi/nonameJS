@@ -28,7 +28,8 @@ var World = function (_game) {
 		debugDraw.SetDrawScale(self.scale);
 		debugDraw.SetFillAlpha(0.5);
 		debugDraw.SetFillAlpha(0.5);
-		debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
+		debugDraw.SetFlags(b2DebugDraw.e_aabbBit);
+		//debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
 		// debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
 		debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
 		self.world.SetDebugDraw(debugDraw);
@@ -125,23 +126,31 @@ self.createPrismaticJoint = function (_config) {
 		self.world.DestroyJoint(_joint);
 	};
 
-	self.queryAABB = function (pointA, pointB) {
+	self.queryAABB = function (start, current) {
 		var fixtures = [];
 		var AABB = new Box2D.Collision.b2AABB();
-		if (pointA.y > pointB.y) {
-			AABB.upperBound = {x: pointA.x / self.scale, y: pointA.y / self.scale};
-			AABB.lowerBound = {x: pointB.x / self.scale, y: pointB.y / self.scale};
+		if (start.x > current.x && start.y < current.y) {
+			AABB.lowerBound = {x: current.x / self.scale, y: start.y / self.scale};
+			AABB.upperBound = {x: start.x / self.scale, y: current.y / self.scale};
+		} else if (start.x < current.x && start.y > current.y) {
+			AABB.lowerBound = {x: start.x / self.scale, y: current.y / self.scale};
+			AABB.upperBound = {x: current.x / self.scale, y: start.y / self.scale};
+		} else if (start.x > current.x && start.y > current.y) {
+			AABB.lowerBound = {x: current.x / self.scale, y: current.y / self.scale};
+			AABB.upperBound = {x: start.x / self.scale, y: start.y / self.scale};
 		} else {
-			AABB.upperBound = {x: pointB.x / self.scale, y: pointB.y / self.scale};
-			AABB.lowerBound = {x: pointA.x / self.scale, y: pointA.y / self.scale};
+			AABB.lowerBound = {x: start.x / self.scale, y: start.y / self.scale};
+			AABB.upperBound = {x: current.x / self.scale, y: current.y / self.scale};
 		}
-		if (pointA.y !== pointB.y) {
-			self.world.QueryAABB(function (fixture) {
-				fixtures.push(fixture);
-				return true;
-			}, AABB);
-		}
-		return fixtures;
+		
+		self.world.QueryAABB(function (fixture) {
+			fixtures.push(fixture);
+			return true;
+		}, AABB);
+		return {
+			aabb: AABB,
+			fixtures: fixtures
+		};
 	};
 
 	self.queryPoint = function (_point, _function) {

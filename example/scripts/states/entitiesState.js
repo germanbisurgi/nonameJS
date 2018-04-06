@@ -144,10 +144,12 @@ entitiesState.update = function (game) {
 	})
 	game.pointers.onContinued('*', '*', function (pointer) {
 		game.world.dragMove(pointer);
-		console.log(game.world.queryAABB(
+		var query = game.world.queryAABB(
 			{x: pointer.startX, y: pointer.startY},
 			{x: pointer.currentX, y: pointer.currentY}
-		));
+		);
+		self.aabb = query.aabb;
+		console.log(query.fixtures);
 	})
 	game.pointers.onEnd('*', '*', function (pointer) {
 		game.world.dragEnd(pointer);
@@ -173,6 +175,7 @@ entitiesState.update = function (game) {
 };
 
 entitiesState.afterRender = function (game) {
+	var self = this;
 	game.pointers.continued.forEach(function (pointer) {
 		game.render.context.save();
 		game.render.context.strokeStyle = 'cyan';
@@ -214,5 +217,28 @@ entitiesState.afterRender = function (game) {
 		game.render.context.stroke();
 		game.render.context.restore();
 	})
+	game.pointers.onContinued('*', '*', function (pointer) {
+		game.render.context.save();
+		game.render.context.strokeStyle = 'red';
+		/*game.render.context.rect(
+			pointer.startX,
+			pointer.startY,
+			pointer.currentX - pointer.startX,
+			pointer.currentY - pointer.startY
+		);*/
+		if (self.aabb) {
+			game.render.context.rect(
+				self.aabb.upperBound.x * game.world.scale,
+				self.aabb.upperBound.y * game.world.scale,
+				self.aabb.lowerBound.x * game.world.scale - self.aabb.upperBound.x * game.world.scale,
+				self.aabb.lowerBound.y * game.world.scale - self.aabb.upperBound.y * game.world.scale
+			);
+		}
+		game.render.context.stroke();
+		game.render.context.restore();
+	})
+
+	// game.debugger.print(2, self.aabb)
+	
 	
 };
