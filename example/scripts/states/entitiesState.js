@@ -48,7 +48,7 @@ entitiesState.create = function (game) {
 	self.edges.addEdge(0, window.innerHeight - 20, 0, 0);
 
 	// humstar
-	self.humstar = game.world.addBody(100, 150, 'dynamic', {});
+	self.humstar = game.world.addBody(400, 50, 'dynamic', {});
 	self.humstarCircle = self.humstar.addCircle(0, 0, 25);
 	self.sensor = self.humstar.addCircle(0, 0, 30, {isSensor: true, density: 0});
 	self.humstarSprite = self.humstar.addSprite(game.loader.get('humstar'), 0, 0, 50, 50, 32, 32);
@@ -125,8 +125,8 @@ entitiesState.create = function (game) {
 		offsetA: {x: 0, y: 0},
 		offsetB: {x: 0, y: 0},
 		ratio: 1,
-		lengthA: 10,
-		lengthB: 10,
+		lengthA: 100,
+		lengthB: 100,
 	});
 	console.log(self.pulleyJoint)
 
