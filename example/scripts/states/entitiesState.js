@@ -135,7 +135,9 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	// game.debugger.print(self.distanceBlock1, 1);
+	game.debugger.print(1, {
+		devicePixelRatio: window.devicePixelRatio
+	});
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);
