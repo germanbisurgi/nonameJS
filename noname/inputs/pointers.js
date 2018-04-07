@@ -7,9 +7,10 @@ var Pointers = function (_game) {
 	self.ended = [];
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
-		console.log(event.touches)
 		event.preventDefault();
 		for (var i = 0; i < event.touches.length; i++) {
+			game.debugger.print(1,{i:i});
+
 			var pointer = {
 				number: i,
 				type: 'finger',
