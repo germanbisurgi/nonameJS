@@ -7,7 +7,7 @@ var Pointers = function (_game) {
 	self.ended = [];
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
-
+		game.debugger.print(2, event.touches.length);
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var pointer = {
