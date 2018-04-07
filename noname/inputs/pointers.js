@@ -7,11 +7,11 @@ var Pointers = function (_game) {
 	self.ended = [];
 
 	_game.render.canvas.addEventListener('touchstart', function (event) {
-		game.debugger.print(3, event.touches);
+		console.log(event.touches)
 		event.preventDefault();
-		for (var i = 0; i < event.changedTouches.length; i++) {
+		for (var i = 0; i < event.touches.length; i++) {
 			var pointer = {
-				number: event.touches.length,
+				number: i,
 				type: 'finger',
 				startX: Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft),
 				startY: Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop),

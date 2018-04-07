@@ -128,10 +128,6 @@ entitiesState.create = function (game) {
 		lengthA: 100,
 		lengthB: 100,
 	});
-	console.log(self.pulleyJoint)
-
-
-
 };
 
 entitiesState.update = function (game) {
