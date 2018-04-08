@@ -42,7 +42,7 @@ var Audio = function (_game) {
 				}, 0);
 			}
 		}, false);
-	}
+	};
 
 	self.init();
 

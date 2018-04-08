@@ -19,5 +19,5 @@ var noname = {
 	transformComponent: TransformComponent,
 	imageComponent: ImageComponent,
 	spriteComponent: SpriteComponent,
-	tileSpriteComponent: TileSpriteComponent,
+	tileSpriteComponent: TileSpriteComponent
 };

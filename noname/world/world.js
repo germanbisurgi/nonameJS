@@ -28,7 +28,7 @@ var World = function (_game) {
 		debugDraw.SetDrawScale(self.scale);
 		debugDraw.SetFillAlpha(0.5);
 		debugDraw.SetFillAlpha(0.5);
-		//debugDraw.SetFlags(b2DebugDraw.e_aabbBit);
+		// debugDraw.SetFlags(b2DebugDraw.e_aabbBit);
 		debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
 		// debugDraw.AppendFlags(b2DebugDraw.e_centerOfMassBit);
 		debugDraw.AppendFlags(b2DebugDraw.e_jointBit);
@@ -69,7 +69,7 @@ var World = function (_game) {
 		jointDefinition.length = _config.length || _config.length === 0 ? _config.length / self.scale : jointDefinition.length;
 		jointDefinition.frequencyHz = _config.frequencyHz || _config.frequencyHz === 0 ? _config.frequencyHz : jointDefinition.frequencyHz;
 		jointDefinition.damping = _config.damping || _config.damping === 0 ? _config.damping : jointDefinition.damping;
-		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : jointDefinition.collideConnected;
+		jointDefinition.collideConnected = _config.collideConnected ? _config.collideConnected : jointDefinition.collideConnected;
 		return self.world.CreateJoint(jointDefinition);
 	};
 
@@ -90,9 +90,9 @@ var World = function (_game) {
 		jointDefinition.lowerAngle = _config.lowerAngle || _config.lowerAngle === 0 ? _config.lowerAngle * 0.0174532925199432957 : 0;
 		jointDefinition.upperAngle = _config.upperAngle || _config.upperAngle === 0 ? _config.upperAngle * 0.0174532925199432957 : 0;
 		jointDefinition.maxMotorTorque = _config.maxMotorTorque || _config.maxMotorTorque === 0 ? _config.maxMotorTorque : 0;
-		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
-		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
-		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+		jointDefinition.enableMotor = _config.enableMotor ? _config.enableMotor : false;
+		jointDefinition.enableLimit = _config.enableLimit ? _config.enableLimit : false;
+		jointDefinition.collideConnected = _config.collideConnected ? _config.collideConnected : false;
 		return self.world.CreateJoint(jointDefinition);
 	};
 
@@ -114,11 +114,11 @@ var World = function (_game) {
 		jointDefinition.localAnchorB = {x: bx, y: by};
 		jointDefinition.lowerTranslation = _config.lowerTranslation || _config.lowerTranslation === 0 ? _config.lowerTranslation / self.scale : 0;
 		jointDefinition.upperTranslation = _config.upperTranslation || _config.upperTranslation === 0 ? _config.upperTranslation / self.scale : 0;
-		jointDefinition.enableLimit = _config.enableLimit  ? _config.enableLimit : false;
+		jointDefinition.enableLimit = _config.enableLimit ? _config.enableLimit : false;
 		jointDefinition.motorSpeed = _config.motorSpeed || _config.motorSpeed === 0 ? _config.motorSpeed * 0.0174532925199432957 : 0;
 		jointDefinition.maxMotorForce = _config.maxMotorForce || _config.maxMotorForce === 0 ? _config.maxMotorForce : 0;
-		jointDefinition.enableMotor = _config.enableMotor  ? _config.enableMotor : false;
-		jointDefinition.collideConnected = _config.collideConnected  ? _config.collideConnected : false;
+		jointDefinition.enableMotor = _config.enableMotor ? _config.enableMotor : false;
+		jointDefinition.collideConnected = _config.collideConnected ? _config.collideConnected : false;
 		return self.world.CreateJoint(jointDefinition);
 	};
 
@@ -138,7 +138,7 @@ var World = function (_game) {
 		jointDefinition.lengthB = config.lengthB / self.scale;
 		jointDefinition.maxLengthA = (config.lengthA / self.scale + config.lengthB / self.scale) * 2;
 		jointDefinition.maxLengthB = (config.lengthA / self.scale + config.lengthB / self.scale) * 2;
-		var pulleyJoint = self.world.CreateJoint(jointDefinition)
+		var pulleyJoint = self.world.CreateJoint(jointDefinition);
 		pulleyJoint.m_maxLength1 = pulleyJoint.m_constant;
 		pulleyJoint.m_maxLength2 = pulleyJoint.m_constant;
 		return pulleyJoint;
@@ -168,9 +168,7 @@ var World = function (_game) {
 			fixtures.push(fixture);
 			return true;
 		}, AABB);
-		return {
-			fixtures: fixtures
-		};
+		return fixtures;
 	};
 
 	self.queryPoint = function (_point, _function) {
@@ -372,7 +370,6 @@ var World = function (_game) {
 		self.mouseJoints = [];
 	};
 
-
 	self.dragStart = function (_pointer) {
 		self.queryPoint(
 			{x: _pointer.currentX, y: _pointer.currentY},
@@ -380,7 +377,7 @@ var World = function (_game) {
 				self.mouseJoints.push(
 					{
 						number: _pointer.number,
-						body:  _fixture.GetBody(),
+						body: _fixture.GetBody(),
 						joint: null
 					}
 				);
@@ -398,7 +395,7 @@ var World = function (_game) {
 					_mouseJoint.joint = self.createMouseJoint(
 						{x: _pointer.currentX, y: _pointer.currentY},
 						_mouseJoint.body
-					)
+					);
 				}
 				_mouseJoint.joint.SetTarget(
 					{x: _pointer.currentX / self.scale, y: _pointer.currentY / self.scale}

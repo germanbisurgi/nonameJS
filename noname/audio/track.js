@@ -58,19 +58,19 @@ var Track = function (_audioMamaner, _settings) {
 	 * @method play
 	 */
 	self.play = function () {
-		// if (!self.isPlaying) {
-			self.source = self.context.createBufferSource();
-			self.source.buffer = self.audioBuffer;
-			self.source.onended = function () {
-				self.playbackTime = 0;
-				self.isPlaying = false;
-			};
-			self.source.connect(self.gainNode);
-			self.source.start(0, self.playbackTime);
-			self.onPlay();
-			self.isPlaying = true;
-			self.lastTime = self.context.currentTime;
-		// }
+	// if (!self.isPlaying) {
+		self.source = self.context.createBufferSource();
+		self.source.buffer = self.audioBuffer;
+		self.source.onended = function () {
+			self.playbackTime = 0;
+			self.isPlaying = false;
+		};
+		self.source.connect(self.gainNode);
+		self.source.start(0, self.playbackTime);
+		self.onPlay();
+		self.isPlaying = true;
+		self.lastTime = self.context.currentTime;
+	// }
 	};
 
 	/**

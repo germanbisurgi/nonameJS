@@ -25,7 +25,7 @@ var Game = function (_settings) {
 			return;
 		}
 
-		var extend = function(out) {
+		var extend = function (out) {
 			out = out || {};
 			for (var i = 1; i < arguments.length; i++) {
 				if (!arguments[i]) {

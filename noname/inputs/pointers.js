@@ -26,20 +26,20 @@ var Pointers = function (_game) {
 	}, false);
 
 	_game.render.canvas.addEventListener('mousedown', function (_event) {
-			_event.preventDefault();
-			var pointer = {
-				number: _event.button,
-				type: 'mouse',
-				startX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
-				startY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
-				currentX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
-				currentY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
-				milliseconds: 0,
-				startFrame: _game.loop.frames
-			};
-			self.started.push(pointer);
-			self.continued.push(pointer);
-		}, false);
+		_event.preventDefault();
+		var pointer = {
+			number: _event.button,
+			type: 'mouse',
+			startX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
+			startY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
+			currentX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
+			currentY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
+			milliseconds: 0,
+			startFrame: _game.loop.frames
+		};
+		self.started.push(pointer);
+		self.continued.push(pointer);
+	}, false);
 
 	_game.render.canvas.addEventListener('touchmove', function (event) {
 		event.preventDefault();
@@ -159,10 +159,10 @@ var Pointers = function (_game) {
 	self.filterPointers = function (array, type, number, fn) {
 		array.forEach(function (pointer) {
 			if (type === '*' && number === '*') {
-					fn(pointer);
+				fn(pointer);
 			}
 			if (type !== '*' && number !== '*') {
-				if (pointer.type === type && pointer.number ===  Number(number)) {
+				if (pointer.type === type && pointer.number === Number(number)) {
 					fn(pointer);
 				}
 			}
@@ -182,7 +182,7 @@ var Pointers = function (_game) {
 	self.onStart = function (type, number, fn) {
 		self.filterPointers(self.started, type, number, fn);
 	};
-	
+
 	self.onContinued = function (type, number, fn) {
 		self.filterPointers(self.continued, type, number, fn);
 	};
@@ -190,5 +190,4 @@ var Pointers = function (_game) {
 	self.onEnd = function (type, number, fn) {
 		self.filterPointers(self.ended, type, number, fn);
 	};
-	
 };

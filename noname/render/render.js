@@ -119,7 +119,7 @@ var Render = function (_game) {
 							);
 							self.context.restore();
 						}
-					})
+					});
 				}
 			});
 		}
