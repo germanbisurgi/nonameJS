@@ -1,7 +1,7 @@
 var game = new noname.game({
 	screen: document.querySelector('.screen'),
-	fps: 60,
-	dps: 60,
+	fps: 30,
+	dps: 30,
 	states: [
 		// timeState,
 		pointersState,

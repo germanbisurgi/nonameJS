@@ -18,8 +18,8 @@ var Render = function (_game) {
 
 	self.resize = function () {
 		self.screen.setAttribute('style', 'height: 100vh; width: 100vw;');
-		self.canvas.width = 800;
-		self.canvas.height = 400;
+		self.canvas.width = _game.settings.screen.clientWidth;
+		self.canvas.height = _game.settings.screen.clientHeight;
 		self.camera.width = self.canvas.width;
 		self.camera.height = self.canvas.height;
 		self.camera.zoomRatio = 1;
