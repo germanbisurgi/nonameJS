@@ -6,7 +6,7 @@ var Pointers = function (_game) {
 	self.continued = [];
 	self.ended = [];
 
-	_game.render.canvas.addEventListener('touchstart', function (event) {
+	self.touchstartHandler = function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var pointer = {
@@ -23,42 +23,42 @@ var Pointers = function (_game) {
 			self.started.push(pointer);
 			self.continued.push(pointer);
 		}
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('mousedown', function (_event) {
-		_event.preventDefault();
+	self.mouseDownHandler = function (event) {
+		event.preventDefault();
 		var pointer = {
-			number: _event.button,
+			number: event.button,
 			type: 'mouse',
-			startX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
-			startY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
-			currentX: Math.floor(_event.clientX - _game.render.screen.offsetLeft),
-			currentY: Math.floor(_event.clientY - _game.render.screen.offsetLeft),
+			startX: Math.floor(event.clientX - _game.render.screen.offsetLeft),
+			startY: Math.floor(event.clientY - _game.render.screen.offsetLeft),
+			currentX: Math.floor(event.clientX - _game.render.screen.offsetLeft),
+			currentY: Math.floor(event.clientY - _game.render.screen.offsetLeft),
 			milliseconds: 0,
 			startFrame: _game.loop.frames
 		};
 		self.started.push(pointer);
 		self.continued.push(pointer);
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('touchmove', function (event) {
+	self.touchMoveHandler = function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
 			pointer.currentX = Math.floor(event.changedTouches[i].clientX - _game.render.screen.offsetLeft);
 			pointer.currentY = Math.floor(event.changedTouches[i].clientY - _game.render.screen.offsetTop);
 		}
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('mousemove', function (_event) {
-		_event.preventDefault();
+	self.mouseMoveHandler = function (event) {
+		event.preventDefault();
 		self.continued.forEach(function (pointer) {
-			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
-			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
+			pointer.currentX = Math.floor(event.clientX - _game.render.screen.offsetLeft);
+			pointer.currentY = Math.floor(event.clientY - _game.render.screen.offsetLeft);
 		});
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('touchend', function (event) {
+	self.touchEndHandler = function (event) {
 		event.preventDefault();
 		for (var i = 0; i < event.changedTouches.length; i++) {
 			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
@@ -66,41 +66,28 @@ var Pointers = function (_game) {
 			self.ended.push(pointer);
 			self.remove(pointer, self.continued);
 		}
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('touchcancel', function (event) {
+	self.mouseEndHandler = function (event) {
 		event.preventDefault();
-		for (var i = 0; i < event.changedTouches.length; i++) {
-			var pointer = self.getByIdentifier(event.changedTouches[i].identifier, self.continued);
-			pointer.releaseFrame = _game.loop.frames;
-			self.ended.push(pointer);
-			self.remove(pointer, self.continued);
-		}
-	}, false);
-
-	_game.render.canvas.addEventListener('mouseup', function (_event) {
-		_event.preventDefault();
-		var pointer = self.getByNumber(_event.button, self.continued);
+		var pointer = self.getByNumber(event.button, self.continued);
 		if (pointer) {
-			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
-			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
+			pointer.currentX = Math.floor(event.clientX - _game.render.screen.offsetLeft);
+			pointer.currentY = Math.floor(event.clientY - _game.render.screen.offsetLeft);
 			pointer.releaseFrame = _game.loop.frames;
 			self.ended.push(pointer);
 			self.remove(pointer, self.continued);
 		}
-	}, false);
+	};
 
-	_game.render.canvas.addEventListener('mouseout', function (_event) {
-		_event.preventDefault();
-		var pointer = self.getByNumber(_event.button, self.continued);
-		if (pointer) {
-			pointer.currentX = Math.floor(_event.clientX - _game.render.screen.offsetLeft);
-			pointer.currentY = Math.floor(_event.clientY - _game.render.screen.offsetLeft);
-			pointer.releaseFrame = _game.loop.frames;
-			self.ended.push(pointer);
-			self.remove(pointer, self.continued);
-		}
-	}, false);
+	_game.render.canvas.addEventListener('touchstart', self.touchstartHandler, false);
+	_game.render.canvas.addEventListener('mousedown', self.mouseDownHandler, false);
+	_game.render.canvas.addEventListener('touchmove', self.touchMoveHandler, false);
+	_game.render.canvas.addEventListener('mousemove', self.mouseMoveHandler, false);
+	_game.render.canvas.addEventListener('touchend', self.touchEndHandler, false);
+	_game.render.canvas.addEventListener('touchcancel', self.touchEndHandler, false);
+	_game.render.canvas.addEventListener('mouseup', self.mouseEndHandler, false);
+	_game.render.canvas.addEventListener('mouseout', self.mouseEndHandler, false);
 
 	self.update = function () {
 		if (self.started.length > 0) {
