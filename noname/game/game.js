@@ -80,7 +80,7 @@ var Game = function (_settings) {
 
 				if (self.loop.frames % Math.floor(_settings.fps / _settings.dps) === 0) {
 					self.render.clear();
-					self.render.draw(self.world.bodies);
+					// self.render.draw(self.world.bodies);
 					if (_settings.physicsDebug) {
 						self.world.drawDebugData();
 					}
