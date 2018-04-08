@@ -11,7 +11,7 @@ var game = new noname.game({
 		entitiesState
 	],
 	initialState: 'entitiesState',
-	physicsDebug: false
+	physicsDebug: true
 });
 
 var loading = document.querySelector('.loading');
