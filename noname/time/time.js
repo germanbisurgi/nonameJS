@@ -8,10 +8,10 @@
  * add it to this entities and change the motion property of that clock.
  * New clocks should always be created with the clock manager create method
  * otherwise it will be not updated.
- * @param  {object} _game a reference to the game.
+ * @param  {object} game a reference to the game.
  * @class Time
  */
-var Time = function (_game) {
+var Time = function (game) {
 	'use strict';
 	var self = this;
 
@@ -34,7 +34,7 @@ var Time = function (_game) {
 	};
 
 	self.update = function (_delta) {
-		self.pool.forEach(function (clock) {
+		game.utils.fasterEach(self.pool, function (clock) {
 			clock.update(_delta);
 		});
 	};
@@ -49,7 +49,7 @@ var Time = function (_game) {
 	 * @return {Clock}
 	 */
 	self.create = function () {
-		var clock = new noname.clock(_game);
+		var clock = new noname.clock(game);
 		self.add(clock);
 		return clock;
 	};

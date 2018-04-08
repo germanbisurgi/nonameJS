@@ -120,7 +120,7 @@ var Clock = function (_game) {
 	};
 
 	self.updateEvents = function () {
-		self.events.forEach(function (_event) {
+		game.utils.fasterEach(self.events, function (_event) {
 			_event.elapsed += self.elapsed - _event.lastElapsed;
 			if (_event.elapsed >= _event.interval) {
 				_event.function();

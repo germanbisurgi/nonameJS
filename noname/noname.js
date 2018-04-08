@@ -1,4 +1,5 @@
 var noname = {
+	utils: Utils,
 	stateManager: StateManager,
 	loader: Loader,
 	loop: Loop,

@@ -12,11 +12,11 @@ var b2Contacts = Box2D.Dynamics.Contacts;
 var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 var b2MouseJoint = Box2D.Dynamics.Joints.b2MouseJointDef;
 
-var World = function (_game) {
+var World = function (game) {
 	'use strict';
 	var self = this;
 	self.scale = 100;
-	self.fps = _game.settings.fps;
+	self.fps = game.settings.fps;
 	self.world = new b2World(new b2Vec2(0, 0), true);
 	self.bodies = [];
 	self.contacts = null;
@@ -24,7 +24,7 @@ var World = function (_game) {
 
 	self.init = function () {
 		var debugDraw = new b2DebugDraw();
-		debugDraw.SetSprite(_game.render.context);
+		debugDraw.SetSprite(game.render.context);
 		debugDraw.SetDrawScale(self.scale);
 		debugDraw.SetFillAlpha(0.5);
 		debugDraw.SetFillAlpha(0.5);
@@ -235,7 +235,7 @@ var World = function (_game) {
 		var body = self.world.CreateBody(bodyDef);
 
 		// state
-		body.state = _game.state.current.name;
+		body.state = game.state.current.name;
 
 		body.images = [];
 
@@ -262,7 +262,7 @@ var World = function (_game) {
 				_width * 0.5 / self.scale,
 				_height * 0.5 / self.scale
 			);
-			fixtureDef.shape.m_vertices.forEach(function (_vert) {
+			game.utils.fasterEach(fixtureDef.shape.m_vertices, function (_vert) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
 			});
@@ -277,12 +277,12 @@ var World = function (_game) {
 		body.addPolygon = function (_offsetX, _offsetY, _points, _fixtureDefinition) {
 			var fixtureDef = self.getFixtureDef(_fixtureDefinition);
 			fixtureDef.shape = new b2PolygonShape();
-			_points.forEach(function (_point) {
+			game.utils.fasterEach(_points, function (_point) {
 				_point.x /= self.scale;
 				_point.y /= self.scale;
 			});
 			fixtureDef.shape.SetAsArray(_points, _points.length);
-			fixtureDef.shape.m_vertices.forEach(function (_vert) {
+			game.utils.fasterEach(fixtureDef.shape.m_vertices, function (_vert) {
 				_vert.x += _offsetX / self.scale || 0;
 				_vert.y += _offsetY / self.scale || 0;
 			});
@@ -324,7 +324,7 @@ var World = function (_game) {
 		// addSprite
 		body.addSprite = function (_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight) {
 			var sprite = new noname.spriteComponent(_image, offsetX, offsetY, _width, _height, _sourceWidth, _sourceHeight);
-			sprite.clock = _game.time.masterClock;
+			sprite.clock = game.time.masterClock;
 			body.images.push(sprite);
 			return sprite;
 		};
@@ -349,21 +349,21 @@ var World = function (_game) {
 	};
 
 	self.drawDebugData = function () {
-		_game.render.context.save();
+		game.render.context.save();
 		// camera rotation
-		_game.render.context.translate((_game.render.camera.width * _game.render.camera.anchorX), (_game.render.camera.height * _game.render.camera.anchorY));
-		_game.render.context.rotate(-_game.render.camera.angle * 0.0174532925199432957);
-		_game.render.context.translate(-(_game.render.camera.width * _game.render.camera.anchorX), -(_game.render.camera.height * _game.render.camera.anchorY));
+		game.render.context.translate((game.render.camera.width * game.render.camera.anchorX), (game.render.camera.height * game.render.camera.anchorY));
+		game.render.context.rotate(-game.render.camera.angle * 0.0174532925199432957);
+		game.render.context.translate(-(game.render.camera.width * game.render.camera.anchorX), -(game.render.camera.height * game.render.camera.anchorY));
 		// camera position
-		_game.render.context.translate(-_game.render.camera.x, -_game.render.camera.y);
+		game.render.context.translate(-game.render.camera.x, -game.render.camera.y);
 		// camera zoom.
-		_game.render.context.scale(_game.render.camera.zoom, _game.render.camera.zoom);
+		game.render.context.scale(game.render.camera.zoom, game.render.camera.zoom);
 		self.world.DrawDebugData();
-		_game.render.context.restore();
+		game.render.context.restore();
 	};
 
 	self.clear = function () {
-		self.bodies.forEach(function (body) {
+		game.utils.fasterEach(self.bodies, function (body) {
 			body.GetWorld().DestroyBody(body);
 		});
 		self.bodies = [];
@@ -386,7 +386,7 @@ var World = function (_game) {
 	};
 
 	self.dragMove = function (_pointer) {
-		self.mouseJoints.forEach(function (_mouseJoint) {
+		game.utils.fasterEach(self.mouseJoints, function (_mouseJoint) {
 			if (_mouseJoint.number === _pointer.number) {
 				if (!_mouseJoint.body) {
 					return;
@@ -405,7 +405,7 @@ var World = function (_game) {
 	};
 
 	self.dragEnd = function (_pointer) {
-		self.mouseJoints.forEach(function (_mouseJoint) {
+		game.utils.fasterEach(self.mouseJoints, function (_mouseJoint) {
 			if (_mouseJoint.number === _pointer.number) {
 				_mouseJoint.body = null;
 				self.destroyJoint(_mouseJoint.joint);

@@ -1,10 +1,10 @@
-var Render = function (_game) {
+var Render = function (game) {
 	'use strict';
 	var self = this;
 	self.canvas = null;
 	self.context = null;
 	self.camera = new noname.camera(0, 0, 0, 0);
-	self.screen = _game.settings.screen;
+	self.screen = game.settings.screen;
 
 	self.init = function () {
 		self.canvas = document.createElement('canvas');
@@ -18,8 +18,8 @@ var Render = function (_game) {
 
 	self.resize = function () {
 		self.screen.setAttribute('style', 'height: 100vh; width: 100vw;');
-		self.canvas.width = _game.settings.screen.clientWidth;
-		self.canvas.height = _game.settings.screen.clientHeight;
+		self.canvas.width = game.settings.screen.clientWidth;
+		self.canvas.height = game.settings.screen.clientHeight;
 		self.camera.width = self.canvas.width;
 		self.camera.height = self.canvas.height;
 		self.camera.zoomRatio = 1;
@@ -36,8 +36,8 @@ var Render = function (_game) {
 		var ratio = devicePixelRatio / backingStoreRatio;
 
 		if (devicePixelRatio !== backingStoreRatio) {
-			var oldWidth = _game.settings.screen.clientWidth;
-			var oldHeight = _game.settings.screen.clientHeight;
+			var oldWidth = game.settings.screen.clientWidth;
+			var oldHeight = game.settings.screen.clientHeight;
 			self.canvas.width = oldWidth * ratio;
 			self.canvas.height = oldHeight * ratio;
 			self.canvas.style.width = oldWidth + 'px';
@@ -93,14 +93,14 @@ var Render = function (_game) {
 		self.context.scale(self.camera.zoom, self.camera.zoom);
 
 		if (bodies.length > 0) {
-			bodies.forEach(function (body) {
+			game.utils.fasterEach(bodies, function (body) {
 				if (body.images) {
-					body.images.forEach(function (image) {
+					game.utils.fasterEach(body.images, function (image) {
 						if (self.inCamera(body)) { // TODO culling
 							self.context.save();
 							self.context.translate(
-								body.GetPosition().x * _game.world.scale,
-								body.GetPosition().y * _game.world.scale
+								body.GetPosition().x * game.world.scale,
+								body.GetPosition().y * game.world.scale
 							);
 							self.context.rotate(body.GetAngle());
 							self.context.globalAlpha = body.opacity;
@@ -128,8 +128,8 @@ var Render = function (_game) {
 		return true;
 	};
 
-	self.toRadians = function (_degrees) {
-		return _degrees * 0.0174532925199432957;
+	self.toRadians = function (degrees) {
+		return degrees * 0.0174532925199432957;
 	};
 
 	self.init();
