@@ -13,9 +13,7 @@ var Render = function (_game) {
 		self.context = self.canvas.getContext('2d');
 		self.screen.appendChild(self.canvas);
 		self.resize();
-		window.addEventListener('resize', function () {
-			self.resize();
-		});
+		window.addEventListener('resize', self.resize, false);
 	};
 
 	self.resize = function () {

@@ -13,7 +13,7 @@ var Keys = function (_game) {
 	 */
 	self.tracked = {};
 
-	document.addEventListener('keydown', function (event) {
+	self.keydownHandler = function (event) {
 		event.preventDefault();
 		if (!self.tracked[event.key]) {
 			self.tracked[event.key] = {
@@ -30,16 +30,19 @@ var Keys = function (_game) {
 				self.tracked[event.key].pressFrame = _game.loop.frames;
 			}
 		}
-	}, false);
+	};
 
-	document.addEventListener('keyup', function (event) {
+	self.keyupHandler = function (event) {
 		event.preventDefault();
 		self.tracked[event.key].pressed = false;
 		self.tracked[event.key].released = true;
 		self.tracked[event.key].milliseconds = 0;
 		self.tracked[event.key].releaseFrame = _game.loop.frames;
 		self.tracked[event.key].pressFrame = 0;
-	}, false);
+	};
+
+	document.addEventListener('keydown', self.keydownHandler, false);
+	document.addEventListener('keyup', self.keyupHandler, false);
 
 	self.update = function () {
 

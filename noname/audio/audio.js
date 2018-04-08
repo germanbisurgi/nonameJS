@@ -28,20 +28,22 @@ var Audio = function (_game) {
 	};
 
 	self.init = function () {
-		document.body.addEventListener('touchstart', function () {
-			if (!self.unlocked) {
-				var buffer = self.context.createBuffer(1, 1, 22050);
-				var source = self.context.createBufferSource();
-				source.buffer = buffer;
-				source.connect(self.context.destination);
-				source.start(0);
-				setTimeout(function () {
-					if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
-						self.unlocked = true;
-					}
-				}, 0);
-			}
-		}, false);
+		document.body.addEventListener('touchstart', self.touchStartHandler, false);
+	};
+
+	self.touchStartHandler = function () {
+		if (!self.unlocked) {
+			var buffer = self.context.createBuffer(1, 1, 22050);
+			var source = self.context.createBufferSource();
+			source.buffer = buffer;
+			source.connect(self.context.destination);
+			source.start(0);
+			setTimeout(function () {
+				if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+					self.unlocked = true;
+				}
+			}, 0);
+		}
 	};
 
 	self.init();
