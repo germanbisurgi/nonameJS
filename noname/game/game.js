@@ -55,7 +55,7 @@ var Game = function (_settings) {
 
 		self.loop.start(function () {
 
-			// self.debugger.print(self.messages, 2);
+			self.debugger.print(2, self.loop);
 
 			self.state.actualSwitch();
 
