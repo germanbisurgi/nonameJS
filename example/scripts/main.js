@@ -1,6 +1,6 @@
 var game = new noname.game({
 	screen: document.querySelector('.screen'),
-	fps: 30,
+	fps: 60,
 	dps: 30,
 	states: [
 		// timeState,
@@ -11,7 +11,7 @@ var game = new noname.game({
 		entitiesState
 	],
 	initialState: 'entitiesState',
-	physicsDebug: false
+	physicsDebug: true
 });
 
 var loading = document.querySelector('.loading');
