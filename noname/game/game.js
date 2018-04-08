@@ -84,7 +84,7 @@ var Game = function (_settings) {
 					if (_settings.physicsDebug) {
 						self.world.drawDebugData();
 					}
-					self.state.current.afterRender(self);
+					// self.state.current.afterRender(self);
 				}
 			}
 		});
