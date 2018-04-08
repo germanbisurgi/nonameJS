@@ -107,8 +107,8 @@ entitiesState.create = function (game) {
 		lowerTranslation: 0,
 		upperTranslation: 50,
 		enableLimit: true,
-		motorSpeed: 1200,
-		maxMotorForce: 1200,
+		motorSpeed: 300,
+		maxMotorForce: 300,
 		enableMotor: true,
 		collideConnected: false
 	});
