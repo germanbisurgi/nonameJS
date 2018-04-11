@@ -41,14 +41,10 @@ var World = function (game) {
 	};
 
 	self.createMouseJoint = function (_point, _body) {
-		var point = {
-			x: _point.x / self.scale,
-			y: _point.y / self.scale
-		};
 		var jointDefinition = new Box2D.Dynamics.Joints.b2MouseJointDef();
 		jointDefinition.bodyA = self.world.GetGroundBody();
 		jointDefinition.bodyB = _body;
-		jointDefinition.target.Set(point.x, point.y);
+		jointDefinition.target.Set(_point.x, _point.y);
 		jointDefinition.maxForce = 100000;
 		jointDefinition.timeStep = 1 / self.fps;
 		return self.world.CreateJoint(jointDefinition);
@@ -172,10 +168,12 @@ var World = function (game) {
 	};
 
 	self.queryPoint = function (_point, _function) {
-		self.world.QueryPoint(function (fixture) {
-			_function(fixture);
-		},
-		{x: _point.x / self.scale, y: _point.y / self.scale});
+		self.world.QueryPoint(
+			function (fixture) {
+				_function(fixture);
+			},
+			{x: _point.x, y: _point.y}
+		);
 	};
 
 	self.rayCastOne = function (_pointA, _pointB) {
@@ -370,9 +368,19 @@ var World = function (game) {
 		self.mouseJoints = [];
 	};
 
+	self.vector = function (x, y) {
+		return {
+			x: (x + game.render.camera.x) / self.scale,
+			y: (y + game.render.camera.y) / self.scale
+		}
+	}
+
 	self.dragStart = function (_pointer) {
 		self.queryPoint(
-			{x: _pointer.currentX, y: _pointer.currentY},
+			self.vector(
+				_pointer.currentX,
+				_pointer.currentY
+			),
 			function (_fixture) {
 				self.mouseJoints.push(
 					{
@@ -393,12 +401,18 @@ var World = function (game) {
 				}
 				if (!_mouseJoint.joint) {
 					_mouseJoint.joint = self.createMouseJoint(
-						{x: _pointer.currentX, y: _pointer.currentY},
+						self.vector(
+							_pointer.currentX,
+							_pointer.currentY
+						),
 						_mouseJoint.body
 					);
 				}
 				_mouseJoint.joint.SetTarget(
-					{x: _pointer.currentX / self.scale, y: _pointer.currentY / self.scale}
+					self.vector(
+						_pointer.currentX,
+						_pointer.currentY
+					)
 				);
 			}
 		});

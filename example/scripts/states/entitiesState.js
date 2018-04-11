@@ -23,7 +23,7 @@ entitiesState.create = function (game) {
 	}
 
 	// gravity
-	game.world.setGravity(0, 9.8);
+	game.world.setGravity(0, 0);
 
 	// block factory
 	var addBlock = function (x, y, w, h, type) {
@@ -63,7 +63,7 @@ entitiesState.create = function (game) {
 		ay: 0,
 		bx: 0,
 		by: 0,
-		frequencyHz: 1,
+		frequencyHz: 2,
 		damping: 0.25,
 		collideConnected: false
 	});
@@ -140,19 +140,19 @@ entitiesState.update = function (game) {
 
 	// controls
 	game.keys.pressing('ArrowRight', function () {
-		// self.humstar.setVelocity(100, 0);
+		// self.humstar.setVelocity(300, 0);
 		self.humstar.ApplyForce({x: 3, y: 0}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowLeft', function () {
-		// self.humstar.setVelocity(-100, 0);
+		// self.humstar.setVelocity(-300, 0);
 		self.humstar.ApplyForce({x: -3, y: 0}, self.humstar.GetWorldCenter());
 	});
-	game.keys.justPressed('ArrowUp', function () {
-		// self.humstar.setVelocity(0 ,-100);
-		self.humstar.ApplyImpulse({x: 0, y: -2}, self.humstar.GetWorldCenter());
+	game.keys.pressing('ArrowUp', function () {
+		// self.humstar.setVelocity(0 ,-300);
+		self.humstar.ApplyForce({x: 0, y: -3}, self.humstar.GetWorldCenter());
 	});
 	game.keys.pressing('ArrowDown', function () {
-		// self.humstar.setVelocity(0 ,100);
+		// self.humstar.setVelocity(0 ,300);
 		self.humstar.ApplyForce({x: 0, y: 2}, self.humstar.GetWorldCenter());
 	});
 
@@ -179,6 +179,12 @@ entitiesState.update = function (game) {
 		game.render.camera.angle -= 1;
 	});
 
+	// camera
+	game.render.camera.follow(
+		self.humstar.GetPosition().x * game.world.scale,
+		self.humstar.GetPosition().y * game.world.scale
+	);
+
 	// change state
 	game.keys.justPressed('b', function () {
 		game.world.clear();
@@ -188,6 +194,7 @@ entitiesState.update = function (game) {
 		game.world.clear();
 		game.state.switchNext();
 	});
+
 };
 
 entitiesState.afterRender = function (game) {

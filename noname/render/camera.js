@@ -7,7 +7,7 @@ var Camera = function (_x, _y, _width, _height) {
 	this.anchorY = 0.5;
 	this.angle = 0;
 	this.zoom = 1.0;
-	this.lerp = 1;
+	this.lerp = 0.1;
 
 	this.move = function (_x, _y) {
 		this.x += this.clock.toPPS(_x);
@@ -52,9 +52,9 @@ var Camera = function (_x, _y, _width, _height) {
 			angle: this.angle
 		};
 	};
-	this.follow = function (_entity) {
-		this.x += (this.zoom * (_entity.x + _entity.width / 2) - (this.width / 2) - this.x) * this.lerp;
-		this.y += (this.zoom * (_entity.y + _entity.height / 2) - (this.height / 2) - this.y) * this.lerp;
+	this.follow = function (x, y) {
+		this.x += (this.zoom * (x) - (this.width / 2) - this.x) * this.lerp;
+		this.y += (this.zoom * (y) - (this.height / 2) - this.y) * this.lerp;
 	};
 	this.setZoom = function (_zoom) {
 		this.zoom += this.clock.toPPS(_zoom);
