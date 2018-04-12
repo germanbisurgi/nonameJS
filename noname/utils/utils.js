@@ -10,6 +10,14 @@ var Utils = function () {
         }
     };
 
+    self.fasterEachReverse = function (array, fn, thisContext) {
+        var length = array.length;
+        var i;
+        for (var i = length - 1; i >= 0; i--) {
+            fn(array[i], i, array);
+        }
+    };
+
     self.extend = function (out) {
         out = out || {};
         for (var i = 1; i < arguments.length; i++) {

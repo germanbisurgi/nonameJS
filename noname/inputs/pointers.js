@@ -91,28 +91,18 @@ var Pointers = function (game) {
 
 	self.update = function () {
 		if (self.started.length > 0) {
-			/*game.utils.fasterEach(self.started, function (_pointer) {
+			game.utils.fasterEachReverse(self.started, function (_pointer) {
 				if (_pointer.startFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.started);
 				}
-			});*/
-			for (var i = self.started.length - 1; i >= 0; i--) {
-				if (self.started[i].startFrame < game.loop.frames - 1) {
-					self.remove(self.started[i], self.started);
-				}
-			}
+			});
 		}
 		if (self.ended.length > 0) {
-			/*game.utils.fasterEach(self.ended, function (_pointer) {
+			game.utils.fasterEachReverse(self.ended, function (_pointer) {
 				if (_pointer.releaseFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.ended);
 				}
-			});*/
-			for (var i = self.ended.length - 1; i >= 0; i--) {
-				if (self.ended[i].startFrame < game.loop.frames - 1) {
-					self.remove(self.ended[i], self.ended);
-				}
-			}
+			});
 		}
 	};
 
