@@ -109,7 +109,7 @@ var Mathematics = function () {
 	 * @returns {number} The angle in radians
 	 */
 	self.pointToAngle = function (_originX, _originY, _pointX, _pointY) {
-		return self.toDegrees(Math.atan2(_pointY - _originY, _pointX - _originX));
+		return Math.atan2(_pointY - _originY, _pointX - _originX);
 	};
 
 	/**
@@ -121,10 +121,10 @@ var Mathematics = function () {
 	 * @param {number} _radius How far the point will be from the origin.
 	 * @returns {object} {x: *, y: *}
 	 */
-	self.angleToPoint = function (_angle, _originX, _originY, _radius) {
+	self.angleToPoint = function (angle, originX, originY, radius) {
 		return {
-			x: Math.cos(_angle) * _radius + _originX,
-			y: Math.sin(_angle) * _radius + _originY
+			x: Math.cos(angle) * radius + originX,
+			y: Math.sin(angle) * radius + originY
 		};
 	};
 

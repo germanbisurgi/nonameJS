@@ -350,7 +350,7 @@ var World = function (game) {
 		game.render.context.save();
 		// camera rotation
 		game.render.context.translate((game.render.camera.width * game.render.camera.anchorX), (game.render.camera.height * game.render.camera.anchorY));
-		game.render.context.rotate(-game.render.camera.angle * 0.0174532925199432957);
+		game.render.context.rotate(-game.render.camera.angle);
 		game.render.context.translate(-(game.render.camera.width * game.render.camera.anchorX), -(game.render.camera.height * game.render.camera.anchorY));
 		// camera position
 		game.render.context.translate(-game.render.camera.x, -game.render.camera.y);
@@ -373,6 +373,13 @@ var World = function (game) {
 			x: (x + game.render.camera.x) / self.scale,
 			y: (y + game.render.camera.y) / self.scale
 		}
+		/*var x = (_x + game.render.camera.x)/ self.scale;
+		var y = (_y + game.render.camera.y)/ self.scale;
+		var angle = game.render.camera.angle;
+		var ox = (game.render.camera.x + game.render.camera.width / 2)/ self.scale;
+		var oy = (game.render.camera.x + game.render.camera.height / 2)/ self.scale;
+		var radius = game.mathematics.distance(x, y, ox, oy)/ self.scale;
+		return game.mathematics.angleToPoint(angle, ox, oy, radius);*/
 	}
 
 	self.dragStart = function (_pointer) {

@@ -85,7 +85,7 @@ var Render = function (game) {
 		self.context.save();
 		// camera rotation
 		self.context.translate((self.camera.width * self.camera.anchorX), (self.camera.height * self.camera.anchorY));
-		self.context.rotate(self.toRadians(-self.camera.angle));
+		self.context.rotate(-self.camera.angle);
 		self.context.translate(-(self.camera.width * self.camera.anchorX), -(self.camera.height * self.camera.anchorY));
 		// camera position
 		self.context.translate(-self.camera.x, -self.camera.y);
@@ -126,10 +126,6 @@ var Render = function (game) {
 
 	self.inCamera = function () {
 		return true;
-	};
-
-	self.toRadians = function (degrees) {
-		return degrees * 0.0174532925199432957;
 	};
 
 	self.init();

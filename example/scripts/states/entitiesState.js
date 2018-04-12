@@ -173,10 +173,10 @@ entitiesState.update = function (game) {
 
 	// camera
 	game.keys.pressing('a', function () {
-		game.render.camera.angle += 1;
+		game.render.camera.angle += game.mathematics.toRadians(1);
 	});
 	game.keys.pressing('s', function () {
-		game.render.camera.angle -= 1;
+		game.render.camera.angle -= game.mathematics.toRadians(1);
 	});
 
 	// camera
