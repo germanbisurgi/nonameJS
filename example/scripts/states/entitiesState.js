@@ -133,7 +133,7 @@ entitiesState.create = function (game) {
 entitiesState.update = function (game) {
 	var self = entitiesState;
 
-	game.debugger.print(3, game.pointers);
+	//game.debugger.print(3, game.pointers);
 
 	// play humstar animation
 	self.humstarSprite.play('fly', 100);

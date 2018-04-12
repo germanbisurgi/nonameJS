@@ -64,7 +64,6 @@ var Pointers = function (game) {
 			var pointer = self.getByIdentifier(touch.identifier, self.continued);
 			pointer.releaseFrame = game.loop.frames;
 			self.ended.push(pointer);
-			// self.remove(pointer, self.continued);
 		});
 	};
 
@@ -76,7 +75,6 @@ var Pointers = function (game) {
 			pointer.currentY = Math.floor(event.clientY - game.render.screen.offsetLeft);
 			pointer.releaseFrame = game.loop.frames;
 			self.ended.push(pointer);
-			// self.remove(pointer, self.continued);
 		}
 	};
 
