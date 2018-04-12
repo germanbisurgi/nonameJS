@@ -18,7 +18,8 @@ var Pointers = function (game) {
 				currentY: Math.floor(touch.clientY - game.render.screen.offsetTop),
 				milliseconds: 0,
 				identifier: touch.identifier,
-				startFrame: game.loop.frames
+				startFrame: game.loop.frames,
+				releaseFrame: null
 			};
 			self.started.push(pointer);
 			self.continued.push(pointer);
@@ -35,7 +36,8 @@ var Pointers = function (game) {
 			currentX: Math.floor(event.clientX - game.render.screen.offsetLeft),
 			currentY: Math.floor(event.clientY - game.render.screen.offsetLeft),
 			milliseconds: 0,
-			startFrame: game.loop.frames
+			startFrame: game.loop.frames,
+			releaseFrame: null
 		};
 		self.started.push(pointer);
 		self.continued.push(pointer);
