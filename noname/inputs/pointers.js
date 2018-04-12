@@ -64,7 +64,7 @@ var Pointers = function (game) {
 			var pointer = self.getByIdentifier(touch.identifier, self.continued);
 			pointer.releaseFrame = game.loop.frames;
 			self.ended.push(pointer);
-			self.remove(pointer, self.continued);
+			// self.remove(pointer, self.continued);
 		});
 	};
 
@@ -76,7 +76,7 @@ var Pointers = function (game) {
 			pointer.currentY = Math.floor(event.clientY - game.render.screen.offsetLeft);
 			pointer.releaseFrame = game.loop.frames;
 			self.ended.push(pointer);
-			self.remove(pointer, self.continued);
+			// self.remove(pointer, self.continued);
 		}
 	};
 
@@ -101,6 +101,13 @@ var Pointers = function (game) {
 			game.utils.fasterEachReverse(self.ended, function (_pointer) {
 				if (_pointer.releaseFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.ended);
+				}
+			});
+		}
+		if (self.continued.length > 0) {
+			game.utils.fasterEachReverse(self.continued, function (_pointer) {
+				if (_pointer.releaseFrame < game.loop.frames - 1) {
+					self.remove(_pointer, self.continued);
 				}
 			});
 		}
