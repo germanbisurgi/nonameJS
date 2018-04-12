@@ -178,8 +178,12 @@ entitiesState.update = function (game) {
 	game.keys.pressing('s', function () {
 		game.render.camera.angle -= game.mathematics.toRadians(1);
 	});
-
-	// camera
+	game.keys.pressing('q', function () {
+		game.render.camera.zoom += 0.01;
+	});
+	game.keys.pressing('w', function () {
+		game.render.camera.zoom -= 0.01;
+	});
 	game.render.camera.follow(
 		self.humstar.GetPosition().x * game.world.scale,
 		self.humstar.GetPosition().y * game.world.scale

@@ -84,9 +84,9 @@ var Render = function (game) {
 	self.draw = function (bodies) {
 		self.context.save();
 		// camera rotation
-		self.context.translate((self.camera.width * self.camera.anchorX), (self.camera.height * self.camera.anchorY));
+		self.context.translate((self.camera.width / 2), (self.camera.height / 2));
 		self.context.rotate(-self.camera.angle);
-		self.context.translate(-(self.camera.width * self.camera.anchorX), -(self.camera.height * self.camera.anchorY));
+		self.context.translate(-(self.camera.width / 2), -(self.camera.height / 2));
 		// camera position
 		self.context.translate(-self.camera.x, -self.camera.y);
 		// camera zoom.

@@ -349,9 +349,9 @@ var World = function (game) {
 	self.drawDebugData = function () {
 		game.render.context.save();
 		// camera rotation
-		game.render.context.translate((game.render.camera.width * game.render.camera.anchorX), (game.render.camera.height * game.render.camera.anchorY));
+		game.render.context.translate((game.render.camera.width / 2), (game.render.camera.height / 2));
 		game.render.context.rotate(-game.render.camera.angle);
-		game.render.context.translate(-(game.render.camera.width * game.render.camera.anchorX), -(game.render.camera.height * game.render.camera.anchorY));
+		game.render.context.translate(-(game.render.camera.width / 2), -(game.render.camera.height / 2));
 		// camera position
 		game.render.context.translate(-game.render.camera.x, -game.render.camera.y);
 		// camera zoom.
