@@ -18,8 +18,7 @@ var Pointers = function (game) {
 				currentY: Math.floor(touch.clientY - game.render.screen.offsetTop),
 				milliseconds: 0,
 				identifier: touch.identifier,
-				startFrame: game.loop.frames,
-				releaseFrame: null
+				startFrame: game.loop.frames
 			};
 			self.started.push(pointer);
 			self.continued.push(pointer);
@@ -36,8 +35,7 @@ var Pointers = function (game) {
 			currentX: Math.floor(event.clientX - game.render.screen.offsetLeft),
 			currentY: Math.floor(event.clientY - game.render.screen.offsetLeft),
 			milliseconds: 0,
-			startFrame: game.loop.frames,
-			releaseFrame: null
+			startFrame: game.loop.frames
 		};
 		self.started.push(pointer);
 		self.continued.push(pointer);
@@ -94,14 +92,14 @@ var Pointers = function (game) {
 	self.update = function () {
 		if (self.started.length > 0) {
 			game.utils.fasterEach(self.started, function (_pointer) {
-				if (_pointer.startFrame && _pointer.startFrame < game.loop.frames - 1) {
+				if (_pointer.startFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.started);
 				}
 			});
 		}
 		if (self.ended.length > 0) {
 			game.utils.fasterEach(self.ended, function (_pointer) {
-				if (_pointer.releaseFrame && _pointer.releaseFrame < game.loop.frames - 1) {
+				if (_pointer.releaseFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.ended);
 				}
 			});
