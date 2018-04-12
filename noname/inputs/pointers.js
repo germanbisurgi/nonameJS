@@ -93,7 +93,7 @@ var Pointers = function (game) {
 		if (self.started.length > 0) {
 			game.utils.fasterEach(self.started, function (_pointer) {
 				if (_pointer.startFrame < game.loop.frames - 1) {
-					self.remove(_pointer, self.started);
+					//self.remove(_pointer, self.started);
 				}
 			});
 		}
