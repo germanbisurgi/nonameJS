@@ -97,17 +97,17 @@ var Pointers = function (game) {
 				}
 			});
 		}
-		if (self.continued.length > 0) {
-			game.utils.fasterEachReverse(self.continued, function (_pointer) {
-				if (_pointer.releaseFrame < game.loop.frames - 1) {
-					self.remove(_pointer, self.continued);
-				}
-			});
-		}
 		if (self.ended.length > 0) {
 			game.utils.fasterEachReverse(self.ended, function (_pointer) {
 				if (_pointer.releaseFrame < game.loop.frames - 1) {
 					self.remove(_pointer, self.ended);
+				}
+			});
+		}
+		if (self.continued.length > 0) {
+			game.utils.fasterEachReverse(self.continued, function (_pointer) {
+				if (_pointer.releaseFrame < game.loop.frames - 1) {
+					self.remove(_pointer, self.continued);
 				}
 			});
 		}
