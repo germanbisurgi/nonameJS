@@ -29,9 +29,12 @@ var Audio = function (_game) {
 
 	self.init = function () {
 		document.body.addEventListener('touchstart', self.touchStartHandler, false);
+		document.body.addEventListener('click', self.touchStartHandler, false);
 	};
 
 	self.touchStartHandler = function () {
+		console.log('poppiti');
+		self.context.resume();
 		if (!self.unlocked) {
 			var buffer = self.context.createBuffer(1, 1, 22050);
 			var source = self.context.createBufferSource();
@@ -44,6 +47,8 @@ var Audio = function (_game) {
 				}
 			}, 0);
 		}
+		document.body.removeEventListener('touchstart', self.touchStartHandler, false);
+		document.body.removeEventListener('click', self.touchStartHandler, false);
 	};
 
 	self.init();
