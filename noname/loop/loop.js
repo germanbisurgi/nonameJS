@@ -1,4 +1,4 @@
-var Loop = function (_game) {
+var Loop = function (game) {
 	'use strict';
 	var self = this;
 	self.fps = null;
@@ -9,7 +9,7 @@ var Loop = function (_game) {
 	self.offset = 0;
 
 	self.init = function () {
-		self.fps = _game.settings.fps || 60;
+		self.fps = game.settings.fps || 60;
 		self.offset = self.fps >= 10 ? 0.5 : 0;
 		window.requestAnimFrame = (function () {
 			return window.requestAnimationFrame ||
@@ -21,7 +21,7 @@ var Loop = function (_game) {
 		})();
 	};
 
-	self.start = function (_task) {
+	self.start = function (task) {
 		self.lastTime = performance.now();
 		function tick (timestamp) {
 			if (!self.paused) {
@@ -29,16 +29,12 @@ var Loop = function (_game) {
 				if ((self.delta + self.offset) >= 1000 / self.fps) {
 					self.lastTime = timestamp;
 					self.frames++;
-					_task();
+					task();
 				}
 				requestAnimFrame(tick);
 			}
 		}
 		requestAnimFrame(tick);
-	};
-
-	self.timestamp = function () {
-		return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 	};
 
 	self.pause = function () {

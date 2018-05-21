@@ -33,7 +33,6 @@ var Audio = function (_game) {
 	};
 
 	self.touchStartHandler = function () {
-		console.log('poppiti');
 		self.context.resume();
 		if (!self.unlocked) {
 			var buffer = self.context.createBuffer(1, 1, 22050);
